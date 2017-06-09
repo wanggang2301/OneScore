@@ -91,6 +91,7 @@ import java.util.TimerTask;
 import de.greenrobot.event.EventBus;
 import pl.droidsonroids.gif.GifImageView;
 
+import static com.hhly.mlottery.R.id.ll_guest_free_kick_fk4_title;
 import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK;
 import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK1;
 import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER;
@@ -245,14 +246,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private GifImageView gif_home_attack_danger, gif_guest_attack_danger;
     // 射正、射偏1
     private LinearLayout ll_offside_content1;
-    private RelativeLayout rl_home_offside1, rl_guest_offside1;
+    private RelativeLayout rl_home_offside1, rl_guest_offside1, rl_home_offside_title1, rl_guest_offside_title1;
     private TextView tv_home_title1, tv_guest_title1;
     private GifImageView gif_home_position1, gif_guest_position1;
     private GifImageView gif_home_ball1, gif_guest_ball1, gif_home_hit1, gif_guest_hit1;
     private TextView tv_home_title1_time, tv_guest_title1_time;
     // 射正、射偏2
     private LinearLayout ll_offside_content2;
-    private RelativeLayout rl_home_offside2, rl_guest_offside2;
+    private RelativeLayout rl_home_offside2, rl_guest_offside2, rl_home_offside_title2, rl_guest_offside_title2;
     private TextView tv_home_title2, tv_guest_title2;
     private GifImageView gif_home_position2, gif_guest_position2;
     private GifImageView gif_home_ball2, gif_guest_ball2, gif_guest_hit2, gif_home_hit2;
@@ -299,6 +300,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     // 任意球fk2、fk4
     private RelativeLayout fl_free_kick_fk2_fk4_content;
     private LinearLayout ll_home_free_kick_bg, ll_guest_free_kick_bg, ll_home_free_kick_fk4_bg, ll_guest_free_kick_fk4_bg, ll_home_free_kick_fk2_bg, ll_guest_free_kick_fk2_bg;
+    private LinearLayout ll_guest_free_kick_fk2_title, ll_home_free_kick_fk2_title, ll_home_free_kick_fk4_title, ll_guest_free_kick_fk4_title;
     private TextView tv_home_free_kick_fk4_title, tv_guest_free_kick_fk4_title, tv_home_free_kick_fk2_title, tv_guest_free_kick_fk2_title;
     private GifImageView gif_home_free_kick_fk2_position, gif_guest_free_kick_fk2_position, gif_home_free_kick_fk4_position, gif_guest_free_kick_fk4_position;
     private TextView tv_guest_free_kick_fk4_title_time, tv_guest_free_kick_fk2_title_time, tv_home_free_kick_fk2_title_time, tv_home_free_kick_fk4_title_time;
@@ -307,6 +309,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private RelativeLayout rl_home_free_kick_fk3_1, rl_guest_free_kick_fk3_1;
     private GifImageView gif_home_free_kick_fk3_position, gif_guest_free_kick_fk3_position;
     private TextView ll_home_free_kick_fk3_title_time, ll_guest_free_kick_fk3_title_time;
+    private LinearLayout ll_home_free_kick_fk3_title, ll_guest_free_kick_fk3_title;
     // 任意球fk3 2
     private RelativeLayout fl_free_kick_fk3_content2;
     private LinearLayout ll_home_free_kick_fk3_bg_2, ll_guest_free_kick_fk3_bg_2;
@@ -356,6 +359,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private ImageView iv_head_guest_icon;
 
     private String state;// 当前赛事状态
+    private String halfScore = "";// 上半场比分
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -658,13 +662,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     startReloadTimer();
                 }
 
-                for (MatchTextLiveBean matchTextLiveBean : matchLive) {
-                    if ("2".equals(matchTextLiveBean.getState()) && "1".equals(matchTextLiveBean.getCode())) {
-                        mHalfScore.setText("(" + matchTextLiveBean.getHomeScore() + " : " + matchTextLiveBean.getGuestScore() + ")");
+                // 进行中的获取半场比分
+                if (matchLive != null && matchLive.size() != 0) {
+                    for (MatchTextLiveBean matchTextLiveBean : matchLive) {
+                        if ("2".equals(matchTextLiveBean.getState()) && "1".equals(matchTextLiveBean.getCode())) {
+                            halfScore = "(" + matchTextLiveBean.getHomeScore() + " : " + matchTextLiveBean.getGuestScore() + ")";
+                            mHalfScore.setText("(" + matchTextLiveBean.getHomeScore() + " : " + matchTextLiveBean.getGuestScore() + ")");
+                        }
                     }
+                    updateAnimation(matchLive.get(0));
+                    L.d("wwwww", "刚进入时的状态 state ：" + state);
+                    matchTimeStart(mKeepTime, state);
                 }
-                matchTimeStart(mKeepTime, state);
-                updateAnimation(matchLive.get(0));
 
                 mHandler.sendEmptyMessage(SUCCESS);
             }
@@ -1178,7 +1187,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         time = StadiumUtils.convertStringToInt(time) + "'";
 
-        String halfScore = "";
+        // 完场
+        if (MATCHFINISH.equals(matchTextLiveBean.getState()) || "20".equals(matchTextLiveBean.getCode())) {
+            // 显示完场比分板
+            ll_score_content.setVisibility(View.GONE);
+            tv_head_time.setVisibility(View.GONE);
+            tv_head_over_score.setVisibility(View.VISIBLE);
+            ll_over_score_content.setVisibility(View.VISIBLE);
+        }
 
         switch (matchTextLiveBean.getCode()) {
             case "0":
@@ -1243,6 +1259,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                 mHalfScore.setVisibility(View.VISIBLE);
                 mHalfScore.setText(halfScore);
+
                 break;
             case "18": //点球状态
             case "19":
@@ -1304,10 +1321,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     ll_home_title_r.setVisibility(View.GONE);
                     ll_guest_title_l.setVisibility(View.GONE);
                     ll_guest_title_r.setVisibility(View.GONE);
-                    tv_home_corner_title_r_time.setVisibility(View.GONE);
-                    tv_guest_corner_title_r_time.setVisibility(View.GONE);
-                    tv_guest_corner_title_l_time.setVisibility(View.GONE);
-                    tv_home_corner_title_l_time.setVisibility(View.VISIBLE);
                     gif_guest_corner_r_position.setVisibility(View.GONE);
                     gif_guest_corner_l_position.setVisibility(View.GONE);
                     gif_home_corner_r_position.setVisibility(View.GONE);
@@ -1326,10 +1339,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     ll_home_title_r.setVisibility(View.VISIBLE);
                     ll_guest_title_l.setVisibility(View.GONE);
                     ll_guest_title_r.setVisibility(View.GONE);
-                    tv_home_corner_title_r_time.setVisibility(View.VISIBLE);
-                    tv_guest_corner_title_r_time.setVisibility(View.GONE);
-                    tv_guest_corner_title_l_time.setVisibility(View.GONE);
-                    tv_home_corner_title_l_time.setVisibility(View.GONE);
                     gif_guest_corner_r_position.setVisibility(View.GONE);
                     gif_guest_corner_l_position.setVisibility(View.GONE);
                     gif_home_corner_r_position.setVisibility(View.VISIBLE);
@@ -1354,10 +1363,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     ll_home_title_r.setVisibility(View.GONE);
                     ll_guest_title_l.setVisibility(View.VISIBLE);
                     ll_guest_title_r.setVisibility(View.GONE);
-                    tv_home_corner_title_r_time.setVisibility(View.GONE);
-                    tv_guest_corner_title_r_time.setVisibility(View.GONE);
-                    tv_guest_corner_title_l_time.setVisibility(View.VISIBLE);
-                    tv_home_corner_title_l_time.setVisibility(View.GONE);
                     gif_guest_corner_r_position.setVisibility(View.GONE);
                     gif_guest_corner_l_position.setVisibility(View.VISIBLE);
                     gif_home_corner_r_position.setVisibility(View.GONE);
@@ -1376,10 +1381,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     ll_home_title_r.setVisibility(View.GONE);
                     ll_guest_title_l.setVisibility(View.GONE);
                     ll_guest_title_r.setVisibility(View.VISIBLE);
-                    tv_home_corner_title_r_time.setVisibility(View.GONE);
-                    tv_guest_corner_title_r_time.setVisibility(View.VISIBLE);
-                    tv_guest_corner_title_l_time.setVisibility(View.GONE);
-                    tv_home_corner_title_l_time.setVisibility(View.GONE);
                     gif_guest_corner_r_position.setVisibility(View.VISIBLE);
                     gif_guest_corner_l_position.setVisibility(View.GONE);
                     gif_home_corner_r_position.setVisibility(View.GONE);
@@ -1500,10 +1501,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     rl_guest_offside1.setVisibility(View.INVISIBLE);
                     gif_home_position1.setVisibility(View.VISIBLE);
                     gif_guest_position1.setVisibility(View.INVISIBLE);
-                    tv_home_title1.setVisibility(View.VISIBLE);
-                    tv_home_title1_time.setVisibility(View.VISIBLE);
-                    tv_guest_title1.setVisibility(View.INVISIBLE);
-                    tv_guest_title1_time.setVisibility(View.INVISIBLE);
+                    rl_home_offside_title1.setVisibility(View.VISIBLE);
+                    rl_guest_offside_title1.setVisibility(View.INVISIBLE);
                     gif_home_ball1.setVisibility(View.INVISIBLE);
                     gif_guest_ball1.setVisibility(View.INVISIBLE);
                     gif_home_hit1.setVisibility(View.VISIBLE);
@@ -1518,10 +1517,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     rl_guest_offside2.setVisibility(View.INVISIBLE);
                     gif_home_position2.setVisibility(View.VISIBLE);
                     gif_guest_position2.setVisibility(View.INVISIBLE);
-                    tv_home_title2.setVisibility(View.VISIBLE);
-                    tv_home_title2_time.setVisibility(View.VISIBLE);
-                    tv_guest_title2.setVisibility(View.INVISIBLE);
-                    tv_guest_title2_time.setVisibility(View.INVISIBLE);
+                    rl_home_offside_title2.setVisibility(View.VISIBLE);
+                    rl_guest_offside_title2.setVisibility(View.INVISIBLE);
                     gif_home_ball2.setVisibility(View.INVISIBLE);
                     gif_guest_ball2.setVisibility(View.INVISIBLE);
                     gif_home_hit2.setVisibility(View.VISIBLE);
@@ -1557,10 +1554,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     rl_guest_offside1.setVisibility(View.VISIBLE);
                     gif_home_position1.setVisibility(View.INVISIBLE);
                     gif_guest_position1.setVisibility(View.VISIBLE);
-                    tv_home_title1.setVisibility(View.INVISIBLE);
-                    tv_home_title1_time.setVisibility(View.INVISIBLE);
-                    tv_guest_title1.setVisibility(View.VISIBLE);
-                    tv_guest_title1_time.setVisibility(View.VISIBLE);
+                    rl_home_offside_title1.setVisibility(View.INVISIBLE);
+                    rl_guest_offside_title1.setVisibility(View.VISIBLE);
                     gif_home_ball1.setVisibility(View.INVISIBLE);
                     gif_guest_ball1.setVisibility(View.INVISIBLE);
                     gif_home_hit1.setVisibility(View.INVISIBLE);
@@ -1575,16 +1570,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     rl_guest_offside2.setVisibility(View.VISIBLE);
                     gif_home_position2.setVisibility(View.INVISIBLE);
                     gif_guest_position2.setVisibility(View.VISIBLE);
-                    tv_home_title2.setVisibility(View.INVISIBLE);
-                    tv_home_title2_time.setVisibility(View.INVISIBLE);
-                    tv_guest_title2.setVisibility(View.VISIBLE);
-                    tv_guest_title2_time.setVisibility(View.VISIBLE);
+                    rl_home_offside_title2.setVisibility(View.INVISIBLE);
+                    rl_guest_offside_title2.setVisibility(View.VISIBLE);
                     gif_home_ball2.setVisibility(View.INVISIBLE);
                     gif_guest_ball2.setVisibility(View.INVISIBLE);
                     gif_home_hit2.setVisibility(View.INVISIBLE);
                     gif_guest_hit2.setVisibility(View.VISIBLE);
                     tv_guest_title2.setText(getString(R.string.football_play_hit));
-                    tv_guest_title2_time.setText(time);
+                    tv_guest_title2_time.setText("10'");
                     gif_guest_hit2.setImageResource(R.mipmap.football_guest_hit2);
                     gif_guest_position2.setImageResource(R.mipmap.football_guest_position_gif);
                     showGifAnimation(2222);
@@ -1595,18 +1588,16 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_guest_offside1.setVisibility(View.INVISIBLE);
                 gif_home_position1.setVisibility(View.VISIBLE);
                 gif_guest_position1.setVisibility(View.INVISIBLE);
-                tv_home_title1.setVisibility(View.VISIBLE);
-                tv_home_title1_time.setVisibility(View.VISIBLE);
-                tv_guest_title1.setVisibility(View.INVISIBLE);
-                tv_guest_title1_time.setVisibility(View.INVISIBLE);
+                rl_home_offside_title1.setVisibility(View.VISIBLE);
+                rl_guest_offside_title1.setVisibility(View.INVISIBLE);
                 gif_home_ball1.setVisibility(View.VISIBLE);
                 gif_guest_ball1.setVisibility(View.INVISIBLE);
                 gif_home_hit1.setVisibility(View.INVISIBLE);
                 gif_guest_hit1.setVisibility(View.INVISIBLE);
                 tv_home_title1.setText(getString(R.string.football_play_deviate));
-                tv_home_title1_time.setText(time);
                 gif_home_ball1.setImageResource(R.mipmap.football_home_ball_gif);
                 gif_home_position1.setImageResource(R.mipmap.football_home_position_gif);
+                tv_home_title1_time.setText(time);
                 showGifAnimation(1111);
                 break;
             case "1041":    //主队射偏球门
@@ -1614,10 +1605,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_guest_offside2.setVisibility(View.INVISIBLE);
                 gif_home_position2.setVisibility(View.VISIBLE);
                 gif_guest_position2.setVisibility(View.INVISIBLE);
-                tv_home_title2.setVisibility(View.VISIBLE);
-                tv_home_title2_time.setVisibility(View.VISIBLE);
-                tv_guest_title2.setVisibility(View.INVISIBLE);
-                tv_guest_title2_time.setVisibility(View.INVISIBLE);
+                rl_home_offside_title2.setVisibility(View.VISIBLE);
+                rl_guest_offside_title2.setVisibility(View.INVISIBLE);
                 gif_home_ball2.setVisibility(View.VISIBLE);
                 gif_guest_ball2.setVisibility(View.INVISIBLE);
                 gif_home_hit2.setVisibility(View.INVISIBLE);
@@ -1633,10 +1622,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_guest_offside1.setVisibility(View.VISIBLE);
                 gif_home_position1.setVisibility(View.INVISIBLE);
                 gif_guest_position1.setVisibility(View.VISIBLE);
-                tv_home_title1.setVisibility(View.INVISIBLE);
-                tv_home_title1_time.setVisibility(View.INVISIBLE);
-                tv_guest_title1.setVisibility(View.VISIBLE);
-                tv_guest_title1_time.setVisibility(View.VISIBLE);
+                rl_home_offside_title1.setVisibility(View.INVISIBLE);
+                rl_guest_offside_title1.setVisibility(View.VISIBLE);
                 gif_home_ball1.setVisibility(View.INVISIBLE);
                 gif_guest_ball1.setVisibility(View.VISIBLE);
                 gif_home_hit1.setVisibility(View.INVISIBLE);
@@ -1652,10 +1639,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_guest_offside2.setVisibility(View.VISIBLE);
                 gif_home_position2.setVisibility(View.INVISIBLE);
                 gif_guest_position2.setVisibility(View.VISIBLE);
-                tv_home_title2.setVisibility(View.INVISIBLE);
-                tv_home_title2_time.setVisibility(View.INVISIBLE);
-                tv_guest_title2.setVisibility(View.VISIBLE);
-                tv_guest_title2_time.setVisibility(View.VISIBLE);
+                rl_home_offside_title2.setVisibility(View.INVISIBLE);
+                rl_guest_offside_title2.setVisibility(View.VISIBLE);
                 gif_home_ball2.setVisibility(View.INVISIBLE);
                 gif_guest_ball2.setVisibility(View.VISIBLE);
                 gif_home_hit2.setVisibility(View.INVISIBLE);
@@ -1736,10 +1721,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case "1054"://主队界外球
                 rl_home_goal_out.setVisibility(View.VISIBLE);
                 tv_home_goal_out_title_time.setVisibility(View.VISIBLE);
-                tv_home_goal_out_title_time.setText(time);
                 rl_guest_goal_out.setVisibility(View.INVISIBLE);
+                tv_guest_goal_out_title_time.setVisibility(View.INVISIBLE);
                 gif_home_goal_out_position.setImageResource(R.mipmap.football_home_position_gif);
                 gif_home_goal_out.setImageResource(R.mipmap.football_home_goal_out);
+                tv_home_goal_out_title_time.setText(time);
                 showGifAnimation(1054);
                 break;
             case "2066"://客队犯规
@@ -1757,11 +1743,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 break;
             case "2078"://客队界外球
                 rl_home_goal_out.setVisibility(View.INVISIBLE);
+                tv_home_goal_out_title_time.setVisibility(View.INVISIBLE);
                 rl_guest_goal_out.setVisibility(View.VISIBLE);
                 tv_guest_goal_out_title_time.setVisibility(View.VISIBLE);
-                tv_guest_goal_out_title_time.setText(time);
                 gif_guest_goal_out_position.setImageResource(R.mipmap.football_guest_position_gif);
                 gif_guest_goal_out.setImageResource(R.mipmap.football_guest_goal_out);
+                tv_guest_goal_out_title_time.setText(time);
                 showGifAnimation(2078);
                 break;
             case "256": //取消（不显示，指定消息取消）
@@ -1850,19 +1837,21 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case "1053"://主队球门球
                 rl_home_goal_door.setVisibility(View.VISIBLE);
                 tv_home_goal_door_title_time.setVisibility(View.VISIBLE);
-                tv_home_goal_door_title_time.setText(time);
                 rl_guest_goal_door.setVisibility(View.INVISIBLE);
+                tv_guest_goal_door_title_time.setVisibility(View.INVISIBLE);
                 gif_home_goal_door_position.setImageResource(R.mipmap.football_home_position_gif);
                 gfi_home_goal_door.setImageResource(R.mipmap.football_home_goal_door);
+                tv_home_goal_door_title_time.setText(time);
                 showGifAnimation(1053);
                 break;
             case "2077"://客队球门球
                 rl_home_goal_door.setVisibility(View.INVISIBLE);
+                tv_home_goal_door_title_time.setVisibility(View.INVISIBLE);
                 rl_guest_goal_door.setVisibility(View.VISIBLE);
                 tv_guest_goal_door_title_time.setVisibility(View.VISIBLE);
-                tv_guest_goal_door_title_time.setText(time);
                 gif_guest_goal_door_position.setImageResource(R.mipmap.football_guest_position_gif);
                 gfi_guest_goal_door.setImageResource(R.mipmap.football_guest_goal_door);
+                tv_guest_goal_door_title_time.setText(time);
                 showGifAnimation(2077);
                 break;
             case "1060"://主队点球罚失
@@ -1900,15 +1889,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                         ll_home_free_kick_fk1_bg.setVisibility(View.VISIBLE);
                                         ll_guest_free_kick_fk1_bg.setVisibility(View.INVISIBLE);
                                         ll_home_free_kick_fk1_title.setVisibility(View.VISIBLE);
+                                        ll_home_free_kick_fk1_title_time.setVisibility(View.VISIBLE);
                                         ll_guest_free_kick_fk1_title.setVisibility(View.GONE);
+                                        ll_guest_free_kick_fk1_title_time.setVisibility(View.GONE);
                                         gif_home_free_kick_fk1_position.setVisibility(View.VISIBLE);
                                         gif_guest_free_kick_fk1_position.setVisibility(View.GONE);
                                         gif_home_free_kick_fk1_position.setImageResource(R.mipmap.football_home_position_gif);
-
-                                        ll_guest_free_kick_fk1_title_time.setVisibility(View.GONE);
-                                        ll_home_free_kick_fk1_title_time.setVisibility(View.VISIBLE);
                                         ll_home_free_kick_fk1_title_time.setText(finalTime);
-
                                         showGifAnimation(6666);
                                         break;
                                     case "FK2":
@@ -1923,17 +1910,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                         gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                                         gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
                                         gif_home_free_kick_fk4_position.setImageResource(R.mipmap.football_home_position_gif);
-                                        tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk4_title.setVisibility(View.VISIBLE);
-                                        tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-
-                                        tv_guest_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                        tv_guest_free_kick_fk2_title_time.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk2_title_time.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk4_title_time.setVisibility(View.VISIBLE);
+                                        ll_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        ll_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        ll_home_free_kick_fk4_title.setVisibility(View.VISIBLE);
+                                        ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                                         tv_home_free_kick_fk4_title_time.setText(finalTime);
-
                                         tv_home_free_kick_fk4_title.setText(getString(R.string.football_play_free_kick_danger));
                                         showGifAnimation(7777);
                                         break;
@@ -1945,22 +1926,16 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                         gif_home_free_kick_fk3_position_2.setVisibility(View.VISIBLE);
                                         gif_guest_free_kick_fk3_position_2.setVisibility(View.INVISIBLE);
                                         gif_home_free_kick_fk3_position_2.setImageResource(R.mipmap.football_home_position_gif);
-
-                                        ll_home_free_kick_fk3_title_2_time.setVisibility(View.VISIBLE);
-                                        ll_guest_free_kick_fk3_title_2_time.setVisibility(View.GONE);
                                         ll_home_free_kick_fk3_title_2_time.setText(finalTime);
-
                                         showGifAnimation(8888);
                                         break;
                                     case "FK3R":
                                         rl_home_free_kick_fk3_1.setVisibility(View.VISIBLE);
+                                        ll_home_free_kick_fk3_title.setVisibility(View.VISIBLE);
                                         rl_guest_free_kick_fk3_1.setVisibility(View.INVISIBLE);
+                                        ll_guest_free_kick_fk3_title.setVisibility(View.INVISIBLE);
                                         gif_home_free_kick_fk3_position.setImageResource(R.mipmap.football_home_position_gif);
-
-                                        ll_home_free_kick_fk3_title_time.setVisibility(View.VISIBLE);
-                                        ll_guest_free_kick_fk3_title_time.setVisibility(View.INVISIBLE);
                                         ll_home_free_kick_fk3_title_time.setText(finalTime);
-
                                         showGifAnimation(9999);
                                         break;
                                     case "FK4":
@@ -1975,18 +1950,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                         gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                                         gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
                                         gif_home_free_kick_fk2_position.setImageResource(R.mipmap.football_home_position_gif);
-                                        tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                                        tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                                        tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-
-                                        tv_guest_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                        tv_guest_free_kick_fk2_title_time.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk2_title_time.setVisibility(View.VISIBLE);
-                                        tv_home_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk2_title_time.setText(finalTime);
-
+                                        ll_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        ll_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                                        ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                                         tv_home_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                                        tv_home_free_kick_fk2_title_time.setText(finalTime);
                                         showGifAnimation(-9999);
                                         break;
                                     default:// kf4
@@ -2001,18 +1970,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                         gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                                         gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
                                         gif_home_free_kick_fk2_position.setImageResource(R.mipmap.football_home_position_gif);
-                                        tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                                        tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                                        tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-
-                                        tv_guest_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                        tv_guest_free_kick_fk2_title_time.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk2_title_time.setVisibility(View.VISIBLE);
-                                        tv_home_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk2_title_time.setText(finalTime);
-
+                                        ll_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        ll_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                                        ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                                         tv_home_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                                        tv_home_free_kick_fk2_title_time.setText(finalTime);
                                         showGifAnimation(-9999);
                                         break;
                                 }
@@ -2028,18 +1991,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                 gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                                 gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
                                 gif_home_free_kick_fk2_position.setImageResource(R.mipmap.football_home_position_gif);
-                                tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                                tv_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                                tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                                tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-
-                                tv_guest_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                tv_guest_free_kick_fk2_title_time.setVisibility(View.INVISIBLE);
-                                tv_home_free_kick_fk2_title_time.setVisibility(View.VISIBLE);
-                                tv_home_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                tv_home_free_kick_fk2_title_time.setText(finalTime);
-
+                                ll_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                ll_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                                ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                                 tv_home_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                                tv_home_free_kick_fk2_title_time.setText(finalTime);
                                 showGifAnimation(-9999);
                             }
                         } else {
@@ -2055,18 +2012,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                             gif_guest_free_kick_fk2_position.setVisibility(View.VISIBLE);
                             gif_guest_free_kick_fk2_position.setImageResource(R.mipmap.football_home_position_gif);
-                            tv_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                            tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                            tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                            tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-
-                            tv_guest_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                            tv_guest_free_kick_fk2_title_time.setVisibility(View.INVISIBLE);
-                            tv_home_free_kick_fk2_title_time.setVisibility(View.VISIBLE);
-                            tv_home_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                            tv_home_free_kick_fk2_title_time.setText(finalTime);
-
+                            ll_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                            ll_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                            ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                            ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                             tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick));
+                            tv_guest_free_kick_fk2_title_time.setText(finalTime);
                             showGifAnimation(5555);
                         }
                         isHomeFreeKick = false;
@@ -2087,15 +2038,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                         ll_home_free_kick_fk1_bg.setVisibility(View.INVISIBLE);
                                         ll_guest_free_kick_fk1_bg.setVisibility(View.VISIBLE);
                                         ll_home_free_kick_fk1_title.setVisibility(View.GONE);
+                                        ll_home_free_kick_fk1_title_time.setVisibility(View.GONE);
                                         ll_guest_free_kick_fk1_title.setVisibility(View.VISIBLE);
+                                        ll_guest_free_kick_fk1_title_time.setVisibility(View.VISIBLE);
                                         gif_home_free_kick_fk1_position.setVisibility(View.GONE);
                                         gif_guest_free_kick_fk1_position.setVisibility(View.VISIBLE);
                                         gif_guest_free_kick_fk1_position.setImageResource(R.mipmap.football_guest_position_gif);
-
-                                        ll_guest_free_kick_fk1_title_time.setVisibility(View.VISIBLE);
-                                        ll_home_free_kick_fk1_title_time.setVisibility(View.GONE);
                                         ll_guest_free_kick_fk1_title_time.setText(finalTime1);
-
                                         showGifAnimation(6666);
                                         break;
                                     case "FK2":
@@ -2110,30 +2059,21 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                         gif_guest_free_kick_fk4_position.setVisibility(View.VISIBLE);
                                         gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
                                         gif_guest_free_kick_fk4_position.setImageResource(R.mipmap.football_guest_position_gif);
-                                        tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                                        tv_guest_free_kick_fk4_title.setVisibility(View.VISIBLE);
-
-                                        tv_guest_free_kick_fk4_title_time.setVisibility(View.VISIBLE);
-                                        tv_guest_free_kick_fk2_title_time.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk2_title_time.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
+                                        ll_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        ll_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        ll_guest_free_kick_fk4_title.setVisibility(View.VISIBLE);
                                         tv_guest_free_kick_fk4_title_time.setText(finalTime1);
-
                                         tv_guest_free_kick_fk4_title.setText(getString(R.string.football_play_free_kick_danger));
                                         showGifAnimation(7777);
                                         break;
                                     case "FK3L":
                                         rl_home_free_kick_fk3_1.setVisibility(View.INVISIBLE);
+                                        ll_home_free_kick_fk3_title.setVisibility(View.INVISIBLE);
                                         rl_guest_free_kick_fk3_1.setVisibility(View.VISIBLE);
+                                        ll_guest_free_kick_fk3_title.setVisibility(View.VISIBLE);
                                         gif_guest_free_kick_fk3_position.setImageResource(R.mipmap.football_guest_position_gif);
-
-                                        ll_home_free_kick_fk3_title_time.setVisibility(View.INVISIBLE);
-                                        ll_guest_free_kick_fk3_title_time.setVisibility(View.VISIBLE);
-                                        ll_home_free_kick_fk3_title_time.setText(finalTime1);
-
-
+                                        ll_guest_free_kick_fk3_title_time.setText(finalTime1);
                                         showGifAnimation(9999);
                                         break;
                                     case "FK3R":
@@ -2144,11 +2084,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                         gif_home_free_kick_fk3_position_2.setVisibility(View.INVISIBLE);
                                         gif_guest_free_kick_fk3_position_2.setVisibility(View.VISIBLE);
                                         gif_guest_free_kick_fk3_position_2.setImageResource(R.mipmap.football_guest_position_gif);
-
-                                        ll_home_free_kick_fk3_title_2_time.setVisibility(View.GONE);
-                                        ll_guest_free_kick_fk3_title_2_time.setVisibility(View.VISIBLE);
                                         ll_guest_free_kick_fk3_title_2_time.setText(finalTime1);
-
                                         showGifAnimation(8888);
                                         break;
                                     case "FK4":
@@ -2163,18 +2099,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                         gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                                         gif_guest_free_kick_fk2_position.setVisibility(View.VISIBLE);
                                         gif_guest_free_kick_fk2_position.setImageResource(R.mipmap.football_guest_position_gif);
-                                        tv_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                                        tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                                        tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-
-                                        tv_guest_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                        tv_guest_free_kick_fk2_title_time.setVisibility(View.VISIBLE);
-                                        tv_home_free_kick_fk2_title_time.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                        tv_guest_free_kick_fk2_title_time.setText(finalTime1);
-
+                                        ll_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                                        ll_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                                         tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                                        tv_guest_free_kick_fk2_title_time.setText(finalTime1);
                                         showGifAnimation(-9999);
                                         break;
                                     default:// kf4
@@ -2189,18 +2119,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                         gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                                         gif_guest_free_kick_fk2_position.setVisibility(View.VISIBLE);
                                         gif_guest_free_kick_fk2_position.setImageResource(R.mipmap.football_guest_position_gif);
-                                        tv_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                                        tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                                        tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-
-                                        tv_guest_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                        tv_guest_free_kick_fk2_title_time.setVisibility(View.VISIBLE);
-                                        tv_home_free_kick_fk2_title_time.setVisibility(View.INVISIBLE);
-                                        tv_home_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                        tv_guest_free_kick_fk2_title_time.setText(finalTime1);
-
+                                        ll_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                                        ll_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                        ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                        ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                                         tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                                        tv_guest_free_kick_fk2_title_time.setText(finalTime1);
                                         showGifAnimation(-9999);
                                         break;
                                 }
@@ -2216,18 +2140,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                 gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                                 gif_guest_free_kick_fk2_position.setVisibility(View.VISIBLE);
                                 gif_guest_free_kick_fk2_position.setImageResource(R.mipmap.football_guest_position_gif);
-                                tv_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                                tv_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                                tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                                tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-
-                                tv_guest_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                tv_guest_free_kick_fk2_title_time.setVisibility(View.VISIBLE);
-                                tv_home_free_kick_fk2_title_time.setVisibility(View.INVISIBLE);
-                                tv_home_free_kick_fk4_title_time.setVisibility(View.INVISIBLE);
-                                tv_guest_free_kick_fk2_title_time.setText(finalTime1);
-
+                                ll_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                                ll_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                                ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                                ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                                 tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick_danger));
+                                tv_guest_free_kick_fk2_title_time.setText(finalTime1);
                                 showGifAnimation(-9999);
                             }
                         } else {
@@ -2242,11 +2160,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
                             gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
                             gif_home_free_kick_fk2_position.setImageResource(R.mipmap.football_guest_position_gif);
-                            tv_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                            tv_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                            tv_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                            tv_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                            ll_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                            ll_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                            ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
+                            ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                             tv_home_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick));
+                            tv_home_free_kick_fk2_title_time.setText(finalTime1);
                             showGifAnimation(5555);
                         }
                         isGuestFreeKick = false;
@@ -2902,6 +2821,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             matchLive.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt), "", "", "0", "", "", "", ""));
             mLiveFragment.setLiveTextDetails(matchLive);
             showGifAnimation(-1);
+            matchTimeStart("","-1");
         }
     }
 
@@ -3482,6 +3402,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         ll_offside_content1 = (LinearLayout) findViewById(R.id.ll_offside_content1);
         rl_home_offside1 = (RelativeLayout) findViewById(R.id.rl_home_offside1);
         rl_guest_offside1 = (RelativeLayout) findViewById(R.id.rl_guest_offside1);
+        rl_home_offside_title1 = (RelativeLayout) findViewById(R.id.rl_home_offside_title1);
+        rl_guest_offside_title1 = (RelativeLayout) findViewById(R.id.rl_guest_offside_title1);
         tv_home_title1 = (TextView) findViewById(R.id.tv_home_title1);
         tv_guest_title1 = (TextView) findViewById(R.id.tv_guest_title1);
         gif_home_position1 = (GifImageView) findViewById(R.id.gif_home_position1);
@@ -3497,6 +3419,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         ll_offside_content2 = (LinearLayout) findViewById(R.id.ll_offside_content2);
         rl_home_offside2 = (RelativeLayout) findViewById(R.id.rl_home_offside2);
         rl_guest_offside2 = (RelativeLayout) findViewById(R.id.rl_guest_offside2);
+        rl_home_offside_title2 = (RelativeLayout) findViewById(R.id.rl_home_offside_title2);
+        rl_guest_offside_title2 = (RelativeLayout) findViewById(R.id.rl_guest_offside_title2);
         tv_home_title2 = (TextView) findViewById(R.id.tv_home_title2);
         tv_guest_title2 = (TextView) findViewById(R.id.tv_guest_title2);
         gif_home_position2 = (GifImageView) findViewById(R.id.gif_home_position2);
@@ -3597,6 +3521,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         ll_guest_free_kick_fk4_bg = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk4_bg);
         ll_home_free_kick_fk2_bg = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk2_bg);
         ll_guest_free_kick_fk2_bg = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk2_bg);
+        ll_guest_free_kick_fk2_title = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk2_title);
+        ll_home_free_kick_fk2_title = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk2_title);
+        ll_home_free_kick_fk4_title = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk4_title);
+        ll_guest_free_kick_fk4_title = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk4_title);
         tv_home_free_kick_fk4_title = (TextView) findViewById(R.id.tv_home_free_kick_fk4_title);
         tv_guest_free_kick_fk4_title = (TextView) findViewById(R.id.tv_guest_free_kick_fk4_title);
         tv_home_free_kick_fk2_title = (TextView) findViewById(R.id.tv_home_free_kick_fk2_title);
@@ -3618,6 +3546,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         gif_guest_free_kick_fk3_position = (GifImageView) findViewById(R.id.gif_guest_free_kick_fk3_position);
         ll_home_free_kick_fk3_title_time = (TextView) findViewById(R.id.ll_home_free_kick_fk3_title_time);
         ll_guest_free_kick_fk3_title_time = (TextView) findViewById(R.id.ll_guest_free_kick_fk3_title_time);
+        ll_home_free_kick_fk3_title = (LinearLayout) findViewById(R.id.ll_home_free_kick_fk3_title);
+        ll_guest_free_kick_fk3_title = (LinearLayout) findViewById(R.id.ll_guest_free_kick_fk3_title);
 
         // 任意球fk3 2
         fl_free_kick_fk3_content2 = (RelativeLayout) findViewById(R.id.fl_free_kick_fk3_content2);
@@ -3902,6 +3832,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         int keepTime = StadiumUtils.convertStringToInt(time);
 
+        L.d("wwwww","未开始时：state: " + state);
+        L.d("wwwww","未开始时：time: " + time);
+
         tv_hean_srcoe_aop.setText("\'");
         final AlphaAnimation anim1 = new AlphaAnimation(1, 1);
         anim1.setDuration(500);
@@ -3946,6 +3879,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         switch (state) {
             case "0":// 未开
+                tv_hean_srcoe_aop.setVisibility(View.GONE);
                 break;
             case "1":// 上半场
                 date.setVisibility(View.VISIBLE);
@@ -3966,16 +3900,17 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 tv_hean_srcoe_aop.setVisibility(View.GONE);
                 mHalfScore.setVisibility(View.VISIBLE);
                 break;
-            case "3":// 下半场
+            case "3":// 结束下半场
                 date.setVisibility(View.VISIBLE);
-                tv_hean_srcoe_aop.setVisibility(View.VISIBLE);
+                tv_hean_srcoe_aop.setVisibility(View.GONE);
                 score.setVisibility(View.VISIBLE);
-                try {
-                    date.setText(keepTime > 90 ? "90+" : String.valueOf(keepTime));
-                } catch (Exception e) {
-                    date.setText("E");
-                }
+                date.setText(mContext.getString(R.string.snooker_state_over_game));
                 mHalfScore.setVisibility(View.VISIBLE);
+                // 显示完场比分板
+                ll_score_content.setVisibility(View.GONE);
+                tv_head_time.setVisibility(View.GONE);
+                tv_head_over_score.setVisibility(View.VISIBLE);
+                ll_over_score_content.setVisibility(View.VISIBLE);
                 break;
             case "4":// 加时
                 date.setVisibility(View.VISIBLE);
@@ -4000,15 +3935,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 date.setTextColor(mContext.getResources().getColor(R.color.red));
 
                 // 显示完场比分板
-                mHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ll_score_content.setVisibility(View.GONE);
-                        tv_head_time.setVisibility(View.GONE);
-                        tv_head_over_score.setVisibility(View.VISIBLE);
-                        ll_over_score_content.setVisibility(View.VISIBLE);
-                    }
-                },3000);
+                ll_score_content.setVisibility(View.GONE);
+                tv_head_time.setVisibility(View.GONE);
+                tv_head_over_score.setVisibility(View.VISIBLE);
+                ll_over_score_content.setVisibility(View.VISIBLE);
                 break;
             case "-10":// 取消
                 date.setVisibility(View.VISIBLE);
