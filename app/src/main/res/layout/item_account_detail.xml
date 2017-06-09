@@ -10,7 +10,6 @@
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     app:cardCornerRadius="5dp"
-    android:foreground="?attr/selectableItemBackground"
     app:cardElevation="0.5dp">
 
     <RelativeLayout
