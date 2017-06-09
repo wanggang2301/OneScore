@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -323,7 +322,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.rl_my_promotion:     //推介文章
                 if (DeviceInfo.isLogin()) {
                     //0 未审核  1.审核通过  2.审核中  3.审核不通过
-                    if ("1".equals(AppConstants.register.getUser().getIsExpert())) {
+
+                    L.d("expert", AppConstants.register.getUser().getIsExpert() + "");
+
+                    if (1 == AppConstants.register.getUser().getIsExpert()) {
                         startActivity(new Intent(this, RecommendArticlesActivity.class));
                     } else {
                         startActivity(new Intent(this, NotRecommendExpertActivity.class));
@@ -338,7 +340,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.rl_my_apply:     //申请专家
                 if (DeviceInfo.isLogin()) {
                     Intent intent1 = new Intent(HomeUserOptionsActivity.this, ApplicationSpecialistActivity.class);
-                    intent1.putExtra("expert", AppConstants.register.getUser().getIsExpert()+"");
+                    intent1.putExtra("expert", AppConstants.register.getUser().getIsExpert() + "");
                     startActivity(intent1);
 
                 } else {
@@ -394,8 +396,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
      * @param
      */
     public void onEventMainThread(SpecialistBean bean) {
-            in_audit.setVisibility(View.VISIBLE);
-            in_audit.setText("审核中");
+        in_audit.setVisibility(View.VISIBLE);
+        in_audit.setText("审核中");
     }
 
     /**
@@ -439,22 +441,22 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         if (DeviceInfo.isLogin()) {
             // 0 未审核  1.审核通过  2.审核中  3.审核不通过
 
-            if (AppConstants.register.getUser().getIsExpert()==0) {
+            if (AppConstants.register.getUser().getIsExpert() == 0) {
                 in_audit.setText("未审核");
-            } else if (AppConstants.register.getUser().getIsExpert()==1) {
+            } else if (AppConstants.register.getUser().getIsExpert() == 1) {
                 in_audit.setText("审核通过");
-            } else if (AppConstants.register.getUser().getIsExpert()==2) {
+            } else if (AppConstants.register.getUser().getIsExpert() == 2) {
                 in_audit.setText("审核中");
-            } else if (AppConstants.register.getUser().getIsExpert()==3) {
+            } else if (AppConstants.register.getUser().getIsExpert() == 3) {
                 in_audit.setText("审核不通过");
-            }else{
+            } else {
                 in_audit.setText("");
             }
 
             available_balance_rl.setVisibility(View.VISIBLE);
             cash_balance_payable_rl.setVisibility(View.VISIBLE);
-            available_balance.setText(AppConstants.register.getUser().getAvailableBalance()+"元");
-            cash_balance_payable.setText(AppConstants.register.getUser().getCashBalance()+"元");
+            available_balance.setText(AppConstants.register.getUser().getAvailableBalance() + "元");
+            cash_balance_payable.setText(AppConstants.register.getUser().getCashBalance() + "元");
             subscribe_tv.setText(AppConstants.register.getUser().getBuyCount());
             promotion_tv.setText(AppConstants.register.getUser().getPushCount());
             not_login_balance.setVisibility(View.GONE);
