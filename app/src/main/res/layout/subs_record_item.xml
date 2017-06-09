@@ -67,8 +67,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:paddingLeft="10dp">
+                            android:paddingLeft="10dp"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/betting_lainzhong"
@@ -142,9 +142,9 @@
                         <TextView
                             android:id="@+id/betting_round"
                             style="@style/betting_recommend_details_style"
-                            android:visibility="gone"
                             android:paddingLeft="10dp"
-                            android:text="轮次" />
+                            android:text="轮次"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/betting_date"
@@ -156,8 +156,7 @@
                             android:id="@+id/betting_week"
                             style="@style/betting_recommend_details_style"
                             android:paddingLeft="10dp"
-                            android:text="12:18"
-                            android:visibility="gone" />
+                            android:text="12:18" />
 
                     </LinearLayout>
 
@@ -230,11 +229,6 @@
                                 style="@style/betting_recommend_details_style"
                                 android:paddingLeft="10dp"
                                 android:text="9999" />
-
-                            <TextView
-                                android:id="@+id/textView14"
-                                style="@style/betting_recommend_details_style"
-                                android:text="@string/betting_txt_have_buy" />
                         </LinearLayout>
                     </LinearLayout>
 
