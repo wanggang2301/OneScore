@@ -44,7 +44,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 33
-        versionName "1.3.1.0608"
+        versionName "1.3.1.0609"
         multiDexEnabled true
     }
 
@@ -88,11 +88,6 @@ dependencies {
     compile files('libs/qq/open_sdk_r5509.jar')
     compile files('libs/sina/weibosdkcore_release.jar')
     compile files('libs/pldroid-player-1.3.0.jar')
-    // okhttp
-    //带消息提醒的tablayout
-    //检测内存泄露
-    compile files('libs/alipaySingle-20161222.jar')
-    compile project(':data')
     compile files('libs/alipaySingle-20161222.jar')
     compile 'com.github.chrisbanes:PhotoView:1.3.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
@@ -132,17 +127,14 @@ dependencies {
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     testCompile 'junit:junit:4.12'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     apt 'com.google.dagger:dagger-compiler:2.4'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     provided 'com.android.support:support-annotations:25.3.0'
-    compile files('libs/alipaySingle-20161222.jar')
     //检测内存泄露
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    compile files('libs/alipaySingle-20161222.jar')
     compile project(':data')
 }

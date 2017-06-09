@@ -8,7 +8,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 
 import java.util.List;
-import java.util.Random;
 
 import data.bean.RecommendArticlesBean;
 
@@ -38,7 +37,7 @@ public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticles
         baseViewHolder.setText(R.id.betting_home_name, r.getHomeName());
         baseViewHolder.setText(R.id.betting_guest_name, r.getGuestName());
         baseViewHolder.setText(R.id.betting_price, String.valueOf("￥ " + r.getPrice() + ".00"));
-        baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(getBuyNum(r.getCount())) + mContext.getResources().getString(R.string.yigoumai_txt));
+        baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(r.getCount()) + mContext.getResources().getString(R.string.yigoumai_txt));
 
         if (0 == r.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.jingcaidanguan_txt));
@@ -64,7 +63,7 @@ public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticles
         baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
     }
 
-    int nums[] = {3, 5, 10};
+/*    int nums[] = {3, 5, 10};
 
     private int getBuyNum(String bugNum) {
         if (TextUtils.isEmpty(bugNum)) {
@@ -78,5 +77,5 @@ public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticles
         } else {
             return Integer.parseInt(bugNum);
         }
-    }
+    }*/
 }

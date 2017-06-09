@@ -1744,13 +1744,13 @@
 
     <string name="invited_summary">请您一起看比赛，输入邀请码，优惠多多哦。</string>
 
-    <!--竞彩推荐-->
+    <!--竞彩推介-->
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">联赛</string>
     <string name="betting_issue_title">推介</string>
 
-    <string name="betting_title_list">竞彩推荐</string>
-    <string name="betting_title_details">推荐详情</string>
+    <string name="betting_title_list">竞彩推介</string>
+    <string name="betting_title_details">推介详情</string>
     <string name="betting_title_onlinepay">在线支付</string>
     <string name="betting_txt_buy">购买</string>
     <string name="betting_txt_check">查看</string>
@@ -1758,8 +1758,8 @@
     <string name="betting_txt_zhusheng">主胜</string>
     <string name="betting_txt_pingju">平局</string>
     <string name="betting_txt_kesheng">客胜</string>
-    <string name="betting_txt_reason">推荐理由</string>
-    <string name="betting_txt_pay_check_result">支付后查看推荐内容和结果</string>
+    <string name="betting_txt_reason">推介理由</string>
+    <string name="betting_txt_pay_check_result">支付后查看推介内容和结果</string>
     <string name="betting_txt_unpaid">待支付</string>
     <string name="betting_txt_to_paid">去支付</string>
     <string name="betting_txt_check_payment">选择支付方式</string>
@@ -1782,6 +1782,16 @@
     <string name="betting_plays_allcheck">全部</string>
     <string name="betting_item_jin">近</string>
     <string name="betting_item_zhong">中</string>
+    <string name="betting_max_recharge">单次最大充值金额为10000元</string>
+    <string name="betting_payment_success">支付成功</string>
+    <string name="betting_payment_cancle">支付取消</string>
+    <string name="betting_not_sufficient_funds">账户余额不足,请选择其它支付方式</string>
+    <string name="betting_network_anomaly">网络异常,请重试</string>
+
+    <string name="betting_reason_txt">推介理由:</string>
+    <string name="betting_payment_no_zero">充值金额不能为0</string>
+    <string name="betting_nodata_to_again">暂时无法获取订单信息,请稍后重试</string>
+    <string name="betting_disclaimer_txt">(免责声明：个人观点并不代表一比分官方网站)</string>
 
 
     <string name="roll_desc_txt">胜出</string>
@@ -1828,7 +1838,7 @@
     <string name="daxiaoqiu_txt">大小球</string>
     <string name="yigoumai_txt">人已购买</string>
     <string name="chakan_txt">查看</string>
-    <string name="tuijianliyou_txt">推荐理由:</string>
+    <string name="tuijianliyou_txt">推介理由:</string>
     <string name="baiyin_txt">白银专家</string>
     <string name="huangjin_txt">黄金专家</string>
     <string name="baijin_txt">白金专家</string>
