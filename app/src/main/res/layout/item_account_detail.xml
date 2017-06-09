@@ -53,12 +53,24 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="16dp"
-            android:text="+80dfsfdsfsdfd"
+            android:text="+000000.00"
             android:textColor="@color/account_trade_name"
             android:textSize="@dimen/text_size_15"
             android:layout_below="@id/account_trade_name"
             android:layout_toRightOf="@id/account_recharge_name"
              />
+        <TextView
+            android:id="@+id/account_status_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/account_trade_name"
+            android:textSize="@dimen/text_size_15"
+            android:text="支付完成"
+            android:layout_below="@id/account_trade_name"
+            android:layout_toRightOf="@id/account_trade_amount"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            />
         <TextView
             android:id="@+id/account_time"
             android:layout_width="wrap_content"

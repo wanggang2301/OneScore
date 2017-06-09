@@ -13,7 +13,7 @@ import data.bean.AccountDetailBean;
 import data.bean.RechargeBean;
 
 /**
- * 描    述：
+ * 描    述：账户详情
  * 作    者：mady@13322.com
  * 时    间：2017/6/5
  */
@@ -30,6 +30,7 @@ public class AccountDetailAdapter extends BaseQuickAdapter<RechargeBean> {
 
         holder.setText(R.id.account_trade_name,recordEntity.getRechargeName());
         holder.setText(R.id.account_recharge_name,recordEntity.getTradeName());
+        holder.setText(R.id.account_status_name,recordEntity.getStatusName());
 
         String [] date=recordEntity.getFinishTime().split(" ");
         holder.setText(R.id.account_date,date[0]);
