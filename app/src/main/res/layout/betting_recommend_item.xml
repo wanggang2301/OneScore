@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:background="@color/betting_recommend_zhuanjia_grand_color"
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
@@ -30,7 +31,7 @@
                         android:id="@+id/betting_portrait_img"
                         android:layout_width="44dp"
                         android:layout_height="44dp"
-                        android:src="@mipmap/specialist_default" />
+                        android:src="@mipmap/center_head" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -276,7 +277,7 @@
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:singleLine="true"
-                        android:text="推荐理由:"
+                        android:text="@string/betting_reason_txt"
                         android:textColor="@color/betting_recommend_details_color"
                         android:textSize="@dimen/text_size_15" />
 

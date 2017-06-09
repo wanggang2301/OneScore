@@ -1,10 +1,10 @@
 package com.hhly.mlottery.util;
 
 
+import android.util.Log;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import android.util.Log;
 /**
  * @ClassName: DataBus 
  * @Description:
@@ -65,7 +65,10 @@ public class DataBus {
 		if(dataBus.cacheInLifecycle!=null){
 			dataBus.cacheInLifecycle.clear();
 			dataBus.cacheInLifecycle=null;
-		}			
+		}
+
+
+
 	}
 	
 }

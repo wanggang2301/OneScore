@@ -15,7 +15,6 @@ import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
-import java.util.Random;
 
 import data.bean.SubsRecordBean;
 
@@ -65,7 +64,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         baseViewHolder.setText(R.id.betting_home_name, b.getHomeName());
         baseViewHolder.setText(R.id.betting_guest_name, b.getGuestName());
         baseViewHolder.setText(R.id.betting_price, String.valueOf("￥ " + b.getPrice() + ".00"));
-        baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(getBuyNum(b.getCount())) + mContext.getResources().getString(R.string.yigoumai_txt));
+        baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(b.getCount()) + mContext.getResources().getString(R.string.yigoumai_txt));
         baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.chakan_txt));
         baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(b.getContext()) ? "" : b.getContext()));
 
@@ -124,7 +123,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
     }
 
 
-    int nums[] = {3, 5, 10};
+    /*int nums[] = {3, 5, 10};
 
     private int getBuyNum(String bugNum) {
         if (TextUtils.isEmpty(bugNum)) {
@@ -137,5 +136,5 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         } else {
             return Integer.parseInt(bugNum);
         }
-    }
+    }*/
 }

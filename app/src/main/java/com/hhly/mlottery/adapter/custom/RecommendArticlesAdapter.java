@@ -1,14 +1,17 @@
 package com.hhly.mlottery.adapter.custom;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.config.ConstantPool;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
 
 import java.util.List;
-import java.util.Random;
 
 import data.bean.RecommendArticlesBean;
 
@@ -30,7 +33,7 @@ public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticles
     }
 
     @Override
-    protected void convert(BaseViewHolder baseViewHolder, RecommendArticlesBean.PublishPromotionsBean.ListBean r) {
+    protected void convert(BaseViewHolder baseViewHolder, final RecommendArticlesBean.PublishPromotionsBean.ListBean r) {
         baseViewHolder.setText(R.id.betting_league_name, r.getLeagueName());
         baseViewHolder.setVisible(R.id.betting_round, false);
         baseViewHolder.setText(R.id.betting_date, r.getMatchDate());
@@ -38,7 +41,7 @@ public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticles
         baseViewHolder.setText(R.id.betting_home_name, r.getHomeName());
         baseViewHolder.setText(R.id.betting_guest_name, r.getGuestName());
         baseViewHolder.setText(R.id.betting_price, String.valueOf("￥ " + r.getPrice() + ".00"));
-        baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(getBuyNum(r.getCount())) + mContext.getResources().getString(R.string.yigoumai_txt));
+        baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(r.getCount()) + mContext.getResources().getString(R.string.yigoumai_txt));
 
         if (0 == r.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.jingcaidanguan_txt));
@@ -50,21 +53,40 @@ public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticles
         switch (r.getStatus()) {
             case 1:
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zhong);
+                baseViewHolder.setVisible(R.id.iv, true);
+                baseViewHolder.setVisible(R.id.textView11, false);
                 break;
             case 2:
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_shi);
+                baseViewHolder.setVisible(R.id.iv, true);
+                baseViewHolder.setVisible(R.id.textView11, false);
                 break;
             case 6:
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zou);
+                baseViewHolder.setVisible(R.id.iv, true);
+                baseViewHolder.setVisible(R.id.textView11, false);
                 break;
             default:
+                baseViewHolder.setVisible(R.id.iv, false);
+                baseViewHolder.setVisible(R.id.textView11, true);
                 break;
 
         }
+
+        baseViewHolder.getView(R.id.textView11).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(mContext, MvpBettingPayDetailsActivity.class);
+                intent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID, r.getId());
+                mContext.startActivity(intent);
+            }
+        });
+
         baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
     }
 
-    int nums[] = {3, 5, 10};
+/*    int nums[] = {3, 5, 10};
 
     private int getBuyNum(String bugNum) {
         if (TextUtils.isEmpty(bugNum)) {
@@ -78,5 +100,5 @@ public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticles
         } else {
             return Integer.parseInt(bugNum);
         }
-    }
+    }*/
 }
