@@ -32,6 +32,8 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.IsTestLoginBean;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.ConstantPool;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.LoadingResultEventBusEntity;
 import com.hhly.mlottery.util.AccessTokenKeeper;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CyUtils;
@@ -141,9 +143,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private ImageView mLogin_sina;
     private ImageView mLogin_weixin;
     private boolean isCoustom;
+    private boolean isBettingDetail;
     private TextView tv_forgetpw;
     private String language;
     private TextView login_more;
+
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -153,6 +157,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         setContentView(R.layout.activity_login);
         if (getIntent().getExtras() != null) {
             isCoustom = getIntent().getBooleanExtra("custom", false);
+            isBettingDetail = getIntent().getBooleanExtra(ConstantPool.BETTING_LOAD, false);
         }
 
         //应UI要求，把状态栏设置成透明的
@@ -638,6 +643,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             if (isCoustom) {
 //                                 PreferenceUtil.commitBoolean("custom_red_dot" , false);
                                 startActivity(new Intent(LoginActivity.this, CustomActivity.class));
+                            }
+                            if (isBettingDetail) {
+                                EventBus.getDefault().post(new LoadingResultEventBusEntity(true));
                             }
                             finish();
                             EventBus.getDefault().post(register);

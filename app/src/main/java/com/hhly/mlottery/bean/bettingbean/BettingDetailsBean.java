@@ -56,7 +56,7 @@ public class BettingDetailsBean {
 //        rightOdds: null,
 //        oddsCompany: null,
 //        serNum: ""
-
+//        chooseStr
         private String id;
         private String userid;
         private String matchid;
@@ -81,6 +81,7 @@ public class BettingDetailsBean {
         private String type;
         private String userId;
         private String serNum;
+        private String[] chooseStr;
 
         public String getId() {
             return id;
@@ -248,6 +249,14 @@ public class BettingDetailsBean {
 
         public void setSerNum(String serNum) {
             this.serNum = serNum;
+        }
+
+        public String[] getChooseStr() {
+            return chooseStr;
+        }
+
+        public void setChooseStr(String[] chooseStr) {
+            this.chooseStr = chooseStr;
         }
     }
 
