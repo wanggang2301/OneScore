@@ -1482,7 +1482,7 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="1.6"
+                            android:layout_weight="1.7"
                             android:orientation="vertical">
 
                             <View
@@ -3561,7 +3561,7 @@
             android:id="@+id/fl_free_kick_fk2_fk4_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <!--主客坐标-->
             <LinearLayout
@@ -3694,7 +3694,7 @@
                                     android:id="@+id/tv_guest_free_kick_fk2_title_time"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:background="@mipmap/number_bg_red"
+                                    android:background="@mipmap/number_bg_blue"
                                     android:gravity="center"
                                     android:textColor="@color/linecolor"
                                     android:textSize="@dimen/item_football_card"
@@ -3754,7 +3754,7 @@
                                     android:id="@+id/tv_home_free_kick_fk2_title_time"
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:background="@mipmap/number_bg_blue"
+                                    android:background="@mipmap/number_bg_red"
                                     android:gravity="center"
                                     android:textColor="@color/linecolor"
                                     android:textSize="@dimen/item_football_card"
