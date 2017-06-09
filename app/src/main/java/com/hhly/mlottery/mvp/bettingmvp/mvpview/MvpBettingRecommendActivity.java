@@ -231,7 +231,6 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
 
         if (beanData.getPromotionList() == null || beanData.getPromotionList().getList().size() == 0) {
             setStatus(SHOW_STATUS_NO_DATA);
-            toSetting = false;
             return;
         }
 
@@ -290,7 +289,7 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
     @Override
     public void loadFailView() {
         setStatus(SHOW_STATUS_ERROR);
-        toSetting = false;
+//        toSetting = false;
 //        Toast.makeText(mContext, "网络请求失败~！！", Toast.LENGTH_SHORT).show();
     }
 
@@ -447,11 +446,21 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
      * @param detailsResuleEventBusEntity
      */
     public void onEventMainThread(BettingDetailsResuleEventBusEntity detailsResuleEventBusEntity){
-        if (detailsResuleEventBusEntity.isResultDetail()) {
-            //TODO***** 这里从详情页返回直接刷新会与 分页加载数据冲突（显示数据不一致）ps:暂不刷新
-//            setStatus(SHOW_STATUS_LOADING);
-//            mLoadHandler.postDelayed(mRun, 0);
+        //TODO***** 这里从详情页返回直接刷新会与 分页加载数据冲突（显示数据不一致）
+        for (BettingListDataBean.PromotionData.BettingListData currlist : listData) {
+            if (currlist.getId().equals(detailsResuleEventBusEntity.getCurrentId())) {
+                currlist.setLookStatus("**"); //购买成功后 LookStatus状态改变（非2 【2代表可购买】）
+                return;
+            }
         }
+        mAdapter.setNewData(listData);
+        mAdapter.notifyDataSetChanged();
+        L.d("购买返回==> " + listData.size());
+//        if (detailsResuleEventBusEntity.getCurrentId().equals("")) {
+////            setStatus(SHOW_STATUS_LOADING);
+////            mLoadHandler.postDelayed(mRun, 0);
+//            upDataAdapter();
+//        }
     }
 
     /**
