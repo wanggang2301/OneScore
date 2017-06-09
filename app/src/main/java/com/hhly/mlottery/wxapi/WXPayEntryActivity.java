@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingOnlinePaymentActivity;
 import com.hhly.mlottery.util.L;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
@@ -17,6 +18,8 @@ import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * @author yixq
@@ -137,14 +140,15 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
     public void onResp(BaseResp resp) {
         L.d("微信支付...onReq()" , "微信回调成功...resp.errCode= " + resp.errCode);
 
-        Toast.makeText(this, "resp.errCode = " + resp.errCode , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "resp.errCode = " + resp.errCode , Toast.LENGTH_SHORT).show();
 
         if(resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX){//支付成功的回调码
 
             switch (resp.errCode){
                 case BaseResp.ErrCode.ERR_OK:
                     L.d("完成回调..." , "支付成功");
-                    MvpBettingOnlinePaymentActivity.orderPay(); // 充值成功调用余额扣款接口
+                    EventBus.getDefault().post(new BettingBuyResultEventBusEntity(true));
+//                    MvpBettingOnlinePaymentActivity.orderPay(); // 充值成功调用余额扣款接口
                     finish();
                     break;
                 case BaseResp.ErrCode.ERR_COMM:

@@ -11,6 +11,7 @@
         android:id="@+id/betting_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/betting_recommend_zhuanjia_grand_color"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -21,128 +22,156 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <LinearLayout
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingBottom="15dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="15dp">
-
-                        <com.hhly.mlottery.view.CircleImageView
-                            android:id="@+id/portrait_img"
-                            android:layout_width="44dp"
-                            android:layout_height="44dp"
-                            android:src="@mipmap/car_no2" />
-                    </LinearLayout>
-
+                    android:layout_height="150dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="7dp">
+                        android:paddingBottom="15dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingTop="18dp"
-                            android:paddingBottom="10dp">
+                            android:paddingTop="15dp">
 
-                            <TextView
-                                android:id="@+id/betting_recommend_specialist_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="@dimen/text_size_15"
-                                android:textColor="@color/betting_recommend_name_color"
-                                android:text="--" />
+                            <com.hhly.mlottery.view.CircleImageView
+                                android:id="@+id/portrait_img"
+                                android:layout_width="44dp"
+                                android:layout_height="44dp"
+                                android:src="@mipmap/car_no2" />
                         </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/betting_recommend_details_bg_color"
                             android:orientation="vertical"
-                            android:paddingBottom="10dp"
-                            android:paddingLeft="10dp"
-                            android:paddingTop="10dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content">
-
-                                <TextView
-                                    android:id="@+id/betting_details_week"
-                                    style="@style/betting_recommend_buy_text_style"
-                                    android:text="--" />
-
-                                <TextView
-                                    android:id="@+id/betting_details_num"
-                                    style="@style/betting_recommend_buy_text_style"
-                                    android:paddingLeft="10dp"
-                                    android:text="" />
-
-                                <TextView
-                                    android:id="@+id/betting_details_league"
-                                    style="@style/betting_recommend_buy_text_style"
-                                    android:paddingLeft="10dp"
-                                    android:text="--" />
-                            </LinearLayout>
+                            android:paddingLeft="7dp">
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingTop="10dp">
+                                android:paddingTop="18dp"
+                                android:paddingBottom="10dp">
 
                                 <TextView
-                                    android:id="@+id/betting_details_home_name"
+                                    android:id="@+id/betting_recommend_specialist_name"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="@dimen/text_size_16"
+                                    android:textSize="@dimen/text_size_15"
                                     android:textColor="@color/betting_recommend_name_color"
-                                    android:text="--" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="@dimen/text_size_16"
-                                    android:textColor="@color/betting_recommend_name_color"
-                                    android:paddingLeft="10dp"
-                                    android:text="VS" />
-
-                                <TextView
-                                    android:id="@+id/betting_details_guest_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="@dimen/text_size_16"
-                                    android:textColor="@color/betting_recommend_name_color"
-                                    android:paddingLeft="10dp"
                                     android:text="--" />
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:background="@color/betting_recommend_details_bg_color"
+                                android:orientation="vertical"
+                                android:paddingBottom="10dp"
+                                android:paddingLeft="10dp"
                                 android:paddingTop="10dp">
 
-                                <TextView
-                                    android:id="@+id/betting_details_date"
-                                    style="@style/betting_recommend_buy_text_style"
-                                    android:text="--" />
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
 
-                                <TextView
-                                    android:id="@+id/betting_details_time"
-                                    style="@style/betting_recommend_buy_text_style"
-                                    android:paddingLeft="10dp"
-                                    android:text=" " />
+                                    <TextView
+                                        android:id="@+id/betting_details_week"
+                                        style="@style/betting_recommend_buy_text_style"
+                                        android:text="--" />
 
+                                    <TextView
+                                        android:id="@+id/betting_details_num"
+                                        style="@style/betting_recommend_buy_text_style"
+                                        android:paddingLeft="10dp"
+                                        android:text="" />
+
+                                    <TextView
+                                        android:id="@+id/betting_details_league"
+                                        style="@style/betting_recommend_buy_text_style"
+                                        android:paddingLeft="10dp"
+                                        android:text="--" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp">
+
+                                    <TextView
+                                        android:id="@+id/betting_details_home_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="@dimen/text_size_16"
+                                        android:textColor="@color/betting_recommend_name_color"
+                                        android:text="--" />
+                                    <TextView
+                                        android:id="@+id/betting_details_handicap"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="@dimen/text_size_12"
+                                        android:textColor="@color/colorPrimary"
+                                        android:text="(--)" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="@dimen/text_size_16"
+                                        android:textColor="@color/betting_recommend_name_color"
+                                        android:paddingLeft="10dp"
+                                        android:text="VS" />
+
+                                    <TextView
+                                        android:id="@+id/betting_details_guest_name"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="@dimen/text_size_16"
+                                        android:textColor="@color/betting_recommend_name_color"
+                                        android:paddingLeft="10dp"
+                                        android:text="--" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingTop="5dp">
+
+                                    <TextView
+                                        android:id="@+id/betting_details_date"
+                                        style="@style/betting_recommend_buy_text_style"
+                                        android:text="--" />
+
+                                    <TextView
+                                        android:id="@+id/betting_details_time"
+                                        style="@style/betting_recommend_buy_text_style"
+                                        android:paddingLeft="10dp"
+                                        android:text=" " />
+
+                                </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:paddingRight="28dp"
+                        android:paddingBottom="10dp"
+                        >
+                        <ImageView
+                            android:id="@+id/betting_details_status_imageView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/jingcai_icon_zhong"
+                            android:visibility="gone"
+                            />
+                    </LinearLayout>
+                </RelativeLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -192,11 +221,12 @@
                                 android:paddingLeft="10dp"
                                 android:orientation="vertical">
                                 <TextView
+                                    android:id="@+id/betting_odds_left_txt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_15"
                                     android:textColor="@color/betting_recommend_name_color"
-                                    android:text="@string/betting_txt_zhusheng"/>
+                                    android:text="--"/>
                                 <TextView
                                     android:id="@+id/betting_details_homewin_odds"
                                     android:layout_width="wrap_content"
@@ -233,11 +263,12 @@
                                 android:paddingLeft="10dp"
                                 android:orientation="vertical">
                                 <TextView
+                                    android:id="@+id/betting_odds_middle_txt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_15"
                                     android:textColor="@color/betting_recommend_name_color"
-                                    android:text="@string/betting_txt_pingju"/>
+                                    android:text="--"/>
                                 <TextView
                                     android:id="@+id/betting_details_draw_odds"
                                     android:layout_width="wrap_content"
@@ -270,11 +301,12 @@
                                 android:paddingLeft="10dp"
                                 android:orientation="vertical">
                                 <TextView
+                                    android:id="@+id/betting_odds_right_txt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/text_size_15"
                                     android:textColor="@color/betting_recommend_name_color"
-                                    android:text="@string/betting_txt_kesheng"/>
+                                    android:text="--"/>
                                 <TextView
                                     android:id="@+id/betting_details_guestwin_odds"
                                     android:layout_width="wrap_content"
@@ -358,57 +390,77 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:background="@color/betting_recommend_to_buy_line_color"
-                        />
-                </LinearLayout>
+                android:orientation="vertical"
+                >
                 <LinearLayout
                     android:id="@+id/betting_topay_all"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
                     <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@color/betting_recommend_to_buy_line_color"
+                            />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_width="0dp"
-                        android:layout_weight="2"
-                        android:gravity="center_vertical"
-                        android:background="@color/betting_recommend_to_buy_color"
-                        android:paddingLeft="15dp"
                         >
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_17"
-                            android:textColor="@color/betting_recommend_name_color"
-                            android:text="@string/betting_txt_unpaid"/>
-                        <TextView
-                            android:id="@+id/detting_details_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_17"
-                            android:textColor="@color/betting_recommend_to_buybg_color"
-                            android:paddingLeft="5dp"
-                            android:text="￥ --"/>
+                        <LinearLayout
+                            android:layout_height="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
+                            android:gravity="center_vertical"
+                            android:background="@color/betting_recommend_to_buy_color"
+                            android:paddingLeft="15dp"
+                            >
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_17"
+                                android:textColor="@color/betting_recommend_name_color"
+                                android:text="@string/betting_txt_unpaid"/>
+                            <TextView
+                                android:id="@+id/detting_details_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_17"
+                                android:textColor="@color/betting_recommend_to_buybg_color"
+                                android:paddingLeft="5dp"
+                                android:text="￥ --"/>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/betting_topay_ll"
+                            android:layout_height="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:background="@color/betting_recommend_to_buybg_color">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_17"
+                                android:textColor="@color/betting_recommend_zhuanjia_grand_color"
+                                android:text="@string/betting_txt_to_paid"/>
+                        </LinearLayout>
                     </LinearLayout>
-                    <LinearLayout
-                        android:id="@+id/betting_topay_ll"
-                        android:layout_height="match_parent"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:background="@color/betting_recommend_to_buybg_color">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="@dimen/text_size_17"
-                            android:textColor="@color/betting_recommend_zhuanjia_grand_color"
-                            android:text="@string/betting_txt_to_paid"/>
-                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_12"
+                        android:textColor="@color/betting_recommend_grand_color"
+                        android:text="@string/betting_disclaimer_txt"/>
                 </LinearLayout>
 
             </LinearLayout>

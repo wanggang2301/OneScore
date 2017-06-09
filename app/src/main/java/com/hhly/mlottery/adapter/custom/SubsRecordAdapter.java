@@ -10,13 +10,11 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
-import java.util.Random;
 
 import data.bean.SubsRecordBean;
 
@@ -32,7 +30,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
     private Context mContext;
 
     public SubsRecordAdapter(Context context, List<SubsRecordBean.PurchaseRecordsBean.ListBean> data) {
-        super(R.layout.betting_recommend_item, data);
+        super(R.layout.subs_record_item, data);
         mContext = context;
     }
 
@@ -65,7 +63,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         baseViewHolder.setText(R.id.betting_home_name, b.getHomeName());
         baseViewHolder.setText(R.id.betting_guest_name, b.getGuestName());
         baseViewHolder.setText(R.id.betting_price, String.valueOf("￥ " + b.getPrice() + ".00"));
-        baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(getBuyNum(b.getCount())) + mContext.getResources().getString(R.string.yigoumai_txt));
+        baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(b.getCount()) + mContext.getResources().getString(R.string.yigoumai_txt));
         baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.chakan_txt));
         baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(b.getContext()) ? "" : b.getContext()));
 
@@ -82,19 +80,9 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         baseViewHolder.getView(R.id.textView11).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { //跳转到记录详情
-                BettingListDataBean.PromotionData.BettingListData bettingListData = new BettingListDataBean.PromotionData.BettingListData();
-
-                bettingListData.setId(b.getId());
-                bettingListData.setHomeName(b.getHomeName());
-                bettingListData.setGuestName(b.getGuestName());
-                bettingListData.setPrice(String.valueOf(b.getPrice()));
-                bettingListData.setReleaseDate(b.getMatchDate());
-                bettingListData.setSerNum(b.getScreening());
-                bettingListData.setPhotoUrl(b.getHeadImg());
-                bettingListData.setLeagueName(b.getLeagueName());
 
                 Intent intent = new Intent(mContext, MvpBettingPayDetailsActivity.class);
-                intent.putExtra(ConstantPool.BETTING_ITEM_DATA, bettingListData);
+                intent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID, b.getId());
                 mContext.startActivity(intent);
             }
         });
@@ -134,7 +122,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
     }
 
 
-    int nums[] = {3, 5, 10};
+    /*int nums[] = {3, 5, 10};
 
     private int getBuyNum(String bugNum) {
         if (TextUtils.isEmpty(bugNum)) {
@@ -147,5 +135,5 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         } else {
             return Integer.parseInt(bugNum);
         }
-    }
+    }*/
 }

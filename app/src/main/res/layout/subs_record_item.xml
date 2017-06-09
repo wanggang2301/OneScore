@@ -8,7 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@color/betting_recommend_zhuanjia_grand_color"
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
@@ -31,7 +30,7 @@
                         android:id="@+id/betting_portrait_img"
                         android:layout_width="44dp"
                         android:layout_height="44dp"
-                        android:src="@mipmap/center_head" />
+                        android:src="@mipmap/specialist_default" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -68,8 +67,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:paddingLeft="10dp">
+                            android:paddingLeft="10dp"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/betting_lainzhong"
@@ -143,9 +142,9 @@
                         <TextView
                             android:id="@+id/betting_round"
                             style="@style/betting_recommend_details_style"
-                            android:visibility="gone"
                             android:paddingLeft="10dp"
-                            android:text="轮次" />
+                            android:text="轮次"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/betting_date"
@@ -157,8 +156,7 @@
                             android:id="@+id/betting_week"
                             style="@style/betting_recommend_details_style"
                             android:paddingLeft="10dp"
-                            android:text="12:18"
-                            android:visibility="gone" />
+                            android:text="12:18" />
 
                     </LinearLayout>
 
@@ -231,11 +229,6 @@
                                 style="@style/betting_recommend_details_style"
                                 android:paddingLeft="10dp"
                                 android:text="9999" />
-
-                            <TextView
-                                android:id="@+id/textView14"
-                                style="@style/betting_recommend_details_style"
-                                android:text="@string/betting_txt_have_buy" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -271,15 +264,6 @@
                     android:layout_height="wrap_content"
                     android:background="@color/betting_recommend_details_bg_color"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:singleLine="true"
-                        android:text="@string/betting_reason_txt"
-                        android:textColor="@color/betting_recommend_details_color"
-                        android:textSize="@dimen/text_size_15" />
 
                     <TextView
                         android:id="@+id/betting_recommended_reason"
