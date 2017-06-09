@@ -1815,5 +1815,6 @@
 
     <string name="go_txt">前往</string>
     <string name="click_to_reload">點擊重試</string>
+    <string name="expert_certification_txt">專家認證</string>
 
 </resources>
