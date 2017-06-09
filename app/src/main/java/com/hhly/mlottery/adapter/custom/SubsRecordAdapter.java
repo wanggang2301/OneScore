@@ -31,7 +31,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
     private Context mContext;
 
     public SubsRecordAdapter(Context context, List<SubsRecordBean.PurchaseRecordsBean.ListBean> data) {
-        super(R.layout.betting_recommend_item, data);
+        super(R.layout.subs_record_item, data);
         mContext = context;
     }
 

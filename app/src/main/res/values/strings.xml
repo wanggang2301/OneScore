@@ -1839,5 +1839,6 @@
     <string name="not_expert_txt">您还不是推介专家，\n快去认证专家吧！</string>
     <string name="go_txt">前往</string>
     <string name="click_to_reload">点击重试</string>
+    <string name="expert_certification_txt">专家认证</string>
 
 </resources>
