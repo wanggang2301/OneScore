@@ -1735,13 +1735,13 @@
 
     <string name="invited_summary">請您壹起看比賽，輸入邀請碼，優惠多多哦。</string>
 
-    <!--竞彩推荐-->
+    <!--竞彩推介-->
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">聯賽</string>
     <string name="betting_issue_title">推介</string>
 
-    <string name="betting_title_list">競彩推薦</string>
-    <string name="betting_title_details">推薦詳情</string>
+    <string name="betting_title_list">競彩推介</string>
+    <string name="betting_title_details">推介詳情</string>
     <string name="betting_title_onlinepay">在線支付</string>
     <string name="betting_txt_buy">購買</string>
     <string name="betting_txt_check">查看</string>
@@ -1749,8 +1749,8 @@
     <string name="betting_txt_zhusheng">主勝</string>
     <string name="betting_txt_pingju">平局</string>
     <string name="betting_txt_kesheng">客勝</string>
-    <string name="betting_txt_reason">推薦理由</string>
-    <string name="betting_txt_pay_check_result">支付後查看推薦內容和結果</string>
+    <string name="betting_txt_reason">推介理由</string>
+    <string name="betting_txt_pay_check_result">支付後查看推介內容和結果</string>
     <string name="betting_txt_unpaid">待支付</string>
     <string name="betting_txt_to_paid">去支付</string>
     <string name="betting_txt_check_payment">選擇支付方式</string>
@@ -1773,6 +1773,16 @@
     <string name="betting_plays_allcheck">全部</string>
     <string name="betting_item_jin">近</string>
     <string name="betting_item_zhong">中</string>
+    <string name="betting_max_recharge">單次最大充值金額為10000元</string>
+    <string name="betting_payment_success">支付成功</string>
+    <string name="betting_payment_cancle">支付取消</string>
+    <string name="betting_not_sufficient_funds">帳護余額不足,請選擇其它支付方式</string>
+    <string name="betting_network_anomaly">網絡異常,請重試</string>
+
+    <string name="betting_reason_txt">推介理由:</string>
+    <string name="betting_payment_no_zero">充值金額不能為0</string>
+    <string name="betting_nodata_to_again">暫時無法獲取訂單信息,請稍後重試</string>
+    <string name="betting_disclaimer_txt">(免責聲明：個人觀點並不代表壹比分官方網站)</string>
 
     <string name="corner_score">角球比分</string>
     <string name="higher">高於</string>
@@ -1803,7 +1813,7 @@
     <string name="daxiaoqiu_txt">大小球</string>
     <string name="yigoumai_txt">人已購買</string>
     <string name="chakan_txt">查看</string>
-    <string name="tuijianliyou_txt">推薦理由:</string>
+    <string name="tuijianliyou_txt">推介理由:</string>
     <string name="baiyin_txt">白銀專家</string>
     <string name="huangjin_txt">黃金專家</string>
     <string name="baijin_txt">白金專家</string>

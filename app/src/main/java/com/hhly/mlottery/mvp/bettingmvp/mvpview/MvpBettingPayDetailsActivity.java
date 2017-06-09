@@ -20,6 +20,9 @@ import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingPaymentResultEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.LoadingResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingPayDetailsPresenter;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
@@ -76,6 +79,10 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     private boolean mayPay;
     private String promotionId;
     private TextView detailsHandicp;
+    private TextView leftOdds;
+    private TextView middleOdds;
+    private TextView rightOdds;
+    private ImageView statusImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +148,11 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         mToPay.setOnClickListener(this);
 
         toPayll = (LinearLayout)findViewById(R.id.betting_topay_all);
+        leftOdds = (TextView)findViewById(R.id.betting_odds_left_txt);
+        middleOdds = (TextView)findViewById(R.id.betting_odds_middle_txt);
+        rightOdds = (TextView)findViewById(R.id.betting_odds_right_txt);
+
+        statusImg = (ImageView) findViewById(R.id.betting_details_status_imageView);
 
         //下拉控件
         mRefresh = (ExactSwipeRefreshLayout) findViewById(R.id.betting_refresh_layout);
@@ -205,7 +217,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         // userId=hhly90662&promotionId=643&sign=007ec32c4f7279cfd49260c408528c0412
 //        String url = "http://192.168.10.242:8092/promotion/info/detail";
         String url = "http://m.1332255.com:81/promotion/info/detail";
-        String userid = AppConstants.register.getUser().getUserId();
+        String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
         mapPrament.put("userId" , userid);//用户id
@@ -232,6 +244,9 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                 initData();
                 break;
             case R.id.public_img_back:
+
+                EventBus.getDefault().post(new BettingDetailsResuleEventBusEntity(true));
+
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
@@ -244,6 +259,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                     overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
                 } else {
                     Intent intent = new Intent(mContext, LoginActivity.class);
+                    intent.putExtra(ConstantPool.BETTING_LOAD , true);
                     startActivity(intent);
                 }
                 break;
@@ -261,10 +277,41 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         if (detailsData != null) {
 
                 detailsWeek.setText(filtraNull(detailsData.getSerNum()));
-                detailsHomeWinOdds.setText(filtraNull(detailsData.getLeftOdds()));
-                detailsDrawOdds.setText(filtraNull(detailsData.getMidOdds()));
-                detailsGuestWinOdds.setText(filtraNull(detailsData.getRightOdds()));
+                detailsHomeWinOdds.setText(filtraNullTonull(detailsData.getLeftOdds()));
+                detailsDrawOdds.setText(filtraNullTonull(detailsData.getMidOdds()));
+                detailsGuestWinOdds.setText(filtraNullTonull(detailsData.getRightOdds()));
+
+            switch (detailsData.getStatus()){
+                case "1": //中
+                    statusImg.setVisibility(View.VISIBLE);
+                    statusImg.setBackground(mContext.getResources().getDrawable(R.mipmap.jingcai_icon_zhong));
+                    break;
+                case "2"://未中
+                    statusImg.setVisibility(View.VISIBLE);
+                    statusImg.setBackground(mContext.getResources().getDrawable(R.mipmap.jingcai_icon_shi));
+                    break;
+                case "6"://走
+                    statusImg.setVisibility(View.VISIBLE);
+                    statusImg.setBackground(mContext.getResources().getDrawable(R.mipmap.jingcai_icon_zou));
+                    break;
+                default:
+                    statusImg.setVisibility(View.GONE);
+                    break;
+            }
+
+            if (detailsData.getChooseStr() != null) {
+                String[] str = detailsData.getChooseStr();
+                if (str.length == 3) {
+                    leftOdds.setText(filtraNull(str[0]));
+                    middleOdds.setText(filtraNull(str[1]));
+                    rightOdds.setText(filtraNull(str[2]));
+                }
+            }
+            if (detailsData.getHandicap() == null || detailsData.getHandicap().equals("")) {
+                detailsHandicp.setText("");
+            }else{
                 detailsHandicp.setText("(" + filtraNull(detailsData.getHandicap()) + ")");
+            }
                 detailsPrice.setText("￥ " + filtraNull(detailsData.getPrice()));
 
                 if (detailsData.getChoose() != null) {
@@ -275,7 +322,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                         case "0":
                             detailsDrawImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
                             break;
-                        case "":
+                        case "-1":
                             detailsGuestImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
                             break;
                     }
@@ -289,7 +336,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                         case "0":
                             detailsDrawImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
                             break;
-                        case "":
+                        case "-1":
                             detailsGuestImg.setBackgroundResource(R.mipmap.jingcai_icon_sel);
                             break;
                     }
@@ -306,7 +353,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
             }
 
             String imgUrl = matchInfoData.getPhotoUrl();
-            ImageLoader.load(mContext,imgUrl,R.mipmap.football_analyze_default).into(portraitImg);
+            ImageLoader.load(mContext,imgUrl,R.mipmap.center_head).into(portraitImg);
             detailsHomeName.setText(filtraNull(matchInfoData.getHomeName()));
             detailsGuestName.setText(filtraNull(matchInfoData.getGuestName()));
             detailsLuague.setText(filtraNull(matchInfoData.getLeagueName()));
@@ -327,13 +374,13 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     @Override
     public void loadFailView() {
         setStatus(SHOW_STATUS_ERROR);
-        Toast.makeText(mContext, "网络请求失败~！！", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "网络请求失败~！！", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void loadNoData() {
         setStatus(SHOW_STATUS_NO_DATA);
-        Toast.makeText(mContext, "暂无数据~！！", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(mContext, "暂无数据~！！", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -343,10 +390,17 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     }
 
     //购买完成后的返回
-    public void onEventMainThread(BettingBuyResultEventBusEntity buyResultEventBusEntity){
+    public void onEventMainThread(BettingPaymentResultEventBusEntity paymentResultEventBusEntity){
 
-        if (buyResultEventBusEntity.isSuccessBuy()) {
+        if (paymentResultEventBusEntity.isPayMentResult()) {
             mayPay = false; //购买的返回 不可二次点击
+            setStatus(SHOW_STATUS_REFRESH_ONCLICK);
+            initData();
+        }
+    }
+    //登录完成后的返回（刷新 得到新的lookstart状态）
+    public void onEventMainThread(LoadingResultEventBusEntity loadingResultEventBusEntity){
+        if (loadingResultEventBusEntity.isLoadResult()) {
             setStatus(SHOW_STATUS_REFRESH_ONCLICK);
             initData();
         }
@@ -356,6 +410,14 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
 
         if (str == null) {
             return "--";
+        }else{
+            return str;
+        }
+    }
+    private String filtraNullTonull(String str){
+
+        if (str == null) {
+            return "";
         }else{
             return str;
         }

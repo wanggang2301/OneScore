@@ -58,7 +58,7 @@ public class PayMentUtils {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 L.d("qwer_AliPay===>>", "error");
-                Toast.makeText(mContext, "后台接口访问失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_nodata_to_again), Toast.LENGTH_SHORT).show();
             }
         }, PaymentZFBBean.class);
 
