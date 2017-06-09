@@ -266,15 +266,6 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:singleLine="true"
-                        android:text="推荐理由:"
-                        android:textColor="@color/betting_recommend_details_color"
-                        android:textSize="@dimen/text_size_15" />
-
-                    <TextView
                         android:id="@+id/betting_recommended_reason"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
