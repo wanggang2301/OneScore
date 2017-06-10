@@ -81,7 +81,7 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
         holder.setText(R.id.betting_specialist_name , filtraNull(data.getUserid()));
         holder.setText(R.id.betting_specialist_grade , filtraNull(data.getExpert()));
         holder.setText(R.id.betting_league_name , filtraNull(data.getLeagueName()));
-        holder.setText(R.id.betting_date , filtraNull(data.getReleaseDate()));
+        holder.setText(R.id.betting_date , filtraNull(data.getMatchDateTime()));
         holder.setText(R.id.betting_concede_points_spf , filtraNull(data.getTypeStr()));
         holder.setText(R.id.betting_home_name , filtraNull(data.getHomeName()));
         holder.setText(R.id.betting_guest_name , filtraNull(data.getGuestName()));
@@ -141,7 +141,7 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
             @Override
             public void onClick(View v) {
                 if (mSpecialistClick != null) {
-                    mSpecialistClick.SpecialistOnClick(v , data.getId());
+                    mSpecialistClick.SpecialistOnClick(v , data.getUserid());
                 }
             }
         });

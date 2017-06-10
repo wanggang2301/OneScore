@@ -130,7 +130,6 @@
                         android:hint="@string/betting_txt_recharge_integer"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:textColor="#d7d7d7"
                         android:maxLength="5"
                         android:textSize="@dimen/text_size_11" />
 

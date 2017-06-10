@@ -64,7 +64,8 @@ public class BettingRecommendSettingActivity extends Activity implements View.On
         findViewById(R.id.public_btn_filter).setVisibility(View.INVISIBLE);
         findViewById(R.id.public_btn_set).setVisibility(View.INVISIBLE);
 
-        TextView title = (TextView) findViewById(R.id.public_txt_left_title);
+        TextView title = (TextView) findViewById(R.id.public_txt_title);
+        title.setVisibility(View.VISIBLE);
         title.setText(getApplicationContext().getString(R.string.basket_analyze_screen));
 
         mBack = (ImageView) findViewById(R.id.public_img_back);

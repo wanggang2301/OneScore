@@ -36,7 +36,7 @@ public class DateMatchChoseDialogFragment extends DialogFragment {
     Button mOkButton;
 
     private String currentDate;
-    private int selectedPosition = 6; // 默认选中当天
+    private int selectedPosition = 7; // 默认选中当天
     private List<Map<String, String>> dateList;
 
     private OnDateChooseListener mOnDateChooseListener;

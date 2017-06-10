@@ -2,29 +2,52 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.google.code.microlog4android.appender.AbstractAppender;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ChoseHeadStartBean;
 import com.hhly.mlottery.bean.SpecialistBean;
 import com.hhly.mlottery.bean.account.Register;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.LoadingResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpChargeMoneyActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.FocusUtils;
+import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
+import com.hhly.mlottery.util.cipher.MD5Util;
+import com.hhly.mlottery.util.net.UnitsUtil;
+import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.hhly.mlottery.util.net.account.CustomEvent;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -101,6 +124,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                             .load(AppConstants.register.getUser().getImageSrc())
                             .error(R.mipmap.center_head)
                             .into(mUser_image);
+
+                    Log.i("register", "isLogin" + AppConstants.register.getUser().getImageSrc());
                     mTv_nickname.setEnabled(false);
                     break;
                 default:
@@ -113,6 +138,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     private RelativeLayout rl_my_subscribe;
     private RelativeLayout rl_my_apply;
     private RelativeLayout rl_my_promotion;
+    private RelativeLayout rl_my_join;
     private LinearLayout my_balance;
     private LinearLayout my_income;
     private ImageView rl_setting_frame1;
@@ -127,11 +153,14 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     private TextView subscribe_tv;
     private TextView promotion_tv;
     private TextView recharge_bt;
+    private Context context;
+    private String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+        context = this;
         initView();
 
     }
@@ -221,6 +250,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         //推介文章
         rl_my_promotion = (RelativeLayout) findViewById(R.id.rl_my_promotion);
         rl_my_promotion.setOnClickListener(this);
+
+        // 加入QQ
+        rl_my_join = (RelativeLayout) findViewById(R.id.rl_my_join);
+        rl_my_join.setOnClickListener(this);
 
         //申请专家
         rl_my_apply = (RelativeLayout) findViewById(R.id.rl_my_apply);
@@ -326,7 +359,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     L.d("expert", AppConstants.register.getUser().getIsExpert() + "");
                     UiUtils.toast(getApplicationContext(), "返回的专家审核值===" + AppConstants.register.getUser().getIsExpert() + "——————说明:0 未审核  1.审核通过  2.审核中  3.审核不通过");
 
-
                     if (1 == AppConstants.register.getUser().getIsExpert()) {
                         startActivity(new Intent(this, RecommendArticlesActivity.class));
                     } else if (2 == AppConstants.register.getUser().getIsExpert()) {
@@ -344,7 +376,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.rl_my_apply:     //申请专家
                 if (DeviceInfo.isLogin()) {
                     Intent intent1 = new Intent(HomeUserOptionsActivity.this, ApplicationSpecialistActivity.class);
-                    intent1.putExtra("expert", AppConstants.register.getUser().getIsExpert() + "");
                     startActivity(intent1);
 
                 } else {
@@ -383,10 +414,36 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
                 break;
-
-
+            case R.id.rl_my_join:// 加入QQ粉丝群
+                if (checkApkExist(this, "com.tencent.mobileqq")) {
+//                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin=" + 332434723 + "&version=1")));// 进入QQ号
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=group&uin=" + 332434723 + "&version=1")));// 进入QQ群
+                } else {
+                    Toast.makeText(this, getString(R.string.no_qq_installed), Toast.LENGTH_SHORT).show();
+                }
+                break;
             default:
                 break;
+        }
+    }
+
+
+    /**
+     * 检测包名是否存在
+     *
+     * @param context
+     * @param packageName
+     * @return
+     */
+    public boolean checkApkExist(Context context, String packageName) {
+        if (packageName == null || "".equals(packageName))
+            return false;
+        try {
+            ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName,
+                    PackageManager.GET_UNINSTALLED_PACKAGES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 
@@ -400,8 +457,18 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
      * @param
      */
     public void onEventMainThread(SpecialistBean bean) {
+        // 0 未审核  1.审核通过  2.审核中  3.审核不通过
         in_audit.setVisibility(View.VISIBLE);
-        in_audit.setText("审核中");
+        if (bean.getCode() == 1) {
+            in_audit.setText("审核通过");
+        } else if (bean.getCode() == 2) {
+            in_audit.setText("审核中");
+        } else if (bean.getCode() == 3) {
+            in_audit.setText("审核不通过");
+        } else if (bean.getCode() == 0) {
+            in_audit.setText("未审核");
+        }
+        PreferenceUtil.commitInt(AppConstants.ISEXPERT, bean.getCode());
     }
 
     /**
@@ -423,13 +490,14 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 .load(choseHeadStartBean.startUrl)
                 .error(R.mipmap.center_head)
                 .into(mUser_image);
+
+        //Log.i("register","onResume=="+PreferenceUtil.getString(AppConstants.HEADICON,""));
     }
 
 
     public void onEventMainThread(Register register) {
 
-        //ImageLoader.load(HomeUserOptionsActivity.this,register.getData().getUser().getHeadIcon()).into(mUser_image);
-        Glide.with(getApplicationContext())
+        Glide.with(context)
                 .load(register.getUser().getImageSrc())
                 .error(R.mipmap.center_head)
                 .into(mUser_image);
@@ -439,11 +507,13 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        MobclickAgent.onResume(this);
 
+        MobclickAgent.onResume(this);
 
         if (DeviceInfo.isLogin()) {
             // 0 未审核  1.审核通过  2.审核中  3.审核不通过
+
+            login();
 
             if (AppConstants.register.getUser().getIsExpert() == 0) {
                 in_audit.setText("未审核");
@@ -459,13 +529,15 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
             available_balance_rl.setVisibility(View.VISIBLE);
             cash_balance_payable_rl.setVisibility(View.VISIBLE);
-            available_balance.setText(AppConstants.register.getUser().getAvailableBalance() + "元");
-            cash_balance_payable.setText(AppConstants.register.getUser().getCashBalance() + "元");
+            available_balance.setText(UnitsUtil.fenToYuan(AppConstants.register.getUser().getAvailableBalance()));
+            cash_balance_payable.setText(UnitsUtil.fenToYuan(AppConstants.register.getUser().getCashBalance()));
             subscribe_tv.setText(AppConstants.register.getUser().getBuyCount());
             promotion_tv.setText(AppConstants.register.getUser().getPushCount());
             not_login_balance.setVisibility(View.GONE);
             not_login_payable.setVisibility(View.GONE);
             mTv_nickname.setText(AppConstants.register.getUser().getNickName());
+
+
         } else {
             in_audit.setText("");
             available_balance_rl.setVisibility(View.GONE);
@@ -479,6 +551,57 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         }
     }
 
+
+    /**
+     * 登录
+     */
+    private void login() {
+
+        final String url = BaseURLs.URL_LOGIN;
+
+        Map<String, String> param = new HashMap<>();
+        param.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
+        param.put("password", PreferenceUtil.getString("et_password", ""));
+
+        if (MyApp.isLanguage.equals("rCN")) {
+            // 如果是中文简体的语言环境
+            language = "langzh";
+        } else if (MyApp.isLanguage.equals("rTW")) {
+            // 如果是中文繁体的语言环境
+            language = "langzh-TW";
+        }
+
+        String sign = DeviceInfo.getSign("/user/login" + language + "password" + MD5Util.getMD5(PreferenceUtil.getString("et_password", "")) + "phoneNum" + AppConstants.register.getUser().getPhoneNum() + "timeZone8");
+        param.put("sign", sign);
+        setResult(RESULT_OK);
+
+        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+            @Override
+            public void onResponse(Register register) {
+
+                progressBar.dismiss();
+                if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
+
+                    available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance()));
+                    cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance()));
+
+                } else {
+
+                    return;
+                }
+            }
+
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+
+            }
+
+        }, Register.class);
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -490,6 +613,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -262,21 +262,23 @@ public class BettingDetailsBean {
 
     public class MatchInfoBeanData{
 
-//        matchId: "848853836",
+//        matchId: "848855330",
 //        screenings: null,
-//        leagueName: "巴西甲",
-//        homeName: "弗鲁米嫩塞",
-//        guestName: "巴拉纳竞技",
-//        matchDateTime: "2017-06-07 07:00:00",
-//        homeImg: "20130913233035.png",
-//        guestImg: "20130913214349.png",
-//        status: "16",
-//        homeScore: "1",
-//        guestScore: "1",
-//        nickname: "小456",
-//        photoUrl: "http://tp.1332255.com/img/2017-05-18/c139f58c-3b8c-4dbc-85fd-33cf7206ccd4.png",
-//        lookStatus: 4,
-//        leagueId: "4"
+//        leagueName: "国际友谊",
+//        homeName: "俄罗斯",
+//        guestName: "阿根廷",
+//        matchDateTime: "2017-06-10 00:00:00",
+//        homeImg: "http://cn1.pp13322.com/img/pic/team/images/20140512163615.jpg",
+//        guestImg: "http://cn3.pp13322.com/img/pic/team/images/20140512161605.jpg",
+//        status: "1",
+//        homeScore: "0",
+//        guestScore: "0",
+//        nickname: "你们在",
+//        photoUrl: "http://cn1.pp13322.com/img/pic/tj/DefaultHead.png",
+//        lookStatus: 2,
+//        homeHalfScore: "0",
+//        guestHalfScore: "0",
+//        leagueId: "1366"
 
         private String matchId;
         private String screenings;
@@ -293,6 +295,8 @@ public class BettingDetailsBean {
         private String photoUrl;
         private String lookStatus;
         private String leagueId;
+        private String homeHalfScore;
+        private String guestHalfScore;
 
         public String getMatchId() {
             return matchId;
@@ -412,6 +416,22 @@ public class BettingDetailsBean {
 
         public void setLeagueId(String leagueId) {
             this.leagueId = leagueId;
+        }
+
+        public String getHomeHalfScore() {
+            return homeHalfScore;
+        }
+
+        public void setHomeHalfScore(String homeHalfScore) {
+            this.homeHalfScore = homeHalfScore;
+        }
+
+        public String getGuestHalfScore() {
+            return guestHalfScore;
+        }
+
+        public void setGuestHalfScore(String guestHalfScore) {
+            this.guestHalfScore = guestHalfScore;
         }
     }
 

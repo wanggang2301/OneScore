@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:background="@color/white"
+        android:id="@+id/pop_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <Button
+            android:background="@color/white"
+            android:id="@+id/picture_selector_take_photo_btn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center"
+            android:text="@string/photograph"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/home_pager_user_title" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_football_footer"/>
+        <Button
+            android:background="@color/white"
+            android:id="@+id/picture_selector_pick_picture_btn"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/home_pager_user_title"
+            android:text="@string/chose_for_telephone" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_football_footer"/>
+        <Button
+            android:background="@color/white"
+            android:id="@+id/tv_chose_start_photo"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/home_pager_user_title"
+            android:text="@string/chose_start_photo" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/line_football_footer"/>
+        <Button
+            android:background="@color/white"
+            android:id="@+id/picture_selector_cancel_btn"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/res_name_color"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="55dp"
+            android:textSize="@dimen/home_pager_user_title"
+            android:text="@string/fottball_home_quxiao" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -110,7 +110,7 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
 
         /**头部布局*/
         TextView mCustomTitle = (TextView) findViewById(R.id.public_txt_title);
-        mCustomTitle.setText(getResources().getString(R.string.custom_mine_cus));
+        mCustomTitle.setText(getResources().getString(R.string.my_focus));
 
         mBack = (ImageView) findViewById(R.id.public_img_back);
         mBack.setOnClickListener(this);
