@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
@@ -121,7 +125,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                             .error(R.mipmap.center_head)
                             .into(mUser_image);
 
-                    Log.i("register","isLogin"+AppConstants.register.getUser().getImageSrc());
+                    Log.i("register", "isLogin" + AppConstants.register.getUser().getImageSrc());
                     mTv_nickname.setEnabled(false);
                     break;
                 default:
@@ -134,6 +138,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     private RelativeLayout rl_my_subscribe;
     private RelativeLayout rl_my_apply;
     private RelativeLayout rl_my_promotion;
+    private RelativeLayout rl_my_join;
     private LinearLayout my_balance;
     private LinearLayout my_income;
     private ImageView rl_setting_frame1;
@@ -245,6 +250,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         //推介文章
         rl_my_promotion = (RelativeLayout) findViewById(R.id.rl_my_promotion);
         rl_my_promotion.setOnClickListener(this);
+
+        // 加入QQ
+        rl_my_join = (RelativeLayout) findViewById(R.id.rl_my_join);
+        rl_my_join.setOnClickListener(this);
 
         //申请专家
         rl_my_apply = (RelativeLayout) findViewById(R.id.rl_my_apply);
@@ -399,10 +408,36 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
                 break;
-
-
+            case R.id.rl_my_join:// 加入QQ粉丝群
+                if (checkApkExist(this, "com.tencent.mobileqq")) {
+//                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin=" + 332434723 + "&version=1")));// 进入QQ号
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=group&uin=" + 332434723 + "&version=1")));// 进入QQ群
+                } else {
+                    Toast.makeText(this, "本机未安装QQ应用", Toast.LENGTH_SHORT).show();
+                }
+                break;
             default:
                 break;
+        }
+    }
+
+
+    /**
+     * 检测包名是否存在
+     *
+     * @param context
+     * @param packageName
+     * @return
+     */
+    public boolean checkApkExist(Context context, String packageName) {
+        if (packageName == null || "".equals(packageName))
+            return false;
+        try {
+            ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName,
+                    PackageManager.GET_UNINSTALLED_PACKAGES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 
@@ -427,7 +462,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         } else if (bean.getCode() == 0) {
             in_audit.setText("未审核");
         }
-        PreferenceUtil.commitInt(AppConstants.ISEXPERT,bean.getCode());
+        PreferenceUtil.commitInt(AppConstants.ISEXPERT, bean.getCode());
     }
 
     /**
@@ -511,56 +546,53 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     }
 
 
-
-
-
     /**
      * 登录
      */
     private void login() {
 
-                final String url = BaseURLs.URL_LOGIN;
+        final String url = BaseURLs.URL_LOGIN;
 
-                Map<String, String> param = new HashMap<>();
-                param.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
-                param.put("password", PreferenceUtil.getString("et_password", ""));
+        Map<String, String> param = new HashMap<>();
+        param.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
+        param.put("password", PreferenceUtil.getString("et_password", ""));
 
-                if (MyApp.isLanguage.equals("rCN")) {
-                    // 如果是中文简体的语言环境
-                    language = "langzh";
-                } else if (MyApp.isLanguage.equals("rTW")) {
-                    // 如果是中文繁体的语言环境
-                    language = "langzh-TW";
+        if (MyApp.isLanguage.equals("rCN")) {
+            // 如果是中文简体的语言环境
+            language = "langzh";
+        } else if (MyApp.isLanguage.equals("rTW")) {
+            // 如果是中文繁体的语言环境
+            language = "langzh-TW";
+        }
+
+        String sign = DeviceInfo.getSign("/user/login" + language + "password" + MD5Util.getMD5(PreferenceUtil.getString("et_password", "")) + "phoneNum" + AppConstants.register.getUser().getPhoneNum() + "timeZone8");
+        param.put("sign", sign);
+        setResult(RESULT_OK);
+
+        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+            @Override
+            public void onResponse(Register register) {
+
+                progressBar.dismiss();
+                if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
+
+                    available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance()));
+                    cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance()));
+
+                } else {
+
+                    return;
                 }
+            }
 
-                String sign = DeviceInfo.getSign("/user/login" + language + "password" + MD5Util.getMD5( PreferenceUtil.getString("et_password", "")) + "phoneNum" + AppConstants.register.getUser().getPhoneNum() + "timeZone8");
-                param.put("sign", sign);
-                setResult(RESULT_OK);
-
-                VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
-                    @Override
-                    public void onResponse(Register register) {
-
-                        progressBar.dismiss();
-                        if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
-
-                            available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance()));
-                            cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance()));
-
-                        }else{
-
-                            return;
-                        }
-                    }
-
-                }, new VolleyContentFast.ResponseErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
 
-                    }
+            }
 
-                }, Register.class);
+        }, Register.class);
 
     }
 
@@ -575,7 +607,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         super.onPause();
         MobclickAgent.onPause(this);
     }
-
 
 
     @Override
