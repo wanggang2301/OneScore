@@ -137,18 +137,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
         specialist_pen = (ImageView) findViewById(R.id.specialist_pen);
         //专家简介
         specalist_edittext = (EditText) findViewById(R.id.specalist_edittext);
-   /*     specalist_edittext.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean isFocus) {
-                if (isFocus){
-                    specialist_pen.setVisibility(View.GONE);
 
-                }else{
-                    specialist_pen.setVisibility(View.VISIBLE);
-                }
-
-            }
-        });*/
         specalist_edittext.addTextChangedListener(new TextWatcher() {
 
             private CharSequence temp;
