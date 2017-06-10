@@ -43,6 +43,13 @@ import de.greenrobot.event.EventBus;
 
 public class MvpBettingPayDetailsActivity extends Activity implements MView<BettingDetailsBean>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
+    /** 签名参数 */
+    private String PARAM_USER_ID = "userId";//用户id
+    private String PARAM_PROMOTION_ID = "promotionId";//推荐ID
+    private String PARAM_LANG = "lang";
+    private String PARAM_TIMEZONE = "timeZone";
+    private String PARAM_SIGN = "sign";//参数签名
+
     private Context mContext;
     private ImageView mBack;
     private LinearLayout mToPay;
@@ -213,22 +220,23 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
-        mapPrament.put("userId" , userid);//用户id
-        mapPrament.put("promotionId" , promotionId); //推荐ID
-        mapPrament.put("lang" , MyApp.getLanguage());
-        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        mapPrament.put(PARAM_USER_ID , userid);//用户id
+        mapPrament.put(PARAM_PROMOTION_ID , promotionId);
+        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
         String signs = SignUtils.getSign(BaseURLs.PARAMENT_RECOMMEND_DETAILS, mapPrament);
 
         Map<String ,String> map = new HashMap<>();
-        map.put("userId" , userid);//用户id
-        map.put("promotionId" , promotionId); //推荐ID
-        map.put("sign" , signs);
+        map.put(PARAM_USER_ID , userid);//用户id
+        map.put(PARAM_PROMOTION_ID , promotionId); //推荐ID
+        map.put(PARAM_SIGN , signs);
 
         L.d("qwer== >> " + signs);
 
 
         mvpBettingPayDetailsPresenter.loadData(url , map);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){

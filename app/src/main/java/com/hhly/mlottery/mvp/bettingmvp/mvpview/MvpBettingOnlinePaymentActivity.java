@@ -42,8 +42,21 @@ import de.greenrobot.event.EventBus;
 
 public class MvpBettingOnlinePaymentActivity extends Activity implements MView<BettingOrderDataBean>, View.OnClickListener {
 
-    // IWXAPI 是第三方app和微信通信的openapi接口
-//    private IWXAPI api;
+    /** 签名参数 */
+    private String PARAM_USER_ID = "userId";//用户id
+    private String PARAM_PROMOTION_ID = "promotionId";//推荐ID
+    private String PARAM_SIGN = "sign";//参数签名
+    private String PARAM_CHANNEL = "channel";// 0：PC 1：安卓 2:IOS 3:H5
+    private String PARAM_LOGIN_TOKEN = "loginToken";//logintoken
+    private String PARAM_APP_TYPE = "appType";//appType 2:android
+
+    private String PARAM_SERVICE = "service";//3 微信 4 支付宝
+    private String PARAM_TRADE_AMOUNT = "tradeAmount";//金额 分
+
+    private String PARAM_PAY_TYPE = "payType";//1微信2支付宝3账户余额  （目前只支持3）
+
+    private String PARAM_LANG = "lang";
+    private String PARAM_TIMEZONE = "timeZone";
 
     //订单接口
 //    String payUrl = "http://192.168.31.15:8081/sunon-web-api/pay/unifiedTradePay";
@@ -115,7 +128,6 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
     private void initData(){
         promId = getIntent().getStringExtra(ConstantPool.PROMOTION_ID);
-
 //        String url = "http://192.168.10.242:8092/promotion/order/create";
 //        String url = "http://m.1332255.com:81/promotion/order/create";
         String url = BaseURLs.URL_ORDER_CREATE;
@@ -124,27 +136,28 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
         Map<String ,String> mapPrament = new HashMap<>();
 
-        mapPrament.put("userId" , userid);//用户id
-        mapPrament.put("promotionId" , promId); //推荐ID
-        mapPrament.put("channel" , "1"); //0：PC 1：安卓 2:IOS 3:H5
-        mapPrament.put("loginToken" , token); //logintoken
-        mapPrament.put("appType" , "2"); //appType 2:android
-        mapPrament.put("lang" , MyApp.getLanguage());
-        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        mapPrament.put(PARAM_USER_ID , userid);//用户id
+        mapPrament.put(PARAM_PROMOTION_ID , promId); //推荐ID
+        mapPrament.put(PARAM_CHANNEL , "1"); //0：PC 1：安卓 2:IOS 3:H5
+        mapPrament.put(PARAM_LOGIN_TOKEN , token); //logintoken
+        mapPrament.put(PARAM_APP_TYPE , "2"); //appType 2:android
+        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
         String signs = SignUtils.getSign(BaseURLs.PARAMENT_ORDER_CREATE , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
-        map.put("userId" , userid);//用户id
-        map.put("promotionId" , promId); //推荐ID
-        map.put("channel" , "1"); //0：PC 1：安卓 2:IOS 3:H5
-        map.put("loginToken" , token); //logintoken
-        map.put("appType" , "2"); //appType 2:android
-        map.put("sign" , signs);
+        map.put(PARAM_USER_ID , userid);//用户id
+        map.put(PARAM_PROMOTION_ID , promId); //推荐ID
+        map.put(PARAM_CHANNEL , "1"); //0：PC 1：安卓 2:IOS 3:H5
+        map.put(PARAM_LOGIN_TOKEN , token); //logintoken
+        map.put(PARAM_APP_TYPE , "2"); //appType 2:android
+        map.put(PARAM_SIGN , signs);
 
         L.d("qwer== >> " + signs);
 
         paymentPresenter.loadData(url , map);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -215,24 +228,25 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
         Map<String ,String> mapPrament = new HashMap<>();
 
-        mapPrament.put("userId" , userid);//用户ID
-        mapPrament.put("service" , service);//3 微信 4 支付宝
-        mapPrament.put("tradeAmount" , money);//金额 分
-        mapPrament.put("loginToken" , token);//登陆的token
-        mapPrament.put("lang" , MyApp.getLanguage());
-        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        mapPrament.put(PARAM_USER_ID , userid);//用户ID
+        mapPrament.put(PARAM_SERVICE , service);//3 微信 4 支付宝
+        mapPrament.put(PARAM_TRADE_AMOUNT , money);//金额 分
+        mapPrament.put(PARAM_LOGIN_TOKEN , token);//登陆的token
+        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
         String signs = SignUtils.getSign(BaseURLs.PARAMENT_RECHARGE_PAY , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
-        map.put("userId" , userid);//用户ID
-        map.put("service" , service);//3 微信 4 支付宝
-        map.put("tradeAmount" , money);//金额 分
-        map.put("loginToken" , token);//登陆的token
-        map.put("sign" , signs);//签名 和 登陆的时候签名一样
+        map.put(PARAM_USER_ID , userid);//用户ID
+        map.put(PARAM_SERVICE , service);//3 微信 4 支付宝
+        map.put(PARAM_TRADE_AMOUNT , money);//金额 分
+        map.put(PARAM_LOGIN_TOKEN , token);//登陆的token
+        map.put(PARAM_SIGN , signs);//签名 和 登陆的时候签名一样
 
         L.d("qwer== >> " + signs);
         return map;
     }
+
     @Override
     public void loadSuccessView(BettingOrderDataBean orderDataBean) {
 
@@ -337,22 +351,22 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
         Map<String ,String> mapPrament = new HashMap<>();
 
-        mapPrament.put("userId" , userid);//用户id
-        mapPrament.put("promotionId" , promId); //推荐ID
-        mapPrament.put("appType" , "2"); //appType 2:android
-        mapPrament.put("loginToken" , token); //logintoken
-        mapPrament.put("payType" , "3"); //1微信2支付宝3账户余额  （目前只支持3）
-        mapPrament.put("lang" , MyApp.getLanguage());
-        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        mapPrament.put(PARAM_USER_ID , userid);//用户id
+        mapPrament.put(PARAM_PROMOTION_ID , promId); //推荐ID
+        mapPrament.put(PARAM_APP_TYPE , "2"); //appType 2:android
+        mapPrament.put(PARAM_LOGIN_TOKEN , token); //logintoken
+        mapPrament.put(PARAM_PAY_TYPE , "3"); //1微信2支付宝3账户余额  （目前只支持3）
+        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
         String signs = SignUtils.getSign(BaseURLs.PARAMENT_ORDER_PAY , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
-        map.put("userId" , userid);//用户id
-        map.put("promotionId" , promId); //推荐ID
-        map.put("appType" , "2"); //appType 2:android
-        map.put("loginToken" , token); //logintoken
-        map.put("payType" , "3"); //1微信2支付宝3账户余额  （目前只支持3）
-        map.put("sign" , signs);
+        map.put(PARAM_USER_ID , userid);//用户id
+        map.put(PARAM_PROMOTION_ID , promId); //推荐ID
+        map.put(PARAM_APP_TYPE , "2"); //appType 2:android
+        map.put(PARAM_LOGIN_TOKEN , token); //logintoken
+        map.put(PARAM_PAY_TYPE , "3"); //1微信2支付宝3账户余额  （目前只支持3）
+        map.put(PARAM_SIGN , signs);
 
         L.d("qwer== >> " + signs);
 

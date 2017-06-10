@@ -1214,6 +1214,8 @@ public class BaseURLs {
     public final static String PARAMENT_ORDER_CREATE = "/promotion/order/create";
     //余额支付接口参数
     public final static String PARAMENT_ORDER_PAY = "/promotion/order/pay";
+    //余额查询接口参数
+    public final static String PARAMENT_PAY_BALANCE = "/user/pay/balance";
 
 
     //推介列表
@@ -1226,6 +1228,8 @@ public class BaseURLs {
     public final static String URL_ORDER_CREATE = URL_BETTING_HTTP + HOST + PARAMENT_ORDER_CREATE;
     //余额支付接口
     public final static String URL_ORDER_PAY = URL_BETTING_HTTP + HOST + PARAMENT_ORDER_PAY;
+    //余额查询接口
+    public final static String URI_PAY_BALANCE = URL_BETTING_HTTP + HOST + PARAMENT_PAY_BALANCE;
 
-//    String orderPayUrl = "http://m.1332255.com:81/promotion/order/pay";
+//    String balanceUrl = "http://m.1332255.com:81/user/pay/balance";
 }

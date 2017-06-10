@@ -51,6 +51,16 @@ import de.greenrobot.event.EventBus;
  */
 public class MvpBettingRecommendActivity extends Activity implements MView<BettingListDataBean>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
+    /** 签名参数 */
+    private String PARAM_PAGE_SIZE = "pageSize";//每页条数
+    private String PARAM_PAGE_NO = "pageNo";//页码
+    private String PARAM_USER_ID = "userId";//用户id
+    private String PARAM_KEY = "key";//联赛key
+    private String PARAM_TYPE = "type";//玩法type
+    private String PARAM_LANG = "lang";
+    private String PARAM_TIMEZONE = "timeZone";
+    private String PARAM_SIGN = "sign";//参数签名
+
     private MvpBettingRecommendPresenter mvpBettingRecommendPresenter;
     private BettingRecommendMvpAdapter mAdapter;
     private TextView mTitlt;
@@ -195,22 +205,22 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
-        mapPrament.put("pageSize" , pageSize +""); //每页条数
-        mapPrament.put("pageNo" , pageNum + "");//页码
-        mapPrament.put("userId" , userid);//用户id
-        mapPrament.put("key" , key);//联赛key
-        mapPrament.put("type" , type);
-        mapPrament.put("lang" , MyApp.getLanguage());
-        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        mapPrament.put(PARAM_PAGE_SIZE , pageSize +"");
+        mapPrament.put(PARAM_PAGE_NO , pageNum + "");
+        mapPrament.put(PARAM_USER_ID , userid);
+        mapPrament.put(PARAM_KEY , key);
+        mapPrament.put(PARAM_TYPE , type);
+        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
         String signs = SignUtils.getSign(BaseURLs.PARAMENT_RECOMMEND_LIST, mapPrament);
 
         Map<String ,String> map = new HashMap<>();
-        map.put("pageSize" , pageSize +""); //每页条数
-        map.put("pageNo" , pageNum + "");//页码
-        map.put("userId" , userid);//用户id
-        map.put("key" , key);//联赛key
-        map.put("type" , type);
-        map.put("sign" , signs);
+        map.put(PARAM_PAGE_SIZE , pageSize +""); //每页条数
+        map.put(PARAM_PAGE_NO , pageNum + "");//页码
+        map.put(PARAM_USER_ID , userid);//用户id
+        map.put(PARAM_KEY , key);//联赛key
+        map.put(PARAM_TYPE , type);
+        map.put(PARAM_SIGN , signs);
 
         L.d("qwer== >> " + signs);
 
@@ -474,25 +484,38 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
 //        String url = "http://192.168.10.242:8092/promotion/info/list";
 //        String url = "http://m.1332255.com:81/promotion/info/list";
         String url = BaseURLs.URL_RECOMEND_LIST;
-        String userid = AppConstants.register.getUser().getUserId();
+        String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
-        mapPrament.put("pageSize" , pageSize +""); //每页条数
-        mapPrament.put("pageNo" , pageNum + "");//页码
-        mapPrament.put("userId" , userid);//用户id
-        mapPrament.put("key" , key);//联赛key
-        mapPrament.put("type" , type);
-        mapPrament.put("lang" , MyApp.getLanguage());
-        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        mapPrament.put(PARAM_PAGE_SIZE , pageSize +"");
+        mapPrament.put(PARAM_PAGE_NO , pageNum + "");
+        mapPrament.put(PARAM_USER_ID , userid);
+        mapPrament.put(PARAM_KEY , key);
+        mapPrament.put(PARAM_TYPE , type);
+        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
+//        mapPrament.put("pageSize" , pageSize +""); //每页条数
+//        mapPrament.put("pageNo" , pageNum + "");//页码
+//        mapPrament.put("userId" , userid);//用户id
+//        mapPrament.put("key" , key);//联赛key
+//        mapPrament.put("type" , type);
+//        mapPrament.put("lang" , MyApp.getLanguage());
+//        mapPrament.put("timeZone" , AppConstants.timeZone + "");
         String signs = SignUtils.getSign(BaseURLs.PARAMENT_RECOMMEND_LIST, mapPrament);
 
         Map<String ,String> map = new HashMap<>();
-        map.put("pageSize" , pageSize +""); //每页条数
-        map.put("pageNo" , pageNum + "");//页码
-        map.put("userId" , userid);//用户id
-        map.put("key" , key);//联赛key
-        map.put("type" , type);
-        map.put("sign" , signs);
+//        map.put("pageSize" , pageSize +""); //每页条数
+//        map.put("pageNo" , pageNum + "");//页码
+//        map.put("userId" , userid);//用户id
+//        map.put("key" , key);//联赛key
+//        map.put("type" , type);
+//        map.put("sign" , signs);
+        map.put(PARAM_PAGE_SIZE , pageSize +""); //每页条数
+        map.put(PARAM_PAGE_NO , pageNum + "");//页码
+        map.put(PARAM_USER_ID , userid);//用户id
+        map.put(PARAM_KEY , key);//联赛key
+        map.put(PARAM_TYPE , type);
+        map.put(PARAM_SIGN , signs);
 
         L.d("qwer== >> " + signs);
 
