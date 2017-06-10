@@ -355,8 +355,14 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.rl_my_promotion:     //推介文章
                 if (DeviceInfo.isLogin()) {
                     //0 未审核  1.审核通过  2.审核中  3.审核不通过
-                    if ("1".equals(AppConstants.register.getUser().getIsExpert())) {
+
+                    L.d("expert", AppConstants.register.getUser().getIsExpert() + "");
+                    UiUtils.toast(getApplicationContext(), "返回的专家审核值===" + AppConstants.register.getUser().getIsExpert() + "——————说明:0 未审核  1.审核通过  2.审核中  3.审核不通过");
+
+                    if (1 == AppConstants.register.getUser().getIsExpert()) {
                         startActivity(new Intent(this, RecommendArticlesActivity.class));
+                    } else if (2 == AppConstants.register.getUser().getIsExpert()) {
+                        UiUtils.toast(getApplicationContext(), R.string.expert_shehe_txt);
                     } else {
                         startActivity(new Intent(this, NotRecommendExpertActivity.class));
                     }
