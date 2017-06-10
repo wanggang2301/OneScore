@@ -14,7 +14,6 @@ import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -84,14 +83,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import de.greenrobot.event.EventBus;
 import pl.droidsonroids.gif.GifImageView;
 
-import static com.hhly.mlottery.R.id.ll_guest_free_kick_fk4_title;
 import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK;
 import static com.hhly.mlottery.config.FootBallTypeEnum.ATTACK1;
 import static com.hhly.mlottery.config.FootBallTypeEnum.CORNER;
@@ -207,7 +204,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private LinearLayout btn_showGif;
     private BarrageView barrage_view;
     private Timer gifTimer;
-    private TimerTask gifTimerTask;
     private boolean isFirstShowGif = true;
     private RelativeLayout rl_gif_notice;
     private int gifCount = 0;
@@ -378,7 +374,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         setContentView(R.layout.activity_football_match_details_test);
 
-        this.mContext = getApplicationContext();
+        this.mContext = this;
 
         L.e(TAG, "mThirdId = " + mThirdId);
         url = BaseURLs.URL_FOOTBALLDETAIL_H5 + "?thirdId=" + mThirdId + "&lang=" + appendLanguage();
@@ -504,20 +500,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     }
 
     private Timer mReloadTimer;
-    private TimerTask reloadTimerTask;
     private boolean isStartTimer = false;
 
     private void startReloadTimer() {
         if (!isStartTimer && !isFinishing()) {//已经开启则不需要再开启
-            reloadTimerTask = new TimerTask() {
+            mReloadTimer = new Timer(true);
+            mReloadTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
                     L.d(TAG, "TimerTask run....");
                     loadData(1);
                 }
-            };
-            mReloadTimer = new Timer();
-            mReloadTimer.schedule(reloadTimerTask, mReloadPeriod, mReloadPeriod);
+            }, mReloadPeriod, mReloadPeriod);
             isStartTimer = true;
         }
     }
@@ -1077,11 +1071,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             mReloadTimer = null;
         }
 
-        if (reloadTimerTask != null) {
-            reloadTimerTask.cancel();
-            reloadTimerTask = null;
-        }
-
         closePollingGifCount();
 
         EventBus.getDefault().unregister(this);
@@ -1193,11 +1182,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             ll_score_content.setVisibility(View.GONE);
             tv_head_time.setVisibility(View.GONE);
             tv_head_over_score.setVisibility(View.VISIBLE);
+            tv_head_time.setVisibility(View.VISIBLE);
+            tv_head_time.setText(halfScore);
             ll_over_score_content.setVisibility(View.VISIBLE);
         }
 
         switch (matchTextLiveBean.getCode()) {
-            case "0":
+            case "0":// 未开
             case "10":
             case "11":  //开始上半场，开球：
                 gif_match_start.setImageResource(R.mipmap.football_match_start_gif);
@@ -2001,23 +1992,23 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                             }
                         } else {
                             // 普通任意球
-                            ll_home_free_kick_bg.setVisibility(View.VISIBLE);
-                            ll_guest_free_kick_bg.setVisibility(View.GONE);
+                            ll_home_free_kick_bg.setVisibility(View.GONE);
+                            ll_guest_free_kick_bg.setVisibility(View.VISIBLE);
                             ll_home_free_kick_fk4_bg.setVisibility(View.GONE);
                             ll_guest_free_kick_fk4_bg.setVisibility(View.GONE);
                             ll_home_free_kick_fk2_bg.setVisibility(View.GONE);
                             ll_guest_free_kick_fk2_bg.setVisibility(View.GONE);
-                            gif_home_free_kick_fk2_position.setVisibility(View.GONE);
+                            gif_home_free_kick_fk2_position.setVisibility(View.VISIBLE);
                             gif_home_free_kick_fk4_position.setVisibility(View.GONE);
                             gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
-                            gif_guest_free_kick_fk2_position.setVisibility(View.VISIBLE);
-                            gif_guest_free_kick_fk2_position.setImageResource(R.mipmap.football_home_position_gif);
-                            ll_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
-                            ll_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                            gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
+                            gif_home_free_kick_fk2_position.setImageResource(R.mipmap.football_home_position_gif);
+                            ll_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
+                            ll_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
                             ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                             ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                            tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick));
-                            tv_guest_free_kick_fk2_title_time.setText(finalTime);
+                            tv_home_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick));
+                            tv_home_free_kick_fk2_title_time.setText(finalTime);
                             showGifAnimation(5555);
                         }
                         isHomeFreeKick = false;
@@ -2149,23 +2140,23 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                 showGifAnimation(-9999);
                             }
                         } else {
-                            ll_home_free_kick_bg.setVisibility(View.GONE);
-                            ll_guest_free_kick_bg.setVisibility(View.VISIBLE);
+                            ll_home_free_kick_bg.setVisibility(View.VISIBLE);
+                            ll_guest_free_kick_bg.setVisibility(View.GONE);
                             ll_home_free_kick_fk4_bg.setVisibility(View.GONE);
                             ll_guest_free_kick_fk4_bg.setVisibility(View.GONE);
                             ll_home_free_kick_fk2_bg.setVisibility(View.GONE);
                             ll_guest_free_kick_fk2_bg.setVisibility(View.GONE);
-                            gif_home_free_kick_fk2_position.setVisibility(View.VISIBLE);
+                            gif_home_free_kick_fk2_position.setVisibility(View.GONE);
                             gif_home_free_kick_fk4_position.setVisibility(View.GONE);
                             gif_guest_free_kick_fk4_position.setVisibility(View.GONE);
-                            gif_guest_free_kick_fk2_position.setVisibility(View.GONE);
-                            gif_home_free_kick_fk2_position.setImageResource(R.mipmap.football_guest_position_gif);
-                            ll_guest_free_kick_fk2_title.setVisibility(View.INVISIBLE);
-                            ll_home_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                            gif_guest_free_kick_fk2_position.setVisibility(View.VISIBLE);
+                            gif_guest_free_kick_fk2_position.setImageResource(R.mipmap.football_guest_position_gif);
+                            ll_guest_free_kick_fk2_title.setVisibility(View.VISIBLE);
+                            ll_home_free_kick_fk2_title.setVisibility(View.INVISIBLE);
                             ll_home_free_kick_fk4_title.setVisibility(View.INVISIBLE);
                             ll_guest_free_kick_fk4_title.setVisibility(View.INVISIBLE);
-                            tv_home_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick));
-                            tv_home_free_kick_fk2_title_time.setText(finalTime1);
+                            tv_guest_free_kick_fk2_title.setText(getString(R.string.football_play_free_kick));
+                            tv_guest_free_kick_fk2_title_time.setText(finalTime1);
                             showGifAnimation(5555);
                         }
                         isGuestFreeKick = false;
@@ -2821,7 +2812,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             matchLive.add(0, new MatchTextLiveBean("", "", "0", "0", "4", "99999999", mContext.getResources().getString(R.string.matchFinished_txt), "", "", "0", "", "", "", ""));
             mLiveFragment.setLiveTextDetails(matchLive);
             showGifAnimation(-1);
-            matchTimeStart("","-1");
+            matchTimeStart("", "-1");
         }
     }
 
@@ -3679,18 +3670,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
      * start polling
      */
     private void pollingGifCount() {
-        if (gifTimer == null) {
-            gifTimer = new Timer();
-            gifTimerTask = new TimerTask() {
-                @Override
-                public void run() {
-                    getCollectionCount();
-                }
-            };
-
-            gifTimer.schedule(gifTimerTask, 1000, GIFPERIOD_2);
-            //gifTimer.schedule(gifTimerTask, 5000, 20000);
-        }
+        gifTimer = new Timer(true);
+        gifTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                getCollectionCount();
+            }
+        }, 1000, GIFPERIOD_2);
     }
 
     /**
@@ -3698,10 +3684,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
      */
     private void closePollingGifCount() {
         if (gifTimer != null) {
-            gifTimerTask.cancel();
             gifTimer.cancel();
             gifTimer.purge();
-            gifTimerTask = null;
             gifTimer = null;
         }
     }
@@ -3832,9 +3816,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         int keepTime = StadiumUtils.convertStringToInt(time);
 
-        L.d("wwwww","未开始时：state: " + state);
-        L.d("wwwww","未开始时：time: " + time);
-
         tv_hean_srcoe_aop.setText("\'");
         final AlphaAnimation anim1 = new AlphaAnimation(1, 1);
         anim1.setDuration(500);
@@ -3880,6 +3861,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         switch (state) {
             case "0":// 未开
                 tv_hean_srcoe_aop.setVisibility(View.GONE);
+                showGifAnimation(0);
                 break;
             case "1":// 上半场
                 date.setVisibility(View.VISIBLE);
@@ -3925,7 +3907,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 date.setVisibility(View.VISIBLE);
                 tv_hean_srcoe_aop.setVisibility(View.GONE);
                 score.setVisibility(View.VISIBLE);
-                mHalfScore.setVisibility(View.GONE);
+                mHalfScore.setVisibility(View.VISIBLE);
                 date.setText(mContext.getString(R.string.snooker_state_over_game));
                 date.setTextColor(mContext.getResources().getColor(R.color.red));
                 break;

@@ -9,7 +9,7 @@
     android:layout_marginTop="60dp"
     android:layout_marginBottom="60dp"
     android:background="@drawable/football_datails_head"
-    android:visibility="gone"
+    android:visibility="visible"
     android:orientation="vertical">
 
     <!--联赛名-->
@@ -82,7 +82,6 @@
                 android:textColor="@color/linecolor"
                 android:textSize="@dimen/number_desc"
                 android:paddingTop="5dp"
-                android:visibility="visible"
                 tools:text="18:00" />
 
             <TextView
