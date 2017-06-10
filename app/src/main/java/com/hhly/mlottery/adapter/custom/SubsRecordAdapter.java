@@ -41,24 +41,27 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         baseViewHolder.setText(R.id.betting_specialist_grade, getSpecialistGrade(b.getLevels()));
         baseViewHolder.setVisible(R.id.betting_lainzhong, false);
 
-        if (b.getWinpointThreeDays() == 0) {
+    /*    if (b.getWinpointThreeDays() == 0) {
             baseViewHolder.setVisible(R.id.betting_lately_accuracy, false);
-        } else {
-            baseViewHolder.setVisible(R.id.betting_lately_accuracy, true);
-            baseViewHolder.setText(R.id.betting_lately_accuracy, getLastAccuracy(b.getWinpointThreeDays(), b.getErrpointThreeDays()));
-        }
+        } else {*/
+       // baseViewHolder.setVisible(R.id.betting_lately_accuracy, true);
+        baseViewHolder.setText(R.id.betting_lately_accuracy, getLastAccuracy(b.getWinpointThreeDays(), b.getErrpointThreeDays()));
+        // }
 
         baseViewHolder.setText(R.id.betting_league_name, b.getLeagueName());
         baseViewHolder.setVisible(R.id.betting_round, false);
         baseViewHolder.setText(R.id.betting_date, b.getMatchDate());
         baseViewHolder.setText(R.id.betting_week, b.getMatchTime());
-        if (0 == b.getType()) {
+     /*   if (0 == b.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.jingcaidanguan_txt));
         } else if (1 == b.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.yapan_txt));
         } else if (2 == b.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.daxiaoqiu_txt));
-        }
+        }*/
+
+        baseViewHolder.setText(R.id.betting_concede_points_spf, b.getTypeStr());
+
 
         baseViewHolder.setText(R.id.betting_home_name, b.getHomeName());
         baseViewHolder.setText(R.id.betting_guest_name, b.getGuestName());

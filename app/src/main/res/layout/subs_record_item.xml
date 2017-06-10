@@ -169,7 +169,6 @@
                             android:id="@+id/betting_concede_points_spf"
                             style="@style/betting_recommend_style"
                             android:background="@drawable/betting_shape_corners_spf"
-                            android:text="让球胜平负"
                             android:textColor="@color/betting_recommend_zhuanjia_spf_color" />
                     </LinearLayout>
                 </RelativeLayout>

@@ -168,6 +168,15 @@ public class RecommendArticlesBean {
             private String headImg;
             private int winpointThreeDays;
             private int errpointThreeDays;
+            private String typeStr;
+
+            public String getTypeStr() {
+                return typeStr;
+            }
+
+            public void setTypeStr(String typeStr) {
+                this.typeStr = typeStr;
+            }
 
             public String getId() {
                 return id;
