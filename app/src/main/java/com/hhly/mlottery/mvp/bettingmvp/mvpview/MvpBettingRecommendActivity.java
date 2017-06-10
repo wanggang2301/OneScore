@@ -441,8 +441,6 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         leagueKey.addAll(resultEventBusEntity.getKeyChecked());
 
         setStatus(SHOW_STATUS_LOADING);
-        listData.clear();
-        setStatus(SHOW_STATUS_LOADING);
         mLoadHandler.postDelayed(mRun, 0);
 
     }
