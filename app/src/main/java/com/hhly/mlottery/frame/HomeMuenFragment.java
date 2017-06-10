@@ -363,7 +363,7 @@ public class HomeMuenFragment extends Fragment {
                                         case "44":// 足球竞彩
                                             mContext.startActivity(new Intent(mContext, FootballMatchActivity.class));
                                             break;
-                                        case "91":// 竞彩推介
+                                        case "92":// 竞彩推介
                                             mContext.startActivity(new Intent(mContext, MvpBettingRecommendActivity.class));
                                             break;
                                         case "101": //角球比分

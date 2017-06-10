@@ -157,7 +157,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             "332",// 七乐彩
             "44",// 竞彩足球
             "101",// 角球比分
-            "91"// 竞彩推介
+            "92"// 竞彩推介
     };
 
     /**
