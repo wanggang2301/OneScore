@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -13,6 +12,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.RecommendedExpertDetailsActivity;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -55,8 +55,9 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         }); //方法中设置asBitmap可以设置回调类型
 */
 
+        L.d("headimg",b.getHeadImg());
         Glide.with(mContext).load(b.getHeadImg()).placeholder(R.mipmap.specialist_default).into((CircleImageView) baseViewHolder.getView(R.id.betting_portrait_img));
-        baseViewHolder.setText(R.id.betting_specialist_name, b.getNickName());
+     baseViewHolder.setText(R.id.betting_specialist_name, b.getNickName());
         baseViewHolder.setText(R.id.betting_specialist_grade, getSpecialistGrade(b.getLevels()));
         baseViewHolder.setVisible(R.id.betting_lainzhong, false);
 
