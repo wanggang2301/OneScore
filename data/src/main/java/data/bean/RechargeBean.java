@@ -22,7 +22,7 @@ public class RechargeBean {
     private int tradeType;
     private String tradeName;
     private String payType;
-    private double tradeAmount;
+    private int tradeAmount;
     private int status;
     private String finishTime;
     private int rechargeType;
@@ -31,11 +31,11 @@ public class RechargeBean {
     private String payResult;
     private String statusName;
 
-    public double getTradeAmount() {
+    public int getTradeAmount() {
         return tradeAmount;
     }
 
-    public void setTradeAmount(double tradeAmount) {
+    public void setTradeAmount(int tradeAmount) {
         this.tradeAmount = tradeAmount;
     }
 

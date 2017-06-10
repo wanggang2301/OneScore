@@ -36,30 +36,51 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
     }
 
     @Override
-    protected void convert(BaseViewHolder baseViewHolder, final SubsRecordBean.PurchaseRecordsBean.ListBean b) {
+    protected void convert(final BaseViewHolder baseViewHolder, final SubsRecordBean.PurchaseRecordsBean.ListBean b) {
+
+
+   /*     // Uri uri = new Uri.Builder().build();
+        Glide.with(mContext).load(b.getHeadImg()).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                baseViewHolder.setImageBitmap(R.id.betting_portrait_img, resource);
+            }
+
+            @Override
+            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+                super.onLoadFailed(e, errorDrawable);
+                baseViewHolder.setImageResource(R.id.betting_portrait_img, R.mipmap.specialist_default);
+                //history_item_pic.setVisibility(View.GONE);
+            }
+        }); //方法中设置asBitmap可以设置回调类型
+*/
+
         Glide.with(mContext).load(b.getHeadImg()).placeholder(R.mipmap.specialist_default).into((CircleImageView) baseViewHolder.getView(R.id.betting_portrait_img));
         baseViewHolder.setText(R.id.betting_specialist_name, b.getNickName());
         baseViewHolder.setText(R.id.betting_specialist_grade, getSpecialistGrade(b.getLevels()));
         baseViewHolder.setVisible(R.id.betting_lainzhong, false);
 
-        if (b.getWinpointThreeDays() == 0) {
+    /*    if (b.getWinpointThreeDays() == 0) {
             baseViewHolder.setVisible(R.id.betting_lately_accuracy, false);
-        } else {
-            baseViewHolder.setVisible(R.id.betting_lately_accuracy, true);
-            baseViewHolder.setText(R.id.betting_lately_accuracy, getLastAccuracy(b.getWinpointThreeDays(), b.getErrpointThreeDays()));
-        }
+        } else {*/
+        // baseViewHolder.setVisible(R.id.betting_lately_accuracy, true);
+        baseViewHolder.setText(R.id.betting_lately_accuracy, getLastAccuracy(b.getWinpointThreeDays(), b.getErrpointThreeDays()));
+        // }
 
         baseViewHolder.setText(R.id.betting_league_name, b.getLeagueName());
         baseViewHolder.setVisible(R.id.betting_round, false);
         baseViewHolder.setText(R.id.betting_date, b.getMatchDate());
         baseViewHolder.setText(R.id.betting_week, b.getMatchTime());
-        if (0 == b.getType()) {
+     /*   if (0 == b.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.jingcaidanguan_txt));
         } else if (1 == b.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.yapan_txt));
         } else if (2 == b.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.daxiaoqiu_txt));
-        }
+        }*/
+
+        baseViewHolder.setText(R.id.betting_concede_points_spf, b.getTypeStr());
+
 
         baseViewHolder.setText(R.id.betting_home_name, b.getHomeName());
         baseViewHolder.setText(R.id.betting_guest_name, b.getGuestName());
