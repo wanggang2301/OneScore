@@ -1829,5 +1829,6 @@
     <string name="expert_certification_txt">專家認證</string>
     <string name="expert_shehe_txt">專家認證審核中,暫不能發佈推介！</string>
     <string name="no_qq_installed">本機未安裝QQ應用</string>
+    <string name="application_specialist">申請專家</string>
 
 </resources>

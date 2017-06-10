@@ -82,7 +82,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
     private LinearLayout agreement;
     private TextView specialist_tv2;
     private LinearLayout good_league_rl;
-    private ImageView success_image;
+    private LinearLayout success_image;
     private TextView shen_good_legue;
     private TextView symptomSelectedNameTv;
     private String language;
@@ -103,7 +103,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
 
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);
 
-        public_txt_title.setText("申请专家");
+        public_txt_title.setText(R.string.application_specialist);
 
         findViewById(R.id.public_img_back).setOnClickListener(this);
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
@@ -176,7 +176,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
 
         //审核页面
         to_examine = (LinearLayout) findViewById(R.id.to_examine);
-        success_image = (ImageView) findViewById(R.id.success_image);
+        success_image = (LinearLayout) findViewById(R.id.success_image);
 
         agreement = (LinearLayout) findViewById(R.id.agreement);
 
@@ -226,7 +226,12 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                 if (isChecked) {
                     if (real_name.getText().toString() != null && id_datas.getText().toString() != null && good_league.getText().toString() != null && specalist_edittext.getText().toString() != null) {
                         specalist_error_tv.setVisibility(View.GONE);
-                        comfirm(real_name.getText().toString(), id_datas.getText().toString(), new_leauue, specalist_edittext.getText().toString());
+                        if (new_leauue==null){
+                            UiUtils.toast(this, "请添加联赛");
+                        }else{
+                            comfirm(real_name.getText().toString(), id_datas.getText().toString(), new_leauue, specalist_edittext.getText().toString());
+                        }
+
                     } else {
                         specalist_error_tv.setVisibility(View.VISIBLE);
                     }
@@ -358,15 +363,13 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                 if (requestBean != null && requestBean.getCode().equals("200")) {
 
 
-
-
                     if (requestBean.getUserInfo().getIsExpert()==3) {
                         to_examine.setVisibility(View.GONE);
                         scrollview.setVisibility(View.VISIBLE);
                         real_name.setText(requestBean.getUserInfo().getRealName());
                         id_datas.setText(requestBean.getUserInfo().getIdCard());
                         specalist_edittext.setText(requestBean.getUserInfo().getIntroduce());
-
+                        good_league.setText(requestBean.getUserInfo().getSkillfulLeague());
                         specalist_error_tv.setVisibility(View.VISIBLE);
                         specalist_error_text.setText(requestBean.getUserInfo().getApproveIdea());
                         success_image.setVisibility(View.GONE);
@@ -390,7 +393,9 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
 
                         success_image.setVisibility(View.VISIBLE);
                         good_league_rl.setVisibility(View.GONE);
-                        SplitString1(requestBean.getUserInfo().getSkillfulLeague());
+                        if(requestBean.getUserInfo().getSkillfulLeague()!=null){
+                            SplitString1(requestBean.getUserInfo().getSkillfulLeague());
+                        }
                         real_name.setKeyListener(null);
                         id_datas.setKeyListener(null);
                         specalist_edittext.setKeyListener(null);
@@ -455,7 +460,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                 if (register != null && Integer.parseInt(register.getCode()) == AccountResultCode.EXPERT_CERTIFICATION_AUDIT) {
                     scrollview.setVisibility(View.GONE);
                     to_examine.setVisibility(View.VISIBLE);
-                    EventBus.getDefault().post(new SpecialistBean(2));
+                   // EventBus.getDefault().post(new SpecialistBean(2));
 
                 } else {
                     scrollview.setVisibility(View.VISIBLE);
