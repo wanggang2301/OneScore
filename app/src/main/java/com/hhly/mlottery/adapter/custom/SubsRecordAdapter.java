@@ -94,10 +94,11 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(mContext, mContext.getResources().getString(R.string.developing), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, mContext.getResources().getString(R.string.developing), Toast.LENGTH_SHORT).show();
                 //专家详情
                 Intent intent=new Intent(mContext,RecommendedExpertDetailsActivity.class);
                 intent.putExtra("expertId",b.getUserId());
+                mContext.startActivity(intent);
             }
         });
 

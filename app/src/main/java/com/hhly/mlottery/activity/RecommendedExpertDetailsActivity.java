@@ -25,10 +25,12 @@ import com.hhly.mlottery.bean.MostExpertBean;
 import com.hhly.mlottery.bean.RecomeHeadBean;
 import com.hhly.mlottery.bean.RecommendationExpertBean;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.sina.weibo.sdk.component.view.AppProgressDialog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -162,10 +164,10 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         pageNum = 1;
         Map<String, String> mapPrament = new HashMap<>();
-        mapPrament.put("userId", "HHLY00000207");
+        mapPrament.put("userId", AppConstants.register.getUser().getUserId());
         mapPrament.put("pageNum", pageNum + "");
         mapPrament.put("pageSize", PAGE_SIZE + "");
-        mapPrament.put("expertId", "HHLY00000207");
+        mapPrament.put("expertId", expertId);
         if (MyApp.isLanguage.equals("rCN")) {
             // 如果是中文简体的语言环境
             mapPrament.put("lang", "zh");
@@ -177,10 +179,10 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         String signs = SignUtils.getSign("/promotion/info/expertPromotions", mapPrament);
 
         Map<String, String> param = new HashMap<>();
-        param.put("userId", "HHLY00000207");
+        param.put("userId", AppConstants.register.getUser().getUserId());
         param.put("pageNum", pageNum+"");
         param.put("pageSize", PAGE_SIZE + "");
-        param.put("expertId", "HHLY00000207");
+        param.put("expertId",expertId);
         param.put("sign", signs);
 
 
@@ -237,10 +239,10 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         pageNum++;
         Map<String, String> mapPrament = new HashMap<>();
-        mapPrament.put("userId", "HHLY00000207");
+        mapPrament.put("userId", AppConstants.register.getUser().getUserId());
         mapPrament.put("pageNum", pageNum + "");
         mapPrament.put("pageSize", PAGE_SIZE + "");
-        mapPrament.put("expertId", "HHLY00000207");
+        mapPrament.put("expertId", expertId);
         if (MyApp.isLanguage.equals("rCN")) {
             // 如果是中文简体的语言环境
             mapPrament.put("lang", "zh");
@@ -252,10 +254,10 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         String signs = SignUtils.getSign("/promotion/info/expertPromotions", mapPrament);
 
         Map<String, String> param = new HashMap<>();
-        param.put("userId", "HHLY00000207");
+        param.put("userId", AppConstants.register.getUser().getUserId());
         param.put("pageNum", pageNum + "");
         param.put("pageSize", PAGE_SIZE + "");
-        param.put("expertId", "HHLY00000207");
+        param.put("expertId", expertId);
         param.put("sign", signs);
 
 
@@ -301,8 +303,8 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
 
         Map<String, String> mapPrament = new HashMap<>();
-        mapPrament.put("userId", "HHLY00000207");
-        mapPrament.put("expertId", "HHLY00000207");
+        mapPrament.put("userId", AppConstants.register.getUser().getUserId());
+        mapPrament.put("expertId", expertId);
         if (MyApp.isLanguage.equals("rCN")) {
             // 如果是中文简体的语言环境
             mapPrament.put("lang", "zh");
@@ -314,8 +316,8 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         String signs = SignUtils.getSign("/user/expertIntroduct", mapPrament);
 
         Map<String, String> param = new HashMap<>();
-        param.put("userId", "HHLY00000207");
-        param.put("expertId", "HHLY00000207");
+        param.put("userId", AppConstants.register.getUser().getUserId());
+        param.put("expertId", expertId);
         param.put("sign", signs);
 
 
@@ -330,17 +332,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
                         return;
                     }
-
                     setHeaderDatas(jsonObject.getUserInfo());
-
-                  /*  if (expertDatas != null) {
-                        setHeaderDatas(expertDatas);
-                    }
-                    infoArrayDatas.clear();
-                    infoArrayDatas.addAll(jsonObject.getInfoArray());
-                    //填充数据
-                    expertsListAdapter.notifyDataSetChanged();
-                    */
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);

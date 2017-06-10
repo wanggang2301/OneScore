@@ -21,6 +21,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BaseActivity;
 import com.hhly.mlottery.activity.BettingRecommendSettingActivity;
 import com.hhly.mlottery.activity.LoginActivity;
+import com.hhly.mlottery.activity.RecommendedExpertDetailsActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
@@ -372,7 +373,10 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
             @Override
             public void SpecialistOnClick(View view, String s) {
 //                Toast.makeText(mContext, "专家** " + s, Toast.LENGTH_SHORT).show();
-                L.d("yxq-0418=== " , "点击了*专家** " + s);
+                Intent intent=new Intent(mContext,RecommendedExpertDetailsActivity.class);
+                intent.putExtra("expertId",s);
+                startActivity(intent);
+               // L.d("yxq-0418=== " , "点击了*专家** " + s);
             }
         };
     }
