@@ -403,6 +403,15 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
                 break;
+            case R.id.cash_balance_payable_rl:
+                if(DeviceInfo.isLogin()){
+                    Intent intent1=new Intent(this,WithDrawActivity.class);
+                    intent1.putExtra("balance",AppConstants.register.getUser().getAvailableBalance()+"");
+                    startActivity(intent1);
+                }else {
+                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
+                }
+                break;
             case R.id.rl_my_join:// 加入QQ粉丝群
                 joinQQGroup("QVQ_ZzmrH5PocArnvvw9_U_hnv3Gs2Os");
                 break;
