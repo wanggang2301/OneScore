@@ -557,8 +557,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
                     subscribe_tv.setText(register.getUser().getBuyCount());
                     promotion_tv.setText(register.getUser().getPushCount());
-                    available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance()));
-                    cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance()));
+                    available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance())+"元");
+                    cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance())+"元");
 
                     DeviceInfo.saveRegisterInfo(register);
                     if (register.getUser().getIsExpert()==0) {

@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,10 +10,12 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -69,9 +72,12 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
     private static final int VIEW_STATUS_NET_ERROR = 44;
     private static final int VIEW_STATUS_NO_DATA = 55;
 
-    private static final int PAGE_SIZE = 30;
+    private static final int PAGE_SIZE = 10;
     private int pageNum = 1;
     private String expertId;
+
+    private View mOnloadingView;
+    private View mNoLoadingView;
 
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -111,13 +117,15 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
             }
         }
     };
+    private boolean hasNextPage;
+    private Context mContext;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_experts);
-
+        mContext = this;
         if (getIntent() != null) {
             expertId = getIntent().getStringExtra(EXPERT_ID);
         }
@@ -125,110 +133,36 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         initView();
         initData();
         initHeadData();
-        intiEvent();
+        // intiEvent();
 
     }
 
-    private void intiEvent() {
-
-
-        recomenHeadAdapter = new RecomenHeadAdapter(RecommendedExpertDetailsActivity.this,R.layout.recommend_articles_item,null);
-        ex_recyclerview.setAdapter(recomenHeadAdapter);
-        recomenHeadAdapter.openLoadMore(0, true);
-        recomenHeadAdapter.setLoadingView(view);
+    private void initEvent() {
+        //上拉加载更多
         recomenHeadAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                ex_recyclerview.post(new Runnable() {
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
-                        pullUpLoadMoreData();
+                        if (hasNextPage) {
+                            pullUpLoadMoreData();
+                        } else {
+                            Toast.makeText(mContext, mContext.getResources().getText(R.string.nodata_txt), Toast.LENGTH_SHORT).show();
+//                            mOnloadingView.findViewById(R.id.loading_text)
+                            recomenHeadAdapter.addFooterView(mNoLoadingView);
+                        }
                     }
-                });
+                }, 1000);
             }
         });
 
-
-        recomenHeadAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int i) {
-                L.d("experts", "index: " + i);
-
-
-            }
-
-
-        });
     }
 
 
     // 请求网络数据
     private void initData() {
-        // mSwipeRefreshLayout.setRefreshing(true);
-        // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-        pageNum = 1;
-        Map<String, String> mapPrament = new HashMap<>();
-        mapPrament.put("userId", AppConstants.register.getUser().getUserId());
-        mapPrament.put("pageNum", pageNum + "");
-        mapPrament.put("pageSize", PAGE_SIZE + "");
-        mapPrament.put("expertId", expertId);
-        if (MyApp.isLanguage.equals("rCN")) {
-            // 如果是中文简体的语言环境
-            mapPrament.put("lang", "zh");
-        } else if (MyApp.isLanguage.equals("rTW")) {
-            // 如果是中文繁体的语言环境
-            mapPrament.put("lang", "zh-TW");
-        }
-        mapPrament.put("timeZone", "8");
-        String signs = SignUtils.getSign("/promotion/info/expertPromotions", mapPrament);
 
-        Map<String, String> param = new HashMap<>();
-        param.put("userId", AppConstants.register.getUser().getUserId());
-        param.put("pageNum", pageNum+"");
-        param.put("pageSize", PAGE_SIZE + "");
-        param.put("expertId",expertId);
-        param.put("sign", signs);
-
-
-        VolleyContentFast.requestJsonByGet(BaseURLs.EXPERTPROMOTIONS, param, new VolleyContentFast.ResponseSuccessListener<RecommendationExpertBean>() {
-
-
-            @Override
-            public void onResponse(RecommendationExpertBean jsonObject) {
-                mSwipeRefreshLayout.setRefreshing(false);
-                if (jsonObject != null) {
-
-                    if (jsonObject.getExpertPromotions().getList()==null) {
-
-                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
-                        return;
-                    }
-
-                    listBeanList = new ArrayList<>();
-                    listBeanList.addAll(jsonObject.getExpertPromotions().getList());
-                    recomenHeadAdapter.notifyItemRemoved(listBeanList.size() - 1);
-                    recomenHeadAdapter.getData().clear();
-                    recomenHeadAdapter.addData(listBeanList);
-                } else {
-                    mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
-                }
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
-            }
-        }, RecommendationExpertBean.class);
-
-
-    }
-
-    private void pullUpLoadMoreData() {
-
-        // mSwipeRefreshLayout.setRefreshing(true);
-        // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
-        pageNum++;
         Map<String, String> mapPrament = new HashMap<>();
         mapPrament.put("userId", AppConstants.register.getUser().getUserId());
         mapPrament.put("pageNum", pageNum + "");
@@ -256,22 +190,102 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
 
             @Override
             public void onResponse(RecommendationExpertBean jsonObject) {
-                mSwipeRefreshLayout.setRefreshing(false);
-                if (jsonObject.getExpertPromotions()!= null) {
+                if (jsonObject != null) {
 
-                    if (jsonObject.getExpertPromotions().getList() != null && jsonObject.getExpertPromotions().getList().size() > 0) {
-                        loadmore_text.setText(RecommendedExpertDetailsActivity.this.getResources().getString(R.string.loading_data_txt));
-                        progressBar.setVisibility(View.VISIBLE);
-                        listBeanList.addAll(jsonObject.getExpertPromotions().getList());
-                        recomenHeadAdapter.addData(listBeanList);
-                        recomenHeadAdapter.notifyDataChangedAfterLoadMore(true);
-                    } else {
-                        // loadmore_text.setText(FootballMatchActivity.this.getResources().getString(R.string.nodata_txt));
-                        loadmore_text.setText("");
-                        progressBar.setVisibility(View.GONE);
+                    if (jsonObject.getExpertPromotions().getList() == null) {
+                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
                         return;
                     }
+                    hasNextPage = jsonObject.getExpertPromotions().isHasNextPage();
 
+
+                    listBeanList = new ArrayList<>();
+                    listBeanList.addAll(jsonObject.getExpertPromotions().getList());
+
+                    if (recomenHeadAdapter == null) {
+                        recomenHeadAdapter = new RecomenHeadAdapter(mContext, listBeanList);
+                        recomenHeadAdapter.setLoadingView(view);
+                        ex_recyclerview.setAdapter(recomenHeadAdapter);
+                        recomenHeadAdapter.openLoadMore(0, true);
+                        initEvent();
+
+                    } else {
+
+                        upDataAdapter();
+                    }
+
+                } else {
+                    mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
+                }
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
+            }
+        }, RecommendationExpertBean.class);
+
+
+    }
+
+    private void upDataAdapter() {
+
+        if (recomenHeadAdapter == null) {
+            return;
+        }
+        recomenHeadAdapter.updateData(listBeanList);
+        recomenHeadAdapter.notifyDataSetChanged();
+
+    }
+
+    private void pullUpLoadMoreData() {
+
+        // mSwipeRefreshLayout.setRefreshing(true);
+        // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+        pageNum += 1;
+        Map<String, String> mapPrament = new HashMap<>();
+        mapPrament.put("userId", AppConstants.register.getUser().getUserId());
+        mapPrament.put("pageNum", pageNum + "");
+        mapPrament.put("pageSize", PAGE_SIZE + "");
+        mapPrament.put("expertId", expertId);
+        if (MyApp.isLanguage.equals("rCN")) {
+            // 如果是中文简体的语言环境
+            mapPrament.put("lang", "zh");
+        } else if (MyApp.isLanguage.equals("rTW")) {
+            // 如果是中文繁体的语言环境
+            mapPrament.put("lang", "zh-TW");
+        }
+        mapPrament.put("timeZone", "8");
+        String signs = SignUtils.getSign("/promotion/info/expertPromotions", mapPrament);
+
+        Map<String, String> param = new HashMap<>();
+        param.put("userId", AppConstants.register.getUser().getUserId());
+        param.put("pageNum", pageNum + "");
+        param.put("pageSize", PAGE_SIZE + "");
+        param.put("expertId", expertId);
+        param.put("sign", signs);
+
+
+        VolleyContentFast.requestJsonByGet(BaseURLs.EXPERTPROMOTIONS, param, new VolleyContentFast.ResponseSuccessListener<RecommendationExpertBean>() {
+
+            @Override
+            public void onResponse(RecommendationExpertBean jsonObject) {
+
+                if (jsonObject.getExpertPromotions() != null) {
+
+                    if (jsonObject.getExpertPromotions().getList() != null && jsonObject.getExpertPromotions().getList().size() > 0) {
+
+                        hasNextPage = jsonObject.getExpertPromotions().isHasNextPage();
+
+                        if (jsonObject.getExpertPromotions().getList().size() == 0) {
+
+                            recomenHeadAdapter.notifyDataChangedAfterLoadMore(false);
+                            recomenHeadAdapter.addFooterView(mNoLoadingView);
+
+                        } else {
+                            recomenHeadAdapter.notifyDataChangedAfterLoadMore(jsonObject.getExpertPromotions().getList(), true);
+                        }
+                    }
 
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
@@ -289,8 +303,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
 
     // 请求头部数据
     private void initHeadData() {
-        // mSwipeRefreshLayout.setRefreshing(true);
-        // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
+
 
         Map<String, String> mapPrament = new HashMap<>();
         mapPrament.put("userId", AppConstants.register.getUser().getUserId());
@@ -314,7 +327,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         VolleyContentFast.requestJsonByGet(BaseURLs.EXPERTINTRODUCT, param, new VolleyContentFast.ResponseSuccessListener<RecomeHeadBean>() {
             @Override
             public void onResponse(RecomeHeadBean jsonObject) {
-                mSwipeRefreshLayout.setRefreshing(false);
+
                 if (jsonObject != null) {
 
                     if (jsonObject.getUserInfo() == null) {
@@ -340,11 +353,11 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
 
     private void initView() {
 
-
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.match_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getApplicationContext(), StaticValues.REFRASH_OFFSET_END));
+
         LayoutInflater layoutInflater = this.getLayoutInflater();
         view = layoutInflater.inflate(R.layout.view_load_more, null);
 
@@ -382,7 +395,8 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         ex_recyclerview.setNestedScrollingEnabled(false);
         layoutManager.setOrientation(OrientationHelper.VERTICAL);//设置为垂直布局，这也是默认的
 
-
+        mOnloadingView = getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) ex_recyclerview.getParent(), false);
+        mNoLoadingView = getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) ex_recyclerview.getParent(), false);
     }
 
     @Override
@@ -394,6 +408,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
 
             case R.id.match_error_btn:
                 initData();
+                initHeadData();
                 break;
 
             default:
