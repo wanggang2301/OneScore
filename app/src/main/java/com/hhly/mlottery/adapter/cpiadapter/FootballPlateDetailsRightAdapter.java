@@ -15,6 +15,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.oddsbean.OddsDetailsDataInfo;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.HandicapUtils;
+import com.hhly.mlottery.util.L;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 
 import java.util.Collections;
@@ -37,14 +38,16 @@ public class FootballPlateDetailsRightAdapter
     int grey;
 
     private String oddsType;
+    private String companyId;
     private List<OddsDetailsDataInfo.DetailsEntity> details;
 
-    public FootballPlateDetailsRightAdapter(String oddsType,
+    public FootballPlateDetailsRightAdapter(String companyId, String oddsType,
                                             List<OddsDetailsDataInfo.DetailsEntity> details,
                                             List<OddsDetailsDataInfo.DetailsEntity.DataDetailsEntity> items) {
         super(R.layout.item_odds_details_child, items);
         this.oddsType = oddsType;
         this.details = details;
+        this.companyId = companyId;
         refreshData();
     }
 
@@ -84,16 +87,23 @@ public class FootballPlateDetailsRightAdapter
         holder.setTextColor(R.id.odds_details_guest_txt, getTextColor(dataDetailsEntity.getGuestColor()));
         // 盘口
         String hand = String.format(Locale.US, "%.2f", dataDetailsEntity.getHand());
-        if ("1".equals(oddsType)) {
-            // 亚盘
-            holder.setText(R.id.odds_details_dish_txt, HandicapUtils.changeHandicap(hand));
-        } else if ("3".equals(oddsType)) {
-            // 大小球
-            holder.setText(R.id.odds_details_dish_txt, HandicapUtils.changeHandicapByBigLittleBall(hand));
-        } else {
-            // 欧赔
+
+
+        if (companyId.equals("0")) { // 产品需求没搞好只能这样处理一下
             holder.setText(R.id.odds_details_dish_txt, hand);
+        } else {
+            if ("1".equals(oddsType)) {
+                // 亚盘
+                holder.setText(R.id.odds_details_dish_txt, HandicapUtils.changeHandicap(hand));
+            } else if ("3".equals(oddsType)) {
+                // 大小球
+                holder.setText(R.id.odds_details_dish_txt, HandicapUtils.changeHandicapByBigLittleBall(hand));
+            } else {
+                // 欧赔
+                holder.setText(R.id.odds_details_dish_txt, hand);
+            }
         }
+
         setDishColor(holder, dataDetailsEntity.getDishColor());
     }
 
