@@ -94,7 +94,6 @@ public class FootballPlateDetailsRightAdapter
         } else {
             if ("1".equals(oddsType)) {
                 // 亚盘
-                L.d("ffggg", dataDetailsEntity.getTime() + "______" + HandicapUtils.changeHandicap(hand));
                 holder.setText(R.id.odds_details_dish_txt, HandicapUtils.changeHandicap(hand));
             } else if ("3".equals(oddsType)) {
                 // 大小球
