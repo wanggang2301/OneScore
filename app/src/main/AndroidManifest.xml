@@ -493,6 +493,8 @@
         android:screenOrientation="portrait" />
         <activity android:name=".util.imagecrop.CropActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.RecommendedExpertDetailsActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
