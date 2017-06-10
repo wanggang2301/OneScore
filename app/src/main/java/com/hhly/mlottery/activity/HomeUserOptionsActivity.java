@@ -413,7 +413,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 //                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin=" + 332434723 + "&version=1")));// 进入QQ号
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=group&uin=" + 332434723 + "&version=1")));// 进入QQ群
                 } else {
-                    Toast.makeText(this, "本机未安装QQ应用", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.no_qq_installed), Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:
