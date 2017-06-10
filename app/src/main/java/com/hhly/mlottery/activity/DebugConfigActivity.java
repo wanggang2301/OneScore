@@ -184,7 +184,6 @@ public class DebugConfigActivity extends BaseActivity {
             }
         });
 
-
     }
 
 }

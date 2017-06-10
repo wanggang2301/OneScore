@@ -1855,5 +1855,6 @@
     <string name="go_txt">前往</string>
     <string name="click_to_reload">点击重试</string>
     <string name="expert_certification_txt">专家认证</string>
+    <string name="expert_shehe_txt">专家认证审核中,暂不能发布推介！</string>
 
 </resources>

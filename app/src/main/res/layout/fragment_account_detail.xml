@@ -81,7 +81,7 @@
             android:orientation="horizontal"
             >
             <LinearLayout
-                android:layout_width="20dp"
+                android:layout_width="15dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 >
@@ -110,13 +110,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/account_detail"
-                    android:layout_marginLeft="40dp"
+                    android:layout_marginLeft="10dp"
                     android:textColor="@color/home_logo_color"
                     android:textSize="@dimen/text_size_14"
                     />
                 </LinearLayout>
             <LinearLayout
-                android:layout_width="20dp"
+                android:layout_width="15dp"
                 android:layout_height="match_parent">
                 <LinearLayout
                     android:layout_width="20dp"
@@ -149,8 +149,8 @@
             android:layout_height="13dp"
             android:gravity="bottom"
             android:background="@color/account_tab_color"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
 
             >
