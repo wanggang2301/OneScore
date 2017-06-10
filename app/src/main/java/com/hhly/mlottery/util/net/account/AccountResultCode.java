@@ -203,6 +203,7 @@ public interface AccountResultCode {
     /*语言参数错误*/
     int  LANGUAGE_PARAMETER_ERROR = 2006;
 
-
+    /** 用户在其他设备登录 */
+    int TOKEN_LOSE_EFFICACY_BY_OTHER_LOGIN_ERROR_CODE = 1000;
 
 }

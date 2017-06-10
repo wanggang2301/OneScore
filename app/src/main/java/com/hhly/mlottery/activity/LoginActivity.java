@@ -600,6 +600,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private void login() {
         String userName = et_username.getText().toString();
         String passWord = et_password.getText().toString();
+        PreferenceUtil.commitString("et_password", passWord);
         if (userName.isEmpty()) {
             UiUtils.toast(LoginActivity.this, R.string.account_cannot_be_empty);
             return;

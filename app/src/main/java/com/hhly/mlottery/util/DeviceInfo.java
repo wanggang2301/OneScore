@@ -500,6 +500,10 @@ public class DeviceInfo {
 			case AccountResultCode.LANGUAGE_PARAMETER_ERROR:
 				UiUtils.toast(MyApp.getInstance(), "语言参数错误");
 				break;
+			case AccountResultCode.TOKEN_LOSE_EFFICACY_BY_OTHER_LOGIN_ERROR_CODE:
+				UiUtils.toast(MyApp.getInstance(), "用户在其他设备登录");
+				break;
+
 			default:
 				L.e(TAG, "未定义错误码 : rescode = " + rescode + " , defaultMessage = " + defaultMessage);
 				if (!TextUtils.isEmpty(defaultMessage)) {

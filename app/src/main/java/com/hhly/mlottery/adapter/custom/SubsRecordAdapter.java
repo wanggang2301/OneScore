@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.RecommendedExpertDetailsActivity;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
 import com.hhly.mlottery.view.CircleImageView;
@@ -74,6 +75,8 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
 
                 Toast.makeText(mContext, mContext.getResources().getString(R.string.developing), Toast.LENGTH_SHORT).show();
                 //专家详情
+                Intent intent=new Intent(mContext,RecommendedExpertDetailsActivity.class);
+                intent.putExtra("expertId",b.getUserId());
             }
         });
 

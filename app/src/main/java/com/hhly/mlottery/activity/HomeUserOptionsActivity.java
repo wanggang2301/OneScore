@@ -19,20 +19,31 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.google.code.microlog4android.appender.AbstractAppender;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ChoseHeadStartBean;
 import com.hhly.mlottery.bean.SpecialistBean;
 import com.hhly.mlottery.bean.account.Register;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.LoadingResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpChargeMoneyActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
+import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
+import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.UnitsUtil;
+import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.hhly.mlottery.util.net.account.CustomEvent;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -138,6 +149,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     private TextView promotion_tv;
     private TextView recharge_bt;
     private Context context;
+    private String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -374,7 +386,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.account_details:    //账户明细
                 if (DeviceInfo.isLogin()) {
 
-                    startActivity(new Intent(this, AccountDetailActivity.class));
+                    //startActivity(new Intent(this, AccountDetailActivity.class));
+                    startActivity(new Intent(this, RecommendedExpertDetailsActivity.class));
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
@@ -460,6 +473,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         if (DeviceInfo.isLogin()) {
             // 0 未审核  1.审核通过  2.审核中  3.审核不通过
 
+            login();
+
             if (AppConstants.register.getUser().getIsExpert() == 0) {
                 in_audit.setText("未审核");
             } else if (AppConstants.register.getUser().getIsExpert() == 1) {
@@ -496,6 +511,60 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         }
     }
 
+
+
+
+
+    /**
+     * 登录
+     */
+    private void login() {
+
+                final String url = BaseURLs.URL_LOGIN;
+
+                Map<String, String> param = new HashMap<>();
+                param.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
+                param.put("password", PreferenceUtil.getString("et_password", ""));
+
+                if (MyApp.isLanguage.equals("rCN")) {
+                    // 如果是中文简体的语言环境
+                    language = "langzh";
+                } else if (MyApp.isLanguage.equals("rTW")) {
+                    // 如果是中文繁体的语言环境
+                    language = "langzh-TW";
+                }
+
+                String sign = DeviceInfo.getSign("/user/login" + language + "password" + MD5Util.getMD5( PreferenceUtil.getString("et_password", "")) + "phoneNum" + AppConstants.register.getUser().getPhoneNum() + "timeZone8");
+                param.put("sign", sign);
+                setResult(RESULT_OK);
+
+                VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+                    @Override
+                    public void onResponse(Register register) {
+
+                        progressBar.dismiss();
+                        if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
+
+                            available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance()));
+                            cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance()));
+
+                        }else{
+
+                            return;
+                        }
+                    }
+
+                }, new VolleyContentFast.ResponseErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+
+                    }
+
+                }, Register.class);
+
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -507,6 +576,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
