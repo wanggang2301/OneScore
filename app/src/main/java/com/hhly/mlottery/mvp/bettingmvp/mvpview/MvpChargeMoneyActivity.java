@@ -258,10 +258,10 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
                     L.d("充值的金额 ：" , moneyIn);
                     switch (PAYMENT_MONEY){
                         case 0:
-                            PayMentUtils.ALiPayData(mContext , MvpChargeMoneyActivity.this ,payUrl ,getDataMap("4" , "1"));
+                            PayMentUtils.ALiPayData(mContext , MvpChargeMoneyActivity.this ,payUrl ,getDataMap(ConstantPool.ZEB_SERVICE , "1"));
                             break;
                         case 1:
-                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap("3" , "1"));
+                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap(ConstantPool.WEIXIN_SERVICE , "1"));
                             break;
                     }
                 }
@@ -327,24 +327,15 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
 
         String resultStatus = result.getResult();
 
-        if (TextUtils.equals(resultStatus, "9000")) {
+        if (TextUtils.equals(resultStatus, ConstantPool.PAY_RESULT_STATUS_SUCCESS)) {
             Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_payment_success), Toast.LENGTH_SHORT).show();
             /** 支付成功后回到当前页刷新余额接口*/
             initData();
         } else {
-            if (TextUtils.equals(resultStatus, "6001")) {
+            if (TextUtils.equals(resultStatus, ConstantPool.PAY_RESULT_STATUS_QUXIAO)) {
                 Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_payment_cancle), Toast.LENGTH_SHORT).show();
             }
             L.d("支付返回码==>> " , "" + resultStatus);
-//            else if (TextUtils.equals(resultStatus, "8000")) {
-//                Toast.makeText(mContext, "结果确认中 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            } else if (TextUtils.equals(resultStatus, "6002")) {
-//                Toast.makeText(mContext, "网络异常 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            } else if (TextUtils.equals(resultStatus, "5000")) {
-//                Toast.makeText(mContext, "重复请求 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(mContext, "支付失败 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            }
         }
     }
     /**
