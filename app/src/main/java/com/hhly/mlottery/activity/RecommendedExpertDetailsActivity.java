@@ -24,6 +24,7 @@ import com.hhly.mlottery.adapter.custom.RecommendArticlesAdapter;
 import com.hhly.mlottery.bean.MostExpertBean;
 import com.hhly.mlottery.bean.RecomeHeadBean;
 import com.hhly.mlottery.bean.RecommendationExpertBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -68,7 +69,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
     private static final int VIEW_STATUS_NET_ERROR = 44;
     private static final int VIEW_STATUS_NO_DATA = 55;
 
-    private static final int PAGE_SIZE = 10;
+    private static final int PAGE_SIZE = 30;
     private int pageNum = 1;
     private String expertId;
 
@@ -124,13 +125,17 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         initView();
         initData();
         initHeadData();
-
+        intiEvent();
 
     }
 
     private void intiEvent() {
 
 
+        recomenHeadAdapter = new RecomenHeadAdapter(RecommendedExpertDetailsActivity.this,R.layout.recommend_articles_item,null);
+        ex_recyclerview.setAdapter(recomenHeadAdapter);
+        recomenHeadAdapter.openLoadMore(0, true);
+        recomenHeadAdapter.setLoadingView(view);
         recomenHeadAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -186,7 +191,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         param.put("sign", signs);
 
 
-        VolleyContentFast.requestJsonByGet("http://m.1332255.com:81/promotion/info/expertPromotions", param, new VolleyContentFast.ResponseSuccessListener<RecommendationExpertBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.EXPERTPROMOTIONS, param, new VolleyContentFast.ResponseSuccessListener<RecommendationExpertBean>() {
 
 
             @Override
@@ -202,23 +207,9 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
 
                     listBeanList = new ArrayList<>();
                     listBeanList.addAll(jsonObject.getExpertPromotions().getList());
-                    recomenHeadAdapter = new RecomenHeadAdapter(RecommendedExpertDetailsActivity.this, listBeanList);
-                    ex_recyclerview.setAdapter(recomenHeadAdapter);
-
-                    recomenHeadAdapter.openLoadMore(0, true);
-                    recomenHeadAdapter.setLoadingView(view);
-                    intiEvent();
-
-
-                  /*  if (expertDatas != null) {
-                        setHeaderDatas(expertDatas);
-                    }
-                    infoArrayDatas.clear();
-                    infoArrayDatas.addAll(jsonObject.getInfoArray());
-                    //填充数据
-                    expertsListAdapter.notifyDataSetChanged();
-                    */
-                    // mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+                    recomenHeadAdapter.notifyItemRemoved(listBeanList.size() - 1);
+                    recomenHeadAdapter.getData().clear();
+                    recomenHeadAdapter.addData(listBeanList);
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                 }
@@ -261,7 +252,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         param.put("sign", signs);
 
 
-        VolleyContentFast.requestJsonByGet("http://m.1332255.com:81/promotion/info/expertPromotions", param, new VolleyContentFast.ResponseSuccessListener<RecommendationExpertBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.EXPERTPROMOTIONS, param, new VolleyContentFast.ResponseSuccessListener<RecommendationExpertBean>() {
 
             @Override
             public void onResponse(RecommendationExpertBean jsonObject) {
@@ -273,7 +264,6 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
                         progressBar.setVisibility(View.VISIBLE);
                         listBeanList.addAll(jsonObject.getExpertPromotions().getList());
                         recomenHeadAdapter.addData(listBeanList);
-                        //mRecyclerView.getRecycledViewPool().clear();
                         recomenHeadAdapter.notifyDataChangedAfterLoadMore(true);
                     } else {
                         // loadmore_text.setText(FootballMatchActivity.this.getResources().getString(R.string.nodata_txt));
@@ -321,7 +311,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         param.put("sign", signs);
 
 
-        VolleyContentFast.requestJsonByGet("http://m.1332255.com:81/user/expertIntroduct", param, new VolleyContentFast.ResponseSuccessListener<RecomeHeadBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.EXPERTINTRODUCT, param, new VolleyContentFast.ResponseSuccessListener<RecomeHeadBean>() {
             @Override
             public void onResponse(RecomeHeadBean jsonObject) {
                 mSwipeRefreshLayout.setRefreshing(false);
