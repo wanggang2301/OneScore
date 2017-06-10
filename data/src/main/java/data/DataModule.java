@@ -13,8 +13,10 @@ import data.api.AccountDetailApi;
 import data.api.UserCenterApiService;
 import dagger.Module;
 import dagger.Provides;
+import data.api.WithDrawApi;
 import data.repository.AccountDetailRepository;
 import data.repository.UserCenterRepository;
+import data.repository.WithdrawRepository;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -115,5 +117,17 @@ public class DataModule {
     @Singleton
     AccountDetailRepository provideAccountRepository(AccountDetailApi accountDetailApi){
         return new AccountDetailRepository(accountDetailApi);
+    }
+
+    @Provides
+    @Singleton
+    WithDrawApi providesWithDrawApi(Retrofit retrofit){
+        return retrofit.create(WithDrawApi.class);
+    }
+
+    @Provides
+    @Singleton
+    WithdrawRepository providesWithDrawRepository(WithDrawApi withDrawApi){
+        return new WithdrawRepository(withDrawApi);
     }
 }

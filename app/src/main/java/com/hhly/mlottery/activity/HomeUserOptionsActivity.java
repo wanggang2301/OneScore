@@ -127,6 +127,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     private TextView subscribe_tv;
     private TextView promotion_tv;
     private TextView recharge_bt;
+    //提现
+    private LinearLayout mWithdrawLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +165,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
         //审核中
         in_audit = (TextView) findViewById(R.id.in_audit);
+        mWithdrawLayout= (LinearLayout) findViewById(R.id.cash_balance_payable_rl);
+        mWithdrawLayout.setOnClickListener(this);
 
              /*判断登录状态*/
         if (DeviceInfo.isLogin()) {
@@ -376,6 +380,15 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     startActivity(new Intent(this, MvpChargeMoneyActivity.class));
 
                 } else {
+                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
+                }
+                break;
+            case R.id.cash_balance_payable_rl:
+                if(DeviceInfo.isLogin()){
+                    Intent intent1=new Intent(this,WithDrawActivity.class);
+                    intent1.putExtra("balance",AppConstants.register.getUser().getAvailableBalance()+"");
+                    startActivity(intent1);
+                }else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
                 break;

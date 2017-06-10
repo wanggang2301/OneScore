@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery">
-    <!--录音权限-->
+
+    <!-- 录音权限 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <!-- 调用系统下载权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -45,10 +46,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <!--<intent-filter>
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
         <!-- 环境选择 -->
         <activity
@@ -74,6 +77,7 @@
             android:value="BETA" />
         <!-- 内地版的key-end -->
 
+
         <!-- TalkingData key  begin -->
         <meta-data
             android:name="TD_APP_ID"
@@ -94,7 +98,6 @@
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
             android:screenOrientation="portrait" />
-
 
         <!-- 足球数据内页显示 -->
         <activity
@@ -333,9 +336,9 @@
             android:name=".activity.FootballMatchSearchActivity"
             android:screenOrientation="portrait" />
         <!-- 1.2.3改版后的新首页 -->
-        <!--<activity-->
-        <!--android:name=".activity.IndexActivity"-->
-        <!--android:screenOrientation="portrait" />-->
+        <!-- <activity -->
+        <!-- android:name=".activity.IndexActivity" -->
+        <!-- android:screenOrientation="portrait" /> -->
         <!-- 斯诺克球员信息 -->
         <activity
             android:name=".activity.SnookerPlayerInfoActivity"
@@ -399,8 +402,6 @@
         <activity
             android:name=".activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity"
             android:screenOrientation="portrait" />
@@ -415,8 +416,11 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="wx7ef1da85d0f485e1" />
+
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -434,8 +438,11 @@
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="wx7ef1da85d0f485e1" />
+
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -443,7 +450,7 @@
                 <data android:scheme="wx7ef1da85d0f485e1" />
             </intent-filter>
         </activity>
-        <!--微信支付-->
+        <!-- 微信支付 -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
@@ -481,13 +488,21 @@
         <activity
             android:name=".activity.NotRecommendExpertActivity"
             android:screenOrientation="portrait" />
-        <!--角球比分-->
+        <!-- 角球比分 -->
         <activity
             android:name=".activity.FootballCornerActivity"
             android:screenOrientation="portrait" />
-        <!--账户详情-->
-        <activity android:name=".activity.ApplicationSpecialistActivity"
+        <!-- 账户详情 -->
+        <activity
+            android:name=".activity.ApplicationSpecialistActivity"
             android:screenOrientation="portrait" />
+        <!--提现界面-->
+        <activity android:name=".activity.WithDrawActivity"
+            android:windowSoftInputMode="adjustResize"
+            />
+        <!--绑定银行卡-->
+        <activity android:name=".activity.BindCardActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

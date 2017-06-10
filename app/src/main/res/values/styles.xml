@@ -1202,4 +1202,10 @@
         <item name="android:textColor">@color/betting_recommend_issue_jiage_color</item>
         <item name="android:textSize">@dimen/text_size_13</item>
     </style>
+    <!--提现页面-->
+    <style name="withdraw_text_style">
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textColor">@color/application_specialist_text_color</item>
+    </style>
+
 </resources>

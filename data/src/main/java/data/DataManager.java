@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import data.repository.AccountDetailRepository;
 import data.repository.UserCenterRepository;
+import data.repository.WithdrawRepository;
 
 /**
  * @author: Wangg
@@ -21,6 +22,9 @@ public class DataManager {
 
     @Inject
     public AccountDetailRepository mAccountRepository;
+
+    @Inject
+    public WithdrawRepository mWithdrawRepository;
 
     public DataManager(Context context, String apiHostUrl, String timeZone, String lang) {
 
