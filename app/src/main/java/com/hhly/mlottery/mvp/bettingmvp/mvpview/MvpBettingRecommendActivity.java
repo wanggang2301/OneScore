@@ -223,7 +223,7 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         if (mAdapter == null) {
             return;
         }
-        mAdapter.updateData(listData);
+//        mAdapter.updateData(listData);
         mAdapter.notifyDataSetChanged();
     }
     @Override
@@ -446,21 +446,14 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
      * @param detailsResuleEventBusEntity
      */
     public void onEventMainThread(BettingDetailsResuleEventBusEntity detailsResuleEventBusEntity){
-        //TODO***** 这里从详情页返回直接刷新会与 分页加载数据冲突（显示数据不一致）
+
         for (BettingListDataBean.PromotionData.BettingListData currlist : listData) {
             if (currlist.getId().equals(detailsResuleEventBusEntity.getCurrentId())) {
-                currlist.setLookStatus("**"); //购买成功后 LookStatus状态改变（非2 【2代表可购买】）
-                return;
+                currlist.setLookStatus("**");
+                break;
             }
         }
-        mAdapter.setNewData(listData);
-        mAdapter.notifyDataSetChanged();
-        L.d("购买返回==> " + listData.size());
-//        if (detailsResuleEventBusEntity.getCurrentId().equals("")) {
-////            setStatus(SHOW_STATUS_LOADING);
-////            mLoadHandler.postDelayed(mRun, 0);
-//            upDataAdapter();
-//        }
+        upDataAdapter();
     }
 
     /**

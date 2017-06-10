@@ -245,6 +245,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
             case R.id.public_img_back:
                 if (successPay) {
                     EventBus.getDefault().post(new BettingDetailsResuleEventBusEntity(promotionId));
+                    L.d("asdfqwer ==> " , "传参成功" + promotionId);
                 }
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
