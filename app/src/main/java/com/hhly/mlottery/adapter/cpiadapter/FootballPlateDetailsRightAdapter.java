@@ -89,7 +89,7 @@ public class FootballPlateDetailsRightAdapter
         String hand = String.format(Locale.US, "%.2f", dataDetailsEntity.getHand());
 
 
-        if (companyId.equals("0")) { // 产品需求没搞好
+        if (companyId.equals("0")) { // 产品需求没搞好只能这样处理一下
             holder.setText(R.id.odds_details_dish_txt, hand);
         } else {
             if ("1".equals(oddsType)) {
