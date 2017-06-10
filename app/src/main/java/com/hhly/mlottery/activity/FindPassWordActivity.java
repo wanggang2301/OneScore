@@ -27,6 +27,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -190,7 +191,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
 
         String phone = et_username.getText().toString();
         String verifyCode = et_verifycode.getText().toString();
-        String pwd = et_password.getText().toString();
+        final String pwd = et_password.getText().toString();
 
         if (UiUtils.isMobileNO(this , phone)){
             if (UiUtils.checkVerifyCode(this , verifyCode)){
@@ -220,6 +221,7 @@ public class FindPassWordActivity extends BaseActivity implements View.OnClickLi
 
                             if (reset != null&& Integer.parseInt(reset.getCode()) == AccountResultCode.SUCC){
                                 UiUtils.toast(MyApp.getInstance(), R.string.reset_password_succ);
+                                PreferenceUtil.commitString("et_password", pwd);
                                 L.d(TAG,"重置密码成功");
                                 setResult(RESULT_OK);
                                 finish();
