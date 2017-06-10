@@ -6,20 +6,20 @@ package com.hhly.mlottery.bean;
 
 public class SpecialistBean {
 
-    private  String code;
+    private  int code;
 
 
-    public   SpecialistBean (String code){
+    public   SpecialistBean (int code){
 
         code=code;
 
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
-    public void setCode(String code) {
+    public void setCode(int code) {
         this.code = code;
     }
 }

@@ -18,6 +18,7 @@ import com.hhly.mlottery.util.DataBus;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.imagecrop.ActivityStack;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
@@ -55,11 +56,13 @@ public class MyApp extends Application {
     DataManager mDataManager;
 
     private static RefWatcher mRefWatcher;
+    public ActivityStack mActivityStack;
 
     @Override
     public void onCreate() {
         appcontext = this;
-
+        // 初始化Activity 栈
+        mActivityStack = new ActivityStack();
         // 子线程中做初始化操作，提升APP打开速度
         new Thread() {
             @Override

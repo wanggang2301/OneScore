@@ -9,17 +9,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BaseActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingDetailsBean;
-import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
-import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingPaymentResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.LoadingResultEventBusEntity;
@@ -33,7 +29,6 @@ import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.view.CircleImageView;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,13 +71,15 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
 //    private BettingListDataBean.PromotionData.BettingListData itemData;
     private LinearLayout toPayll;
 
-    private boolean mayPay;
+    private boolean successPay = false;
     private String promotionId;
     private TextView detailsHandicp;
     private TextView leftOdds;
     private TextView middleOdds;
     private TextView rightOdds;
     private ImageView statusImg;
+    private TextView scoreTxt;
+    private TextView halfscoreTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +148,8 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         leftOdds = (TextView)findViewById(R.id.betting_odds_left_txt);
         middleOdds = (TextView)findViewById(R.id.betting_odds_middle_txt);
         rightOdds = (TextView)findViewById(R.id.betting_odds_right_txt);
+        scoreTxt = (TextView)findViewById(R.id.betting_score_txt);
+        halfscoreTxt = (TextView)findViewById(R.id.betting_halfscore_txt);
 
         statusImg = (ImageView) findViewById(R.id.betting_details_status_imageView);
 
@@ -244,9 +243,9 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                 initData();
                 break;
             case R.id.public_img_back:
-
-                EventBus.getDefault().post(new BettingDetailsResuleEventBusEntity(true));
-
+                if (successPay) {
+                    EventBus.getDefault().post(new BettingDetailsResuleEventBusEntity(promotionId));
+                }
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
@@ -365,9 +364,22 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
             }else{
                 detailsContext.setText(filtraNull(basebean.getDetail().getContext()));
             }
+
+            if (detailsData != null) {
+                switch (detailsData.getStatus()){
+                    case "1":
+                    case "2":
+                    case "6":
+                        scoreTxt.setText(matchInfoData.getHomeScore() + ":" + matchInfoData.getGuestScore());
+                        halfscoreTxt.setText("(" + matchInfoData.getHomeHalfScore() + ":" + matchInfoData.getGuestHalfScore() + ")");
+                        halfscoreTxt.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        scoreTxt.setText("VS");
+                        halfscoreTxt.setVisibility(View.GONE);
+                }
+            }
         }
-
-
 
     }
 
@@ -393,7 +405,8 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     public void onEventMainThread(BettingPaymentResultEventBusEntity paymentResultEventBusEntity){
 
         if (paymentResultEventBusEntity.isPayMentResult()) {
-            mayPay = false; //购买的返回 不可二次点击
+            successPay = true;
+
             setStatus(SHOW_STATUS_REFRESH_ONCLICK);
             initData();
         }
