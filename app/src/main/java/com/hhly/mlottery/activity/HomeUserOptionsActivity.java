@@ -386,8 +386,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.account_details:    //账户明细
                 if (DeviceInfo.isLogin()) {
 
-                    //startActivity(new Intent(this, AccountDetailActivity.class));
-                    startActivity(new Intent(this, RecommendedExpertDetailsActivity.class));
+                    startActivity(new Intent(this, AccountDetailActivity.class));
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
