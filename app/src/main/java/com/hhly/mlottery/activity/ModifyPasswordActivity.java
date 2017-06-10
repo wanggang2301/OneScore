@@ -116,7 +116,7 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
 
     private void modifyPassword() {
         String pwOld = et_password_old.getText().toString();
-        String pwNew = et_password_new.getText().toString();
+        final String pwNew = et_password_new.getText().toString();
         String pwConfirm = et_password_confirm.getText().toString();
 
         Resources res = getResources();
@@ -161,6 +161,7 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
 
                                 if (reset != null && Integer.parseInt(reset.getCode()) == AccountResultCode.SUCC) {
                                     UiUtils.toast(MyApp.getInstance(), R.string.modify_password_succ);
+                                    PreferenceUtil.commitString("et_password", pwNew.toString());
                                     L.d(TAG, "修改密码成功");
                                     setResult(RESULT_OK);
                                     finish();

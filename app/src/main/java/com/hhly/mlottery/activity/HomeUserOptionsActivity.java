@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,26 +17,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.google.code.microlog4android.appender.AbstractAppender;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ChoseHeadStartBean;
 import com.hhly.mlottery.bean.SpecialistBean;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.LoadingResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpChargeMoneyActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
-import com.hhly.mlottery.util.FocusUtils;
-import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
+import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.util.net.UnitsUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
@@ -125,7 +116,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                             .error(R.mipmap.center_head)
                             .into(mUser_image);
 
-                    Log.i("register", "isLogin" + AppConstants.register.getUser().getImageSrc());
+                    Log.i("register","isLogin"+AppConstants.register.getUser().getImageSrc());
                     mTv_nickname.setEnabled(false);
                     break;
                 default:
@@ -354,7 +345,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
             case R.id.rl_my_promotion:     //推介文章
                 if (DeviceInfo.isLogin()) {
-                    //0 未审核  1.审核通过  2.审核中  3.审核不通过
 
                     L.d("expert", AppConstants.register.getUser().getIsExpert() + "");
                     UiUtils.toast(getApplicationContext(), "返回的专家审核值===" + AppConstants.register.getUser().getIsExpert() + "——————说明:0 未审核  1.审核通过  2.审核中  3.审核不通过");
@@ -366,7 +356,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     } else {
                         startActivity(new Intent(this, NotRecommendExpertActivity.class));
                     }
-
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
@@ -415,34 +404,31 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 }
                 break;
             case R.id.rl_my_join:// 加入QQ粉丝群
-                if (checkApkExist(this, "com.tencent.mobileqq")) {
-//                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin=" + 332434723 + "&version=1")));// 进入QQ号
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=group&uin=" + 332434723 + "&version=1")));// 进入QQ群
-                } else {
-                    Toast.makeText(this, getString(R.string.no_qq_installed), Toast.LENGTH_SHORT).show();
-                }
+                joinQQGroup("QVQ_ZzmrH5PocArnvvw9_U_hnv3Gs2Os");
                 break;
             default:
                 break;
         }
     }
 
-
-    /**
-     * 检测包名是否存在
+    /****************
      *
-     * @param context
-     * @param packageName
-     * @return
-     */
-    public boolean checkApkExist(Context context, String packageName) {
-        if (packageName == null || "".equals(packageName))
-            return false;
+     * 发起添加群流程。群号：一比分用户体验群(332434723) 的 key 为： QVQ_ZzmrH5PocArnvvw9_U_hnv3Gs2Os
+     * 调用 joinQQGroup(QVQ_ZzmrH5PocArnvvw9_U_hnv3Gs2Os) 即可发起手Q客户端申请加群 一比分用户体验群(332434723)
+     *
+     * @param key 由官网生成的key
+     * @return 返回true表示呼起手Q成功，返回fals表示呼起失败
+     ******************/
+    public boolean joinQQGroup(String key) {
+        Intent intent = new Intent();
+        intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D" + key));
+        // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         try {
-            ApplicationInfo info = context.getPackageManager().getApplicationInfo(packageName,
-                    PackageManager.GET_UNINSTALLED_PACKAGES);
+            startActivity(intent);
             return true;
-        } catch (PackageManager.NameNotFoundException e) {
+        } catch (Exception e) {
+            // 未安装手Q或安装的版本不支持
+            Toast.makeText(this, getString(R.string.no_qq_installed), Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -512,31 +498,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
         if (DeviceInfo.isLogin()) {
             // 0 未审核  1.审核通过  2.审核中  3.审核不通过
-
             login();
-
-            if (AppConstants.register.getUser().getIsExpert() == 0) {
-                in_audit.setText("未审核");
-            } else if (AppConstants.register.getUser().getIsExpert() == 1) {
-                in_audit.setText("审核通过");
-            } else if (AppConstants.register.getUser().getIsExpert() == 2) {
-                in_audit.setText("审核中");
-            } else if (AppConstants.register.getUser().getIsExpert() == 3) {
-                in_audit.setText("审核不通过");
-            } else {
-                in_audit.setText("");
-            }
-
             available_balance_rl.setVisibility(View.VISIBLE);
             cash_balance_payable_rl.setVisibility(View.VISIBLE);
-            available_balance.setText(UnitsUtil.fenToYuan(AppConstants.register.getUser().getAvailableBalance()));
-            cash_balance_payable.setText(UnitsUtil.fenToYuan(AppConstants.register.getUser().getCashBalance()));
-            subscribe_tv.setText(AppConstants.register.getUser().getBuyCount());
-            promotion_tv.setText(AppConstants.register.getUser().getPushCount());
             not_login_balance.setVisibility(View.GONE);
             not_login_payable.setVisibility(View.GONE);
             mTv_nickname.setText(AppConstants.register.getUser().getNickName());
-
 
         } else {
             in_audit.setText("");
@@ -559,21 +526,27 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
         final String url = BaseURLs.URL_LOGIN;
 
-        Map<String, String> param = new HashMap<>();
-        param.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
-        param.put("password", PreferenceUtil.getString("et_password", ""));
+
+        Map<String, String> mapPrament = new HashMap<>();
+        mapPrament.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
+        mapPrament.put("password", MD5Util.getMD5(PreferenceUtil.getString("et_password", "")));
 
         if (MyApp.isLanguage.equals("rCN")) {
             // 如果是中文简体的语言环境
-            language = "langzh";
+            mapPrament.put("lang", "zh");
         } else if (MyApp.isLanguage.equals("rTW")) {
             // 如果是中文繁体的语言环境
-            language = "langzh-TW";
+            mapPrament.put("lang", "zh-TW");
         }
+        mapPrament.put("timeZone", "8");
 
-        String sign = DeviceInfo.getSign("/user/login" + language + "password" + MD5Util.getMD5(PreferenceUtil.getString("et_password", "")) + "phoneNum" + AppConstants.register.getUser().getPhoneNum() + "timeZone8");
-        param.put("sign", sign);
-        setResult(RESULT_OK);
+        String signs = SignUtils.getSign("/user/login", mapPrament);
+
+
+        Map<String, String> param = new HashMap<>();
+        param.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
+        param.put("password", MD5Util.getMD5(PreferenceUtil.getString("et_password", "")));
+        param.put("sign", signs);
 
         VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
@@ -582,8 +555,26 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 progressBar.dismiss();
                 if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
 
+                    subscribe_tv.setText(register.getUser().getBuyCount());
+                    promotion_tv.setText(register.getUser().getPushCount());
                     available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance()));
                     cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance()));
+
+                    DeviceInfo.saveRegisterInfo(register);
+                    if (register.getUser().getIsExpert()==0) {
+                        in_audit.setText("未审核");
+                    } else if (register.getUser().getIsExpert()== 1) {
+                        in_audit.setText("审核通过");
+                    } else if (register.getUser().getIsExpert()== 2) {
+                        in_audit.setText("审核中");
+                    } else if (register.getUser().getIsExpert() == 3) {
+                        in_audit.setText("审核不通过");
+                    } else {
+                        in_audit.setText("");
+                    }
+
+
+
 
                 } else {
 
@@ -613,6 +604,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
 
 
     @Override

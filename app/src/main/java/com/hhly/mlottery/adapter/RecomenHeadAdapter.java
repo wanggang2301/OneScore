@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.RecommendedExpertDetailsActivity;
+import com.hhly.mlottery.bean.FootballLotteryBean;
 import com.hhly.mlottery.bean.RecommendationExpertBean;
 
 import java.util.List;
@@ -17,17 +18,16 @@ import java.util.List;
  */
 
 public class RecomenHeadAdapter  extends BaseQuickAdapter<RecommendationExpertBean.ExpertPromotionsBean.ListBean> {
-    //private List<RecommendArticlesBean.PublishPromotionsBean.ListBean> listBeanList;
 
     private Context mContext;
+    List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> datas;
 
 
-
-    public RecomenHeadAdapter(RecommendedExpertDetailsActivity context, List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> listBeanList) {
-        super(R.layout.recommend_articles_item, listBeanList);
-        mContext = context;
+    public RecomenHeadAdapter(Context context, int layoutResId, List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> data) {
+        super(layoutResId,data);
+        this.datas = data;
+        this.mContext = context;
     }
-
 
 
     @Override

@@ -71,9 +71,9 @@
                                 android:layout_height="wrap_content"
                                 android:background="@color/betting_recommend_details_bg_color"
                                 android:orientation="vertical"
-                                android:paddingBottom="10dp"
+                                android:paddingBottom="5dp"
                                 android:paddingLeft="10dp"
-                                android:paddingTop="10dp">
+                                android:paddingTop="5dp">
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -100,6 +100,7 @@
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
                                     android:paddingTop="5dp">
 
                                     <TextView
@@ -135,11 +136,11 @@
                                             android:id="@+id/betting_halfscore_txt"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:textSize="@dimen/text_size_14"
-                                            android:textColor="@color/betting_recommend_name_color"
+                                            android:textSize="@dimen/text_size_11"
+                                            android:textColor="@color/betting_recommend_grand_color"
                                             android:paddingLeft="10dp"
                                             android:visibility="gone"
-                                            android:text="--" />
+                                            android:text=" " />
                                     </LinearLayout>
 
                                     <TextView
@@ -160,7 +161,7 @@
                                     <TextView
                                         android:id="@+id/betting_details_date"
                                         style="@style/betting_recommend_buy_text_style"
-                                        android:text="--" />
+                                        android:text="-" />
 
                                     <TextView
                                         android:id="@+id/betting_details_time"
@@ -374,6 +375,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
+                            android:paddingBottom="20dp"
                             android:background="@color/betting_recommend_buy_details_bg_color">
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -387,7 +389,9 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:gravity="center">
+                                android:paddingLeft="8dp"
+                                android:paddingRight="5dp"
+                                >
                                 <TextView
                                     android:id="@+id/betting_details_txt"
                                     android:layout_width="wrap_content"

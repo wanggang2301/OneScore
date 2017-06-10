@@ -177,6 +177,7 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
         mBottomOddsDetailsItemList = new ArrayList<>();
 
         mBottomOddsDetailsItemList.addAll(bowlBean.getMatchoddlist());
+
         setFirstOdd(bowlBean.getFirst());
         setOddTypeText();
 
