@@ -14,8 +14,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.bettingbean.BalanceDataBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayMentZFBResultEventBusEntity;
 import com.hhly.mlottery.config.ConstantPool;
@@ -58,8 +60,10 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
      * pay 参数的URL
      */
 //    String payUrl = "http://192.168.31.207:8092/pay/recharge";
-    String payUrl = "http://m.1332255.com:81/user/pay/recharge";
-//      String payUrl = "http://192.168.10.242:8092/user/pay/recharge";
+//    String payUrl = "http://192.168.10.242:8092/user/pay/recharge";
+//    String payUrl = "http://m.1332255.com:81/user/pay/recharge";
+    String payUrl = BaseURLs.URL_CHARGE_MONEY;
+
 
     /**
      * 余额查询的接口
@@ -137,8 +141,8 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
 
         mapPrament.put("userId" , userid);//用户ID
         mapPrament.put("loginToken" , token);//登陆的token
-        mapPrament.put("lang" , "zh");
-        mapPrament.put("timeZone" , "8");
+        mapPrament.put("lang" , MyApp.getLanguage());
+        mapPrament.put("timeZone" , AppConstants.timeZone + "");
         String signs = SignUtils.getSign("/user/pay/balance" , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
@@ -282,9 +286,9 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
         mapPrament.put("service" , service);//3 微信 4 支付宝
         mapPrament.put("tradeAmount" , money);//金额 分
         mapPrament.put("loginToken" , token);//登陆的token
-        mapPrament.put("lang" , "zh");
-        mapPrament.put("timeZone" , "8");
-        String signs = SignUtils.getSign("/user/pay/recharge" , mapPrament);
+        mapPrament.put("lang" , MyApp.getLanguage());
+        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_CHARGE_MONEY , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
         map.put("userId" , userid);//用户ID

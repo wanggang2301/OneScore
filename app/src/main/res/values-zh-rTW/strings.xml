@@ -1783,6 +1783,7 @@
     <string name="betting_payment_no_zero">充值金額不能為0</string>
     <string name="betting_nodata_to_again">暫時無法獲取訂單信息,請稍後重試</string>
     <string name="betting_disclaimer_txt">(免責聲明：個人觀點並不代表壹比分官方網站)</string>
+    <string name="betting_paly_choose_txt">必須選擇壹項</string>
 
     <string name="corner_score">角球比分</string>
     <string name="higher">高於</string>

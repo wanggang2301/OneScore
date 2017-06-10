@@ -12,8 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.bettingbean.BettingOrderDataBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingPaymentResultEventBusEntity;
@@ -26,6 +28,7 @@ import com.hhly.mlottery.util.PayMentUtils;
 import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.UnitsUtil;
+import com.sina.weibo.sdk.api.share.Base;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +48,8 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
     //订单接口
 //    String payUrl = "http://192.168.31.15:8081/sunon-web-api/pay/unifiedTradePay";
 //    String payUrl = "http://192.168.31.207:8099/user/pay/recharge";
-    String payUrl = "http://m.1332255.com:81/user/pay/recharge";
+//    String payUrl = "http://m.1332255.com:81/user/pay/recharge";
+    String payUrl = BaseURLs.URL_RECHARGE_PAY;
     private Context mContext;
     /**
      * 支付方式  支付宝(默认) 0 ；微信 1 ；余额 2
@@ -110,15 +114,11 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
     }
 
     private void initData(){
-
         promId = getIntent().getStringExtra(ConstantPool.PROMOTION_ID);
 
-
-        //http://192.168.10.242:8092/promotion/order/create?
-        // userId=hhly90531&promotionId=642&sign=59891f91c988198909c527399031d7f111&channel=1&token=eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTYzNzY2NjIsInN1YiI6IntcImlkXCI6XCJoaGx5OTA1MzFcIixcInBob25lTnVtXCI6XCIxMzI2Njc1MjM4NlwifSJ9.2hmsToL-ex9LXRbWI44cuDhqKqZva_qBPG1pKB_IVfU
-
 //        String url = "http://192.168.10.242:8092/promotion/order/create";
-        String url = "http://m.1332255.com:81/promotion/order/create";
+//        String url = "http://m.1332255.com:81/promotion/order/create";
+        String url = BaseURLs.URL_ORDER_CREATE;
         String userid = AppConstants.register.getUser().getUserId();
         String token = AppConstants.register.getToken();
 
@@ -129,9 +129,9 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
         mapPrament.put("channel" , "1"); //0：PC 1：安卓 2:IOS 3:H5
         mapPrament.put("loginToken" , token); //logintoken
         mapPrament.put("appType" , "2"); //appType 2:android
-        mapPrament.put("lang" , "zh");
-        mapPrament.put("timeZone" , "8");
-        String signs = SignUtils.getSign("/promotion/order/create" , mapPrament);
+        mapPrament.put("lang" , MyApp.getLanguage());
+        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_ORDER_CREATE , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
         map.put("userId" , userid);//用户id
@@ -219,9 +219,9 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
         mapPrament.put("service" , service);//3 微信 4 支付宝
         mapPrament.put("tradeAmount" , money);//金额 分
         mapPrament.put("loginToken" , token);//登陆的token
-        mapPrament.put("lang" , "zh");
-        mapPrament.put("timeZone" , "8");
-        String signs = SignUtils.getSign("/user/pay/recharge" , mapPrament);
+        mapPrament.put("lang" , MyApp.getLanguage());
+        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_RECHARGE_PAY , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
         map.put("userId" , userid);//用户ID
@@ -329,7 +329,8 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
         // userId=hhly90531&promotionId=643&sign=982f065d9f9c942d3e5466d93a417d73aa&channel=1&token=eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTYzNzY2NjIsInN1YiI6IntcImlkXCI6XCJoaGx5OTA1MzFcIixcInBob25lTnVtXCI6XCIxMzI2Njc1MjM4NlwifSJ9.2hmsToL-ex9LXRbWI44cuDhqKqZva_qBPG1pKB_IVfU&payType=3
 
 //        String orderPayUrl = "http://192.168.10.242:8092/promotion/order/pay";
-        String orderPayUrl = "http://m.1332255.com:81/promotion/order/pay";
+//        String orderPayUrl = "http://m.1332255.com:81/promotion/order/pay";
+        String orderPayUrl = BaseURLs.URL_ORDER_PAY;
 
         String userid = AppConstants.register.getUser().getUserId();
         String token = AppConstants.register.getToken();
@@ -341,9 +342,9 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
         mapPrament.put("appType" , "2"); //appType 2:android
         mapPrament.put("loginToken" , token); //logintoken
         mapPrament.put("payType" , "3"); //1微信2支付宝3账户余额  （目前只支持3）
-        mapPrament.put("lang" , "zh");
-        mapPrament.put("timeZone" , "8");
-        String signs = SignUtils.getSign("/promotion/order/pay" , mapPrament);
+        mapPrament.put("lang" , MyApp.getLanguage());
+        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_ORDER_PAY , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
         map.put("userId" , userid);//用户id

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,11 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BaseActivity;
 import com.hhly.mlottery.activity.BettingRecommendSettingActivity;
-import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
@@ -30,13 +29,10 @@ import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingRecommendPresente
 import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendMvpAdapter;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.AppConstants;
-import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
-import com.hhly.mlottery.view.LoadMoreRecyclerView;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
 import java.io.Serializable;
@@ -191,7 +187,8 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
     private void initData(String type , String key , int pageNum , int pageSize){
 
 //        String url = "http://192.168.10.242:8092/promotion/info/list";
-        String url = "http://m.1332255.com:81/promotion/info/list";
+//        String url = "http://m.1332255.com:81/promotion/info/list";
+        String url = BaseURLs.URL_RECOMEND_LIST;
 
         String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
@@ -201,9 +198,9 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         mapPrament.put("userId" , userid);//用户id
         mapPrament.put("key" , key);//联赛key
         mapPrament.put("type" , type);
-        mapPrament.put("lang" , "zh");
-        mapPrament.put("timeZone" , "8");
-        String signs = SignUtils.getSign("/promotion/info/list" , mapPrament);
+        mapPrament.put("lang" , MyApp.getLanguage());
+        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_RECOMMEND_LIST, mapPrament);
 
         Map<String ,String> map = new HashMap<>();
         map.put("pageSize" , pageSize +""); //每页条数
@@ -223,7 +220,6 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         if (mAdapter == null) {
             return;
         }
-//        mAdapter.updateData(listData);
         mAdapter.notifyDataSetChanged();
     }
     @Override
@@ -270,20 +266,30 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         gameDetailsClick();
 
         L.d("listData >> " + listData.size());
-        if (mAdapter == null) {
-            mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
+        mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
 
-            mAdapter.setLoadingView(mOnloadingView);
-            mRecycleView.setAdapter(mAdapter);
-            mAdapter.openLoadMore(0 , true);
+        mAdapter.setLoadingView(mOnloadingView);
+        mRecycleView.setAdapter(mAdapter);
+        mAdapter.openLoadMore(0 , true);
 
-            setListener();
-            mAdapter.setmBuyClick(mBettingBuyClickListener);
-            mAdapter.setmGameDetailsClick(mBettingGameDetailsClickListener);
-            mAdapter.setmSpecialistClick(mBettingSpecialistClickListener);
-        }else{
-            upDataAdapter();
-        }
+        setListener();
+        mAdapter.setmBuyClick(mBettingBuyClickListener);
+        mAdapter.setmGameDetailsClick(mBettingGameDetailsClickListener);
+        mAdapter.setmSpecialistClick(mBettingSpecialistClickListener);
+//        if (mAdapter == null) {
+//            mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
+//
+//            mAdapter.setLoadingView(mOnloadingView);
+//            mRecycleView.setAdapter(mAdapter);
+//            mAdapter.openLoadMore(0 , true);
+//
+//            setListener();
+//            mAdapter.setmBuyClick(mBettingBuyClickListener);
+//            mAdapter.setmGameDetailsClick(mBettingGameDetailsClickListener);
+//            mAdapter.setmSpecialistClick(mBettingSpecialistClickListener);
+//        }else{
+//            upDataAdapter();
+//        }
     }
 
     @Override
@@ -463,7 +469,8 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         pageNum += 1;
         L.d("上拉加载、、、" + pageNum);
 //        String url = "http://192.168.10.242:8092/promotion/info/list";
-        String url = "http://m.1332255.com:81/promotion/info/list";
+//        String url = "http://m.1332255.com:81/promotion/info/list";
+        String url = BaseURLs.URL_RECOMEND_LIST;
         String userid = AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
@@ -472,9 +479,9 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
         mapPrament.put("userId" , userid);//用户id
         mapPrament.put("key" , key);//联赛key
         mapPrament.put("type" , type);
-        mapPrament.put("lang" , "zh");
-        mapPrament.put("timeZone" , "8");
-        String signs = SignUtils.getSign("/promotion/info/list" , mapPrament);
+        mapPrament.put("lang" , MyApp.getLanguage());
+        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_RECOMMEND_LIST, mapPrament);
 
         Map<String ,String> map = new HashMap<>();
         map.put("pageSize" , pageSize +""); //每页条数
@@ -514,6 +521,5 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
 
             }
         },BettingListDataBean.class);
-
     }
 }

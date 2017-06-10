@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingDetailsBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
@@ -202,28 +204,20 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
 
         promotionId = getIntent().getStringExtra(ConstantPool.TO_DETAILS_PROMOTION_ID);
 
-//        if (itemData.getLookStatus().equals("2")) {
-//            toPayll.setVisibility(View.VISIBLE);
-//            detailsContextBg.setVisibility(View.VISIBLE);
-//        }else{
-//            toPayll.setVisibility(View.GONE);
-//            detailsContextBg.setVisibility(View.GONE);
-//        }
-
-
         L.d("qwertyui===>>> " , promotionId);
         //http://192.168.10.242:8092/promotion/info/detail?
         // userId=hhly90662&promotionId=643&sign=007ec32c4f7279cfd49260c408528c0412
 //        String url = "http://192.168.10.242:8092/promotion/info/detail";
-        String url = "http://m.1332255.com:81/promotion/info/detail";
+//        String url = "http://m.1332255.com:81/promotion/info/detail";
+        String url = BaseURLs.URL_REMMEND_DETAILS;
         String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
         mapPrament.put("userId" , userid);//用户id
         mapPrament.put("promotionId" , promotionId); //推荐ID
-        mapPrament.put("lang" , "zh");
-        mapPrament.put("timeZone" , "8");
-        String signs = SignUtils.getSign("/promotion/info/detail" , mapPrament);
+        mapPrament.put("lang" , MyApp.getLanguage());
+        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_RECOMMEND_DETAILS, mapPrament);
 
         Map<String ,String> map = new HashMap<>();
         map.put("userId" , userid);//用户id
@@ -372,11 +366,13 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                     case "2":
                     case "6":
                         scoreTxt.setText(matchInfoData.getHomeScore() + ":" + matchInfoData.getGuestScore());
+                        scoreTxt.setTextColor(mContext.getResources().getColor(R.color.betting_recommend_grand_color));
                         halfscoreTxt.setText("(" + matchInfoData.getHomeHalfScore() + ":" + matchInfoData.getGuestHalfScore() + ")");
                         halfscoreTxt.setVisibility(View.VISIBLE);
                         break;
                     default:
                         scoreTxt.setText("VS");
+                        scoreTxt.setTextColor(mContext.getResources().getColor(R.color.betting_recommend_name_color));
                         halfscoreTxt.setVisibility(View.GONE);
                 }
             }

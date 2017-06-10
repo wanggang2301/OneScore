@@ -6,6 +6,8 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 
+import data.utils.Sign;
+
 
 /**
  * @author Tenney
@@ -1181,4 +1183,38 @@ public class BaseURLs {
 
     /***********************************************************************************************************************/
 
+    /**
+     * 竞彩推介
+     */
+    public final static String URL_BETTING_HTTP = "http://";
+
+    //支付接口参数(调用支付宝、微信)
+    public final static String PARAMENT_RECHARGE_PAY = "/user/pay/recharge";
+    //支付接口(调用支付宝、微信)
+    public final static String URL_RECHARGE_PAY = URL_BETTING_HTTP + HOST + PARAMENT_RECHARGE_PAY;
+
+    //推介列表接口参数
+    public final static String PARAMENT_RECOMMEND_LIST = "/promotion/info/list";
+    //推介详情接口参数
+    public final static String PARAMENT_RECOMMEND_DETAILS = "/promotion/info/detail";
+    //充值页面接口参数
+    public final static String PARAMENT_CHARGE_MONEY = "/user/pay/recharge";
+    //支付页面参数
+    public final static String PARAMENT_ORDER_CREATE = "/promotion/order/create";
+    //余额支付接口参数
+    public final static String PARAMENT_ORDER_PAY = "/promotion/order/pay";
+
+
+    //推介列表
+    public final static String URL_RECOMEND_LIST = URL_BETTING_HTTP + HOST + PARAMENT_RECOMMEND_LIST;
+    //推介详情
+    public final static String URL_REMMEND_DETAILS = URL_BETTING_HTTP + HOST + PARAMENT_RECOMMEND_DETAILS;
+    //充值页面接口
+    public final static String URL_CHARGE_MONEY = URL_BETTING_HTTP + HOST + PARAMENT_CHARGE_MONEY;
+    //支付页面接口
+    public final static String URL_ORDER_CREATE = URL_BETTING_HTTP + HOST + PARAMENT_ORDER_CREATE;
+    //余额支付接口
+    public final static String URL_ORDER_PAY = URL_BETTING_HTTP + HOST + PARAMENT_ORDER_PAY;
+
+//    String orderPayUrl = "http://m.1332255.com:81/promotion/order/pay";
 }
