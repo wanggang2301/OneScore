@@ -1184,6 +1184,9 @@ public class BaseURLs {
     //足球竞彩
     public final static String FINDBETTINGLIST = URL_API_HOST + "footballBetting.findBettingList.do";
 
+    /*推荐专家*/
+    public final static String EXPERTPROMOTIONS = P_URL_API_HOST + "promotion/info/expertPromotions";
+    public final static String EXPERTINTRODUCT = P_URL_API_HOST + "user/expertIntroduct";
     /**
      * 角球列表
      */

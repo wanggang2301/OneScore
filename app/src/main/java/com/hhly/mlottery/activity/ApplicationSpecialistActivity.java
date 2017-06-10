@@ -382,7 +382,9 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                         specalist_error_text.setText(requestBean.getUserInfo().getApproveIdea());
                         success_image.setVisibility(View.GONE);
                         good_league_rl.setVisibility(View.VISIBLE);
-                        SplitString(requestBean.getUserInfo().getSkillfulLeague());
+                        if(requestBean.getUserInfo().getSkillfulLeague()!=null){
+                            SplitString(requestBean.getUserInfo().getSkillfulLeague());
+                        }
                         agreement.setVisibility(View.VISIBLE);
                         immediate_authentication.setVisibility(View.VISIBLE);
                         findViewById(R.id.tv_2).setVisibility(View.VISIBLE);
@@ -422,7 +424,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                         shen_good_legue.setVisibility(View.GONE);
 
                     }
-                    EventBus.getDefault().post(new SpecialistBean(requestBean.getUserInfo().getIsExpert()));
+                   // EventBus.getDefault().post(new SpecialistBean(requestBean.getUserInfo().getIsExpert()));
 
                 } else {
 
