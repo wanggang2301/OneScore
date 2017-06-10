@@ -488,7 +488,7 @@
         <activity
             android:name=".activity.NotRecommendExpertActivity"
             android:screenOrientation="portrait" />
-        <!-- 角球比分 -->
+        <!--角球比分-->
         <activity
             android:name=".activity.FootballCornerActivity"
             android:screenOrientation="portrait" />
@@ -503,6 +503,13 @@
         <!--绑定银行卡-->
         <activity android:name=".activity.BindCardActivity"
             android:screenOrientation="portrait"/>
+        <!--拍照-->
+        <activity android:name=".activity.PictureSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".util.imagecrop.CropActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.RecommendedExpertDetailsActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

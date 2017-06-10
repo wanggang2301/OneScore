@@ -411,7 +411,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 param.put("ip", DeviceInfo.getIpAddress());
                 param.put("deviceToken", DeviceInfo.getDeviceId(MyApp.getContext()));
                 //调用公共的登录请求
-                requestLogin(BaseURLs.URL_WEIXIN_LOGIN, param);
+                //requestLogin(BaseURLs.URL_WEIXIN_LOGIN, param);
 
             }
         }, new VolleyContentFast.ResponseErrorListener() {
@@ -472,7 +472,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 param.put("uid", openID);
                 param.put("ip", DeviceInfo.getIpAddress());
                 param.put("deviceToken", DeviceInfo.getDeviceId(MyApp.getContext()));
-                requestLogin(BaseURLs.URL_SINA_LOGIN, param);
+                //requestLogin(BaseURLs.URL_SINA_LOGIN, param);
 
             } else {
 
@@ -527,7 +527,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     param.put("ip", DeviceInfo.getIpAddress());
                     param.put("deviceToken", DeviceInfo.getDeviceId(MyApp.getContext()));
                     /*将所需参数传给后台*/
-                    requestLogin(BaseURLs.URL_QQ_LOGIN, param);
+                    //requestLogin(BaseURLs.URL_QQ_LOGIN, param);
 
                 }
 
@@ -547,8 +547,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         public void onCancel() {
         }
     }
-
-    /*公用登录请求*/
+/*
+    *//*公用登录请求*//*
     public void requestLogin(String url, Map<String, String> param) {
         progressBar.show();
         VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
@@ -592,7 +592,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         }, Register.class);
 
 
-    }
+    }*/
 
     /**
      * 登录
@@ -600,6 +600,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private void login() {
         String userName = et_username.getText().toString();
         String passWord = et_password.getText().toString();
+        PreferenceUtil.commitString("et_password", passWord);
         if (userName.isEmpty()) {
             UiUtils.toast(LoginActivity.this, R.string.account_cannot_be_empty);
             return;
@@ -639,7 +640,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             setResult(RESULT_OK);
                             //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                             sendUserInfoToServer(register);
-                            PreferenceUtil.commitString(AppConstants.SPKEY_LOGINACCOUNT, register.getUser().getPhoneNum());
                             if (isCoustom) {
 //                                 PreferenceUtil.commitBoolean("custom_red_dot" , false);
                                 startActivity(new Intent(LoginActivity.this, CustomActivity.class));
@@ -649,6 +649,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             }
                             finish();
                             EventBus.getDefault().post(register);
+                            PreferenceUtil.commitString(AppConstants.HEADICON,register.getUser().getImageSrc());
                             FocusUtils.getFootballUserFocus(register.getUser().getUserId());
                             FocusUtils.getBasketballUserConcern(register.getUser().getUserId());
 

@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.util.AppConstants;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +35,10 @@ public class NotRecommendExpertActivity extends BaseActivity {
                 break;
             case R.id.btn_confirm:
                 //进入跳转到申请成为专家页面
-                startActivity(new Intent(this, ApplicationSpecialistActivity.class));
+                Intent intent1 = new Intent(this, ApplicationSpecialistActivity.class);
+                intent1.putExtra("expert", "0");
+                startActivity(intent1);
+
                 finish();
                 break;
         }

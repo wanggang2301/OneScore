@@ -60,7 +60,13 @@ public class FootballPlateAdapter extends BaseQuickAdapter<OddsDataInfo.ListOddE
         if (!OddsTypeEnum.OP.equals(type)) {
             setCenterOddsColor(holder, currentOdds.getHand(), preOdds.getHand(), R.id.plate_dish_txt);
         }
-        setHandicap(holder, currentOdds, preOdds);
+
+        if ("0".equals(item.getId())) {
+            holder.setText(R.id.plate_dish_txt, String.valueOf(currentOdds.getHand()));
+            holder.setText(R.id.plate_dish_txt2, String.valueOf(preOdds.getHand()));
+        } else {
+            setHandicap(holder, currentOdds, preOdds);
+        }
 
         // 左边
         holder.setTextColor(R.id.plate_guestOdds_txt2, black);
@@ -91,6 +97,7 @@ public class FootballPlateAdapter extends BaseQuickAdapter<OddsDataInfo.ListOddE
             preOddsText = String.format(Locale.US, "%.2f", preOdds.getHand());
             currentOddsText = String.format(Locale.US, "%.2f", currentOdds.getHand());
         }
+
         holder.setText(R.id.plate_dish_txt, currentOddsText)
                 .setText(R.id.plate_dish_txt2, preOddsText);
     }

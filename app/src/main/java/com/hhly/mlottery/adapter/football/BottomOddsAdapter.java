@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter.football;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,7 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
 
-        if (position < list.size() - 1 && !list.get(position).getScore().equals(list.get(position + 1).getScore())) {
+        if (position < list.size() - 1 && !TextUtils.isEmpty(list.get(position).getScore()) && !TextUtils.isEmpty(list.get(position + 1).getScore()) && !list.get(position).getScore().equals(list.get(position + 1).getScore())) {
             hold.item_score.setText(list.get(position).getScore());
             hold.item_score.setTextColor(mContext.getResources().getColor(R.color.white));
             hold.item_score.setBackgroundResource(R.color.analyze_left);
@@ -111,7 +112,7 @@ public class BottomOddsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } else if (mType == OUER_TYPE) {  //欧赔
                 hold.item_handicap.setText(list.get(position).getOdd().getMiddle());
                 setTextViewColor(hold.item_handicap, 0, list.get(position).getOdd().getMiddleUp());
-            }else if (mType == CORNER_TYPE){
+            } else if (mType == CORNER_TYPE) {
                 hold.item_handicap.setText(list.get(position).getOdd().getMiddle());
                 setTextViewColor(hold.item_handicap, 0, list.get(position).getOdd().getMiddleUp());
             }

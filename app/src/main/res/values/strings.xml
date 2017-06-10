@@ -845,10 +845,15 @@
     <string name="basket_analyze_dialog_fifteen">15场</string>
     <string name="basket_analyze_dialog_cancle">取消</string>
     <string name="basket_analyze_dialog_ok">确定</string>
-
+    <string name="authority_requirement">权限需求</string>
     <string name="basket_odds_euro_details">欧赔详情</string>
     <string name="basket_odds_asiaLet_details">亚盘详情</string>
     <string name="basket_odds_asiaSize_details">大小球详情</string>
+    <string name="label_cancel">取消</string>
+    <string name="label_ok">确定</string>
+    <string name="permission_title_rationale">权限需求</string>
+    <string name="permission_read_storage_rationale">选择图片时需要读取权限</string>
+    <string name="permission_write_storage_rationale">拍照时需要存储权限</string>
 
     <!--篮球资料库详情-->
     <string name="basket_database_details_handicapname">让分盘</string>
@@ -1792,6 +1797,7 @@
     <string name="betting_payment_no_zero">充值金额不能为0</string>
     <string name="betting_nodata_to_again">暂时无法获取订单信息,请稍后重试</string>
     <string name="betting_disclaimer_txt">(免责声明：个人观点并不代表一比分官方网站)</string>
+    <string name="betting_paly_choose_txt">必须选择一项</string>
 
 
     <string name="roll_desc_txt">胜出</string>
@@ -1850,5 +1856,7 @@
     <string name="go_txt">前往</string>
     <string name="click_to_reload">点击重试</string>
     <string name="expert_certification_txt">专家认证</string>
+    <string name="expert_shehe_txt">专家认证审核中,暂不能发布推介！</string>
+    <string name="no_qq_installed">本机未安装QQ应用</string>
 
 </resources>

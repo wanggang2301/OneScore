@@ -68,7 +68,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="53dp"
         android:layout_marginRight="53dp"
-        android:layout_weight="0.001"
+        android:layout_weight="0.002"
         android:background="@color/white" />
 
     <LinearLayout
@@ -118,7 +118,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="53dp"
         android:layout_marginRight="53dp"
-        android:layout_weight="0.001"
+        android:layout_weight="0.002"
         android:background="@color/white" />
 
     <TextView

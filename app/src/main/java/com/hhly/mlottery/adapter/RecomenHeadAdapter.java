@@ -1,39 +1,41 @@
-package com.hhly.mlottery.adapter.custom;
+package com.hhly.mlottery.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.TextUtils;
-import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.config.ConstantPool;
-import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
+import com.hhly.mlottery.activity.RecommendedExpertDetailsActivity;
+import com.hhly.mlottery.bean.FootballLotteryBean;
+import com.hhly.mlottery.bean.RecommendationExpertBean;
+import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 
 import java.util.List;
 
-import data.bean.RecommendArticlesBean;
 
 /**
- * @author: Wangg
- * @name：xxx
- * @description: 推介文章Adapter
- * @created on:2017/6/2  11:27.
+ * Created by yuely198 on 2017/6/10.
  */
 
-public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticlesBean.PublishPromotionsBean.ListBean> {
-    //private List<RecommendArticlesBean.PublishPromotionsBean.ListBean> listBeanList;
+public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBean.ExpertPromotionsBean.ListBean> {
 
     private Context mContext;
 
-    public RecommendArticlesAdapter(Context context, List<RecommendArticlesBean.PublishPromotionsBean.ListBean> data) {
+    List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> mData;
+
+    public RecomenHeadAdapter(Context context, List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> data) {
         super(R.layout.recommend_articles_item, data);
-        mContext = context;
+        this.mContext = context;
+        this.mData = data;
+    }
+
+    public void updateData(List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> data) {
+        this.mData = data;
     }
 
     @Override
-    protected void convert(BaseViewHolder baseViewHolder, final RecommendArticlesBean.PublishPromotionsBean.ListBean r) {
+    protected void convert(BaseViewHolder baseViewHolder, RecommendationExpertBean.ExpertPromotionsBean.ListBean r) {
         baseViewHolder.setText(R.id.betting_league_name, r.getLeagueName());
         baseViewHolder.setVisible(R.id.betting_round, false);
         baseViewHolder.setText(R.id.betting_date, r.getMatchDate());
@@ -43,50 +45,27 @@ public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticles
         baseViewHolder.setText(R.id.betting_price, String.valueOf("￥ " + r.getPrice() + ".00"));
         baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(r.getCount()) + mContext.getResources().getString(R.string.yigoumai_txt));
 
-       /* if (0 == r.getType()) {
+        if (0 == r.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.jingcaidanguan_txt));
         } else if (1 == r.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.yapan_txt));
         } else if (2 == r.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.daxiaoqiu_txt));
-        }*/
-
-        baseViewHolder.setText(R.id.betting_concede_points_spf, r.getTypeStr());
-
-
+        }
         switch (r.getStatus()) {
             case 1:
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zhong);
-                baseViewHolder.setVisible(R.id.iv, true);
-                baseViewHolder.setVisible(R.id.textView11, false);
                 break;
             case 2:
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_shi);
-                baseViewHolder.setVisible(R.id.iv, true);
-                baseViewHolder.setVisible(R.id.textView11, false);
                 break;
             case 6:
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zou);
-                baseViewHolder.setVisible(R.id.iv, true);
-                baseViewHolder.setVisible(R.id.textView11, false);
                 break;
             default:
-                baseViewHolder.setVisible(R.id.iv, false);
-                baseViewHolder.setVisible(R.id.textView11, true);
                 break;
 
         }
-
-        baseViewHolder.getView(R.id.textView11).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(mContext, MvpBettingPayDetailsActivity.class);
-                intent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID, r.getId());
-                mContext.startActivity(intent);
-            }
-        });
-
         baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
     }
 

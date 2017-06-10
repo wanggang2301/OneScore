@@ -9,17 +9,15 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BaseActivity;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingDetailsBean;
-import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
-import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingPaymentResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.LoadingResultEventBusEntity;
@@ -33,7 +31,6 @@ import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.view.CircleImageView;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,13 +73,15 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
 //    private BettingListDataBean.PromotionData.BettingListData itemData;
     private LinearLayout toPayll;
 
-    private boolean mayPay;
+    private boolean successPay = false;
     private String promotionId;
     private TextView detailsHandicp;
     private TextView leftOdds;
     private TextView middleOdds;
     private TextView rightOdds;
     private ImageView statusImg;
+    private TextView scoreTxt;
+    private TextView halfscoreTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +150,8 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         leftOdds = (TextView)findViewById(R.id.betting_odds_left_txt);
         middleOdds = (TextView)findViewById(R.id.betting_odds_middle_txt);
         rightOdds = (TextView)findViewById(R.id.betting_odds_right_txt);
+        scoreTxt = (TextView)findViewById(R.id.betting_score_txt);
+        halfscoreTxt = (TextView)findViewById(R.id.betting_halfscore_txt);
 
         statusImg = (ImageView) findViewById(R.id.betting_details_status_imageView);
 
@@ -203,28 +204,20 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
 
         promotionId = getIntent().getStringExtra(ConstantPool.TO_DETAILS_PROMOTION_ID);
 
-//        if (itemData.getLookStatus().equals("2")) {
-//            toPayll.setVisibility(View.VISIBLE);
-//            detailsContextBg.setVisibility(View.VISIBLE);
-//        }else{
-//            toPayll.setVisibility(View.GONE);
-//            detailsContextBg.setVisibility(View.GONE);
-//        }
-
-
         L.d("qwertyui===>>> " , promotionId);
         //http://192.168.10.242:8092/promotion/info/detail?
         // userId=hhly90662&promotionId=643&sign=007ec32c4f7279cfd49260c408528c0412
 //        String url = "http://192.168.10.242:8092/promotion/info/detail";
-        String url = "http://m.1332255.com:81/promotion/info/detail";
+//        String url = "http://m.1332255.com:81/promotion/info/detail";
+        String url = BaseURLs.URL_REMMEND_DETAILS;
         String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
         mapPrament.put("userId" , userid);//用户id
         mapPrament.put("promotionId" , promotionId); //推荐ID
-        mapPrament.put("lang" , "zh");
-        mapPrament.put("timeZone" , "8");
-        String signs = SignUtils.getSign("/promotion/info/detail" , mapPrament);
+        mapPrament.put("lang" , MyApp.getLanguage());
+        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_RECOMMEND_DETAILS, mapPrament);
 
         Map<String ,String> map = new HashMap<>();
         map.put("userId" , userid);//用户id
@@ -244,9 +237,10 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                 initData();
                 break;
             case R.id.public_img_back:
-
-                EventBus.getDefault().post(new BettingDetailsResuleEventBusEntity(true));
-
+                if (successPay) {
+                    EventBus.getDefault().post(new BettingDetailsResuleEventBusEntity(promotionId));
+                    L.d("asdfqwer ==> " , "传参成功" + promotionId);
+                }
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
@@ -365,9 +359,24 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
             }else{
                 detailsContext.setText(filtraNull(basebean.getDetail().getContext()));
             }
+
+            if (detailsData != null) {
+                switch (detailsData.getStatus()){
+                    case "1":
+                    case "2":
+                    case "6":
+                        scoreTxt.setText(matchInfoData.getHomeScore() + ":" + matchInfoData.getGuestScore());
+                        scoreTxt.setTextColor(mContext.getResources().getColor(R.color.betting_recommend_grand_color));
+                        halfscoreTxt.setText("(" + matchInfoData.getHomeHalfScore() + ":" + matchInfoData.getGuestHalfScore() + ")");
+                        halfscoreTxt.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        scoreTxt.setText("VS");
+                        scoreTxt.setTextColor(mContext.getResources().getColor(R.color.betting_recommend_name_color));
+                        halfscoreTxt.setVisibility(View.GONE);
+                }
+            }
         }
-
-
 
     }
 
@@ -393,7 +402,8 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     public void onEventMainThread(BettingPaymentResultEventBusEntity paymentResultEventBusEntity){
 
         if (paymentResultEventBusEntity.isPayMentResult()) {
-            mayPay = false; //购买的返回 不可二次点击
+            successPay = true;
+
             setStatus(SHOW_STATUS_REFRESH_ONCLICK);
             initData();
         }

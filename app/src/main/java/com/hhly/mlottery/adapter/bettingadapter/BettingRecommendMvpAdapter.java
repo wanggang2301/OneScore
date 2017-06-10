@@ -38,36 +38,6 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
     public void updateData(List<BettingListDataBean.PromotionData.BettingListData> data){
         this.mData = data;
     }
-    /**
-     * 购买（查看）监听
-     */
-    private MvpBettingRecommendActivity.BettingBuyClickListener mBuyClick; //关注监听回掉
-    public void setmBuyClick(MvpBettingRecommendActivity.BettingBuyClickListener mBuyClick) {
-        this.mBuyClick = mBuyClick;
-    }
-    /**
-     * 专家详情监听
-     */
-    private MvpBettingRecommendActivity.BettingSpecialistClickListener mSpecialistClick; //关注监听回掉
-    public void setmSpecialistClick(MvpBettingRecommendActivity.BettingSpecialistClickListener mSpecialistClick) {
-        this.mSpecialistClick = mSpecialistClick;
-    }
-
-    /**
-     * 内页详情监听
-     */
-    private MvpBettingRecommendActivity.BettingGameDetailsClickListener mGameDetailsClick;
-    public void setmGameDetailsClick(MvpBettingRecommendActivity.BettingGameDetailsClickListener mGameDetailsClick){
-        this.mGameDetailsClick = mGameDetailsClick;
-    }
-
-    @Override
-    public int getItemViewType(int position) {return super.getItemViewType(position);}
-
-    @Override
-    protected View getItemView(int layoutResId, ViewGroup parent) {
-        return super.getItemView(layoutResId, parent);
-    }
 
     @Override
     protected void convert(BaseViewHolder holder, final BettingListDataBean.PromotionData.BettingListData data) {
@@ -78,10 +48,10 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
             ImageLoader.load(mContext,imgUrl,R.mipmap.center_head).into(icon);
         }
 
-        holder.setText(R.id.betting_specialist_name , filtraNull(data.getUserid()));
+        holder.setText(R.id.betting_specialist_name , filtraNull(data.getNickname()));
         holder.setText(R.id.betting_specialist_grade , filtraNull(data.getExpert()));
         holder.setText(R.id.betting_league_name , filtraNull(data.getLeagueName()));
-        holder.setText(R.id.betting_date , filtraNull(data.getReleaseDate()));
+        holder.setText(R.id.betting_date , filtraNull(data.getMatchDateTime()));
         holder.setText(R.id.betting_concede_points_spf , filtraNull(data.getTypeStr()));
         holder.setText(R.id.betting_home_name , filtraNull(data.getHomeName()));
         holder.setText(R.id.betting_guest_name , filtraNull(data.getGuestName()));
@@ -141,7 +111,7 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
             @Override
             public void onClick(View v) {
                 if (mSpecialistClick != null) {
-                    mSpecialistClick.SpecialistOnClick(v , data.getId());
+                    mSpecialistClick.SpecialistOnClick(v , data.getUserid());
                 }
             }
         });
@@ -153,6 +123,38 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
                 }
             }
         });
+    }
+
+
+    /**
+     * 购买（查看）监听
+     */
+    private MvpBettingRecommendActivity.BettingBuyClickListener mBuyClick; //关注监听回掉
+    public void setmBuyClick(MvpBettingRecommendActivity.BettingBuyClickListener mBuyClick) {
+        this.mBuyClick = mBuyClick;
+    }
+    /**
+     * 专家详情监听
+     */
+    private MvpBettingRecommendActivity.BettingSpecialistClickListener mSpecialistClick; //关注监听回掉
+    public void setmSpecialistClick(MvpBettingRecommendActivity.BettingSpecialistClickListener mSpecialistClick) {
+        this.mSpecialistClick = mSpecialistClick;
+    }
+
+    /**
+     * 内页详情监听
+     */
+    private MvpBettingRecommendActivity.BettingGameDetailsClickListener mGameDetailsClick;
+    public void setmGameDetailsClick(MvpBettingRecommendActivity.BettingGameDetailsClickListener mGameDetailsClick){
+        this.mGameDetailsClick = mGameDetailsClick;
+    }
+
+    @Override
+    public int getItemViewType(int position) {return super.getItemViewType(position);}
+
+    @Override
+    protected View getItemView(int layoutResId, ViewGroup parent) {
+        return super.getItemView(layoutResId, parent);
     }
 
     private String filtraNull(String str){

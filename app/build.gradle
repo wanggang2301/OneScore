@@ -44,7 +44,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 33
-        versionName "1.3.1.0609"
+        versionName "1.3.1.0610"
         multiDexEnabled true
     }
 
@@ -89,9 +89,6 @@ dependencies {
     compile files('libs/sina/weibosdkcore_release.jar')
     compile files('libs/pldroid-player-1.3.0.jar')
     compile files('libs/alipaySingle-20161222.jar')
-    //检测内存泄露
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    compile project(':data')
     compile 'com.github.chrisbanes:PhotoView:1.3.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
@@ -130,11 +127,18 @@ dependencies {
     compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     testCompile 'junit:junit:4.12'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     apt 'com.google.dagger:dagger-compiler:2.4'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
     provided 'org.glassfish:javax.annotation:10.0-b28'
     provided 'com.android.support:support-annotations:25.3.0'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    compile project(':data')
+    // 图像剪切
+    compile('com.kevin:crop:1.0.2') {
+        // 如果已经引入 support:appcompat-v7 可以加上这句话
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+    }
+    compile 'com.jakewharton:butterknife:7.0.1'
 }

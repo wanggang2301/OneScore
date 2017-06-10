@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="34dp"
                 android:background="@color/application_specialist_color"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
 
@@ -43,7 +43,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
-                    android:text="请准确填写一下信"
+                    android:text=""
                     android:textColor="@color/red"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -293,6 +293,7 @@
                     android:visibility="gone" />
 
                 <LinearLayout
+                    android:layout_marginTop="10dp"
                     android:id="@+id/agreement"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
@@ -350,7 +351,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="17点前的申请，当日内处理;17点后的申请;次日处理,"
+                        android:text="17点前的申请，当日内处理;17点后的申请,次日处理;"
                         android:textColor="#4b4b4b"
                         android:textSize="13sp" />
 

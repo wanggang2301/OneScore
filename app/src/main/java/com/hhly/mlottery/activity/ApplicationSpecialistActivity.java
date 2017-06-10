@@ -1,9 +1,11 @@
 package com.hhly.mlottery.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.IntegerRes;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -52,7 +54,7 @@ import de.greenrobot.event.EventBus;
  * 申请专家页面
  */
 
-public class ApplicationSpecialistActivity extends BaseActivity implements View.OnClickListener {
+public class ApplicationSpecialistActivity extends Activity implements View.OnClickListener {
 
 
     private TextView public_txt_title;
@@ -77,7 +79,6 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
     private String new_leauue;
     private LinearLayout to_examine;
     private ScrollView scrollview;
-    private String expert;
     private LinearLayout agreement;
     private TextView specialist_tv2;
     private LinearLayout good_league_rl;
@@ -90,12 +91,8 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getIntent() != null && getIntent().getExtras() != null) {
-            expert = getIntent().getExtras().getString("expert", "");
-        }
-
         initView();
+        expertrequest();
 
     }
 
@@ -140,18 +137,7 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
         specialist_pen = (ImageView) findViewById(R.id.specialist_pen);
         //专家简介
         specalist_edittext = (EditText) findViewById(R.id.specalist_edittext);
-   /*     specalist_edittext.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean isFocus) {
-                if (isFocus){
-                    specialist_pen.setVisibility(View.GONE);
 
-                }else{
-                    specialist_pen.setVisibility(View.VISIBLE);
-                }
-
-            }
-        });*/
         specalist_edittext.addTextChangedListener(new TextWatcher() {
 
             private CharSequence temp;
@@ -195,23 +181,8 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
         agreement = (LinearLayout) findViewById(R.id.agreement);
 
         scrollview = (ScrollView) findViewById(R.id.scrollview);
-        if (expert.equals("1")) {//审核通过
 
-            expertrequest();
 
-        } else if (expert.equals("0")) {//未审核
-            to_examine.setVisibility(View.GONE);
-            scrollview.setVisibility(View.VISIBLE);
-            success_image.setVisibility(View.GONE);
-            good_league_rl.setVisibility(View.VISIBLE);
-            shen_good_legue.setVisibility(View.GONE);
-        } else if (expert.equals("2")) {  //审核中
-            to_examine.setVisibility(View.VISIBLE);
-            scrollview.setVisibility(View.GONE);
-        } else if (expert.equals("3")) {   //审核失败
-
-            expertrequest();
-        }
 
         //付费协议
 
@@ -364,7 +335,7 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
     private void expertrequest(){
 
 
-        //String url = BaseURLs.URL_REGISTER;
+        String url = BaseURLs.EXPERTINFO;
         Map<String, String> param = new HashMap<>();
         param.put("userId", AppConstants.register.getUser().getUserId());
         param.put("loginToken", AppConstants.register.getToken());
@@ -380,43 +351,72 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
         String sign = DeviceInfo.getSign("/user/expertInfo" +language+"loginToken"+AppConstants.register.getToken()+"timeZone8"+"userId" + AppConstants.register.getUser().getUserId());
         param.put("sign", sign);
 
-        VolleyContentFast.requestJsonByGet("http://192.168.10.242:8099/user/expertInfo", param, new VolleyContentFast.ResponseSuccessListener<ExpertreQuestBean>() {
+        VolleyContentFast.requestJsonByGet(url, param, new VolleyContentFast.ResponseSuccessListener<ExpertreQuestBean>() {
             @Override
             public void onResponse(ExpertreQuestBean requestBean) {
 
                 if (requestBean != null && requestBean.getCode().equals("200")) {
 
+
+
+
                     if (requestBean.getUserInfo().getIsExpert()==3) {
+                        to_examine.setVisibility(View.GONE);
+                        scrollview.setVisibility(View.VISIBLE);
+                        real_name.setText(requestBean.getUserInfo().getRealName());
+                        id_datas.setText(requestBean.getUserInfo().getIdCard());
+                        specalist_edittext.setText(requestBean.getUserInfo().getIntroduce());
+
                         specalist_error_tv.setVisibility(View.VISIBLE);
                         specalist_error_text.setText(requestBean.getUserInfo().getApproveIdea());
                         success_image.setVisibility(View.GONE);
-                    }else{
+                        good_league_rl.setVisibility(View.VISIBLE);
+                        if(requestBean.getUserInfo().getSkillfulLeague()!=null){
+                            SplitString(requestBean.getUserInfo().getSkillfulLeague());
+                        }
+                        agreement.setVisibility(View.VISIBLE);
+                        immediate_authentication.setVisibility(View.VISIBLE);
+                        findViewById(R.id.tv_2).setVisibility(View.VISIBLE);
+                        findViewById(R.id.tv_1).setVisibility(View.VISIBLE);
+                        shen_good_legue.setVisibility(View.INVISIBLE);
+                    }else if (requestBean.getUserInfo().getIsExpert()==1){
+
+                        to_examine.setVisibility(View.GONE);
+                        scrollview.setVisibility(View.VISIBLE);
+                        real_name.setText(requestBean.getUserInfo().getRealName());
+                        id_datas.setText(requestBean.getUserInfo().getIdCard());
+                        specalist_edittext.setText(requestBean.getUserInfo().getIntroduce());
+
+
                         success_image.setVisibility(View.VISIBLE);
+                        good_league_rl.setVisibility(View.GONE);
+                        SplitString1(requestBean.getUserInfo().getSkillfulLeague());
+                        real_name.setKeyListener(null);
+                        id_datas.setKeyListener(null);
+                        specalist_edittext.setKeyListener(null);
+                        good_league.setKeyListener(null);
+                        agreement.setVisibility(View.GONE);
+                        immediate_authentication.setVisibility(View.GONE);
+                        findViewById(R.id.tv_2).setVisibility(View.GONE);
+                        findViewById(R.id.tv_1).setVisibility(View.GONE);
+                        shen_good_legue.setVisibility(View.VISIBLE);
+                    }else if (requestBean.getUserInfo().getIsExpert()==2){
+
+                        to_examine.setVisibility(View.VISIBLE);
+                        scrollview.setVisibility(View.GONE);
+
+                    }else {
+                        to_examine.setVisibility(View.GONE);
+                        scrollview.setVisibility(View.VISIBLE);
+                        success_image.setVisibility(View.GONE);
+                        good_league_rl.setVisibility(View.VISIBLE);
+                        shen_good_legue.setVisibility(View.GONE);
+
                     }
-
-                    to_examine.setVisibility(View.GONE);
-                    scrollview.setVisibility(View.VISIBLE);
-
-                    good_league_rl.setVisibility(View.GONE);
-                    real_name.setText(requestBean.getUserInfo().getRealName());
-                    id_datas.setText(requestBean.getUserInfo().getIdCard());
-                    specalist_edittext.setText(requestBean.getUserInfo().getIntroduce());
-                    SplitString1(requestBean.getUserInfo().getSkillfulLeague());
-
-                    real_name.setKeyListener(null);
-                    id_datas.setKeyListener(null);
-                    specalist_edittext.setKeyListener(null);
-                    good_league.setKeyListener(null);
-                    agreement.setVisibility(View.GONE);
-                    immediate_authentication.setVisibility(View.GONE);
-                    findViewById(R.id.tv_2).setVisibility(View.GONE);
-                    findViewById(R.id.tv_1).setVisibility(View.GONE);
-                    shen_good_legue.setVisibility(View.VISIBLE);
-                    symptomSelectedNameTv.setKeyListener(null);
+                   // EventBus.getDefault().post(new SpecialistBean(requestBean.getUserInfo().getIsExpert()));
 
                 } else {
 
-                    L.e(TAG, "成功请求，注册失败");
                     DeviceInfo.handlerRequestResult(Integer.parseInt(requestBean.getCode()), "未知错误");
                 }
             }
@@ -437,7 +437,7 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
     private void comfirm(String real_name, String id_datas, String good_league, String specalist_edittext) {
 
 
-        //String url = BaseURLs.URL_REGISTER;
+        String url = BaseURLs.EXPERTAUTH;
         Map<String, String> param = new HashMap<>();
         param.put("userId", AppConstants.register.getUser().getUserId());
         param.put("realName", real_name);//姓名
@@ -448,19 +448,18 @@ public class ApplicationSpecialistActivity extends BaseActivity implements View.
         String sign = DeviceInfo.getSign("/user/expertAuth" + "idCard" + id_datas + "introduce" + specalist_edittext + "langzh" + "loginToken" + AppConstants.register.getToken() + "realName" + real_name + "skillfulLeague" + good_league + "timeZone8" + "userId" + AppConstants.register.getUser().getUserId());
         param.put("sign", sign);
 
-        VolleyContentFast.requestJsonByPost("http://192.168.10.242:8099/user/expertAuth", param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
 
                 if (register != null && Integer.parseInt(register.getCode()) == AccountResultCode.EXPERT_CERTIFICATION_AUDIT) {
                     scrollview.setVisibility(View.GONE);
                     to_examine.setVisibility(View.VISIBLE);
-                    EventBus.getDefault().post(new SpecialistBean("1"));
+                    EventBus.getDefault().post(new SpecialistBean(2));
 
                 } else {
                     scrollview.setVisibility(View.VISIBLE);
                     to_examine.setVisibility(View.GONE);
-                    L.e(TAG, "成功请求，注册失败");
                     DeviceInfo.handlerRequestResult(Integer.parseInt(register.getCode()), "未知错误");
                 }
             }
