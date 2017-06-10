@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingOnlinePaymentActivity;
 import com.hhly.mlottery.util.L;
@@ -38,7 +39,8 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler{
 
         // 通过WXAPIFactory工厂，获取IWXAPI的实例
 //        data.api = WXAPIFactory.createWXAPI(this, Constants.APP_ID, false);
-        api = WXAPIFactory.createWXAPI(this, "wx2a5538052969956e");
+//        api = WXAPIFactory.createWXAPI(this, "wx2a5538052969956e");
+        api = WXAPIFactory.createWXAPI(this, ConstantPool.APP_ID);
         api.handleIntent(getIntent(), this);
         L.d("微信支付..." , "onCreate()");
 //        regBtn = (Button) findViewById(R.id.reg_btn);

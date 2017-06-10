@@ -138,9 +138,9 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
         mapPrament.put(PARAM_USER_ID , userid);//用户id
         mapPrament.put(PARAM_PROMOTION_ID , promId); //推荐ID
-        mapPrament.put(PARAM_CHANNEL , "1"); //0：PC 1：安卓 2:IOS 3:H5
+        mapPrament.put(PARAM_CHANNEL , ConstantPool.PARAMENT_CHANNEL); //0：PC 1：安卓 2:IOS 3:H5
         mapPrament.put(PARAM_LOGIN_TOKEN , token); //logintoken
-        mapPrament.put(PARAM_APP_TYPE , "2"); //appType 2:android
+        mapPrament.put(PARAM_APP_TYPE , ConstantPool.PARAMENT_APP_TYPE); //appType 2:android
         mapPrament.put(PARAM_LANG , MyApp.getLanguage());
         mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
         String signs = SignUtils.getSign(BaseURLs.PARAMENT_ORDER_CREATE , mapPrament);
@@ -148,9 +148,9 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
         Map<String ,String> map = new HashMap<>();
         map.put(PARAM_USER_ID , userid);//用户id
         map.put(PARAM_PROMOTION_ID , promId); //推荐ID
-        map.put(PARAM_CHANNEL , "1"); //0：PC 1：安卓 2:IOS 3:H5
+        map.put(PARAM_CHANNEL , ConstantPool.PARAMENT_CHANNEL); //0：PC 1：安卓 2:IOS 3:H5
         map.put(PARAM_LOGIN_TOKEN , token); //logintoken
-        map.put(PARAM_APP_TYPE , "2"); //appType 2:android
+        map.put(PARAM_APP_TYPE , ConstantPool.PARAMENT_APP_TYPE); //appType 2:android
         map.put(PARAM_SIGN , signs);
 
         L.d("qwer== >> " + signs);
@@ -195,11 +195,11 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
                     switch (MODE_PAYMENT){
                         case 0:
                             L.d("支付方式 = ","支付宝");
-                            PayMentUtils.ALiPayData(mContext , MvpBettingOnlinePaymentActivity.this , payUrl , getDataMap("4" , moneyIns));
+                            PayMentUtils.ALiPayData(mContext , MvpBettingOnlinePaymentActivity.this , payUrl , getDataMap(ConstantPool.ZEB_SERVICE , moneyIns));
                             break;
                         case 1:
                             L.d("支付方式 = ","微信");
-                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap("3" , moneyIns));
+                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap(ConstantPool.WEIXIN_SERVICE , moneyIns));
                             break;
                         case 2:
                             L.d("支付方式 = ","余额支付");
@@ -302,26 +302,15 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
         String resultStatus = result.getResult();
 
-        if (TextUtils.equals(resultStatus, "9000")) {
+        if (TextUtils.equals(resultStatus, ConstantPool.PAY_RESULT_STATUS_SUCCESS)) {
             Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_payment_success), Toast.LENGTH_SHORT).show();
             //TODO=====  充值成功调起余额接口
             orderPay();// 充值成功调余额支付接口
         } else {
-            if (TextUtils.equals(resultStatus, "6001")) {
+            if (TextUtils.equals(resultStatus, ConstantPool.PAY_RESULT_STATUS_QUXIAO)) {
                 Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_payment_cancle), Toast.LENGTH_SHORT).show();
             }
             L.d("支付返回码==>> " , "" + resultStatus);
-//            if (TextUtils.equals(resultStatus, "8000")) {
-//                Toast.makeText(mContext, "结果确认中 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            } else if (TextUtils.equals(resultStatus, "6001")) {
-//                Toast.makeText(mContext, "支付取消 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            } else if (TextUtils.equals(resultStatus, "6002")) {
-//                Toast.makeText(mContext, "网络异常 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            } else if (TextUtils.equals(resultStatus, "5000")) {
-//                Toast.makeText(mContext, "重复请求 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(mContext, "支付失败 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            }
         }
     }
 
@@ -339,9 +328,6 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
      */
     public void orderPay(){
 
-        //http://192.168.10.242:8092/promotion/order/pay?
-        // userId=hhly90531&promotionId=643&sign=982f065d9f9c942d3e5466d93a417d73aa&channel=1&token=eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTYzNzY2NjIsInN1YiI6IntcImlkXCI6XCJoaGx5OTA1MzFcIixcInBob25lTnVtXCI6XCIxMzI2Njc1MjM4NlwifSJ9.2hmsToL-ex9LXRbWI44cuDhqKqZva_qBPG1pKB_IVfU&payType=3
-
 //        String orderPayUrl = "http://192.168.10.242:8092/promotion/order/pay";
 //        String orderPayUrl = "http://m.1332255.com:81/promotion/order/pay";
         String orderPayUrl = BaseURLs.URL_ORDER_PAY;
@@ -353,9 +339,9 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
         mapPrament.put(PARAM_USER_ID , userid);//用户id
         mapPrament.put(PARAM_PROMOTION_ID , promId); //推荐ID
-        mapPrament.put(PARAM_APP_TYPE , "2"); //appType 2:android
+        mapPrament.put(PARAM_APP_TYPE , ConstantPool.PARAMENT_APP_TYPE); //appType 2:android
         mapPrament.put(PARAM_LOGIN_TOKEN , token); //logintoken
-        mapPrament.put(PARAM_PAY_TYPE , "3"); //1微信2支付宝3账户余额  （目前只支持3）
+        mapPrament.put(PARAM_PAY_TYPE , ConstantPool.PARAMENT_PAY_TYPE); //1微信2支付宝3账户余额  （目前只支持3）
         mapPrament.put(PARAM_LANG , MyApp.getLanguage());
         mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
         String signs = SignUtils.getSign(BaseURLs.PARAMENT_ORDER_PAY , mapPrament);
@@ -363,9 +349,9 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
         Map<String ,String> map = new HashMap<>();
         map.put(PARAM_USER_ID , userid);//用户id
         map.put(PARAM_PROMOTION_ID , promId); //推荐ID
-        map.put(PARAM_APP_TYPE , "2"); //appType 2:android
+        map.put(PARAM_APP_TYPE , ConstantPool.PARAMENT_APP_TYPE); //appType 2:android
         map.put(PARAM_LOGIN_TOKEN , token); //logintoken
-        map.put(PARAM_PAY_TYPE , "3"); //1微信2支付宝3账户余额  （目前只支持3）
+        map.put(PARAM_PAY_TYPE , ConstantPool.PARAMENT_PAY_TYPE); //1微信2支付宝3账户余额  （目前只支持3）
         map.put(PARAM_SIGN , signs);
 
         L.d("qwer== >> " + signs);
