@@ -324,6 +324,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     //0 未审核  1.审核通过  2.审核中  3.审核不通过
 
                     L.d("expert", AppConstants.register.getUser().getIsExpert() + "");
+                    UiUtils.toast(getApplicationContext(), "返回的专家审核值===" + AppConstants.register.getUser().getIsExpert());
 
                     if (1 == AppConstants.register.getUser().getIsExpert()) {
                         startActivity(new Intent(this, RecommendArticlesActivity.class));
