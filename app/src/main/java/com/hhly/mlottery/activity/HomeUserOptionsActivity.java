@@ -327,6 +327,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
                     if (1 == AppConstants.register.getUser().getIsExpert()) {
                         startActivity(new Intent(this, RecommendArticlesActivity.class));
+                    } else if (2 == AppConstants.register.getUser().getIsExpert()) {
+                        UiUtils.toast(getApplicationContext(), R.string.expert_shehe_txt);
                     } else {
                         startActivity(new Intent(this, NotRecommendExpertActivity.class));
                     }
