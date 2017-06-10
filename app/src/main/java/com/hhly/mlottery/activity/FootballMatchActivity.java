@@ -422,11 +422,10 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                         bettingList = jsonObject.getBettingList();
                         tv_data_size.setText("(" + totalSize + ")");
 
-
+                        initViewData();
                         if (bettingList == null) {
                             mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
                         } else {
-                            initViewData();
                             footballMatchListAdapter.notifyItemRemoved(bettingList.size() - 1);
                             footballMatchListAdapter.getData().clear();
                             footballMatchListAdapter.addData(bettingList);
@@ -457,10 +456,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
         footballMatchListAdapter = new FootballMatchListAdapter(getApplicationContext(), R.layout.football_match_child, null);
         mRecyclerView.setAdapter(footballMatchListAdapter);
-
         footballMatchListAdapter.openLoadMore(0, true);
         footballMatchListAdapter.setLoadingView(view);
-
 
         footballMatchListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
@@ -681,6 +678,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
     public void showSelectInfo(int indexDate) {
 
+
         currentIndexDate = indexDate;
 
         //footballMatchListAdapter.getData().clear();
@@ -691,7 +689,6 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
             footballMatchListAdapter.setEmptyView(emptyView);
             footballMatchListAdapter.notifyDataSetChanged();
         }
-
 
         mTitleTextView.setText(dateList.get(indexDate).get("date") + "" + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(dateList.get(indexDate).get("date"))));
         if (indexDate <= 0) {

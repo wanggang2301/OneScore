@@ -40,6 +40,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
+import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.util.net.UnitsUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
@@ -125,7 +126,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                             .error(R.mipmap.center_head)
                             .into(mUser_image);
 
-                    Log.i("register", "isLogin" + AppConstants.register.getUser().getImageSrc());
+                    Log.i("register","isLogin"+AppConstants.register.getUser().getImageSrc());
                     mTv_nickname.setEnabled(false);
                     break;
                 default:
@@ -355,14 +356,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.rl_my_promotion:     //推介文章
                 if (DeviceInfo.isLogin()) {
                     //0 未审核  1.审核通过  2.审核中  3.审核不通过
-
-                    L.d("expert", AppConstants.register.getUser().getIsExpert() + "");
-                    UiUtils.toast(getApplicationContext(), "返回的专家审核值===" + AppConstants.register.getUser().getIsExpert() + "——————说明:0 未审核  1.审核通过  2.审核中  3.审核不通过");
-
-                    if (1 == AppConstants.register.getUser().getIsExpert()) {
+                    if ("1".equals(AppConstants.register.getUser().getIsExpert())) {
                         startActivity(new Intent(this, RecommendArticlesActivity.class));
-                    } else if (2 == AppConstants.register.getUser().getIsExpert()) {
-                        UiUtils.toast(getApplicationContext(), R.string.expert_shehe_txt);
                     } else {
                         startActivity(new Intent(this, NotRecommendExpertActivity.class));
                     }
@@ -509,31 +504,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
         if (DeviceInfo.isLogin()) {
             // 0 未审核  1.审核通过  2.审核中  3.审核不通过
-
             login();
-
-            if (AppConstants.register.getUser().getIsExpert() == 0) {
-                in_audit.setText("未审核");
-            } else if (AppConstants.register.getUser().getIsExpert() == 1) {
-                in_audit.setText("审核通过");
-            } else if (AppConstants.register.getUser().getIsExpert() == 2) {
-                in_audit.setText("审核中");
-            } else if (AppConstants.register.getUser().getIsExpert() == 3) {
-                in_audit.setText("审核不通过");
-            } else {
-                in_audit.setText("");
-            }
-
             available_balance_rl.setVisibility(View.VISIBLE);
             cash_balance_payable_rl.setVisibility(View.VISIBLE);
-            available_balance.setText(UnitsUtil.fenToYuan(AppConstants.register.getUser().getAvailableBalance()));
-            cash_balance_payable.setText(UnitsUtil.fenToYuan(AppConstants.register.getUser().getCashBalance()));
-            subscribe_tv.setText(AppConstants.register.getUser().getBuyCount());
-            promotion_tv.setText(AppConstants.register.getUser().getPushCount());
             not_login_balance.setVisibility(View.GONE);
             not_login_payable.setVisibility(View.GONE);
             mTv_nickname.setText(AppConstants.register.getUser().getNickName());
-
 
         } else {
             in_audit.setText("");
@@ -556,21 +532,27 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
         final String url = BaseURLs.URL_LOGIN;
 
-        Map<String, String> param = new HashMap<>();
-        param.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
-        param.put("password", PreferenceUtil.getString("et_password", ""));
+
+        Map<String, String> mapPrament = new HashMap<>();
+        mapPrament.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
+        mapPrament.put("password", MD5Util.getMD5(PreferenceUtil.getString("et_password", "")));
 
         if (MyApp.isLanguage.equals("rCN")) {
             // 如果是中文简体的语言环境
-            language = "langzh";
+            mapPrament.put("lang", "zh");
         } else if (MyApp.isLanguage.equals("rTW")) {
             // 如果是中文繁体的语言环境
-            language = "langzh-TW";
+            mapPrament.put("lang", "zh-TW");
         }
+        mapPrament.put("timeZone", "8");
 
-        String sign = DeviceInfo.getSign("/user/login" + language + "password" + MD5Util.getMD5(PreferenceUtil.getString("et_password", "")) + "phoneNum" + AppConstants.register.getUser().getPhoneNum() + "timeZone8");
-        param.put("sign", sign);
-        setResult(RESULT_OK);
+        String signs = SignUtils.getSign("/user/login", mapPrament);
+
+
+        Map<String, String> param = new HashMap<>();
+        param.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
+        param.put("password", MD5Util.getMD5(PreferenceUtil.getString("et_password", "")));
+        param.put("sign", signs);
 
         VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
@@ -579,8 +561,26 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 progressBar.dismiss();
                 if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
 
+                    subscribe_tv.setText(register.getUser().getBuyCount());
+                    promotion_tv.setText(register.getUser().getPushCount());
                     available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance()));
                     cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance()));
+
+                    DeviceInfo.saveRegisterInfo(register);
+                    if (register.getUser().getIsExpert()==0) {
+                        in_audit.setText("未审核");
+                    } else if (register.getUser().getIsExpert()== 1) {
+                        in_audit.setText("审核通过");
+                    } else if (register.getUser().getIsExpert()== 2) {
+                        in_audit.setText("审核中");
+                    } else if (register.getUser().getIsExpert() == 3) {
+                        in_audit.setText("审核不通过");
+                    } else {
+                        in_audit.setText("");
+                    }
+
+
+
 
                 } else {
 
@@ -610,6 +610,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
 
 
     @Override
