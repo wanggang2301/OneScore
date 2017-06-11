@@ -128,7 +128,6 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
                 mEditText=mWithDrawAmount.getText().toString();
                 if(mEditText==null||mEditText.equals("")){
                     Toast.makeText(getActivity(), R.string.withdraw_input_money, Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getActivity(), BindCardActivity.class));
                 }
                 else if(Integer.parseInt(mEditText)<MIX_NUM){
                     Toast.makeText(getActivity(), R.string.withdraw_unless_100, Toast.LENGTH_LONG).show();
