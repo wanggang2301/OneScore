@@ -53,7 +53,7 @@
                         android:lines="1"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:text="提现"
+                        android:text="@string/withdraw"
                         android:textColor="@color/white"
                         android:textSize="20sp" />
                 </RelativeLayout>
@@ -82,7 +82,7 @@
                         style="@style/withdraw_text_style"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="开户名:" />
+                        android:text="@string/bind_card_name" />
 
                     <TextView
                         android:id="@+id/withdraw_name"
@@ -100,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/withdraw1"
                         android:layout_marginTop="20dp"
-                        android:text="银行卡号:" />
+                        android:text="@string/bind_card_card_num" />
 
                     <TextView
                         android:id="@+id/withdraw_card_number"
@@ -124,7 +124,7 @@
                         android:id="@+id/withdraw3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="提取金额"
+                        android:text="@string/withdraw_amount"
                         style="@style/withdraw_text_style"
                         />
                     <TextView
@@ -139,7 +139,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/withdraw_text_style"
-                        android:text="可提现"
+                        android:text="@string/withdraw_available"
                         android:layout_toLeftOf="@id/withdraw_balance"
                         />
 
@@ -150,7 +150,7 @@
                         android:background="@drawable/betting_issues_fabu_edit_text_bg"
                         android:inputType="number"
                         android:cursorVisible="true"
-                        android:hint="请输入提取金额"
+                        android:hint="@string/please_input_amount"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:layout_marginTop="7dp"
@@ -174,7 +174,7 @@
                         android:gravity="center"
                         android:textSize="@dimen/text_size_15"
                         android:textColor="@color/betting_recommend_zhuanjia_grand_color"
-                        android:text="提现"/>
+                        android:text="@string/withdraw"/>
                 </LinearLayout>
                 <TextView
                     android:layout_width="wrap_content"
@@ -184,12 +184,7 @@
                     android:layout_marginTop="30dp"
                     android:textSize="@dimen/text_size_12"
 
-                    android:text="
-                    1.为了保障你的资金安全，你的提款申请成功并经核对无误后，将通过人工处理到第三方支付平台再汇到你的账户。\n
-                    2.处理时间：17点之前的提款申请，当日内处理;17点后的提款申请，次日处理。节假日到账时间顺延。\n
-                    3.提款需收取1元的手续费\n
-                    4.提款申请下发银行后以银行处理的到账时间为准
-                     "
+                    android:text="@string/_1_n_2_17_17_n_3_1_n_4"
                     />
             </LinearLayout>
         </ScrollView>
@@ -266,7 +261,7 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="提现审核中..."
+          android:text="@string/withdraw_waiting"
           android:layout_gravity="center"
           android:textColor="@color/application_specialist_text_color"
           android:textSize="@dimen/text_size_15"
@@ -276,7 +271,7 @@
           android:layout_height="wrap_content"
           android:layout_gravity="center"
           android:textColor="@color/application_specialist_text_color"
-          android:text="需要三个工作日完成审核,请耐心等待"
+          android:text="@string/withdraw_3_day"
           android:textSize="@dimen/text_size_15"
           />
   </LinearLayout>

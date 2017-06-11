@@ -3,7 +3,11 @@ package com.hhly.mlottery.frame.withdrawandbindcard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.Double2;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +21,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BindCardActivity;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.widget.TextWatcherAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -116,17 +121,24 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
      * 设置监听
      */
     private void setListener() {
+
         mCommitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mEditText=mWithDrawAmount.getText().toString();
-                if(mEditText!=null&&!mEditText.equals("")&&Integer.parseInt(mEditText)<MIX_NUM){
-                    Toast.makeText(getActivity(), "提现金额最小100", Toast.LENGTH_LONG).show();
+                if(mEditText==null||mEditText.equals("")){
+                    Toast.makeText(getActivity(), R.string.withdraw_input_money, Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getActivity(), BindCardActivity.class));
+                }
+                else if(Integer.parseInt(mEditText)<MIX_NUM){
+                    Toast.makeText(getActivity(), R.string.withdraw_unless_100, Toast.LENGTH_LONG).show();
                 }
                 else if(mPresenter.getCardInfo().getCardNum()==null||mPresenter.getCardInfo().getCardNum().equals("")){ //未绑定银行卡
                     //跳绑定银行卡页面
                     L.e("sign","没绑卡呢");
                     startActivity(new Intent(getActivity(), BindCardActivity.class));
+                }else if(Double.parseDouble(mEditText)>Double.parseDouble(mTextBalance)){
+                    Toast.makeText(getActivity(), R.string.withdraw_morethan_total, Toast.LENGTH_LONG).show();
                 }
                 else { //提现
                     mPresenter.commitWithdraw(mEditText);
@@ -177,7 +189,7 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
         mCardName.setText(mPresenter.getCardInfo().getAccountName());
         String head=""; String last="";
         if(mPresenter.getCardInfo().getCardNum()!=null&&!mPresenter.getCardInfo().getCardNum().equals("")){
-            head=mPresenter.getCardInfo().getCardNum().substring(0,4)+"****　****";
+            head=mPresenter.getCardInfo().getCardNum().substring(0,4)+" **** **** ";
             last=mPresenter.getCardInfo().getCardNum().substring(mPresenter.getCardInfo().getCardNum().length()-4,mPresenter.getCardInfo().getCardNum().length());
         }
         mCardNumber.setText(head+last);
@@ -191,7 +203,7 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
 
     @Override
     public void withdrawError() {
-        Toast.makeText(getActivity(), "提现失败,请重试", Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), R.string.withdraw_error, Toast.LENGTH_LONG).show();
 
     }
 }

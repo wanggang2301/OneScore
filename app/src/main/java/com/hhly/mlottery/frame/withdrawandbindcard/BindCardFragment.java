@@ -59,11 +59,11 @@ public class BindCardFragment extends ViewFragment<BindCardContract.Presenter>im
             @Override
             public void onClick(View view) {
                 if(mName.getText().toString().isEmpty()){
-                    Toast.makeText(mActivity, "开户名不能为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, R.string.bind_card_name_null, Toast.LENGTH_SHORT).show();
                 }else if(mBank.getText().toString().isEmpty()){
-                    Toast.makeText(mActivity, "开户银行不能为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, R.string.bind_card_bank_null, Toast.LENGTH_SHORT).show();
                 }else if(checkBankCard(mCardNumber.getText().toString())){
-                    Toast.makeText(mActivity, "银行卡号不正确", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, R.string.bind_card_card_error, Toast.LENGTH_SHORT).show();
                 }else{
                     mPresenter.request(mName.getText().toString(),mBank.getText().toString(),mCardNumber.getText().toString());
                 }
@@ -90,36 +90,42 @@ public class BindCardFragment extends ViewFragment<BindCardContract.Presenter>im
      * @return
      */
     public  boolean checkBankCard(String cardId) {
+        if(cardId.isEmpty()||cardId.length()<10){
+            return true;
+        }
         char bit = getBankCardCheckCode(cardId
                 .substring(0, cardId.length() - 1));
-        return cardId.charAt(cardId.length() - 1) == bit;
+        return cardId.charAt(cardId.length() - 1) != bit; //不等于则是错误卡 、true就是错误
     }
     /**
      * 从不含校验位的银行卡卡号采用 Luhm 校验算法获得校验位
-     *
-     * @param nonCheckCodeCardId
-     * @return
+     * 该校验的过程：
+     * 1、从卡号最后一位数字开始，逆向将奇数位(1、3、5等等)相加。
+     * 2、从卡号最后一位数字开始，逆向将偶数位数字，先乘以2（如果乘积为两位数，则将其减去9），再求和。
+     * 3、将奇数位总和加上偶数位总和，结果应该可以被10整除。
      */
-    public  char getBankCardCheckCode(String nonCheckCodeCardId) {
-        int cardLenth = nonCheckCodeCardId.trim().length();
-        if (nonCheckCodeCardId == null || cardLenth == 0
-                || !nonCheckCodeCardId.matches("\\d+")) {
-            throw new IllegalArgumentException("不是银行卡的卡号!");
+    public  char getBankCardCheckCode(String nonCheckCodeCardId){
+        if(nonCheckCodeCardId == null || nonCheckCodeCardId.trim().length() == 0
+                || !nonCheckCodeCardId.matches("\\d+")||nonCheckCodeCardId.trim().length()<15
+                ||nonCheckCodeCardId.trim().length()>18) {
+            //如果传的数据不合法返回N
+            return 'N';
         }
         char[] chs = nonCheckCodeCardId.trim().toCharArray();
         int luhmSum = 0;
-        for (int i = chs.length - 1, j = 0; i >= 0; i--, j++) {
+        // 执行luh算法
+        for(int i = chs.length - 1, j = 0; i >= 0; i--, j++) {
             int k = chs[i] - '0';
-            if (j % 2 == 0) {
+            if(j % 2 == 0) {  //偶数位处理
                 k *= 2;
                 k = k / 10 + k % 10;
             }
             luhmSum += k;
         }
-        return (luhmSum % 10 == 0) ? '0' : (char) ((10 - luhmSum % 10) + '0');
+        return (luhmSum % 10 == 0) ? '0' : (char)((10 - luhmSum % 10) + '0');
     }
 
-        @Override
+    @Override
     public BindCardContract.Presenter initPresenter() {
         return new BindCardPresenter(this);
     }
@@ -127,13 +133,13 @@ public class BindCardFragment extends ViewFragment<BindCardContract.Presenter>im
 
     @Override
     public void bindSuccess(WithdrawBean.DataEntity bean) {
-        Toast.makeText(mActivity, "绑定成功", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mActivity, R.string.bind_success, Toast.LENGTH_SHORT).show();
 //        EventBus.getDefault().post(bean);
         getActivity().finish();
     }
 
     @Override
     public void bindError() {
-        Toast.makeText(mActivity, "绑定失败", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mActivity, R.string.bind_error, Toast.LENGTH_SHORT).show();
     }
 }
