@@ -37,6 +37,7 @@
                     android:text="提示："
                     android:textColor="@color/red"
                     android:textSize="12sp" />
+
                 <TextView
                     android:id="@+id/specalist_error_text"
                     android:layout_width="wrap_content"
@@ -283,22 +284,46 @@
 
                 </LinearLayout>
 
-                <ImageView
+                <LinearLayout
                     android:id="@+id/success_image"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-                    android:src="@mipmap/success"
-                    android:visibility="gone" />
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="30dp"
+                        android:src="@mipmap/success" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="恭喜你!"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="你已通过实名注册"
+                        android:textSize="18sp" />
+
+
+                </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="10dp"
                     android:id="@+id/agreement"
                     android:layout_width="fill_parent"
                     android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
                     android:background="#FFFFFFFF"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:visibility="visible">
 
 
                     <ImageView

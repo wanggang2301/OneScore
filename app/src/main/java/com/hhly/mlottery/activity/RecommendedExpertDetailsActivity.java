@@ -64,6 +64,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
     private LinearLayout px_line;
     private List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> listBeanList;
     private View view;
+    private View headView;
     private ProgressBar progressBar;
     private TextView loadmore_text;
     private View emptyView;
@@ -205,6 +206,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
                     if (recomenHeadAdapter == null) {
                         recomenHeadAdapter = new RecomenHeadAdapter(mContext, listBeanList);
                         recomenHeadAdapter.setLoadingView(view);
+                        recomenHeadAdapter.addHeaderView(headView);
                         ex_recyclerview.setAdapter(recomenHeadAdapter);
                         recomenHeadAdapter.openLoadMore(0, true);
                         initEvent();
@@ -360,6 +362,8 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
 
         LayoutInflater layoutInflater = this.getLayoutInflater();
         view = layoutInflater.inflate(R.layout.view_load_more, null);
+        headView  = layoutInflater.inflate(R.layout.activity_experts_head_view,null);
+        headView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //上来加载view
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
@@ -373,7 +377,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         match_error_btn = (LinearLayout) findViewById(R.id.match_error_ll);
         findViewById(R.id.match_error_btn).setOnClickListener(this);
 
-        px_line = (LinearLayout) findViewById(R.id.px_line);
+        px_line = (LinearLayout) headView.findViewById(R.id.px_line);
         px_line.setVisibility(View.GONE);
         emptyView = View.inflate(this, R.layout.layout_nodata, null);
 
@@ -383,10 +387,10 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
         findViewById(R.id.public_img_back).setOnClickListener(this);
-        ex_image = (ImageView) findViewById(R.id.ex_image);
-        ex_name = (TextView) findViewById(R.id.ex_name);
-        ex_zhong = (TextView) findViewById(R.id.ex_zhong);
-        ex_text = (TextView) findViewById(R.id.ex_text);
+        ex_image = (ImageView) headView.findViewById(R.id.ex_image);
+        ex_name = (TextView) headView.findViewById(R.id.ex_name);
+        ex_zhong = (TextView) headView.findViewById(R.id.ex_zhong);
+        ex_text = (TextView) headView.findViewById(R.id.ex_text);
 
         ex_recyclerview = (RecyclerView) findViewById(R.id.ex_recyclerview);
 

@@ -1873,4 +1873,6 @@
         completions."
     </string>
 
+    <!--申请专家-->
+    <string name="application_specialist">申请专家</string>
 </resources>

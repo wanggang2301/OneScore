@@ -27,6 +27,7 @@ import com.hhly.mlottery.util.PayMentUtils;
 import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.UnitsUtil;
+import com.sina.weibo.sdk.api.share.Base;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,6 +39,15 @@ import de.greenrobot.event.EventBus;
  * Use:充值页面(view)
  */
 public class MvpChargeMoneyActivity extends Activity implements View.OnClickListener {
+
+    /** 签名参数 */
+    private String PARAM_USER_ID = "userId";//用户id
+    private String PARAM_LOGIN_TOKEN = "loginToken";//logintoken
+    private String PARAM_SIGN = "sign";//参数签名
+    private String PARAM_SERVICE = "service";//3 微信 4 支付宝
+    private String PARAM_TRADE_AMOUNT = "tradeAmount";//金额 分
+    private String PARAM_LANG = "lang";
+    private String PARAM_TIMEZONE = "timeZone";
 
     private Context mContext;
     private RadioButton priceCardA;
@@ -69,7 +79,8 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
      * 余额查询的接口
      */
 //    String balanceUrl = "http://192.168.10.242:8099/user/pay/balance";
-    String balanceUrl = "http://m.1332255.com:81/user/pay/balance";
+//    String balanceUrl = "http://m.1332255.com:81/user/pay/balance";
+    String balanceUrl = BaseURLs.URI_PAY_BALANCE;
     private TextView balance;
 
     @Override
@@ -139,16 +150,16 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
 
         Map<String ,String> mapPrament = new HashMap<>();
 
-        mapPrament.put("userId" , userid);//用户ID
-        mapPrament.put("loginToken" , token);//登陆的token
-        mapPrament.put("lang" , MyApp.getLanguage());
-        mapPrament.put("timeZone" , AppConstants.timeZone + "");
-        String signs = SignUtils.getSign("/user/pay/balance" , mapPrament);
+        mapPrament.put(PARAM_USER_ID , userid);//用户ID
+        mapPrament.put(PARAM_LOGIN_TOKEN , token);//登陆的token
+        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_PAY_BALANCE , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
-        map.put("userId" , userid);//用户ID
-        map.put("loginToken" , token);//登陆的token
-        map.put("sign" , signs);//签名 和 登陆的时候签名一样
+        map.put(PARAM_USER_ID , userid);//用户ID
+        map.put(PARAM_LOGIN_TOKEN , token);//登陆的token
+        map.put(PARAM_SIGN , signs);//签名 和 登陆的时候签名一样
 
         L.d("qwer== >> " + signs);
 
@@ -247,10 +258,10 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
                     L.d("充值的金额 ：" , moneyIn);
                     switch (PAYMENT_MONEY){
                         case 0:
-                            PayMentUtils.ALiPayData(mContext , MvpChargeMoneyActivity.this ,payUrl ,getDataMap("4" , moneyIn));
+                            PayMentUtils.ALiPayData(mContext , MvpChargeMoneyActivity.this ,payUrl ,getDataMap(ConstantPool.ZEB_SERVICE , "1"));
                             break;
                         case 1:
-                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap("3" , moneyIn));
+                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap(ConstantPool.WEIXIN_SERVICE , "1"));
                             break;
                     }
                 }
@@ -282,20 +293,20 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
 
         Map<String ,String> mapPrament = new HashMap<>();
 
-        mapPrament.put("userId" , userid);//用户ID
-        mapPrament.put("service" , service);//3 微信 4 支付宝
-        mapPrament.put("tradeAmount" , money);//金额 分
-        mapPrament.put("loginToken" , token);//登陆的token
-        mapPrament.put("lang" , MyApp.getLanguage());
-        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        mapPrament.put(PARAM_USER_ID , userid);//用户ID
+        mapPrament.put(PARAM_SERVICE , service);//3 微信 4 支付宝
+        mapPrament.put(PARAM_TRADE_AMOUNT , money);//金额 分
+        mapPrament.put(PARAM_LOGIN_TOKEN , token);//登陆的token
+        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
         String signs = SignUtils.getSign(BaseURLs.PARAMENT_CHARGE_MONEY , mapPrament);
 
         Map<String ,String> map = new HashMap<>();
-        map.put("userId" , userid);//用户ID
-        map.put("service" , service);//3 微信 4 支付宝
-        map.put("tradeAmount" , money);//金额 分
-        map.put("loginToken" , token);//登陆的token
-        map.put("sign" , signs);//签名 和 登陆的时候签名一样
+        map.put(PARAM_USER_ID , userid);//用户ID
+        map.put(PARAM_SERVICE , service);//3 微信 4 支付宝
+        map.put(PARAM_TRADE_AMOUNT , money);//金额 分
+        map.put(PARAM_LOGIN_TOKEN , token);//登陆的token
+        map.put(PARAM_SIGN , signs);//签名 和 登陆的时候签名一样
 
         L.d("qwer== >> " + signs);
 
@@ -316,24 +327,15 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
 
         String resultStatus = result.getResult();
 
-        if (TextUtils.equals(resultStatus, "9000")) {
+        if (TextUtils.equals(resultStatus, ConstantPool.PAY_RESULT_STATUS_SUCCESS)) {
             Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_payment_success), Toast.LENGTH_SHORT).show();
             /** 支付成功后回到当前页刷新余额接口*/
             initData();
         } else {
-            if (TextUtils.equals(resultStatus, "6001")) {
+            if (TextUtils.equals(resultStatus, ConstantPool.PAY_RESULT_STATUS_QUXIAO)) {
                 Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_payment_cancle), Toast.LENGTH_SHORT).show();
             }
             L.d("支付返回码==>> " , "" + resultStatus);
-//            else if (TextUtils.equals(resultStatus, "8000")) {
-//                Toast.makeText(mContext, "结果确认中 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            } else if (TextUtils.equals(resultStatus, "6002")) {
-//                Toast.makeText(mContext, "网络异常 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            } else if (TextUtils.equals(resultStatus, "5000")) {
-//                Toast.makeText(mContext, "重复请求 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            } else {
-//                Toast.makeText(mContext, "支付失败 > " + resultStatus, Toast.LENGTH_SHORT).show();
-//            }
         }
     }
     /**
