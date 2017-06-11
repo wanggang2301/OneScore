@@ -60,13 +60,27 @@
         android:layout_height="wrap_content"
         android:padding="12dp"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            style="@style/withdraw_text_style"
-            android:text="绑定银行卡"
-            android:gravity="center"
-            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                style="@style/withdraw_text_style"
+                android:text="绑定银行卡"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/unionpay"
+                />
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -90,7 +104,7 @@
                 android:background="@drawable/betting_issues_fabu_edit_text_bg"
                 android:hint="姓名"
                 android:paddingLeft="10dp"
-                android:textColorHint="@color/application_specialist_text_color"
+                android:textColorHint="@color/edit_hint_color"
                 android:textSize="@dimen/text_size_13"
                 android:textColor="@color/application_specialist_text_color"
                 android:layout_marginLeft="20dp"
@@ -119,7 +133,7 @@
                     android:paddingLeft="10dp"
                     android:textSize="@dimen/text_size_13"
                     android:textColor="@color/application_specialist_text_color"
-                    android:textColorHint="@color/application_specialist_text_color"
+                    android:textColorHint="@color/edit_hint_color"
                     android:layout_marginLeft="20dp"
                     />
 
@@ -147,6 +161,7 @@
                 android:layout_marginLeft="20dp"
                 android:inputType="number"
                 android:textSize="@dimen/text_size_11"
+                android:textColorHint="@color/edit_hint_color"
                 android:textColor="@color/application_specialist_text_color"
                 android:gravity="center_vertical"
                 />

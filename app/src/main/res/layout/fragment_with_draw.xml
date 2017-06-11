@@ -155,7 +155,7 @@
                         android:paddingRight="10dp"
                         android:layout_marginTop="7dp"
                         android:textColor="@color/application_specialist_text_color"
-                        android:textColorHint="#d7d7d7"
+                        android:textColorHint="@color/edit_hint_color"
                         android:layout_below="@id/withdraw3"
                         android:textSize="@dimen/text_size_13" />
                 </RelativeLayout>
@@ -240,9 +240,9 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:layout_centerInParent="true"
               android:gravity="center_horizontal"
-              >
+              android:layout_centerVertical="true"
+              android:layout_centerHorizontal="true">
               <ImageView
                   android:id="@+id/tanhao"
                   android:layout_width="wrap_content"
