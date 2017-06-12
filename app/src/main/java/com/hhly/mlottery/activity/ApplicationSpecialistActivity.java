@@ -418,7 +418,6 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                         shen_good_legue.setVisibility(View.GONE);
 
                     }
-                   // EventBus.getDefault().post(new SpecialistBean(requestBean.getUserInfo().getIsExpert()));
 
                 } else {
 

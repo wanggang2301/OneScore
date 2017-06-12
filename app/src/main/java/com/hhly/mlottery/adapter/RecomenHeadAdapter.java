@@ -2,6 +2,8 @@ package com.hhly.mlottery.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -25,7 +27,7 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
     List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> mData;
 
     public RecomenHeadAdapter(Context context, List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> data) {
-        super(R.layout.recommend_articles_item, data);
+        super(R.layout.recomenhead_articles_item, data);
         this.mContext = context;
         this.mData = data;
     }
@@ -35,7 +37,9 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
     }
 
     @Override
-    protected void convert(BaseViewHolder baseViewHolder, RecommendationExpertBean.ExpertPromotionsBean.ListBean r) {
+    protected void convert(BaseViewHolder baseViewHolder, final RecommendationExpertBean.ExpertPromotionsBean.ListBean r) {
+
+
         baseViewHolder.setText(R.id.betting_league_name, r.getLeagueName());
         baseViewHolder.setVisible(R.id.betting_round, false);
         baseViewHolder.setText(R.id.betting_date, r.getMatchDate());
@@ -54,34 +58,69 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
         }
         switch (r.getStatus()) {
             case 1:
+                baseViewHolder.setVisible(R.id.iv, true);
+                baseViewHolder.setVisible(R.id.textView11, false);
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zhong);
                 break;
             case 2:
+                baseViewHolder.setVisible(R.id.iv, true);
+                baseViewHolder.setVisible(R.id.textView11, false);
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_shi);
                 break;
             case 6:
+                baseViewHolder.setVisible(R.id.iv, true);
+                baseViewHolder.setVisible(R.id.textView11, false);
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zou);
                 break;
             default:
                 break;
 
         }
+        boolean lookStatus;
+        if (r.getLookStatus() + "" == null) {
+            lookStatus = false;
+            baseViewHolder.setText(R.id.textView11, "--");
+        } else {
+            lookStatus = true;
+            if (r.getLookStatus() == 2) {
+                baseViewHolder.setVisible(R.id.textView11, true);
+                baseViewHolder.setVisible(R.id.iv, false);
+                baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.betting_txt_buy));
+            } else {
+                baseViewHolder.setVisible(R.id.textView11, true);
+                baseViewHolder.setVisible(R.id.iv, false);
+                baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.betting_txt_check));
+            }
+        }
+        LinearLayout mBuyOrCheck = baseViewHolder.getView(R.id.betting_tobuy_or_check);
+
         baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
+
+
+        /**
+         * 购买（查看）点击
+         */
+
+        if (lookStatus) {
+            mBuyOrCheck.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mBuyClick != null) {
+                        mBuyClick.BuyOnClick(v, r);
+                    }
+                }
+            });
+        }
+
+
     }
 
-/*    int nums[] = {3, 5, 10};
+    /**
+     * 购买（查看）监听
+     */
+    private RecommendedExpertDetailsActivity.BettingBuyClickListener mBuyClick; //关注监听回掉
 
-    private int getBuyNum(String bugNum) {
-        if (TextUtils.isEmpty(bugNum)) {
-            return nums[new Random().nextInt(3)];
-        }
-
-        if (Integer.parseInt(bugNum) == 0) {
-            return nums[new Random().nextInt(3)];
-        } else if (Integer.parseInt(bugNum) < 10 && Integer.parseInt(bugNum) > 0) {
-            return Integer.parseInt(bugNum) * 10;
-        } else {
-            return Integer.parseInt(bugNum);
-        }
-    }*/
+    public void setmBuyClick(RecommendedExpertDetailsActivity.BettingBuyClickListener mBuyClick) {
+        this.mBuyClick = mBuyClick;
+    }
 }

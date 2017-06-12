@@ -43,6 +43,7 @@ public interface UserCenterApiService {
                                              @Query("loginToken") String loginToken,
                                              @Query("sign") String sign);
 
+
     /**
      * @param userId
      * @param pageNum

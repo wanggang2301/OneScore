@@ -38,11 +38,13 @@ import butterknife.OnClick;
 import data.bean.SubsRecordBean;
 
 /**
- * @author wangg
- * @desc 订阅记录SubsRecordFragment
- * @date 2017 六一儿童节
+ * @anthor     wangg
+ * @className  SubsRecordFragment
+ * @time       2017 六一儿童节
+ * @changeDesc XXX
+ * @changeTime XXX
+ * @classDesc  订阅记录
  */
-
 public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresenter> implements IContract.IPullLoadMoreDataView, ExactSwipeRefreshLayout.OnRefreshListener {
 
     private static final String PAGE_SIZE = "10"; //每页10条记录
@@ -105,6 +107,10 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     }
 
 
+    /**
+     *@desc 初始化view
+     *@@time 2017/6/12 15:54
+     */
     private void initEvent() {
         loadmoreText = (TextView) moreView.findViewById(R.id.loadmore_text);
         progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
@@ -125,6 +131,10 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         return new SubsRecordPresenter(this);
     }
 
+    /**
+     *@desc 加载。。。
+     *@@time 2017/6/12 15:54
+     */
     @Override
     public void loading() {
         handleException.setVisibility(View.GONE);

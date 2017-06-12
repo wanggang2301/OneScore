@@ -79,38 +79,12 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
     /*头像*/
     private ImageView mHead_portrait;//头像
 
-    /**
-     * 拍照获得图片Url
-     */
-    private Uri mCamerUri;
-
-    /** 头像Bitmap */
-//    private Bitmap mHeadBitmap;
-
-    /**
-     * 裁剪图片code
-     */
-    private final int REQUEST_IMAGE_CROP = 2000;
-    /**
-     * 相册获得图片code
-     */
-    private final int REQUEST_IMAGE_CHOICE = 10;
-    /**
-     * 拍照获得图片code
-     */
-    private final int REQUEST_IMAGE_CAPTURE = 20;
-
-    private final int REQUESTCODE_CHOSE = 100;
-
-
-
     private ProgressDialog progressBar;
 
     private final static int Put_FAIL_PHOTO = 11;
 
     private final OkHttpClient client = new OkHttpClient();
 
-    //    private final String IMAGE_STORAGGEID = "/headview/image.png";
 
     private List<String> sexDatas = new ArrayList<>();
 
@@ -155,12 +129,6 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
         EventBus.getDefault().unregister(this);
     }
 
-    /*   @Override
-       protected void onPause() {
-           super.onPause();
-           MobclickAgent.onPause(this);
-       }
-   */
     @Override
     protected void onResume() {
         super.onResume();
@@ -190,7 +158,6 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
         mHead_portrait.setOnClickListener(this);
         findViewById(R.id.modify_avatar).setOnClickListener(this);
         if (DeviceInfo.isLogin()) {
-            //ImageLoader.load(ProfileActivity.this,AppConstants.register.getData().getUser().getHeadIcon(),R.mipmap.center_head).into(mHead_portrait);
             Glide.with(getApplicationContext())
                     .load(    PreferenceUtil.getString(AppConstants.HEADICON,""))
                     .error(R.mipmap.center_head)
@@ -229,12 +196,6 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
             @Override
             public void onPictureSelected(Uri fileUri, Bitmap bitmap) {
                 mHead_portrait.setImageBitmap(bitmap);
-/*
-                Glide.with(getApplicationContext())
-                        .load(PreferenceUtil.getString(AppConstants.HEADICON,""))
-                        .error(R.mipmap.center_head)
-                        .into(mHead_portrait);*/
-
 
                 String filePath = fileUri.getEncodedPath();
                 String imagePath = Uri.decode(filePath);
@@ -287,7 +248,6 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
                 break;
             case R.id.rl_nickname: // 昵称栏
                 MobclickAgent.onEvent(ProfileActivity.this, "ModifyNicknameActivity_Start");
-                // startActivity(new Intent(this, ModifyNicknameActivity.class));
                 Intent intent = new Intent(ProfileActivity.this, ModifyNicknameActivity.class);
                 intent.putExtra("nickname", tv_nickname.getText().toString());
                 startActivity(intent);
@@ -298,23 +258,12 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
                 break;
 
             case R.id.modify_avatar: //修改头像
-                ///backgroundAlpha(0.5f);
                 selectPicture();
-                // startActivity(new Intent(this, PictureSelectActivity.class));
-                //setHeadView(v);
                 break;
-            case R.id.tv_photograph:  //拍照
-                //doTakePhoto();
-               /* Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                camera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Environment.
-                        getExternalStorageDirectory(), "temp.jpg")));
-                startActivityForResult(camera, CAMERA_REQUEST_CODE);*/
 
-                break;
 
             case R.id.text_man:
 
-                // man_sex.setImageResource(R.mipmap.man_sex);
                 sexDatas.clear();
                 sexDatas.add("1");
                 sexChange(R.color.home_logo_color, R.mipmap.man_sex, R.color.res_pl_color, R.mipmap.default_noon_sex, R.color.res_pl_color, R.mipmap.default_woman_sex);
@@ -329,6 +278,11 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
                 sexDatas.add("3");
                 sexChange(R.color.res_pl_color, R.mipmap.default_man_sex, R.color.noon_sex, R.mipmap.noon_sex, R.color.res_pl_color, R.mipmap.default_woman_sex);
                 break;
+            case R.id. head_portrait:  //拍照
+                selectPicture();
+                break;
+
+
             default:
                 break;
         }
@@ -348,10 +302,6 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
             @Override
             public void onResponse(Register register) {
                 if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
-                    //
-                    // CommonUtils.saveRegisterInfo(register);
-                    //AppConstants.register.getData().getUser().setSex(sexDatas.get(0));
-                    // PreferenceUtil.commitString(AppConstants.SEX, register.getData().getUser().getSex());
                     progressBar.dismiss();
                     finish();
                 } else if (Integer.parseInt(register.getCode()) == AccountResultCode.USER_NOT_LOGIN) {
@@ -388,7 +338,6 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
 
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean) {
 
-        //ImageLoader.load(ProfileActivity.this,choseHeadStartBean.startUrl).into(mHead_portrait);
         Glide.with(getApplicationContext())
                 .load(choseHeadStartBean.startUrl)
                 .error(R.mipmap.center_head)
@@ -407,7 +356,6 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
                     .addFormDataPart("userId", AppConstants.register.getUser().getUserId())
                     .addFormDataPart("loginToken", AppConstants.register.getToken())
                     .build();
-            //BaseURLs.MODIFY_PICTURE
 
             Request request = new Request.Builder()//建立请求
                     .url(BaseURLs.MODIFY_PICTURE)//请求的地址
@@ -421,7 +369,6 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
                     // UiUtils.toast(MyApp.getInstance(), R.string.picture_put_failed);
                     mViewHandler.sendEmptyMessage(Put_FAIL_PHOTO);
                     progressBar.dismiss();
-                    L.e(TAG, "上传erre="+e.toString());
                 }
 
                 @Override
@@ -430,14 +377,11 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
                     progressBar.dismiss();
                     String jsonString = response.body().string();
                     JSONObject jo = JSON.parseObject(jsonString);
-                    // UiUtils.toast(MyApp.getInstance(), jo.toString());
-                    Log.i("register","onResponse===="+jo);
                     if (response != null) {
                         if (jo.getString("code").equals("200")) {
                             String headerUrl = jo.getString("avatorURL");
                             EventBus.getDefault().post(new ChoseHeadStartBean(headerUrl));
                             AppConstants.register.getUser().setImageSrc(headerUrl);
-                            //Log.i("register","onResponse===="+headerUrl);
                             PreferenceUtil.commitString(AppConstants.HEADICON,headerUrl);
 
                         }

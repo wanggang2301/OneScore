@@ -96,13 +96,11 @@
     </LinearLayout>
 
 
-
     <TextView
-        style="@style/login_edittext_loginbtn"
         android:id="@+id/tv_comfirm"
+        style="@style/login_edittext_loginbtn"
         android:layout_marginTop="30dp"
-        android:text="@string/about_confirm"
-        />
+        android:text="@string/about_confirm" />
 
     <ProgressBar
         android:visibility="gone"
