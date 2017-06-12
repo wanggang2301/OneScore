@@ -65,7 +65,7 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
     ImageView mCheckback;
 
     private String mEditText;
-    private int MIX_NUM=1;
+    private int MIX_NUM=100;
     String mChangeEdit; //监听变化时的值
 
     public WithDrawFragment() {
