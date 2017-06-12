@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -13,6 +12,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.RecommendedExpertDetailsActivity;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.view.CircleImageView;
 
 import java.util.List;
@@ -55,7 +55,11 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         }); //方法中设置asBitmap可以设置回调类型
 */
 
-        Glide.with(mContext).load(b.getHeadImg()).placeholder(R.mipmap.specialist_default).into((CircleImageView) baseViewHolder.getView(R.id.betting_portrait_img));
+
+
+
+        L.d("headimg", b.getHeadImg());
+          Glide.with(mContext).load(b.getHeadImg()).placeholder(R.mipmap.specialist_default).into((CircleImageView) baseViewHolder.getView(R.id.betting_portrait_img));
         baseViewHolder.setText(R.id.betting_specialist_name, b.getNickName());
         baseViewHolder.setText(R.id.betting_specialist_grade, getSpecialistGrade(b.getLevels()));
         baseViewHolder.setVisible(R.id.betting_lainzhong, false);
@@ -70,6 +74,7 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
         baseViewHolder.setText(R.id.betting_league_name, b.getLeagueName());
         baseViewHolder.setVisible(R.id.betting_round, false);
         baseViewHolder.setText(R.id.betting_date, b.getMatchDate());
+        baseViewHolder.setVisible(R.id.betting_week, true);
         baseViewHolder.setText(R.id.betting_week, b.getMatchTime());
      /*   if (0 == b.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.jingcaidanguan_txt));
@@ -96,8 +101,8 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
 
                 //Toast.makeText(mContext, mContext.getResources().getString(R.string.developing), Toast.LENGTH_SHORT).show();
                 //专家详情
-                Intent intent=new Intent(mContext,RecommendedExpertDetailsActivity.class);
-                intent.putExtra("expertId",b.getUserId());
+                Intent intent = new Intent(mContext, RecommendedExpertDetailsActivity.class);
+                intent.putExtra("expertId", b.getUserId());
                 mContext.startActivity(intent);
             }
         });
