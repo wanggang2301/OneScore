@@ -269,6 +269,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
         available_balance_rl = (LinearLayout) findViewById(R.id.available_balance_rl);
         cash_balance_payable_rl = (LinearLayout) findViewById(R.id.cash_balance_payable_rl);
+        cash_balance_payable_rl.setOnClickListener(this);
 
         //可用余额
         available_balance = (TextView) findViewById(R.id.available_balance);
@@ -400,6 +401,15 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     startActivity(new Intent(this, MvpChargeMoneyActivity.class));
 
                 } else {
+                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
+                }
+                break;
+            case R.id.cash_balance_payable_rl: //提现
+                if(DeviceInfo.isLogin()){
+                    Intent intent1=new Intent(this,WithDrawActivity.class);
+                    intent1.putExtra("balance",AppConstants.register.getUser().getAvailableBalance()+"");
+                    startActivity(intent1);
+                }else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
                 break;
@@ -557,8 +567,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
                     subscribe_tv.setText(register.getUser().getBuyCount());
                     promotion_tv.setText(register.getUser().getPushCount());
-                    available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance()));
-                    cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance()));
+                    available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance())+"元");
+                    cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance())+"元");
 
                     DeviceInfo.saveRegisterInfo(register);
                     if (register.getUser().getIsExpert()==0) {

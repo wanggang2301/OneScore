@@ -122,7 +122,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="元"
+                        android:text=""
                         android:textColor="#F45858"
                         android:textSize="11sp" />
 
@@ -199,14 +199,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="2000"
+                        android:text=""
                         android:textColor="#F45858"
                         android:textSize="13sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="元"
+                        android:text=""
                         android:textColor="#F45858"
                         android:textSize="11sp" />
 

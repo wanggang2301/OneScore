@@ -105,7 +105,8 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
     private void initEvent() {
         loadmoreText = (TextView) moreView.findViewById(R.id.loadmore_text);
         progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
-        btnConfirm.setVisibility(View.VISIBLE);
+        //先隐藏掉
+        btnConfirm.setVisibility(View.GONE);
         tvNodata.setText(mActivity.getResources().getString(R.string.tuijie_nodata_txt));
         refresh.setOnRefreshListener(this);
         refresh.setColorSchemeResources(R.color.bg_header);
