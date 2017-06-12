@@ -190,6 +190,7 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
 
     public void updateFragmentOddList(WebSocketRollballOdd webSocketRollballOdd) {
         if (CollectionUtils.notEmpty(mBottomOddsDetailsItemList)) {
+            L.d("bowlpush", webSocketRollballOdd.toString());
             mBottomOddsDetailsItemList.add(0, setLiveOdds(mBottomOddsDetailsItemList.get(0), webSocketRollballOdd));
             mAdapter.notifyDataSetChanged();
         }
