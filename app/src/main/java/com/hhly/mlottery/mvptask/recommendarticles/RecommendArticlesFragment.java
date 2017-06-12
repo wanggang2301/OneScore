@@ -38,9 +38,12 @@ import butterknife.OnClick;
 import data.bean.RecommendArticlesBean;
 
 /**
- * @author wangg
- * @desc 推介文章
- * @date 2017/06/02
+ * @anthor     wangg
+ * @className  RecommendArticlesFragment
+ * @time       2017/6/12 16:07
+ * @changeDesc XXX
+ * @changeTime XXX
+ * @classDesc  推介文章
  */
 public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommendArticlesPresenter> implements IContract.IPullLoadMoreDataView, ExactSwipeRefreshLayout.OnRefreshListener {
 
