@@ -1858,6 +1858,21 @@
     <string name="expert_certification_txt">专家认证</string>
     <string name="expert_shehe_txt">专家认证审核中,暂不能发布推介！</string>
     <string name="no_qq_installed">本机未安装QQ应用</string>
+    <string name="title_activity_edit_text_test">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+
     <!--申请专家-->
     <string name="application_specialist">申请专家</string>
     <string name="account_details">账户明细</string>
