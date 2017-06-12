@@ -230,19 +230,21 @@
                         </LinearLayout>
                     </LinearLayout>
 
+
                     <LinearLayout
                         android:id="@+id/betting_tobuy_or_check"
                         android:layout_width="70dp"
-                        android:layout_height="28dp"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_marginTop="20dp"
                         android:background="@drawable/betting_shape_corners_buy"
                         android:gravity="center">
 
                         <TextView
                             android:id="@+id/textView11"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="28dp"
+                            android:gravity="center"
                             android:text="@string/betting_txt_buy"
                             android:textColor="@color/betting_recommend_zhuanjia_grand_color"
                             android:textSize="@dimen/text_size_16" />
