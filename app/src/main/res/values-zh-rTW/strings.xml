@@ -1762,7 +1762,7 @@
     <string name="betting_txt_recharge_amount">充值金額</string>
     <string name="betting_txt_balance_account">賬戶余額:</string>
     <string name="betting_txt_recharge_integer">充值金額需為整數</string>
-    <string name="betting_txt_recharge_quota">1-10000￥</string>
+    <string name="betting_txt_recharge_quota">￥1-10000</string>
     <string name="betting_txt_amount_ten">10元</string>
     <string name="betting_txt_amount_twenty">20元</string>
     <string name="betting_txt_amount_fifty">50元</string>

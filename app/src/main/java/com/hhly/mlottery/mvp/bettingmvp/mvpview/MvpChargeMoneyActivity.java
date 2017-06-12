@@ -173,7 +173,7 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
                     if (jsonObject.getData() != null) {
                         L.d("balance == >>>" , "返回成功");
                         String balancess = UnitsUtil.fenToYuan(jsonObject.getData().getBalance().getAvailableBalance()); //元转分
-                        balance.setText(jsonObject.getData().getBalance() == null ? "--" : (filtraNull(balancess) + "￥"));
+                        balance.setText(jsonObject.getData().getBalance() == null ? "--" : "￥ " + (filtraNull(balancess)));
                     }
                 }
             }
