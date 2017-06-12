@@ -21,6 +21,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BindCardActivity;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.net.UnitsUtil;
 import com.hhly.mlottery.widget.TextWatcherAdapter;
 
 import butterknife.BindView;
@@ -109,7 +110,7 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
 
         mCheckLayout.setVisibility(View.GONE);
         mWithdrawLayout.setVisibility(View.VISIBLE);
-        mBalance.setText(mTextBalance+"¥");
+        mBalance.setText(UnitsUtil.fenToYuan(mTextBalance)+"¥");
 
         mPresenter.requestData();
 
@@ -129,14 +130,14 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
                 if(mEditText==null||mEditText.equals("")){
                     Toast.makeText(getActivity(), R.string.withdraw_input_money, Toast.LENGTH_LONG).show();
                 }
-                else if(Integer.parseInt(mEditText)<MIX_NUM){
+                else if(Double.parseDouble(mEditText)<MIX_NUM){
                     Toast.makeText(getActivity(), R.string.withdraw_unless_100, Toast.LENGTH_LONG).show();
                 }
                 else if(mPresenter.getCardInfo().getCardNum()==null||mPresenter.getCardInfo().getCardNum().equals("")){ //未绑定银行卡
                     //跳绑定银行卡页面
                     L.e("sign","没绑卡呢");
                     startActivity(new Intent(getActivity(), BindCardActivity.class));
-                }else if(Double.parseDouble(mEditText)>Double.parseDouble(mTextBalance)){
+                }else if(Double.parseDouble(mEditText)>Double.parseDouble(mTextBalance)/100){
                     Toast.makeText(getActivity(), R.string.withdraw_morethan_total, Toast.LENGTH_LONG).show();
                 }
                 else { //提现
