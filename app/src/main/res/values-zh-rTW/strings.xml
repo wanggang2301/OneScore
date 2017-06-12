@@ -1875,7 +1875,7 @@
     <string name="characters_at_most">最多輸入1000個字符</string>
     <string name="exceeded_the_limit">你輸入的字數超過了限制！</string>
     <string name="congratulations">恭喜你!</string>
-    <string name="registered_via_real_name">你已通過實名注冊</string>
+    <string name="registered_via_real_name">實名認證已經通過</string>
     <string name="i_have_read_and_agreed">我已經閲讀並同意</string>
     <string name="serious_fee_recommendation_agreement">《認真付費推薦協議》</string>
     <string name="immediate_authentication">立即認證</string>
@@ -1883,5 +1883,13 @@
     <string name="holidays_are_postponed">節假日時間順延。你可在個人中心查看稽核狀態。</string>
     <string name="realname_authentication_audit">實名認證審核中...</string>
     <string name="please_be_patient">請耐心等待...</string>
+
+    <string name="audited">審核通過</string>
+    <string name="in_audit">審核中</string>
+    <string name="audit_not_through">審核不通過</string>
+    <string name="not_audited">未審核</string>
+    <string name="please_add_eague">請添加聯賽</string>
+    <string name="agreement_carefully">請認真閱讀推薦付費協定</string>
+
 
 </resources>
