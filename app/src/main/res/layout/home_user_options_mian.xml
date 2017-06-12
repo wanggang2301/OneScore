@@ -159,7 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="余额"
+                    android:text="@string/balance"
                     android:textSize="@dimen/text_size_13"
                     android:visibility="visible" />
             </LinearLayout>
@@ -243,7 +243,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="收入"
+                    android:text="@string/income"
                     android:textSize="@dimen/text_size_13"
                     android:visibility="visible" />
             </LinearLayout>
@@ -306,7 +306,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="账户明细"
+                        android:text="@string/account_details"
                         android:textColor="@color/res_name_color"
                         android:textSize="@dimen/home_pager_user_title" />
                     <!--<View-->
@@ -434,7 +434,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:text="订阅记录"
+                        android:text="@string/subscription_record"
                         android:textColor="@color/res_name_color"
                         android:textSize="@dimen/home_pager_user_title" />
                 </RelativeLayout>
@@ -517,7 +517,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:text="申请专家"
+                        android:text="@string/application_specialist"
                         android:textColor="@color/res_name_color"
                         android:textSize="@dimen/home_pager_user_title" />
                 </RelativeLayout>
@@ -754,7 +754,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:text="加入QQ粉丝群"
+                        android:text="@string/join_qq"
                         android:textColor="@color/res_name_color"
                         android:textSize="@dimen/home_pager_user_title" />
                 </RelativeLayout>

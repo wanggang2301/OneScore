@@ -1830,5 +1830,31 @@
     <string name="expert_shehe_txt">專家認證審核中,暫不能發佈推介！</string>
     <string name="no_qq_installed">本機未安裝QQ應用</string>
     <string name="application_specialist">申請專家</string>
+    <string name="account_details">賬戶明細</string>
+    <string name="subscription_record">訂閲記錄</string>
+    <string name="recommend_articles">推介文章</string>
+    <string name="join_qq">加入QQ粉絲群</string>
+    <string name="balance">餘額</string>
+    <string name="income">收入</string>
+
+    <string name="real_name">真實姓名</string>
+    <string name="Please_enter_your_real_name">請輸入你的真實姓名</string>
+    <string name="id_card_number">身份證號碼</string>
+    <string name="correct_identification">請填寫正確的身份證號碼，用於結算和認證</string>
+    <string name="good_league">擅長聯賽</string>
+    <string name="enter_the_league_name">請輸入聯賽名稱，多餘聯賽用逗號分開</string>
+    <string name="add_to">添加</string>
+    <string name="expert_profile">專家簡介</string>
+    <string name="characters_at_most">最多輸入1000個字符</string>
+    <string name="exceeded_the_limit">你輸入的字數超過了限制！</string>
+    <string name="congratulations">恭喜你!</string>
+    <string name="registered_via_real_name">你已通過實名注冊</string>
+    <string name="i_have_read_and_agreed">我已經閲讀並同意</string>
+    <string name="serious_fee_recommendation_agreement">《認真付費推薦協議》</string>
+    <string name="immediate_authentication">立即認證</string>
+    <string name="application_tv">17點前的申請，當日內處理；17點後的申請，次日處理；</string>
+    <string name="holidays_are_postponed">節假日時間順延。你可在個人中心查看稽核狀態。</string>
+    <string name="realname_authentication_audit">實名認證審核中...</string>
+    <string name="please_be_patient">請耐心等待...</string>
 
 </resources>

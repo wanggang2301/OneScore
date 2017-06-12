@@ -1630,5 +1630,36 @@
     <string name="total_balance">总余额(元)</string>
     <string name="account_detail">账户明细</string>
     <string name="click_to_reload">点击重试</string>
+    <string name="application_specialist">Application specialist</string>
+    <string name="account_details">Account details</string>
+    <string name="subscription_record">Subscription record</string>
+    <string name="recommend_articles">Recommend articles</string>
+    <string name="join_qq">Join the QQ fan pack</string>
+    <string name="balance">balance</string>
+    <string name="income">income</string>
+
+
+    <string name="real_name">Real name</string>
+    <string name="Please_enter_your_real_name">Please enter your real name</string>
+    <string name="id_card_number">ID card No.</string>
+    <string name="correct_identification">Please fill in the correct identification</string>
+    <string name="good_league">Good League</string>
+    <string name="enter_the_league_name">Enter the League name</string>
+    <string name="add_to">Add to</string>
+    <string name="expert_profile">Expert profile</string>
+    <string name="characters_at_most">Enter 1000 characters at most</string>
+    <string name="exceeded_the_limit">The number of words you entered exceeded the limit!</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="registered_via_real_name">You have registered via real name</string>
+    <string name="i_have_read_and_agreed">I have read and agreed</string>
+
+    <string name="serious_fee_recommendation_agreement">"Serious fee recommendation agreement"</string>
+    <string name="immediate_authentication">Immediate authentication</string>
+    <string name="application_tv">The application before 17 will be processed within that day; the application after 17 will be processed the following day;</string>
+    <string name="holidays_are_postponed">Holidays are postponed. You can view the audit status at the personal center.</string>
+    <string name="realname_authentication_audit">Real name authentication audit...</string>
+    <string name="please_be_patient">Please be patient...</string>
+
+
 
 </resources>

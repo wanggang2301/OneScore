@@ -1860,4 +1860,33 @@
     <string name="no_qq_installed">本机未安装QQ应用</string>
     <!--申请专家-->
     <string name="application_specialist">申请专家</string>
+    <string name="account_details">账户明细</string>
+    <string name="subscription_record">订阅记录</string>
+    <string name="recommend_articles">推介文章</string>
+    <string name="join_qq">加入QQ粉丝群</string>
+    <string name="balance">余额</string>
+    <string name="income">收入</string>
+
+    <string name="real_name">真实姓名</string>
+    <string name="please_enter_your_real_name">请输入你的真实姓名</string>
+    <string name="id_card_number">身份证号码</string>
+    <string name="correct_identification">请填写正确的身份证号码,用于结算和认证</string>
+    <string name="good_league">擅长联赛</string>
+    <string name="enter_the_league_name">请输入联赛名称,多余联赛用逗号分开</string>
+    <string name="add_to">添加</string>
+    <string name="expert_profile">专家简介</string>
+    <string name="characters_at_most">最多输入1000个字符</string>
+    <string name="exceeded_the_limit">你输入的字数已经超过了限制!</string>
+    <string name="congratulations">恭喜你!</string>
+    <string name="registered_via_real_name">你已通过实名注册</string>
+    <string name="i_have_read_and_agreed">我已经阅读并同意</string>
+    <string name="serious_fee_recommendation_agreement">《认真付费推荐协议》</string>
+    <string name="immediate_authentication">立即认证</string>
+    <string name="application_tv">17点前的申请，当日内处理;17点后的申请,次日处理;</string>
+    <string name="holidays_are_postponed">节假日时间顺延。你可在个人中心查看审核状态。</string>
+    <string name="realname_authentication_audit">实名认证审核中...</string>
+    <string name="please_be_patient">请耐心等待...</string>
+
+
+
 </resources>
