@@ -80,10 +80,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     private ProgressDialog progressBar;
 
 
-    //审核中状态
-
-    boolean is_inaudit = false;
-
     /**
      * 跳转其他Activity 的requestcode
      */
@@ -145,7 +141,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     private TextView promotion_tv;
     private TextView recharge_bt;
     private Context context;
-    private String language;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,36 +190,12 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
         rl_custom = (RelativeLayout) findViewById(R.id.rl_custom);
         rl_custom.setOnClickListener(this);
-        //我的关注
-//        rl_focus= (RelativeLayout) findViewById(R.id.rl_my_focus);
-//        rl_focus.setOnClickListener(this);
-
         rl_language_frame = (RelativeLayout) findViewById(R.id.rl_language_frame);
         rl_language_frame.setOnClickListener(this);
-    /*    rl_setting_frame = (RelativeLayout) findViewById(R.id.rl_setting_frame);
-        rl_setting_frame.setOnClickListener(this);*/
         rl_setting_frame1 = (ImageView) findViewById(R.id.rl_setting_frame);
         rl_setting_frame1.setOnClickListener(this);
         rl_user_feedback = (RelativeLayout) findViewById(R.id.rl_user_feedback);
         rl_user_feedback.setOnClickListener(this);
-
-        /**我的定制红点*/
-//        mRedDot = findViewById(R.id.custom_red_dot_view);
-//        boolean currenRedDot = PreferenceUtil.getBoolean("custom_red_dot" , true);
-//        if (currenRedDot) {
-//            mRedDot.setVisibility(View.VISIBLE);
-//        }else{
-//            mRedDot.setVisibility(View.GONE);
-//        }
-        /**我的关注红点*/
-//        mFocus_RedDot=findViewById(R.id.focus_red_dot_view);
-//        mShowRedDot=PreferenceUtil.getBoolean(SHOW_RED,false);
-//        if(mShowRedDot){
-//            mFocus_RedDot.setVisibility(View.VISIBLE);
-//        }else {
-//            mFocus_RedDot.setVisibility(View.GONE);
-//        }
-        /*邀请码红点*/
 
         invited_red_dot_view = findViewById(R.id.invited_red_dot_view);
         mInvitedShowRedDot = PreferenceUtil.getBoolean(INVITED_SHOW_RED, true);
@@ -292,7 +263,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.rl_custom:
                 if (DeviceInfo.isLogin()) {
                     PreferenceUtil.commitBoolean("custom_red_dot", false);
-//                    mRedDot.setVisibility(View.GONE);
                     startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
                 } else {
                     Intent intent = new Intent(this, LoginActivity.class);
@@ -447,47 +417,14 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         startActivityForResult(new Intent(this, LoginActivity.class), REQUESTCODE_LOGIN);
     }
 
-    /**
-     * 专家认证返回
-     *
-     * @param
-     */
-    public void onEventMainThread(SpecialistBean bean) {
-        // 0 未审核  1.审核通过  2.审核中  3.审核不通过
-        in_audit.setVisibility(View.VISIBLE);
-        if (bean.getCode() == 1) {
-            in_audit.setText("审核通过");
-        } else if (bean.getCode() == 2) {
-            in_audit.setText("审核中");
-        } else if (bean.getCode() == 3) {
-            in_audit.setText("审核不通过");
-        } else if (bean.getCode() == 0) {
-            in_audit.setText("未审核");
-        }
-        PreferenceUtil.commitInt(AppConstants.ISEXPERT, bean.getCode());
-    }
 
-    /**
-     * 定制页面返回
-     *
-     * @param event
-     */
-    public void onEventMainThread(CustomEvent event) {
-//        if (PreferenceUtil.getBoolean("custom_red_dot" , true)) {
-//            mRedDot.setVisibility(View.VISIBLE);
-//        }else{
-//            mRedDot.setVisibility(View.GONE);
-//        }
-    }
 
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean) {
-        //ImageLoader.load(HomeUserOptionsActivity.this,choseHeadStartBean.startUrl,R.mipmap.center_head).into(mUser_image);
         Glide.with(getApplicationContext())
                 .load(choseHeadStartBean.startUrl)
                 .error(R.mipmap.center_head)
                 .into(mUser_image);
 
-        //Log.i("register","onResume=="+PreferenceUtil.getString(AppConstants.HEADICON,""));
     }
 
 
@@ -572,20 +509,16 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
                     DeviceInfo.saveRegisterInfo(register);
                     if (register.getUser().getIsExpert()==0) {
-                        in_audit.setText("未审核");
+                        in_audit.setText(R.string.audited);
                     } else if (register.getUser().getIsExpert()== 1) {
-                        in_audit.setText("审核通过");
+                        in_audit.setText(R.string.in_audit);
                     } else if (register.getUser().getIsExpert()== 2) {
-                        in_audit.setText("审核中");
+                        in_audit.setText(R.string.audit_not_through);
                     } else if (register.getUser().getIsExpert() == 3) {
-                        in_audit.setText("审核不通过");
+                        in_audit.setText(R.string.not_audited);
                     } else {
                         in_audit.setText("");
                     }
-
-
-
-
                 } else {
 
                     return;
@@ -624,12 +557,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             if (requestCode == REQUESTCODE_LOGIN) {
                 // 登录成功返回
                 L.d(TAG, "登录成功");
-                // iv_account.setImageResource(R.mipmap.login);
             } else if (requestCode == REQUESTCODE_LOGOUT) {
                 L.d(TAG, "注销成功");
                 mTv_nickname.setText(R.string.Login_register);
                 mUser_image.setImageResource(R.mipmap.center_head);
-                // iv_account.setImageResource(R.mipmap.logout);
             }
         }
     }

@@ -1885,7 +1885,7 @@
     <string name="characters_at_most">最多输入1000个字符</string>
     <string name="exceeded_the_limit">你输入的字数已经超过了限制!</string>
     <string name="congratulations">恭喜你!</string>
-    <string name="registered_via_real_name">你已通过实名注册</string>
+    <string name="registered_via_real_name">实名认证已经通过</string>
     <string name="i_have_read_and_agreed">我已经阅读并同意</string>
     <string name="serious_fee_recommendation_agreement">《认真付费推荐协议》</string>
     <string name="immediate_authentication">立即认证</string>
@@ -1894,5 +1894,10 @@
     <string name="realname_authentication_audit">实名认证审核中...</string>
     <string name="please_be_patient">请耐心等待...</string>
 
-
+    <string name="audited">审核通过</string>
+    <string name="in_audit">审核中</string>
+    <string name="audit_not_through">审核不通过</string>
+    <string name="not_audited">未审核</string>
+    <string name="please_add_eague">请添加联赛</string>
+    <string name="agreement_carefully">请认真阅读推荐付费协议</string>
 </resources>

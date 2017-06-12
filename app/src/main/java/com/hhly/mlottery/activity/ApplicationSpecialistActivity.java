@@ -181,7 +181,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
         agreement = (LinearLayout) findViewById(R.id.agreement);
 
         scrollview = (ScrollView) findViewById(R.id.scrollview);
-
+        scrollview.setVisibility(View.GONE);
 
 
         //付费协议
@@ -227,7 +227,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                     if (real_name.getText().toString() != null && id_datas.getText().toString() != null && good_league.getText().toString() != null && specalist_edittext.getText().toString() != null) {
                         specalist_error_tv.setVisibility(View.GONE);
                         if (new_leauue==null){
-                            UiUtils.toast(this, "请添加联赛");
+                            UiUtils.toast(this, R.string.please_add_eague);
                         }else{
                             comfirm(real_name.getText().toString(), id_datas.getText().toString(), new_leauue, specalist_edittext.getText().toString());
                         }
@@ -237,7 +237,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                     }
 
                 } else {
-                    UiUtils.toast(this, "请认真阅读推荐付费协议");
+                    UiUtils.toast(this, R.string.agreement_carefully);
                 }
                 break;
             case R.id.specialist_tv2:
@@ -319,7 +319,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
         // 遍历数据
         for (String labelName : this.labelNameList) {
             // 指定子标签布局
-            final View labelView = LayoutInflater.from(this).inflate(R.layout.layout_child_selected_label, null);
+            final View labelView = LayoutInflater.from(this).inflate(R.layout.layout_child_selected_label_n, null);
 
             symptomSelectedNameTv = (TextView) labelView.findViewById(R.id.tv_symptom_selected_name);
 
@@ -416,7 +416,6 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                         success_image.setVisibility(View.GONE);
                         good_league_rl.setVisibility(View.VISIBLE);
                         shen_good_legue.setVisibility(View.GONE);
-
                     }
 
                 } else {
@@ -485,7 +484,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
 
         Intent intent = new Intent(ApplicationSpecialistActivity.this, WebActivity.class);
         intent.putExtra(INTENT_PARAM_TITLE, "认真付费推荐协议");//头部名称
-        intent.putExtra(INTENT_PARAM_JUMPURL, "http://m.1332255.com:81/recommended/argeement.html#/");
+        intent.putExtra(INTENT_PARAM_JUMPURL, "http://m.13322.com/recommended/argeement.html#/");
         intent.putExtra("title", "认真付费推荐协议");
         intent.putExtra("subtitle", "推荐协议");
         startActivity(intent);

@@ -12,7 +12,7 @@
         android:gravity="center"
         android:layout_margin="4dp"
         android:background="@drawable/symptom_selected_round_backgroud">
-        <!-- 症状名称  -->
+
         <TextView
             android:id="@+id/tv_symptom_selected_name"
             android:layout_width="wrap_content"
