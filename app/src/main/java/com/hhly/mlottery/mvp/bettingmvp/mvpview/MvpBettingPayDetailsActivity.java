@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -268,6 +269,17 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
 
 
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (successPay) {
+            EventBus.getDefault().post(new BettingDetailsResuleEventBusEntity(promotionId));
+            L.d("asdfqwer ==> " , "传参成功" + promotionId);
+        }
+        finish();
+        overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
