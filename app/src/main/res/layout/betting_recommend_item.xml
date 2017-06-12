@@ -240,21 +240,29 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/betting_tobuy_or_check"
-                        android:layout_width="70dp"
-                        android:layout_height="28dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/betting_shape_corners_buy"
-                        android:gravity="center">
+                        android:paddingTop="20dp"
+                        >
 
-                        <TextView
-                            android:id="@+id/textView11"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/betting_txt_buy"
-                            android:textColor="@color/betting_recommend_zhuanjia_grand_color"
-                            android:textSize="@dimen/text_size_16" />
+                        <LinearLayout
+                            android:id="@+id/betting_tobuy_or_check"
+                            android:layout_width="70dp"
+                            android:layout_height="28dp"
+                            android:background="@drawable/betting_shape_corners_buy"
+                            android:gravity="center"
+                            >
+
+                            <TextView
+                                android:id="@+id/textView11"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/betting_txt_buy"
+                                android:textColor="@color/betting_recommend_zhuanjia_grand_color"
+                                android:textSize="@dimen/text_size_16" />
+                        </LinearLayout>
                     </LinearLayout>
 
                 </RelativeLayout>
