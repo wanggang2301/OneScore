@@ -119,7 +119,11 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         return new RecommendArticlesPresenter(this);
     }
 
-    //请求load
+
+    /**
+     * @desc 请求load
+     * @@time 2017/6/12 15:51
+     */
     @Override
     public void loading() {
         handleException.setVisibility(View.GONE);
@@ -127,7 +131,10 @@ public class RecommendArticlesFragment extends ViewFragment<IContract.IRecommend
         refresh.setRefreshing(true);
     }
 
-    //请求成功返回数据
+    /**
+     * @desc 请求成功返回数据
+     * @@time 2017/6/12 15:51
+     */
     @Override
     public void responseData() {
         handleException.setVisibility(View.GONE);
