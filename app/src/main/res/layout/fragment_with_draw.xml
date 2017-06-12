@@ -149,7 +149,7 @@
                         android:layout_height="50dp"
                         android:background="@drawable/betting_issues_fabu_edit_text_bg"
                         android:inputType="number"
-                        android:cursorVisible="true"
+                        android:cursorVisible="false"
                         android:hint="@string/please_input_amount"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
