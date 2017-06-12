@@ -46,8 +46,8 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
     private String PARAM_SIGN = "sign";//参数签名
     private String PARAM_SERVICE = "service";//3 微信 4 支付宝
     private String PARAM_TRADE_AMOUNT = "tradeAmount";//金额 分
-    private String PARAM_LANG = "lang";
-    private String PARAM_TIMEZONE = "timeZone";
+    private String PARAM_LANG = "lang";//语言环境
+    private String PARAM_TIMEZONE = "timeZone";//时区环境
 
     private Context mContext;
     private RadioButton priceCardA;
@@ -265,8 +265,6 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
                             break;
                     }
                 }
-                
-
                 break;
         }
     }
