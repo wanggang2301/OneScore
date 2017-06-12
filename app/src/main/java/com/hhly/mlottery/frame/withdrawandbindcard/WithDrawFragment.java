@@ -37,7 +37,7 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    /**传入的余额*/
     private String mTextBalance;
 
     private View mView;
@@ -65,7 +65,8 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
     ImageView mCheckback;
 
     private String mEditText;
-    private int MIX_NUM=100;
+    private int MIX_NUM=1;
+    String mChangeEdit; //监听变化时的值
 
     public WithDrawFragment() {
     }
@@ -110,7 +111,7 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
 
         mCheckLayout.setVisibility(View.GONE);
         mWithdrawLayout.setVisibility(View.VISIBLE);
-        mBalance.setText(UnitsUtil.fenToYuan(mTextBalance)+"¥");
+        mBalance.setText(" ¥ "+UnitsUtil.fenToYuan(mTextBalance));
 
         mPresenter.requestData();
 
@@ -122,6 +123,29 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
      * 设置监听
      */
     private void setListener() {
+
+        mWithDrawAmount.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                mChangeEdit=mWithDrawAmount.getText().toString();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mChangeEdit=mWithDrawAmount.getText().toString();
+                if(!mChangeEdit.equals("")){
+                    if(Double.parseDouble(mChangeEdit)>Double.parseDouble(mTextBalance)/100){ //分转元
+                        mWithDrawAmount.setText((Double.parseDouble(mTextBalance)/100)+"");
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         mCommitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +175,8 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
             public void onClick(View view) {
                 mCheckLayout.setVisibility(View.GONE);
                 mWithdrawLayout.setVisibility(View.VISIBLE);
+                mBalance.setText(" ¥"+UnitsUtil.fenToYuan((int)(Double.parseDouble(mTextBalance)-Double.parseDouble(mWithDrawAmount.getText().toString())*100)+"")); //乘100转分
+                mTextBalance=Double.parseDouble(mTextBalance)-Double.parseDouble(mWithDrawAmount.getText().toString())*100+"";
             }
         });
         mWithdrawback.setOnClickListener(new View.OnClickListener() {

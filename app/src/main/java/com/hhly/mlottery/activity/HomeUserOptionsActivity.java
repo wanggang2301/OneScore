@@ -407,7 +407,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.cash_balance_payable_rl: //提现
                 if(DeviceInfo.isLogin()){
                     Intent intent1=new Intent(this,WithDrawActivity.class);
-                    intent1.putExtra("balance",AppConstants.register.getUser().getAvailableBalance()+"");
+                    intent1.putExtra("balance",AppConstants.register.getUser().getCashBalance()+"");
                     startActivity(intent1);
                 }else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
