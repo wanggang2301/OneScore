@@ -358,7 +358,7 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
     private BettingSpecialistClickListener mBettingSpecialistClickListener;
     // 专家详情的点击监听
     public interface BettingSpecialistClickListener {
-        void SpecialistOnClick(View view , String s);
+        void SpecialistOnClick(View view , BettingListDataBean.PromotionData.BettingListData s);
     }
 
     private BettingGameDetailsClickListener mBettingGameDetailsClickListener;
@@ -387,10 +387,12 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
     public void specialistClick(){
         mBettingSpecialistClickListener = new BettingSpecialistClickListener() {
             @Override
-            public void SpecialistOnClick(View view, String s) {
+            public void SpecialistOnClick(View view, BettingListDataBean.PromotionData.BettingListData s) {
 //                Toast.makeText(mContext, "专家** " + s, Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(mContext,RecommendedExpertDetailsActivity.class);
-                intent.putExtra("expertId",s);
+                intent.putExtra("expertId",s.getUserid());
+                intent.putExtra("winPoint",s.getWinPoint());
+                intent.putExtra("errPoint",s.getErrPoint());
                 startActivity(intent);
                // L.d("yxq-0418=== " , "点击了*专家** " + s);
             }

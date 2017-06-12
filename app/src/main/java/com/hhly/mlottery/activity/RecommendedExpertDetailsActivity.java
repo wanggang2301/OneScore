@@ -1,6 +1,7 @@
 package com.hhly.mlottery.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,8 +28,12 @@ import com.hhly.mlottery.adapter.custom.RecommendArticlesAdapter;
 import com.hhly.mlottery.bean.MostExpertBean;
 import com.hhly.mlottery.bean.RecomeHeadBean;
 import com.hhly.mlottery.bean.RecommendationExpertBean;
+import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
@@ -49,14 +54,15 @@ import java.util.Map;
 public class RecommendedExpertDetailsActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private final String EXPERT_ID = "expertId";
+    private final String WINPOINT = "winPoint";
+    private final String ERRPOINT = "errPoint";
 
     private ImageView ex_image;//专家头像
     private TextView ex_name;//专家名称
     private TextView ex_zhong;
     private TextView ex_text;
     private RecyclerView ex_recyclerview;
-    private MostExpertBean.ExpertBean expertDatas;
-    private List<MostExpertBean.InfoArrayBean> infoArrayDatas = new ArrayList<>();
+
     private RecomenHeadAdapter recomenHeadAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private TextView match_no_data_txt;
@@ -65,9 +71,6 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
     private List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> listBeanList;
     private View view;
     private View headView;
-    private ProgressBar progressBar;
-    private TextView loadmore_text;
-    private View emptyView;
     private final static int VIEW_STATUS_LOADING = 11;
     private final static int VIEW_STATUS_SUCCESS = 33;
     private static final int VIEW_STATUS_NET_ERROR = 44;
@@ -79,6 +82,10 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
 
     private View mOnloadingView;
     private View mNoLoadingView;
+
+    private String winPoint;
+    private String errorPoint;
+
 
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -121,6 +128,9 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
     private boolean hasNextPage;
     private Context mContext;
 
+    private int allPoint;
+    private LinearLayoutManager layoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,9 +138,10 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         setContentView(R.layout.activity_experts);
         mContext = this;
         if (getIntent() != null) {
-            expertId = getIntent().getStringExtra(EXPERT_ID);
+            expertId =getIntent().getStringExtra(EXPERT_ID);
+            winPoint = getIntent().getStringExtra(WINPOINT);
+            errorPoint =getIntent().getStringExtra(ERRPOINT);
         }
-
         initView();
         initData();
         initHeadData();
@@ -157,6 +168,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
                 }, 1000);
             }
         });
+
 
     }
 
@@ -207,6 +219,8 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
                         recomenHeadAdapter = new RecomenHeadAdapter(mContext, listBeanList);
                         recomenHeadAdapter.setLoadingView(view);
                         recomenHeadAdapter.addHeaderView(headView);
+                        buyClicked();
+                        recomenHeadAdapter.setmBuyClick(mBettingBuyClickListener);
                         ex_recyclerview.setAdapter(recomenHeadAdapter);
                         recomenHeadAdapter.openLoadMore(0, true);
                         initEvent();
@@ -238,6 +252,29 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         recomenHeadAdapter.updateData(listBeanList);
         recomenHeadAdapter.notifyDataSetChanged();
 
+    }
+
+    private RecommendedExpertDetailsActivity.BettingBuyClickListener mBettingBuyClickListener;
+
+    // 购买(查看)的点击监听
+    public interface BettingBuyClickListener {
+        void BuyOnClick(View view, RecommendationExpertBean.ExpertPromotionsBean.ListBean s);
+    }
+
+    /**
+     * 购买(查看)的点击事件
+     */
+    public void buyClicked() {
+        mBettingBuyClickListener = new RecommendedExpertDetailsActivity.BettingBuyClickListener() {
+            @Override
+            public void BuyOnClick(View view, RecommendationExpertBean.ExpertPromotionsBean.ListBean listData) {
+                Intent mIntent = new Intent(mContext, MvpBettingPayDetailsActivity.class);
+//                    mIntent.putExtra(ConstantPool.BETTING_ITEM_DATA , listData);//选中的
+                mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID, listData.getId());//选中的
+                startActivity(mIntent);
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+            }
+        };
     }
 
     private void pullUpLoadMoreData() {
@@ -362,14 +399,9 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
 
         LayoutInflater layoutInflater = this.getLayoutInflater();
         view = layoutInflater.inflate(R.layout.view_load_more, null);
-        headView  = layoutInflater.inflate(R.layout.activity_experts_head_view,null);
-        headView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        //上来加载view
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
-        loadmore_text = (TextView) view.findViewById(R.id.loadmore_text);
-
-
+        headView = layoutInflater.inflate(R.layout.activity_experts_head_view, null);
+        headView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        
         //暂无数据
         match_no_data_txt = (TextView) findViewById(R.id.match_no_data_txt);
 
@@ -379,7 +411,6 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
 
         px_line = (LinearLayout) headView.findViewById(R.id.px_line);
         px_line.setVisibility(View.GONE);
-        emptyView = View.inflate(this, R.layout.layout_nodata, null);
 
 
         TextView public_txt_title = (TextView) findViewById(R.id.public_txt_title);
@@ -394,10 +425,10 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
 
         ex_recyclerview = (RecyclerView) findViewById(R.id.ex_recyclerview);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-        ex_recyclerview.setLayoutManager(layoutManager);//设置布局管理器
-        ex_recyclerview.setNestedScrollingEnabled(false);
-        layoutManager.setOrientation(OrientationHelper.VERTICAL);//设置为垂直布局，这也是默认的
+        layoutManager = new LinearLayoutManager(mContext);
+        layoutManager = new LinearLayoutManager(this);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        ex_recyclerview.setLayoutManager(layoutManager);
 
         mOnloadingView = getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) ex_recyclerview.getParent(), false);
         mNoLoadingView = getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) ex_recyclerview.getParent(), false);
@@ -425,9 +456,15 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
     /*加载头部数据*/
     public void setHeaderDatas(RecomeHeadBean.UserInfoBean headerDatas) {
         try {
+
+            if (winPoint==null&&errorPoint==null){
+                 winPoint="0";
+                 errorPoint="0";
+            }
+            allPoint = Integer.parseInt(winPoint)+Integer.parseInt(errorPoint);
             Glide.with(getApplicationContext()).load(headerDatas.getImageSrc()).into(ex_image);
             ex_name.setText(headerDatas.getNickname());
-            ex_zhong.setText(headerDatas.getSkillfulLeague() + "");
+            ex_zhong.setText(mContext.getResources().getString(R.string.betting_item_jin) + allPoint+ mContext.getResources().getString(R.string.betting_item_zhong) + errorPoint);
             ex_text.setText("\t\t\t\t" + headerDatas.getIntroduce());
         } catch (Exception e) {
             e.printStackTrace();

@@ -74,7 +74,7 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="真实姓名"
+                        android:text="@string/real_name"
                         android:textColor="@color/snooker"
                         android:textSize="13sp" />
 
@@ -85,7 +85,7 @@
                         android:layout_marginRight="20dp"
                         android:background="@drawable/selector_loginbtn"
                         android:gravity="center_vertical"
-                        android:hint="请输入真实姓名"
+                        android:hint="@string/please_enter_your_real_name"
                         android:paddingLeft="10dp"
                         android:textColorHint="@color/snooker_line"
                         android:textSize="@dimen/text_size_11" />
@@ -104,7 +104,7 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="身份证号码 "
+                        android:text="@string/id_card_number"
                         android:textColor="@color/snooker"
                         android:textSize="13sp" />
 
@@ -116,7 +116,7 @@
                         android:background="@drawable/selector_loginbtn"
                         android:digits="@string/password_digits"
                         android:gravity="center_vertical"
-                        android:hint="请填写正确的身份证号码，用于结算和认证"
+                        android:hint="@string/correct_identification"
                         android:paddingLeft="10dp"
                         android:textColorHint="@color/snooker_line"
                         android:textSize="@dimen/text_size_11" />
@@ -137,7 +137,7 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="擅长联赛"
+                        android:text="@string/good_league"
                         android:textColor="@color/snooker"
                         android:textSize="13sp" />
 
@@ -152,7 +152,7 @@
                             android:layout_marginRight="20dp"
                             android:background="@drawable/selector_loginbtn"
                             android:gravity="center_vertical"
-                            android:hint="请输入联赛名称，多余联赛用逗号分开"
+                            android:hint="@string/enter_the_league_name"
                             android:paddingLeft="10dp"
                             android:textColorHint="@color/snooker_line"
                             android:textSize="@dimen/text_size_11" />
@@ -168,7 +168,7 @@
                             android:layout_marginTop="5dp"
                             android:background="@drawable/specialist_buton_white"
                             android:gravity="center"
-                            android:text="添加"
+                            android:text="@string/add_to"
                             android:textColor="@color/colorPrimary"
                             android:textSize="12sp" />
                     </RelativeLayout>
@@ -188,7 +188,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_marginLeft="10dp"
-                        android:text="擅长联赛"
+                        android:text="@string/good_league"
                         android:textColor="@color/snooker"
                         android:textSize="13sp"
                         android:visibility="invisible" />
@@ -213,7 +213,7 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="专家简介"
+                        android:text="@string/expert_profile"
                         android:textColor="@color/snooker"
 
                         android:textSize="13sp" />
@@ -229,7 +229,7 @@
                             android:layout_gravity="top"
                             android:background="@drawable/selector_loginbtn"
                             android:gravity="top"
-                            android:hint="最多输入1000个字符"
+                            android:hint="@string/characters_at_most"
                             android:inputType="textMultiLine"
                             android:minLines="12"
                             android:paddingLeft="26dp"
@@ -279,7 +279,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="你输入的字数已经超过了限制!"
+                        android:text="@string/exceeded_the_limit"
                         android:textColor="@color/red" />
 
                 </LinearLayout>
@@ -303,14 +303,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="恭喜你!"
+                        android:text="@string/congratulations"
                         android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="你已通过实名注册"
+                        android:text="@string/registered_via_real_name"
                         android:textSize="18sp" />
 
 
@@ -337,7 +337,7 @@
                         android:id="@+id/specialist_tv1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="我已经阅读并同意 "
+                        android:text="@string/i_have_read_and_agreed"
                         android:textColor="#333333"
                         android:textSize="@dimen/text_size_11" />
 
@@ -345,7 +345,7 @@
                         android:id="@+id/specialist_tv2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="《认真付费推荐协议》"
+                        android:text="@string/serious_fee_recommendation_agreement"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="@dimen/text_size_11" />
                 </LinearLayout>
@@ -354,7 +354,7 @@
                     android:id="@+id/immediate_authentication"
                     style="@style/login_edittext_loginbtn_newblue"
                     android:background="#2D63c4eb"
-                    android:text="立即认证"
+                    android:text="@string/immediate_authentication"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/text_size_13" />
 
@@ -376,7 +376,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="17点前的申请，当日内处理;17点后的申请,次日处理;"
+                        android:text="@string/application_tv"
                         android:textColor="#4b4b4b"
                         android:textSize="13sp" />
 
@@ -389,7 +389,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="2dp"
                     android:paddingBottom="50dp"
-                    android:text="节假日时间顺延。你可在个人中心查看审核状态。"
+                    android:text="@string/holidays_are_postponed"
                     android:textColor="#4b4b4b"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -434,14 +434,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="实名认证审核中..."
+            android:text="@string/realname_authentication_audit"
             android:textColor="@color/white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="请耐心等待..."
+            android:text="@string/please_be_patient"
             android:textColor="@color/white" />
     </LinearLayout>
 
