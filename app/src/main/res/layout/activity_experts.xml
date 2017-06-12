@@ -18,9 +18,9 @@
         <!--情报列表-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/ex_recyclerview"
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/number_info_two_bg"
+            android:layout_height="wrap_content"
             android:visibility="visible" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
