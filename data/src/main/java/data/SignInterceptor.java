@@ -12,10 +12,10 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * @author: Wangg
- * @name：xxx
- * @description: 签名的Interceptor
- * @created on:2017/6/6  15:15.
+ * @anthor   wangg
+ * @name     SignInterceptor
+ * @created  2017/6/12 16:12
+ * @desc     签名的Interceptor
  */
 
 public class SignInterceptor implements okhttp3.Interceptor {
