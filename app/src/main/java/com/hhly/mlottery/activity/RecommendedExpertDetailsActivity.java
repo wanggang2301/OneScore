@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -55,7 +56,7 @@ import de.greenrobot.event.EventBus;
  * 推荐专家详情页
  */
 
-public class RecommendedExpertDetailsActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class RecommendedExpertDetailsActivity extends Activity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private final String EXPERT_ID = "expertId";
     private final String WINPOINT = "winPoint";
