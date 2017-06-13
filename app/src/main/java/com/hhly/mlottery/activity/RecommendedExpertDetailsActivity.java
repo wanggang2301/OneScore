@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -258,7 +259,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
 
     // 购买(查看)的点击监听
     public interface BettingBuyClickListener {
-        void BuyOnClick(View view, RecommendationExpertBean.ExpertPromotionsBean.ListBean s);
+        void BuyOnClick(View view, String s);
     }
 
     /**
@@ -267,10 +268,10 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
     public void buyClicked() {
         mBettingBuyClickListener = new RecommendedExpertDetailsActivity.BettingBuyClickListener() {
             @Override
-            public void BuyOnClick(View view, RecommendationExpertBean.ExpertPromotionsBean.ListBean listData) {
+            public void BuyOnClick(View view, String s) {
                 Intent mIntent = new Intent(mContext, MvpBettingPayDetailsActivity.class);
 //                    mIntent.putExtra(ConstantPool.BETTING_ITEM_DATA , listData);//选中的
-                mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID, listData.getId());//选中的
+                mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID, s);//选中的
                 startActivity(mIntent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
             }
