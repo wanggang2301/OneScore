@@ -118,7 +118,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_experts);
+        setContentView(R.layout.activity_expert_new);
 
         if (getIntent() != null) {
             expertId = getIntent().getStringExtra(EXPERT_ID);
