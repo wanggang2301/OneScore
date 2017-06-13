@@ -1885,6 +1885,7 @@
     <string name="holidays_are_postponed">節假日時間順延。你可在個人中心查看稽核狀態。</string>
     <string name="realname_authentication_audit">實名認證審核中...</string>
     <string name="please_be_patient">請耐心等待...</string>
+    <string name="recommendation_agreement">認真閱讀推薦付費協定</string>
 
     <string name="audited">審核通過</string>
     <string name="in_audit">審核中</string>

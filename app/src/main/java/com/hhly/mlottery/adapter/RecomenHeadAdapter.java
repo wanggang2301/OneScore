@@ -56,43 +56,45 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
         } else if (2 == r.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.daxiaoqiu_txt));
         }*/
+        boolean lookStatus = false;
         switch (r.getStatus()) {
             case 1:
                 baseViewHolder.setVisible(R.id.iv, true);
-                baseViewHolder.setVisible(R.id.textView11, false);
+                baseViewHolder.setVisible(R.id.betting_tobuy_or_check, false);
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zhong);
                 break;
             case 2:
                 baseViewHolder.setVisible(R.id.iv, true);
-                baseViewHolder.setVisible(R.id.textView11, false);
+                baseViewHolder.setVisible(R.id.betting_tobuy_or_check, false);
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_shi);
                 break;
             case 6:
                 baseViewHolder.setVisible(R.id.iv, true);
-                baseViewHolder.setVisible(R.id.textView11, false);
+                baseViewHolder.setVisible(R.id.betting_tobuy_or_check, false);
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zou);
                 break;
             default:
+                if (r.getLookStatus() + "" == null) {
+                    lookStatus = false;
+                    baseViewHolder.setText(R.id.betting_tobuy_or_check, "--");
+                } else {
+                    lookStatus = true;
+                    if (r.getLookStatus() == 2) {
+                        baseViewHolder.setVisible(R.id.betting_tobuy_or_check, true);
+                        baseViewHolder.setVisible(R.id.iv, false);
+                        baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.betting_txt_buy));
+                    } else {
+                        baseViewHolder.setVisible(R.id.betting_tobuy_or_check, true);
+                        baseViewHolder.setVisible(R.id.iv, false);
+                        baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.betting_txt_check));
+                    }
+                }
                 break;
 
         }
-        boolean lookStatus;
-        if (r.getLookStatus() + "" == null) {
-            lookStatus = false;
-            baseViewHolder.setText(R.id.textView11, "--");
-        } else {
-            lookStatus = true;
-            if (r.getLookStatus() == 2) {
-                baseViewHolder.setVisible(R.id.textView11, true);
-                baseViewHolder.setVisible(R.id.iv, false);
-                baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.betting_txt_buy));
-            } else {
-                baseViewHolder.setVisible(R.id.textView11, true);
-                baseViewHolder.setVisible(R.id.iv, false);
-                baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.betting_txt_check));
-            }
-        }
-        LinearLayout mBuyOrCheck = baseViewHolder.getView(R.id.betting_tobuy_or_check);
+      
+       
+        LinearLayout mBuyOrCheck = baseViewHolder.getView(R.id.betting_tobuy_check);
 
         baseViewHolder.setText(R.id.betting_recommended_reason,  (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
 
