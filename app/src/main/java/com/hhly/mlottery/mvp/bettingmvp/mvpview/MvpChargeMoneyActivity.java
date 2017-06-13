@@ -258,10 +258,10 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
                     L.d("充值的金额 ：" , moneyIn);
                     switch (PAYMENT_MONEY){
                         case 0:
-                            PayMentUtils.ALiPayData(mContext , MvpChargeMoneyActivity.this ,payUrl ,getDataMap(ConstantPool.ZEB_SERVICE , "1"));
+                            PayMentUtils.ALiPayData(mContext , MvpChargeMoneyActivity.this ,payUrl ,getDataMap(ConstantPool.ZEB_SERVICE , moneyIn));
                             break;
                         case 1:
-                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap(ConstantPool.WEIXIN_SERVICE , "1"));
+                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap(ConstantPool.WEIXIN_SERVICE , moneyIn));
                             break;
                     }
                 }
