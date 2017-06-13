@@ -1815,6 +1815,7 @@
     <string name="betting_nodata_to_again">暂时无法获取订单信息,请稍后重试</string>
     <string name="betting_disclaimer_txt">(免责声明：个人观点并不代表一比分官方网站)</string>
     <string name="betting_paly_choose_txt">必须选择一项</string>
+    <string name="betting_netword_error_txt">当前网络繁忙,请稍后重试!</string>
 
     <string name="recommendarticle_txt">推介文章</string>
     <string name="subsrecord_txt">订阅记录</string>
