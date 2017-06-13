@@ -482,9 +482,9 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
     private void gotoWebActivity() {
 
         Intent intent = new Intent(ApplicationSpecialistActivity.this, WebActivity.class);
-        intent.putExtra(INTENT_PARAM_TITLE, R.string.recommendation_agreement);//头部名称
+        intent.putExtra(INTENT_PARAM_TITLE, this.getResources().getString(R.string.recommendation_agreement));//头部名称
         intent.putExtra(INTENT_PARAM_JUMPURL, "http://m.13322.com/recommended/argeement.html#/");
-        intent.putExtra("title", R.string.recommendation_agreement);
+        intent.putExtra("title", this.getResources().getString(R.string.recommendation_agreement));
         intent.putExtra("subtitle", "推荐协议");
         startActivity(intent);
     }
