@@ -368,7 +368,7 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
-                            <EditText
+                            <com.hhly.mlottery.view.DrawableLeftBottomEditText
                                 android:id="@+id/betting_issue_details_edit"
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
@@ -391,7 +391,7 @@
                                     android:id="@+id/input_edit_img"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@mipmap/edit_img"/>
+                                    android:background="@mipmap/danmu_close"/>
                             </LinearLayout>
                         </RelativeLayout>
                     </LinearLayout>
