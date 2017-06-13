@@ -220,7 +220,7 @@
                     android:layout_marginTop="9dp"
                     android:background="@drawable/specialist_buton_white"
                     android:gravity="center"
-                    android:text="提现"
+                    android:text="@string/withdrawals"
                     android:textColor="@color/snooker_odds_textcolor"
                     android:textSize="@dimen/text_size_13" />
             </LinearLayout>

@@ -1884,6 +1884,7 @@
     <string name="history_recommendation">赛事推介</string>
     <string name="cash_balance_payable">可提现余额</string>
     <string name="available_balance_a">可用余额</string>
+    <string name="withdrawals">提现</string>
 
     <string name="real_name">真实姓名</string>
     <string name="please_enter_your_real_name">请输入你的真实姓名</string>
