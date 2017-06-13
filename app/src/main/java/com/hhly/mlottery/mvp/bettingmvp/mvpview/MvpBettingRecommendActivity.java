@@ -374,8 +374,7 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
             @Override
             public void BuyOnClick(View view, BettingListDataBean.PromotionData.BettingListData listData) {
                 Intent mIntent = new Intent(mContext , MvpBettingPayDetailsActivity.class);
-//                    mIntent.putExtra(ConstantPool.BETTING_ITEM_DATA , listData);//选中的
-                mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID , listData.getId());//选中的
+                mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID , listData.getId());//推介id
                 startActivity(mIntent);
                 overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
             }

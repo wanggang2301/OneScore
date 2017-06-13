@@ -47,6 +47,7 @@ public class PayMentUtils {
             public void onResponse(PaymentZFBBean jsonBean) {
 
                 if (jsonBean == null || jsonBean.getData() == null) {
+
                     return;
                 }
                 if (jsonBean.getData().getBody() != null) {
@@ -154,7 +155,7 @@ public class PayMentUtils {
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                Toast.makeText(mContext, "后台接口访问失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_nodata_to_again), Toast.LENGTH_SHORT).show();
             }
         }, PaymentWeiXinBean.class);
     }

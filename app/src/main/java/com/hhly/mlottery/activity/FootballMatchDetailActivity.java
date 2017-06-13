@@ -1810,8 +1810,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         // 聊球
                         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
-                        mTabsAdapter.addFragments(mBowlFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
-                        mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
+                        mTabsAdapter.addFragments(mBettingIssueFragment , mBowlFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
+                        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
                         mViewPager.setAdapter(mTabsAdapter);
                         mTabLayout.setupWithViewPager(mViewPager);
                         isAddFragment = true;

@@ -175,6 +175,7 @@ public class BettingIssueFragment extends Fragment implements View.OnClickListen
             public void BuyOnClick(View view, String s) {
                 L.d("qwer_name = ", s);
                 Intent mIntent = new Intent(getActivity(), MvpBettingPayDetailsActivity.class);
+                mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID , "id");//推介id
                 startActivity(mIntent);
                 getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
             }
