@@ -462,7 +462,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
                  errorPoint="0";
             }
             allPoint = Integer.parseInt(winPoint)+Integer.parseInt(errorPoint);
-            Glide.with(getApplicationContext()).load(headerDatas.getImageSrc()).into(ex_image);
+            Glide.with(getApplicationContext()).load(headerDatas.getImageSrc()).error(R.mipmap.specialist_default).into(ex_image);
             ex_name.setText(headerDatas.getNickname());
             ex_zhong.setText(mContext.getResources().getString(R.string.betting_item_jin) + allPoint+ mContext.getResources().getString(R.string.betting_item_zhong) + winPoint);
             ex_text.setText("\t\t\t\t" + headerDatas.getIntroduce());
