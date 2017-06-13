@@ -19,7 +19,7 @@
             android:id="@+id/ex_image"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:src="@mipmap/basket_default" />
+            android:src="@mipmap/specialist_default" />
 
     </FrameLayout>
 
