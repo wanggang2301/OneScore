@@ -1,29 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:yxq="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <include layout="@layout/layout_header" />
 
-    <include layout="@layout/activity_experts_head_view" />
-
     <android.support.v4.widget.SwipeRefreshLayout
-
         android:id="@+id/match_swiperefreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--情报列表-->
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/ex_recyclerview"
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/ex_nestsroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="visible" />
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
 
+            <LinearLayout
+                android:id="@+id/px_line"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="20dp">
+
+                    <com.hhly.mlottery.view.CircleImageView
+                        android:id="@+id/ex_image"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@mipmap/basket_default"
+                        />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="-50dp"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/ex_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="115dp"
+                            android:layout_marginTop="10dp"
+                            android:textColor="@color/bpblack" />
+
+                        <TextView
+                            android:id="@+id/ex_zhong"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center" />
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:id="@+id/ex_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginTop="30dp" />
+
+                </LinearLayout>
+
+                <!--情报列表-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/ex_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/number_info_two_bg"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
