@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -59,16 +60,19 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
         boolean lookStatus = false;
         switch (r.getStatus()) {
             case 1:
+                lookStatus = true;
                 baseViewHolder.setVisible(R.id.iv, true);
                 baseViewHolder.setVisible(R.id.betting_tobuy_or_check, false);
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zhong);
                 break;
             case 2:
+                lookStatus = true;
                 baseViewHolder.setVisible(R.id.iv, true);
                 baseViewHolder.setVisible(R.id.betting_tobuy_or_check, false);
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_shi);
                 break;
             case 6:
+                lookStatus = true;
                 baseViewHolder.setVisible(R.id.iv, true);
                 baseViewHolder.setVisible(R.id.betting_tobuy_or_check, false);
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zou);
@@ -92,8 +96,7 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
                 break;
 
         }
-      
-       
+
         LinearLayout mBuyOrCheck = baseViewHolder.getView(R.id.betting_tobuy_check);
 
         baseViewHolder.setText(R.id.betting_recommended_reason,  (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
@@ -108,7 +111,7 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
                 @Override
                 public void onClick(View v) {
                     if (mBuyClick != null) {
-                        mBuyClick.BuyOnClick(v, r);
+                        mBuyClick.BuyOnClick(v, r.getId());
                     }
                 }
             });
