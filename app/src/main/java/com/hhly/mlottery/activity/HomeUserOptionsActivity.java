@@ -376,9 +376,14 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 break;
             case R.id.cash_balance_payable_rl: //提现
                 if(DeviceInfo.isLogin()){
-                    Intent intent1=new Intent(this,WithDrawActivity.class);
-                    intent1.putExtra("balance",AppConstants.register.getUser().getCashBalance()+"");
-                    startActivity(intent1);
+                    if(Double.parseDouble(AppConstants.register.getUser().getCashBalance())<10000){ //小于10000分不可點
+                        Toast.makeText(this, R.string.withdraw_unless_100, Toast.LENGTH_LONG).show();
+                    }else {
+                        Intent intent1=new Intent(this,WithDrawActivity.class);
+                        intent1.putExtra("balance",AppConstants.register.getUser().getCashBalance()+"");
+                        startActivity(intent1);
+                    }
+
                 }else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }

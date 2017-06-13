@@ -136,7 +136,8 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
                 mChangeEdit=mWithDrawAmount.getText().toString();
                 if(!mChangeEdit.equals("")){
                     if(Double.parseDouble(mChangeEdit)>Double.parseDouble(mTextBalance)/100){ //分转元
-                        mWithDrawAmount.setText((Double.parseDouble(mTextBalance)/100)+"");
+                        mWithDrawAmount.setText(((int)Double.parseDouble(mTextBalance)/100)+"");
+                        mWithDrawAmount.setSelection(mWithDrawAmount.length());
                     }
                 }
             }

@@ -264,7 +264,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
             moneyIn = orderDataBean.getData().getPayPrice();//付款金额
 
-            mBalance.setText(UnitsUtil.fenToYuan(orderDataBean.getData().getAmount()) + "￥");
+            mBalance.setText("￥ " + UnitsUtil.fenToYuan(orderDataBean.getData().getAmount()));
             mPayPrice.setText("￥ " + orderDataBean.getData().getPayPrice());
 
             if (blance >= price) { //余额大于单价
