@@ -161,7 +161,9 @@ public class WithDrawFragment extends ViewFragment<WithdrawContract.Presenter> i
                 else if(mPresenter.getCardInfo().getCardNum()==null||mPresenter.getCardInfo().getCardNum().equals("")){ //未绑定银行卡
                     //跳绑定银行卡页面
                     L.e("sign","没绑卡呢");
-                    startActivity(new Intent(getActivity(), BindCardActivity.class));
+                    Intent intent=new Intent(getActivity(), BindCardActivity.class);
+                    intent .putExtra("cardName",mPresenter.getCardInfo().getAccountName());
+                    startActivity(intent);
                 }else if(Double.parseDouble(mEditText)>Double.parseDouble(mTextBalance)/100){
                     Toast.makeText(getActivity(), R.string.withdraw_morethan_total, Toast.LENGTH_LONG).show();
                 }
