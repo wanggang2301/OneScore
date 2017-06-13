@@ -94,7 +94,7 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
         }
         LinearLayout mBuyOrCheck = baseViewHolder.getView(R.id.betting_tobuy_or_check);
 
-        baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
+        baseViewHolder.setText(R.id.betting_recommended_reason,  (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
 
 
         /**
