@@ -78,11 +78,7 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zou);
                 break;
             default:
-                if (r.getLookStatus() + "" == null) {
-                    lookStatus = false;
-                    baseViewHolder.setText(R.id.betting_tobuy_or_check, "--");
-                } else {
-                    lookStatus = true;
+
                     if (r.getLookStatus() == 2) {
                         baseViewHolder.setVisible(R.id.betting_tobuy_or_check, true);
                         baseViewHolder.setVisible(R.id.iv, false);
@@ -92,7 +88,7 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
                         baseViewHolder.setVisible(R.id.iv, false);
                         baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.betting_txt_check));
                     }
-                }
+
                 break;
 
         }
@@ -106,7 +102,7 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
          * 购买（查看）点击
          */
 
-        if (lookStatus) {
+
             mBuyOrCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -115,7 +111,6 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
                     }
                 }
             });
-        }
 
 
     }
