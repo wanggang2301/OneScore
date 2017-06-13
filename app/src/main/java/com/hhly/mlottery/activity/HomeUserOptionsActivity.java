@@ -513,13 +513,13 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance())+"元");
 
                     DeviceInfo.saveRegisterInfo(register);
-                    if (register.getUser().getIsExpert()==0) {
+                    if (register.getUser().getIsExpert()==1) {
                         in_audit.setText(R.string.audited);
-                    } else if (register.getUser().getIsExpert()== 1) {
-                        in_audit.setText(R.string.in_audit);
                     } else if (register.getUser().getIsExpert()== 2) {
+                        in_audit.setText(R.string.in_audit);
+                    } else if (register.getUser().getIsExpert()== 3) {
                         in_audit.setText(R.string.audit_not_through);
-                    } else if (register.getUser().getIsExpert() == 3) {
+                    } else if (register.getUser().getIsExpert() == 0) {
                         in_audit.setText(R.string.not_audited);
                     } else {
                         in_audit.setText("");

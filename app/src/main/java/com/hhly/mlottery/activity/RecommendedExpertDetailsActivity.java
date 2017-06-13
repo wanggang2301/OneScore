@@ -464,7 +464,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
             allPoint = Integer.parseInt(winPoint)+Integer.parseInt(errorPoint);
             Glide.with(getApplicationContext()).load(headerDatas.getImageSrc()).into(ex_image);
             ex_name.setText(headerDatas.getNickname());
-            ex_zhong.setText(mContext.getResources().getString(R.string.betting_item_jin) + allPoint+ mContext.getResources().getString(R.string.betting_item_zhong) + errorPoint);
+            ex_zhong.setText(mContext.getResources().getString(R.string.betting_item_jin) + allPoint+ mContext.getResources().getString(R.string.betting_item_zhong) + winPoint);
             ex_text.setText("\t\t\t\t" + headerDatas.getIntroduce());
         } catch (Exception e) {
             e.printStackTrace();

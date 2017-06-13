@@ -48,14 +48,14 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
         baseViewHolder.setText(R.id.betting_guest_name, r.getGuestName());
         baseViewHolder.setText(R.id.betting_price, String.valueOf("￥ " + r.getPrice() + ".00"));
         baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(r.getCount()) + mContext.getResources().getString(R.string.yigoumai_txt));
-
-        if (0 == r.getType()) {
+        baseViewHolder.setText(R.id.betting_concede_points_spf , r.getTypeStr());
+    /*    if (0 == r.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.jingcaidanguan_txt));
         } else if (1 == r.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.yapan_txt));
         } else if (2 == r.getType()) {
             baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.daxiaoqiu_txt));
-        }
+        }*/
         switch (r.getStatus()) {
             case 1:
                 baseViewHolder.setVisible(R.id.iv, true);
@@ -94,7 +94,7 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
         }
         LinearLayout mBuyOrCheck = baseViewHolder.getView(R.id.betting_tobuy_or_check);
 
-        baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
+        baseViewHolder.setText(R.id.betting_recommended_reason,  (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
 
 
         /**

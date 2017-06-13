@@ -1873,6 +1873,8 @@
     <string name="balance">余额</string>
     <string name="income">收入</string>
     <string name="history_recommendation">历史推荐</string>
+    <string name="cash_balance_payable">可提现余额</string>
+    <string name="available_balance_a">可用余额</string>
 
     <string name="real_name">真实姓名</string>
     <string name="Please_enter_your_real_name">真实姓名</string>
