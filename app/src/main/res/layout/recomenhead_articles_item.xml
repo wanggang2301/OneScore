@@ -48,7 +48,7 @@
                         style="@style/betting_recommend_details_style"
                         android:paddingLeft="10dp"
                         android:text="12:18"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                 </LinearLayout>
 
@@ -127,7 +127,7 @@
                         <TextView
                             android:id="@+id/textView14"
                             style="@style/betting_recommend_details_style"
-                            android:text="@string/betting_txt_have_buy" />
+                            android:text="" />
                     </LinearLayout>
                 </LinearLayout>
 
