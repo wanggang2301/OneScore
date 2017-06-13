@@ -33,6 +33,7 @@ import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.util.AppConstants;
@@ -46,6 +47,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by yuely198 on 2017/6/8.
@@ -138,6 +141,9 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_experts);
         mContext = this;
+
+        EventBus.getDefault().register(this);
+
         if (getIntent() != null) {
             expertId =getIntent().getStringExtra(EXPERT_ID);
             winPoint = getIntent().getStringExtra(WINPOINT);
@@ -148,6 +154,12 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         initHeadData();
         // intiEvent();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initEvent() {
@@ -476,5 +488,20 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
     public void onRefresh() {
         initData();
         initHeadData();
+    }
+
+    /**
+     * 详情页面返回
+     * @param detailsResuleEventBusEntity
+     */
+    public void onEventMainThread(BettingDetailsResuleEventBusEntity detailsResuleEventBusEntity){
+        L.d("asdfqwer ==> " , "接收成功" + detailsResuleEventBusEntity.getCurrentId());
+        for (RecommendationExpertBean.ExpertPromotionsBean.ListBean currlist : listBeanList) {
+            if (currlist.getId().equals(detailsResuleEventBusEntity.getCurrentId())) {
+                currlist.setLookStatus(-1);
+                break;
+            }
+        }
+        upDataAdapter();
     }
 }
