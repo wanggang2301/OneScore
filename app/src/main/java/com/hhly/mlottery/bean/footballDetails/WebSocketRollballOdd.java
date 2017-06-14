@@ -70,4 +70,17 @@ public class WebSocketRollballOdd {
     public void setScore(String score) {
         this.score = score;
     }
+
+    @Override
+    public String toString() {
+        return "WebSocketRollballOdd{" +
+                "thirdId='" + thirdId + '\'' +
+                ", oddType='" + oddType + '\'' +
+                ", left='" + left + '\'' +
+                ", middle='" + middle + '\'' +
+                ", right='" + right + '\'' +
+                ", matchInTime='" + matchInTime + '\'' +
+                ", score='" + score + '\'' +
+                '}';
+    }
 }

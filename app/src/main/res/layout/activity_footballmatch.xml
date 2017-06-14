@@ -35,13 +35,13 @@
             android:textSize="13sp" />
 
         <TextView
-            android:layout_toRightOf="@+id/tv_data_content"
             android:id="@+id/tv_data_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:clickable="true"
             android:layout_marginLeft="-3dp"
+            android:layout_toRightOf="@+id/tv_data_content"
+            android:clickable="true"
             android:text=""
             android:textColor="@color/res_name_color"
             android:textSize="13sp" />
@@ -132,7 +132,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
 
 </LinearLayout>

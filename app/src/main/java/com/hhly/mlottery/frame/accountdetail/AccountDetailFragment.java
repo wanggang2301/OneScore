@@ -27,6 +27,7 @@ import com.hhly.mlottery.adapter.account.AccountDetailAdapter;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MDStatusBarCompat;
+import com.hhly.mlottery.util.net.UnitsUtil;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 import com.hhly.mlottery.widget.PullToEnlargeCoorDinatorLayout;
 
@@ -90,7 +91,7 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
      * 加载中
      */
     @BindView(R.id.basket_player_progressbar)
-    FrameLayout mProgressBarLayout;
+    LinearLayout mProgressBarLayout;
 
     @BindView(R.id.available_balance)
     TextView mAvailableBalance;
@@ -228,6 +229,7 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
 
     @Override
     public void recyclerNotify() {
+        mScrollView.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mAdapter.setNewData(mPresenter.getListData()); //点进去看下
         mAdapter.setLoadingView(mOnloadingView);
@@ -239,6 +241,7 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
 
     @Override
     public void showNoData() {
+        mScrollView.setVisibility(View.VISIBLE);
         mNodataLayout.setVisibility(View.VISIBLE);
         mExceptionLayout.setVisibility(View.GONE);
         mProgressBarLayout.setVisibility(View.GONE);
@@ -266,9 +269,9 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
 
     @Override
     public void showBalance() {
-        mAvailableBalance.setText(mPresenter.getBalanceData().getAvailableBalance()+"");
-        mFrozenBalance.setText(mPresenter.getBalanceData().getBlockedBalance()+"");
-        mTotalBalance.setText(mPresenter.getBalanceData().getCashBalance()+"");
+        mAvailableBalance.setText(UnitsUtil.fenToYuan(mPresenter.getBalanceData().getAvailableBalance()));
+        mFrozenBalance.setText(UnitsUtil.fenToYuan(mPresenter.getBalanceData().getBlockedBalance()));
+        mTotalBalance.setText(UnitsUtil.fenToYuan(mPresenter.getBalanceData().getTotalAmount()));
     }
 
 
@@ -292,6 +295,7 @@ public class AccountDetailFragment extends ViewFragment<AccountDetailContract.Pr
 
     @Override
     public void onError() {
+        mScrollView.setVisibility(View.VISIBLE);
         mNodataLayout.setVisibility(View.GONE);
         mExceptionLayout.setVisibility(View.VISIBLE);
         mProgressBarLayout.setVisibility(View.GONE);

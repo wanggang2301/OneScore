@@ -22,13 +22,30 @@ public class RechargeBean {
     private int tradeType;
     private String tradeName;
     private String payType;
-    private double tradeAmount;
+    private int tradeAmount;
     private int status;
     private String finishTime;
     private int rechargeType;
     private String rechargeName;
     private String transactionId;
     private String payResult;
+    private String statusName;
+
+    public int getTradeAmount() {
+        return tradeAmount;
+    }
+
+    public void setTradeAmount(int tradeAmount) {
+        this.tradeAmount = tradeAmount;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statueName) {
+        this.statusName = statueName;
+    }
 
     public int getTradeType() {
         return tradeType;
@@ -54,13 +71,6 @@ public class RechargeBean {
         this.payType = payType;
     }
 
-    public double getTradeAmount() {
-        return tradeAmount;
-    }
-
-    public void setTradeAmount(int tradeAmount) {
-        this.tradeAmount = tradeAmount;
-    }
 
     public int getStatus() {
         return status;

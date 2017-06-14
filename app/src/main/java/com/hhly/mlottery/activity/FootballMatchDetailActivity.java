@@ -177,10 +177,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private String mPreStatus;
     public final static String BUNDLE_PARAM_THIRDID = "thirdId";
 
-    private BettingIssueFragment mRecommendFragment;  //推介
+    private BettingIssueFragment mBettingIssueFragment;  //推介
     private BowlFragment mBowlFragment;
-
-
     private LiveFragment mLiveFragment;  //直播
     private OddsFragment mOddsFragment;         //指数
     private AnalyzeParentFragment mAnalyzeParentFragment;
@@ -492,7 +490,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 //                    mAnalyzeParentFragment.initData();
                     mOddsFragment.oddPlateRefresh(); // 指数刷新
                     mChartBallFragment.onRefresh();// 聊球
-                    //mBettingIssueFragment.initData();//推介
                 }
             }
         }, 500);
@@ -2985,9 +2982,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     if (!isAddFragment) {
                         // 传值到直播Fragment
                         //推介
-//                    mRecommendFragment = RecommendFragment.newInstance();
+                        mBettingIssueFragment = BettingIssueFragment.newInstance(mThirdId);
+
                         //滚球
+//
                         mBowlFragment = BowlFragment.newInstance(mThirdId);
+
                         //直播
                         mLiveFragment = LiveFragment.newInstance(mThirdId, mMatchDetail, mathchStatisInfo, eventMatchTimeLiveList, trendChartList, mKeepTime);
                         //指数
@@ -2999,7 +2999,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
                         mTabsAdapter.addFragments(mBowlFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
                         mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
-                        //设置预加载页面的个数。
                         mViewPager.setAdapter(mTabsAdapter);
                         mTabLayout.setupWithViewPager(mViewPager);
                         isAddFragment = true;

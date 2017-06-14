@@ -10,7 +10,7 @@ import data.DataManager;
 /**
  * @author: Wangg
  * @name：xxx
- * @description: xxx
+ * @description: MyApp Module
  * @created on:2017/4/8  15:23.
  */
 

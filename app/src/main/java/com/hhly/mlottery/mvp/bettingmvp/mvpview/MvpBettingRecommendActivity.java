@@ -1,5 +1,7 @@
 package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,12 +16,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.BaseActivity;
 import com.hhly.mlottery.activity.BettingRecommendSettingActivity;
+import com.hhly.mlottery.activity.LoginActivity;
+import com.hhly.mlottery.activity.RecommendedExpertDetailsActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingSettingResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingRecommendPresenter;
 import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendMvpAdapter;
@@ -43,7 +49,17 @@ import de.greenrobot.event.EventBus;
  * Created by：XQyi on 2017/5/2 10:56
  * Use:竞彩推荐列表（MVP-View 页面展示）
  */
-public class MvpBettingRecommendActivity extends BaseActivity implements MView<BettingListDataBean>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class MvpBettingRecommendActivity extends Activity implements MView<BettingListDataBean>, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+
+    /** 签名参数 */
+    private String PARAM_PAGE_SIZE = "pageSize";//每页条数
+    private String PARAM_PAGE_NO = "pageNo";//页码
+    private String PARAM_USER_ID = "userId";//用户id
+    private String PARAM_KEY = "key";//联赛key
+    private String PARAM_TYPE = "type";//玩法type
+    private String PARAM_LANG = "lang";
+    private String PARAM_TIMEZONE = "timeZone";
+    private String PARAM_SIGN = "sign";//参数签名
 
     private MvpBettingRecommendPresenter mvpBettingRecommendPresenter;
     private BettingRecommendMvpAdapter mAdapter;
@@ -58,18 +74,28 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
     private TextView mRefreshTxt;
     private LinearLayout mLoadingLayout;
     private TextView mNoDataLayout;
+    private Context mContext;
 
     List<BettingListDataBean.LeagueNameData> allLeague;// 所有的联赛
     List<BettingListDataBean.LeagueNameData> currLeague;//选中的联赛
     boolean filtrate = false;//是否筛选过联赛
 
-    private View mOnLoadingView;
-    private View mNoLoadingView;
+
 
     private int PAGE_SIZE=10; //每页的最大数量
     private String playType = "-1";//选中的玩法（-1 全部）
     private List<String> leagueKey = new ArrayList<>();//选中的联赛
     private String leagueKeys = "";//选中联赛的key -string
+
+    private int pageNum = 1;//页码 (初次请求第一页)
+    private int pageSize = 10;//每页条数（分页加载每页条数）
+    private boolean hasNextPage;//是否有下一页
+    private View mOnloadingView;
+    private View mNoLoadingView;
+    /**
+     * 设置是否可点击
+     */
+    private boolean toSetting = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +106,6 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         mContext = this;
         mvpBettingRecommendPresenter = new MvpBettingRecommendPresenter(this);
         initView();
-//        initData();
         setStatus(SHOW_STATUS_LOADING);
         mLoadHandler.postDelayed(mRun, 0);
     }
@@ -98,7 +123,8 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
     private Runnable mRun = new Runnable() {
         @Override
         public void run() {
-            initData(playType , leagueKeys);
+            pageNum = 1; //重新加载，当前页复位
+            initData(playType , leagueKeys , pageNum , pageSize);
         }
     };
     /**
@@ -149,13 +175,10 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         mRefresh.setOnRefreshListener(this);
         mRefresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getApplicationContext(), StaticValues.REFRASH_OFFSET_END));
 
-        mRecycleView = (RecyclerView)findViewById(R.id.betting_recyclerview);
+         mRecycleView = (RecyclerView)findViewById(R.id.betting_recyclerview);
         mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecycleView.setLayoutManager(mLinearLayoutManager);
-
-        mOnLoadingView = getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecycleView.getParent(),false);
-        mNoLoadingView = getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) mRecycleView.getParent(),false);
 
         //异常状态
         //网络不给力
@@ -168,85 +191,47 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         //暂无数据
         mNoDataLayout = (TextView) findViewById(R.id.nodata_txt);
 
+        mOnloadingView = getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecycleView.getParent(),false);
+        mNoLoadingView=getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) mRecycleView.getParent(),false);
+
     }
 
-    private void initData(String type , String key){
-        String url = "http://192.168.10.242:8092/promotion/info/list";
-        String userid = AppConstants.register.getUser().getUserId();
+    private void initData(String type , String key , int pageNum , int pageSize){
+
+//        String url = "http://192.168.10.242:8092/promotion/info/list";
+//        String url = "http://m.1332255.com:81/promotion/info/list";
+        String url = BaseURLs.URL_RECOMEND_LIST;
+
+        String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
         Map<String ,String> mapPrament = new HashMap<>();
 
-        mapPrament.put("pageSize" , "10"); //每页条数
-        mapPrament.put("pageNo" , "1");//页码
-        mapPrament.put("userId" , userid);//用户id
-        mapPrament.put("key" , key);//联赛key
-        mapPrament.put("type" , type);
-        mapPrament.put("lang" , "zh");
-        mapPrament.put("timeZone" , "8");
-        String signs = SignUtils.getSign("/promotion/info/list" , mapPrament);
+        mapPrament.put(PARAM_PAGE_SIZE , pageSize +"");
+        mapPrament.put(PARAM_PAGE_NO , pageNum + "");
+        mapPrament.put(PARAM_USER_ID , userid);
+        mapPrament.put(PARAM_KEY , key);
+        mapPrament.put(PARAM_TYPE , type);
+        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_RECOMMEND_LIST, mapPrament);
 
         Map<String ,String> map = new HashMap<>();
-        map.put("pageSize" , "10"); //每页条数
-        map.put("pageNo" , "1");//页码
-        map.put("userId" , userid);//用户id
-        map.put("key" , key);//联赛key
-        map.put("type" , type);
-        map.put("sign" , signs);
+        map.put(PARAM_PAGE_SIZE , pageSize +""); //每页条数
+        map.put(PARAM_PAGE_NO , pageNum + "");//页码
+        map.put(PARAM_USER_ID , userid);//用户id
+        map.put(PARAM_KEY , key);//联赛key
+        map.put(PARAM_TYPE , type);
+        map.put(PARAM_SIGN , signs);
 
         L.d("qwer== >> " + signs);
 
         mvpBettingRecommendPresenter.loadData(url , map);
     }
 
-    /**
-     * 加载更多
-     */
-    private int currentPage = 1;
-    private void loadMoreData(){
-        L.d("上拉加载、、、");
-        String url = "http://192.168.10.242:8092/promotion/info/list";
-        Map<String ,String> map = new HashMap<>();
-        String userid = AppConstants.register.getUser().getUserId();
-        String sign = AppConstants.SIGN_KEY;
-        map.put("pageSize" , "10"); //每页条数
-        map.put("pageNo" , "1");//页码
-        map.put("userId" , userid);//用户id
-        map.put("key" , "");//联赛key
-        map.put("sign" , sign);
-        map.put("type" , "-1");
-
-        currentPage = ++currentPage;
-        VolleyContentFast.requestJsonByGet(url,map , new VolleyContentFast.ResponseSuccessListener<BettingListDataBean>() {
-            @Override
-            public void onResponse(BettingListDataBean jsonBean) {
-                if (jsonBean.getCode() == 200) {
-                    if (jsonBean.getPromotionList() != null) {
-
-                        if (jsonBean.getPromotionList().getList().size() == 0) {
-
-                            mAdapter.notifyDataChangedAfterLoadMore(false);
-                            mAdapter.addFooterView(mNoLoadingView);
-
-                        }else{
-                            mAdapter.notifyDataChangedAfterLoadMore(jsonBean.getPromotionList().getList(),true);
-                        }
-                    }
-                }
-
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
-            }
-        },BettingListDataBean.class);
-
-    }
 
     public void upDataAdapter(){
         if (mAdapter == null) {
             return;
         }
-        mAdapter.updateData(listData);
         mAdapter.notifyDataSetChanged();
     }
     @Override
@@ -256,6 +241,10 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
             setStatus(SHOW_STATUS_NO_DATA);
             return;
         }
+
+        toSetting = true; //设置是否可点击
+
+        hasNextPage = beanData.getPromotionList().isHasNextPage();
 
         //所有的联赛
         allLeague = new ArrayList<>();
@@ -289,27 +278,44 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         gameDetailsClick();
 
         L.d("listData >> " + listData.size());
-        if (mAdapter == null) {
-            mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
-            mRecycleView.setAdapter(mAdapter);
-            mAdapter.setmBuyClick(mBettingBuyClickListener);
-            mAdapter.setmSpecialistClick(mBettingSpecialistClickListener);
-            mAdapter.setmGameDetailsClick(mBettingGameDetailsClickListener);
-        }else{
-            upDataAdapter();
-        }
+        mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
+
+        mAdapter.setLoadingView(mOnloadingView);
+        mRecycleView.setAdapter(mAdapter);
+        mAdapter.openLoadMore(0 , true);
+
+        setListener();
+        mAdapter.setmBuyClick(mBettingBuyClickListener);
+        mAdapter.setmGameDetailsClick(mBettingGameDetailsClickListener);
+        mAdapter.setmSpecialistClick(mBettingSpecialistClickListener);
+//        if (mAdapter == null) {
+//            mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
+//
+//            mAdapter.setLoadingView(mOnloadingView);
+//            mRecycleView.setAdapter(mAdapter);
+//            mAdapter.openLoadMore(0 , true);
+//
+//            setListener();
+//            mAdapter.setmBuyClick(mBettingBuyClickListener);
+//            mAdapter.setmGameDetailsClick(mBettingGameDetailsClickListener);
+//            mAdapter.setmSpecialistClick(mBettingSpecialistClickListener);
+//        }else{
+//            upDataAdapter();
+//        }
     }
 
     @Override
     public void loadFailView() {
         setStatus(SHOW_STATUS_ERROR);
-        Toast.makeText(mContext, "网络请求失败~！！", Toast.LENGTH_SHORT).show();
+//        toSetting = false;
+//        Toast.makeText(mContext, "网络请求失败~！！", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void loadNoData() {
         setStatus(SHOW_STATUS_NO_DATA);
-        Toast.makeText(mContext, "暂无数据~！！", Toast.LENGTH_SHORT).show();
+        toSetting = false;
+//        Toast.makeText(mContext, "暂无数据~！！", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -322,14 +328,17 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
             case R.id.public_img_back:
                 finish();
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
+//                startActivity(new Intent(mContext , MvpChargeMoneyActivity.class));
                 break;
             case R.id.public_btn_set:
-                Intent mIntent = new Intent(mContext , BettingRecommendSettingActivity.class);
-                mIntent.putExtra(ConstantPool.ALL_LEAGUE, (Serializable)allLeague);//所有的
-                mIntent.putExtra(ConstantPool.CURR_LEAGUE , (Serializable)currLeague);//选中的
-                mIntent.putExtra(ConstantPool.CURR_PALY_TYPE , playType);//选中的
-                startActivity(mIntent);
-                overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
+                if (toSetting) {
+                    Intent mIntent = new Intent(mContext , BettingRecommendSettingActivity.class);
+                    mIntent.putExtra(ConstantPool.ALL_LEAGUE, (Serializable)allLeague);//所有的
+                    mIntent.putExtra(ConstantPool.CURR_LEAGUE , (Serializable)currLeague);//选中的
+                    mIntent.putExtra(ConstantPool.CURR_PALY_TYPE , playType);//选中的
+                    startActivity(mIntent);
+                    overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
+                }
                 break;
         }
     }
@@ -349,7 +358,7 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
     private BettingSpecialistClickListener mBettingSpecialistClickListener;
     // 专家详情的点击监听
     public interface BettingSpecialistClickListener {
-        void SpecialistOnClick(View view , String s);
+        void SpecialistOnClick(View view , BettingListDataBean.PromotionData.BettingListData s);
     }
 
     private BettingGameDetailsClickListener mBettingGameDetailsClickListener;
@@ -364,10 +373,8 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         mBettingBuyClickListener = new BettingBuyClickListener() {
             @Override
             public void BuyOnClick(View view, BettingListDataBean.PromotionData.BettingListData listData) {
-                //                Toast.makeText(mContext, "点击了购买** " + s, Toast.LENGTH_SHORT).show();
-                L.d("yxq-0418=== " , "点击了*购买** " + listData.getId());
                 Intent mIntent = new Intent(mContext , MvpBettingPayDetailsActivity.class);
-                mIntent.putExtra(ConstantPool.BETTING_ITEM_DATA , listData);//选中的
+                mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID , listData.getId());//推介id
                 startActivity(mIntent);
                 overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
             }
@@ -379,9 +386,14 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
     public void specialistClick(){
         mBettingSpecialistClickListener = new BettingSpecialistClickListener() {
             @Override
-            public void SpecialistOnClick(View view, String s) {
+            public void SpecialistOnClick(View view, BettingListDataBean.PromotionData.BettingListData s) {
 //                Toast.makeText(mContext, "专家** " + s, Toast.LENGTH_SHORT).show();
-                L.d("yxq-0418=== " , "点击了*专家** " + s);
+                Intent intent=new Intent(mContext,RecommendedExpertDetailsActivity.class);
+                intent.putExtra("expertId",s.getUserid());
+                intent.putExtra("winPoint",s.getWinPoint());
+                intent.putExtra("errPoint",s.getErrPoint());
+                startActivity(intent);
+               // L.d("yxq-0418=== " , "点击了*专家** " + s);
             }
         };
     }
@@ -406,7 +418,13 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        loadMoreData();
+                        if (hasNextPage) {
+                            loadMoreData(playType , leagueKeys);
+                        }else{
+                            Toast.makeText(mContext, mContext.getResources().getText(R.string.nodata_txt), Toast.LENGTH_SHORT).show();
+//                            mOnloadingView.findViewById(R.id.loading_text)
+                            mAdapter.addFooterView(mNoLoadingView);
+                        }
                     }
                 },1000);
             }
@@ -439,8 +457,96 @@ public class MvpBettingRecommendActivity extends BaseActivity implements MView<B
         leagueKey.addAll(resultEventBusEntity.getKeyChecked());
 
         setStatus(SHOW_STATUS_LOADING);
-        listData.clear();
-        initData(playType , leagueKeys);
+        mLoadHandler.postDelayed(mRun, 0);
 
+    }
+
+    /**
+     * 详情页面返回
+     * @param detailsResuleEventBusEntity
+     */
+    public void onEventMainThread(BettingDetailsResuleEventBusEntity detailsResuleEventBusEntity){
+
+        for (BettingListDataBean.PromotionData.BettingListData currlist : listData) {
+            if (currlist.getId().equals(detailsResuleEventBusEntity.getCurrentId())) {
+                currlist.setLookStatus("**");
+                break;
+            }
+        }
+        upDataAdapter();
+    }
+
+    /**
+     * 加载更多
+     */
+    private void loadMoreData(String type , String key){
+        pageNum += 1;
+        L.d("上拉加载、、、" + pageNum);
+//        String url = "http://192.168.10.242:8092/promotion/info/list";
+//        String url = "http://m.1332255.com:81/promotion/info/list";
+        String url = BaseURLs.URL_RECOMEND_LIST;
+        String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
+        Map<String ,String> mapPrament = new HashMap<>();
+
+        mapPrament.put(PARAM_PAGE_SIZE , pageSize +"");
+        mapPrament.put(PARAM_PAGE_NO , pageNum + "");
+        mapPrament.put(PARAM_USER_ID , userid);
+        mapPrament.put(PARAM_KEY , key);
+        mapPrament.put(PARAM_TYPE , type);
+        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
+//        mapPrament.put("pageSize" , pageSize +""); //每页条数
+//        mapPrament.put("pageNo" , pageNum + "");//页码
+//        mapPrament.put("userId" , userid);//用户id
+//        mapPrament.put("key" , key);//联赛key
+//        mapPrament.put("type" , type);
+//        mapPrament.put("lang" , MyApp.getLanguage());
+//        mapPrament.put("timeZone" , AppConstants.timeZone + "");
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_RECOMMEND_LIST, mapPrament);
+
+        Map<String ,String> map = new HashMap<>();
+//        map.put("pageSize" , pageSize +""); //每页条数
+//        map.put("pageNo" , pageNum + "");//页码
+//        map.put("userId" , userid);//用户id
+//        map.put("key" , key);//联赛key
+//        map.put("type" , type);
+//        map.put("sign" , signs);
+        map.put(PARAM_PAGE_SIZE , pageSize +""); //每页条数
+        map.put(PARAM_PAGE_NO , pageNum + "");//页码
+        map.put(PARAM_USER_ID , userid);//用户id
+        map.put(PARAM_KEY , key);//联赛key
+        map.put(PARAM_TYPE , type);
+        map.put(PARAM_SIGN , signs);
+
+        L.d("qwer== >> " + signs);
+
+        VolleyContentFast.requestJsonByGet(url,map , new VolleyContentFast.ResponseSuccessListener<BettingListDataBean>() {
+            @Override
+            public void onResponse(BettingListDataBean jsonBean) {
+                if (jsonBean.getCode() == 200) {
+
+                    if (jsonBean.getPromotionList() != null) {
+
+                        hasNextPage = jsonBean.getPromotionList().isHasNextPage();
+
+                        if (jsonBean.getPromotionList().getList().size() == 0) {
+
+                            mAdapter.notifyDataChangedAfterLoadMore(false);
+                            mAdapter.addFooterView(mNoLoadingView);
+
+                        }else{
+
+                            mAdapter.notifyDataChangedAfterLoadMore(jsonBean.getPromotionList().getList(),true);
+                        }
+                    }
+                }
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        },BettingListDataBean.class);
     }
 }

@@ -1,10 +1,12 @@
 package com.hhly.mlottery.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendSettingAdapter;
@@ -26,7 +28,7 @@ import de.greenrobot.event.EventBus;
  * Created by：Administrator on 2017/4/24 10:36
  * Use: 竞彩推荐设置页
  */
-public class BettingRecommendSettingActivity extends BaseActivity implements View.OnClickListener {
+public class BettingRecommendSettingActivity extends Activity implements View.OnClickListener {
 
     private ImageView mBack;
     private Button mSave;
@@ -62,6 +64,10 @@ public class BettingRecommendSettingActivity extends BaseActivity implements Vie
         findViewById(R.id.public_btn_filter).setVisibility(View.INVISIBLE);
         findViewById(R.id.public_btn_set).setVisibility(View.INVISIBLE);
 
+        TextView title = (TextView) findViewById(R.id.public_txt_title);
+        title.setVisibility(View.VISIBLE);
+        title.setText(getApplicationContext().getString(R.string.basket_analyze_screen));
+
         mBack = (ImageView) findViewById(R.id.public_img_back);
         mBack.setOnClickListener(this);
         mSave = (Button) findViewById(R.id.public_btn_save);
@@ -93,7 +99,7 @@ public class BettingRecommendSettingActivity extends BaseActivity implements Vie
 
 
         BettingListDataBean.LeagueNameData dataBean1 = new BettingListDataBean.LeagueNameData();
-        dataBean1.setLeagueName(getApplicationContext().getString(R.string.betting_title_details));
+        dataBean1.setLeagueName(getApplicationContext().getString(R.string.jingcaidanguan_txt));
         dataBean1.setKey("0");
         playList.add(dataBean1);
         BettingListDataBean.LeagueNameData dataBean2 = new BettingListDataBean.LeagueNameData();

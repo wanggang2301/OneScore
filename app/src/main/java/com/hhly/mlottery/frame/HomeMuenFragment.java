@@ -23,6 +23,7 @@ import com.hhly.mlottery.activity.VideoActivity;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeGridAdapter;
 import com.hhly.mlottery.bean.homepagerentity.HomeContentEntity;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -362,8 +363,8 @@ public class HomeMuenFragment extends Fragment {
                                         case "44":// 足球竞彩
                                             mContext.startActivity(new Intent(mContext, FootballMatchActivity.class));
                                             break;
-                                        case "91":// 竞彩推介
-//                                            ToastTools.showQuick(mContext,"竞彩推介");
+                                        case "92":// 竞彩推介
+                                            mContext.startActivity(new Intent(mContext, MvpBettingRecommendActivity.class));
                                             break;
                                         case "101": //角球比分
                                             mContext.startActivity(new Intent(mContext, FootballCornerActivity.class));

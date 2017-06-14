@@ -20,9 +20,11 @@ import com.hhly.mlottery.adapter.football.BottomOddsAdapter;
 import com.hhly.mlottery.bean.footballDetails.WebSocketRollballOdd;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.mvptask.IContract;
+import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.L;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -172,7 +174,10 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
         flNodata.setVisibility(View.GONE);
         bowlBean = mPresenter.getBowlBean();
 
-        mBottomOddsDetailsItemList = bowlBean.getMatchoddlist();
+        mBottomOddsDetailsItemList = new ArrayList<>();
+
+        mBottomOddsDetailsItemList.addAll(bowlBean.getMatchoddlist());
+
         setFirstOdd(bowlBean.getFirst());
         setOddTypeText();
 
@@ -184,8 +189,11 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
     }
 
     public void updateFragmentOddList(WebSocketRollballOdd webSocketRollballOdd) {
-        mBottomOddsDetailsItemList.add(0, setLiveOdds(mBottomOddsDetailsItemList.get(0), webSocketRollballOdd));
-        mAdapter.notifyDataSetChanged();
+        if (CollectionUtils.notEmpty(mBottomOddsDetailsItemList)) {
+            L.d("bowlpush", webSocketRollballOdd.toString());
+            mBottomOddsDetailsItemList.add(0, setLiveOdds(mBottomOddsDetailsItemList.get(0), webSocketRollballOdd));
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
 

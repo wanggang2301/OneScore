@@ -30,6 +30,7 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CountDown;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
@@ -266,7 +267,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
      * @param verifyCode
      * @param passWord
      */
-    private void register(String userName, String verifyCode, String passWord) {
+    private void register(String userName, String verifyCode, final String passWord) {
 
         tv_register.setClickable(false);
         progressBar.show();
@@ -303,9 +304,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     progressBar.dismiss();
 
                     if (register != null && Integer.parseInt(register.getCode())== AccountResultCode.SUCC) {
-                       // DeviceInfo.saveRegisterInfo(register);
+                       DeviceInfo.saveRegisterInfo(register);
                         UiUtils.toast(MyApp.getInstance(), R.string.register_succ);
-                       // EventBus.getDefault().post(register);
+                        PreferenceUtil.commitString("et_password", passWord);
+                        EventBus.getDefault().post(register);
                         //给服务器发送注册成功后用户id和渠道id（用来统计留存率）
                         //sendUserInfoToServer(register);
 
@@ -323,7 +325,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 @Override
                 public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                     countDown.cancel();
-
                     progressBar.dismiss();
                     tv_register.setClickable(true);
                     L.e(TAG, "注册失败");

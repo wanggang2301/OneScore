@@ -11,10 +11,12 @@ import data.repository.UserCenterRepository;
 import rx.Subscriber;
 
 /**
- * @author: Wangg
- * @name：xxx
- * @description: 推介文章presenter
- * @created on:2017/6/2  11:19.
+ * @anthor     wangg
+ * @className  RecommendArticlesPresenter
+ * @time       2017/6/2  11:19
+ * @changeDesc XXX
+ * @changeTime XXX
+ * @classDesc  推介文章presenter
  */
 
 public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoadMoreDataView> implements IContract.IRecommendArticlesPresenter {
@@ -74,9 +76,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
     @Override
     public void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
 
-
-        //if (!isHasNextPage) {
-        if (false) {
+        if (!isHasNextPage) {
             mView.pullUpLoadMoreDataFail();
             return;
         }

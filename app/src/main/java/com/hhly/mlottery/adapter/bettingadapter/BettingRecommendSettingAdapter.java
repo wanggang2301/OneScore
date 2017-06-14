@@ -48,7 +48,7 @@ public class BettingRecommendSettingAdapter extends CommonAdapter<BettingListDat
                         }
                     }else{
                         if (chickedList.contains(buttonView.getTag())) {
-                            Toast.makeText(mContext, "必须选择一项", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_paly_choose_txt), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }else{ //多选

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.hhly.mlottery">
 
+    <!-- 录音权限 -->
+    <!--<uses-permission android:name="android.permission.RECORD_AUDIO" />-->
     <!-- 调用系统下载权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
@@ -29,6 +31,11 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <!-- 获取当前应用是否在显示应用，可以更精准的统计用户活跃 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".MyApp"
@@ -83,7 +90,6 @@
         <activity
             android:name=".activity.FiltrateMatchConfigActivity"
             android:screenOrientation="portrait" />
-
 
         <!-- 足球数据内页显示 -->
         <activity
@@ -398,6 +404,13 @@
 
         <!--专家详情MVP-->
         <activity
+            android:name=".activity.BettingRecommendSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity"
+            android:screenOrientation="portrait" />
+        <!-- 专家详情MVP -->
+        <activity
             android:name=".mvp.bettingmvp.mvpview.MvpBettingRecommendActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -441,26 +454,30 @@
                 <data android:scheme="wx7ef1da85d0f485e1" />
             </intent-filter>
         </activity>
-
+        <!-- 微信支付 -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
 
         <!-- alipay sdk begin -->
         <!-- 若手机没有安装支付宝，则调用H5支付页面 -->
-        <!--<activity-->
-            <!--android:name="com.alipay.sdk.app.H5PayActivity"-->
-            <!--android:configChanges="orientation|keyboardHidden|navigation"-->
-            <!--android:exported="false"-->
-            <!--android:screenOrientation="behind" />-->
-        <!--<activity-->
-            <!--android:name="com.alipay.sdk.app.H5AuthActivity"-->
-            <!--android:configChanges="orientation|keyboardHidden|navigation"-->
-            <!--android:exported="false"-->
-            <!--android:screenOrientation="behind" />-->
-        <!--&lt;!&ndash; alipay sdk end &ndash;&gt;-->
-        <!--<activity-->
-            <!--android:name="com.alipay.sdk.auth.AuthActivity"-->
-            <!--android:configChanges="orientation|keyboardHidden|navigation"-->
-            <!--android:exported="false"-->
-            <!--android:screenOrientation="behind" />-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
+        <!-- alipay sdk end -->
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" />
 
         <activity
             android:name=".activity.SubsRecordActivity"
@@ -468,6 +485,12 @@
         <activity
             android:name=".activity.RecommendArticlesActivity"
             android:screenOrientation="portrait" />
+        <!-- 账户详情 -->
+        <activity
+            android:name=".activity.AccountDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.NotRecommendExpertActivity"
         <!--账户详情-->
         <activity
             android:name=".activity.AccountDetailActivity"
@@ -476,6 +499,33 @@
         <!--<activity-->
             <!--android:name=".activity.FootballCornerActivity"-->
             <!--android:screenOrientation="portrait" />-->
+        <!-- 角球比分 -->
+        <activity
+            android:name=".activity.FootballCornerActivity"
+            android:screenOrientation="portrait" />
+        <!-- 账户详情 -->
+        <activity
+            android:name=".activity.ApplicationSpecialistActivity"
+            android:screenOrientation="portrait" />
+        <!-- 提现界面 -->
+        <activity
+            android:name=".activity.WithDrawActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- 绑定银行卡 -->
+        <activity
+            android:name=".activity.BindCardActivity"
+            android:screenOrientation="portrait" />
+        <!-- 拍照 -->
+        <activity
+            android:name=".activity.PictureSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".util.imagecrop.CropActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.RecommendedExpertDetailsActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

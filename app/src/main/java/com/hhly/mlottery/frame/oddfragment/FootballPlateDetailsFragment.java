@@ -139,7 +139,7 @@ public class FootballPlateDetailsFragment extends Fragment {
 
         rightList = new ArrayList<>();
         rightConvertList = new ArrayList<>();
-        mRightAdapter = new FootballPlateDetailsRightAdapter(oddType, rightList, rightConvertList);
+        mRightAdapter = new FootballPlateDetailsRightAdapter(companyId,oddType, rightList, rightConvertList);
         mRightRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRightRecyclerView.setAdapter(mRightAdapter);
 
@@ -188,6 +188,7 @@ public class FootballPlateDetailsFragment extends Fragment {
         super.onDetach();
         mParentFragment = null;
     }
+
 
     public void loadData() {
         Map<String, String> myPostParams = new HashMap<>();

@@ -2,27 +2,41 @@ package com.hhly.mlottery.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ChoseHeadStartBean;
 import com.hhly.mlottery.bean.account.Register;
+import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpChargeMoneyActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
-import com.hhly.mlottery.util.net.account.CustomEvent;
+import com.hhly.mlottery.util.cipher.MD5Util;
+import com.hhly.mlottery.util.net.SignUtils;
+import com.hhly.mlottery.util.net.UnitsUtil;
+import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.umeng.analytics.MobclickAgent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import de.greenrobot.event.EventBus;
 
@@ -95,6 +109,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                             .load(AppConstants.register.getUser().getImageSrc())
                             .error(R.mipmap.center_head)
                             .into(mUser_image);
+
+                    Log.i("register","isLogin"+AppConstants.register.getUser().getImageSrc());
                     mTv_nickname.setEnabled(false);
                     break;
                 default:
@@ -107,14 +123,28 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     private RelativeLayout rl_my_subscribe;
     private RelativeLayout rl_my_apply;
     private RelativeLayout rl_my_promotion;
+    private RelativeLayout rl_my_join;
     private LinearLayout my_balance;
     private LinearLayout my_income;
     private ImageView rl_setting_frame1;
+    private RelativeLayout account_details;
+    private LinearLayout not_login_balance;
+    private LinearLayout not_login_payable;
+    private LinearLayout available_balance_rl;
+    private LinearLayout cash_balance_payable_rl;
+    private TextView in_audit;
+    private TextView available_balance;
+    private TextView cash_balance_payable;
+    private TextView subscribe_tv;
+    private TextView promotion_tv;
+    private TextView recharge_bt;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
+        context = this;
         initView();
 
     }
@@ -144,47 +174,26 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         rl_setting_invited = (RelativeLayout) findViewById(R.id.rl_setting_invited);
         rl_setting_invited.setOnClickListener(this);
 
+        //审核中
+        in_audit = (TextView) findViewById(R.id.in_audit);
+
              /*判断登录状态*/
         if (DeviceInfo.isLogin()) {
             mViewHandler.sendEmptyMessage(LOGGED_ON);
-
         } else {
             mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);
+            in_audit.setText("");
         }
 
         rl_custom = (RelativeLayout) findViewById(R.id.rl_custom);
         rl_custom.setOnClickListener(this);
-        //我的关注
-//        rl_focus= (RelativeLayout) findViewById(R.id.rl_my_focus);
-//        rl_focus.setOnClickListener(this);
-
         rl_language_frame = (RelativeLayout) findViewById(R.id.rl_language_frame);
         rl_language_frame.setOnClickListener(this);
-    /*    rl_setting_frame = (RelativeLayout) findViewById(R.id.rl_setting_frame);
-        rl_setting_frame.setOnClickListener(this);*/
         rl_setting_frame1 = (ImageView) findViewById(R.id.rl_setting_frame);
         rl_setting_frame1.setOnClickListener(this);
         rl_user_feedback = (RelativeLayout) findViewById(R.id.rl_user_feedback);
         rl_user_feedback.setOnClickListener(this);
-
-        /**我的定制红点*/
-//        mRedDot = findViewById(R.id.custom_red_dot_view);
-//        boolean currenRedDot = PreferenceUtil.getBoolean("custom_red_dot" , true);
-//        if (currenRedDot) {
-//            mRedDot.setVisibility(View.VISIBLE);
-//        }else{
-//            mRedDot.setVisibility(View.GONE);
-//        }
-        /**我的关注红点*/
-//        mFocus_RedDot=findViewById(R.id.focus_red_dot_view);
-//        mShowRedDot=PreferenceUtil.getBoolean(SHOW_RED,false);
-//        if(mShowRedDot){
-//            mFocus_RedDot.setVisibility(View.VISIBLE);
-//        }else {
-//            mFocus_RedDot.setVisibility(View.GONE);
-//        }
-        /*邀请码红点*/
 
         invited_red_dot_view = findViewById(R.id.invited_red_dot_view);
         mInvitedShowRedDot = PreferenceUtil.getBoolean(INVITED_SHOW_RED, true);
@@ -202,6 +211,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         rl_my_promotion = (RelativeLayout) findViewById(R.id.rl_my_promotion);
         rl_my_promotion.setOnClickListener(this);
 
+        // 加入QQ
+        rl_my_join = (RelativeLayout) findViewById(R.id.rl_my_join);
+        rl_my_join.setOnClickListener(this);
+
         //申请专家
         rl_my_apply = (RelativeLayout) findViewById(R.id.rl_my_apply);
         rl_my_apply.setOnClickListener(this);
@@ -212,23 +225,45 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         //收入
         my_income = (LinearLayout) findViewById(R.id.my_income);
         my_income.setOnClickListener(this);
+
+
+        //账户明细
+        account_details = (RelativeLayout) findViewById(R.id.account_details);
+        account_details.setOnClickListener(this);
+
+
+        //登录和为登录显示账户信息
+        not_login_balance = (LinearLayout) findViewById(R.id.not_login_balance);
+        not_login_payable = (LinearLayout) findViewById(R.id.not_login_payable);
+
+        available_balance_rl = (LinearLayout) findViewById(R.id.available_balance_rl);
+        cash_balance_payable_rl = (LinearLayout) findViewById(R.id.cash_balance_payable_rl);
+        cash_balance_payable_rl.setOnClickListener(this);
+
+        //可用余额
+        available_balance = (TextView) findViewById(R.id.available_balance);
+        //可提现余额
+        cash_balance_payable = (TextView) findViewById(R.id.cash_balance_payable);
+
+        //订阅个数
+        subscribe_tv = (TextView) findViewById(R.id.subscribe_tv);
+        //推荐文章个数
+        promotion_tv = (TextView) findViewById(R.id.promotion_tv);
+
+        recharge_bt = (TextView) findViewById(R.id.recharge_bt);
+        recharge_bt.setOnClickListener(this);
     }
 
 
+    /**
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-
-//            case R.id.rl_my_focus: //关注不需要登录
-//                MobclickAgent.onEvent(HomeUserOptionsActivity.this, "MyFocusActivity");
-//                    PreferenceUtil.commitBoolean(SHOW_RED,false);
-//                    mFocus_RedDot.setVisibility(View.GONE);
-//                    startActivity(new Intent(HomeUserOptionsActivity.this,MyFocusActivity.class));
-//                break;
             case R.id.rl_custom:
                 if (DeviceInfo.isLogin()) {
                     PreferenceUtil.commitBoolean("custom_red_dot", false);
-//                    mRedDot.setVisibility(View.GONE);
                     startActivity(new Intent(HomeUserOptionsActivity.this, CustomActivity.class));
                 } else {
                     Intent intent = new Intent(this, LoginActivity.class);
@@ -241,11 +276,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 Intent intent = new Intent(HomeUserOptionsActivity.this, HomeLanguageActivity.class);
                 startActivity(intent);
                 break;
-          /*  case R.id.rl_about_frame:// 关于我们
-                Intent intent2 = new Intent(HomeUserOptionsActivity.this, HomeAboutActivity.class);
-                startActivity(intent2);
-                MobclickAgent.onEvent(mContext, "AboutWe");
-                break;*/
             case R.id.rl_setting_frame://更多設置
                 MobclickAgent.onEvent(HomeUserOptionsActivity.this, "HomeUserOptionsActivity_settings");
                 Intent intent2 = new Intent(HomeUserOptionsActivity.this, MoreSettingsActivity.class);
@@ -267,10 +297,6 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
 
                 break;
-          /*  case R.id.tv_logout: // 退出登录
-                MobclickAgent.onEvent(mContext, "AccountActivity_ExitLogin");
-                showDialog();
-                break;*/
             case R.id.user_info_image: //用户信息
                 MobclickAgent.onEvent(HomeUserOptionsActivity.this, "ProfileActivity_Start");
                 if (DeviceInfo.isLogin()) {
@@ -281,19 +307,9 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 }
 
                 break;
-//            case R.id.rl_setting_invited:
-//                MobclickAgent.onEvent(this, "InvitedActivity");
-//                PreferenceUtil.commitBoolean(INVITED_SHOW_RED, false);
-//                invited_red_dot_view.setVisibility(View.GONE);
-//                if (DeviceInfo.isLogin()) {
-//                    startActivity(new Intent(HomeUserOptionsActivity.this, InvitedActivity.class));
-//                } else {
-//                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
-//                }
             case R.id.rl_my_subscribe: //订阅记录
                 if (DeviceInfo.isLogin()) {
-
-
+                    startActivity(new Intent(this, SubsRecordActivity.class));
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
@@ -302,7 +318,16 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             case R.id.rl_my_promotion:     //推介文章
                 if (DeviceInfo.isLogin()) {
 
+                    L.d("expert", AppConstants.register.getUser().getIsExpert() + "");
+                   // UiUtils.toast(getApplicationContext(), "返回的专家审核值===" + AppConstants.register.getUser().getIsExpert() + "——————说明:0 未审核  1.审核通过  2.审核中  3.审核不通过");
 
+                    if (1 == AppConstants.register.getUser().getIsExpert()) {
+                        startActivity(new Intent(this, RecommendArticlesActivity.class));
+                    } else if (2 == AppConstants.register.getUser().getIsExpert()) {
+                        UiUtils.toast(getApplicationContext(), R.string.expert_shehe_txt);
+                    } else {
+                        startActivity(new Intent(this, NotRecommendExpertActivity.class));
+                    }
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
@@ -311,8 +336,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
             case R.id.rl_my_apply:     //申请专家
                 if (DeviceInfo.isLogin()) {
-
-                    startActivity(new Intent(HomeUserOptionsActivity.this, ApplicationSpecialistActivity.class));
+                    Intent intent1 = new Intent(HomeUserOptionsActivity.this, ApplicationSpecialistActivity.class);
+                    startActivity(intent1);
 
                 } else {
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
@@ -334,9 +359,63 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     UiUtils.toast(getApplicationContext(), R.string.please_login_first);
                 }
                 break;
+            case R.id.account_details:    //账户明细
+                if (DeviceInfo.isLogin()) {
 
+                    startActivity(new Intent(this, AccountDetailActivity.class));
+                } else {
+                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
+                }
+                break;
+            case R.id.recharge_bt:    //充值
+                if (DeviceInfo.isLogin()) {
+                    startActivity(new Intent(this, MvpChargeMoneyActivity.class));
+
+                } else {
+                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
+                }
+                break;
+            case R.id.cash_balance_payable_rl: //提现
+                if(DeviceInfo.isLogin()){
+                    if(Double.parseDouble(AppConstants.register.getUser().getCashBalance())<10000){ //小于10000分不可點
+                        Toast.makeText(this, R.string.withdraw_unless_100, Toast.LENGTH_LONG).show();
+                    }else {
+                        Intent intent1=new Intent(this,WithDrawActivity.class);
+                        intent1.putExtra("balance",AppConstants.register.getUser().getCashBalance()+"");
+                        startActivity(intent1);
+                    }
+
+                }else {
+                    UiUtils.toast(getApplicationContext(), R.string.please_login_first);
+                }
+                break;
+            case R.id.rl_my_join:// 加入QQ粉丝群
+                joinQQGroup("QVQ_ZzmrH5PocArnvvw9_U_hnv3Gs2Os");
+                break;
             default:
                 break;
+        }
+    }
+
+    /****************
+     *
+     * 发起添加群流程。群号：一比分用户体验群(332434723) 的 key 为： QVQ_ZzmrH5PocArnvvw9_U_hnv3Gs2Os
+     * 调用 joinQQGroup(QVQ_ZzmrH5PocArnvvw9_U_hnv3Gs2Os) 即可发起手Q客户端申请加群 一比分用户体验群(332434723)
+     *
+     * @param key 由官网生成的key
+     * @return 返回true表示呼起手Q成功，返回fals表示呼起失败
+     ******************/
+    public boolean joinQQGroup(String key) {
+        Intent intent = new Intent();
+        intent.setData(Uri.parse("mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3D" + key));
+        // 此Flag可根据具体产品需要自定义，如设置，则在加群界面按返回，返回手Q主界面，不设置，按返回会返回到呼起产品界面    //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        try {
+            startActivity(intent);
+            return true;
+        } catch (Exception e) {
+            // 未安装手Q或安装的版本不支持
+            Toast.makeText(this, getString(R.string.no_qq_installed), Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
@@ -344,176 +423,20 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         startActivityForResult(new Intent(this, LoginActivity.class), REQUESTCODE_LOGIN);
     }
 
-//    private void showDialog() {
-//
-//        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(HomeUserOptionsActivity.this, R.style.AppThemeDialog);//  android.R.style.Theme_Material_Light_Dialog
-//        builder.setCancelable(false);// 设置对话框以外不可点击
-//        builder.setTitle("");// 提示标题
-//        builder.setMessage(R.string.logout_check);// 提示内容
-//        builder.setPositiveButton(R.string.about_confirm, new DialogInterface.OnClickListener() {
-//            //@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.dismiss();
-//                logout();
-//            }
-//        });
-//        builder.setNegativeButton(R.string.about_cancel, new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.cancel();
-//            }
-//        });
-//        android.support.v7.app.AlertDialog alertDialog = builder.create();
-//        alertDialog.show();
-//    }
 
-
-    /**
-     * 注销
-     */
-
-    /*private void logout() {
-
-        progressBar.show();
-
-        String url = BaseURLs.URL_LOGOUT;
-        Map<String, String> param = new HashMap<>();
-        param.put("loginToken", AppConstants.register.getData().getLoginToken());
-        param.put("deviceToken", AppConstants.deviceToken);
-        param.put("userId", AppConstants.register.getData().getUser().getUserId());
-        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
-            @Override
-            public void onResponse(Register register) {
-
-                progressBar.dismiss();
-                if (register.getResult() == AccountResultCode.SUCC || register.getResult() == AccountResultCode.USER_NOT_LOGIN) {
-                    CommonUtils.saveRegisterInfo(null);
-                    UiUtils.toast(MyApp.getInstance(), R.string.logout_succ);
-                    PreferenceUtil.commitBoolean("three_login",false);
-                    setResult(RESULT_OK);
-
-                    PreferenceUtil.commitString(BasketballFocusNewFragment.BASKET_FOCUS_IDS,""); //清空篮球关注列表
-                    PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,""); //清空足球关注列表
-                    request(); //推送需要
-
-//                    getFootballUserFocus(""); //注销时把未登录状态的用户id请求过来 .篮球不需要是因为篮球进行了预加载，会直接请求关注页面。足球没有。
-//
-                } else {
-                    CommonUtils.handlerRequestResult(register.getResult(), register.getMsg());
-                }
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                progressBar.dismiss();
-                //L.e(TAG, " 注销失败");
-                UiUtils.toast(MyApp.getInstance(), R.string.immediate_unconection);
-            }
-        }, Register.class);
-    }*/
-
-    /**
-     * 用户注销把用户状态改成0
-     */
-//    private void request() {
-//        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.exitUpdateOnlile.do";
-//        Map<String ,String> params=new HashMap<>();
-//        params.put("deviceId",AppConstants.deviceToken);
-//        VolleyContentFast.requestJsonByPost(BaseURLs.EXIT_PUSH_ONLINE, params, new VolleyContentFast.ResponseSuccessListener<ConcernBean>() {
-//            @Override
-//            public void onResponse(ConcernBean jsonObject) {
-//                if(jsonObject.getResult().equals("200")){
-//                    //注销成功
-//                    L.d("AAA","注销成功");
-//
-//                }
-//                finish();
-//
-//            }
-//        }, new VolleyContentFast.ResponseErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-//
-//                finish();
-//            }
-//        },ConcernBean.class);
-//    }
-    /**
-     * 获取用户足球关注列表
-     */
-    /*private void getFootballUserFocus(String userId) {
-
-        //devideID;
-        String deviceId=AppConstants.deviceToken;
-        //devicetoken 友盟。
-        String umengDeviceToken=PreferenceUtil.getString(AppConstants.uMengDeviceToken,"");
-        String appNo="11";
-        String url="http://192.168.31.73:8080/mlottery/core/pushSetting.loginUserFindMatch.do";
-        Map<String,String> params=new HashMap<>();
-        params.put("appNo",appNo);
-        params.put("userId",userId);
-        params.put("deviceToken",umengDeviceToken);
-        params.put("deviceId",deviceId);
-
-        //volley请求
-        VolleyContentFast.requestJsonByPost(BaseURLs.FOOTBALL_FIND_MATCH, params, new VolleyContentFast.ResponseSuccessListener<BasketballConcernListBean>() {
-            @Override
-            public void onResponse(BasketballConcernListBean jsonObject) {
-                if(jsonObject.getResult().equals("200")){
-                    //将关注写入文件
-                    StringBuffer sb=new StringBuffer();
-                    for(String thirdId:jsonObject.getConcerns()){
-                        if("".equals(sb.toString())){
-                            sb.append(thirdId);
-                        }else {
-                            sb.append(","+thirdId);
-                        }
-                    }
-                    PreferenceUtil.commitString(FocusFragment.FOCUS_ISD,sb.toString());
-                    finish();
-                }else{
-                    finish();
-                }
-
-
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                finish();
-
-            }
-        },BasketballConcernListBean.class);
-
-    }*/
-
-    /**
-     * 定制页面返回
-     *
-     * @param event
-     */
-    public void onEventMainThread(CustomEvent event) {
-//        if (PreferenceUtil.getBoolean("custom_red_dot" , true)) {
-//            mRedDot.setVisibility(View.VISIBLE);
-//        }else{
-//            mRedDot.setVisibility(View.GONE);
-//        }
-    }
 
     public void onEventMainThread(ChoseHeadStartBean choseHeadStartBean) {
-        //ImageLoader.load(HomeUserOptionsActivity.this,choseHeadStartBean.startUrl,R.mipmap.center_head).into(mUser_image);
         Glide.with(getApplicationContext())
                 .load(choseHeadStartBean.startUrl)
                 .error(R.mipmap.center_head)
                 .into(mUser_image);
+
     }
 
 
     public void onEventMainThread(Register register) {
 
-        //ImageLoader.load(HomeUserOptionsActivity.this,register.getData().getUser().getHeadIcon()).into(mUser_image);
-        Glide.with(getApplicationContext())
+        Glide.with(context)
                 .load(register.getUser().getImageSrc())
                 .error(R.mipmap.center_head)
                 .into(mUser_image);
@@ -523,15 +446,100 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
+
         MobclickAgent.onResume(this);
 
         if (DeviceInfo.isLogin()) {
-
+            // 0 未审核  1.审核通过  2.审核中  3.审核不通过
+            login();
+            available_balance_rl.setVisibility(View.VISIBLE);
+            cash_balance_payable_rl.setVisibility(View.VISIBLE);
+            not_login_balance.setVisibility(View.GONE);
+            not_login_payable.setVisibility(View.GONE);
             mTv_nickname.setText(AppConstants.register.getUser().getNickName());
+
         } else {
+            in_audit.setText("");
+            available_balance_rl.setVisibility(View.GONE);
+            cash_balance_payable_rl.setVisibility(View.GONE);
+            not_login_balance.setVisibility(View.VISIBLE);
+            not_login_payable.setVisibility(View.VISIBLE);
+            subscribe_tv.setText("");
+            promotion_tv.setText("");
             mTv_nickname.setText(R.string.Login_register);
             mUser_image.setImageResource(R.mipmap.center_head);
         }
+    }
+
+
+    /**
+     * 登录
+     */
+    private void login() {
+
+        final String url = BaseURLs.URL_LOGIN;
+
+
+        Map<String, String> mapPrament = new HashMap<>();
+        mapPrament.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
+        mapPrament.put("password", MD5Util.getMD5(PreferenceUtil.getString("et_password", "")));
+
+        if (MyApp.isLanguage.equals("rCN")) {
+            // 如果是中文简体的语言环境
+            mapPrament.put("lang", "zh");
+        } else if (MyApp.isLanguage.equals("rTW")) {
+            // 如果是中文繁体的语言环境
+            mapPrament.put("lang", "zh-TW");
+        }
+        mapPrament.put("timeZone", "8");
+
+        String signs = SignUtils.getSign("/user/login", mapPrament);
+
+
+        Map<String, String> param = new HashMap<>();
+        param.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
+        param.put("password", MD5Util.getMD5(PreferenceUtil.getString("et_password", "")));
+        param.put("sign", signs);
+
+        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+            @Override
+            public void onResponse(Register register) {
+
+                progressBar.dismiss();
+                if (Integer.parseInt(register.getCode()) == AccountResultCode.SUCC) {
+
+                    subscribe_tv.setText(register.getUser().getBuyCount());
+                    promotion_tv.setText(register.getUser().getPushCount());
+                    available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance())+"元");
+                    cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance())+"元");
+
+                    DeviceInfo.saveRegisterInfo(register);
+                    if (register.getUser().getIsExpert()==1) {
+                        in_audit.setText(R.string.audited);
+                    } else if (register.getUser().getIsExpert()== 2) {
+                        in_audit.setText(R.string.in_audit);
+                    } else if (register.getUser().getIsExpert()== 3) {
+                        in_audit.setText(R.string.audit_not_through);
+                    } else if (register.getUser().getIsExpert() == 0) {
+                        in_audit.setText(R.string.not_audited);
+                    } else {
+                        in_audit.setText("");
+                    }
+                } else {
+
+                    return;
+                }
+            }
+
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+
+            }
+
+        }, Register.class);
+
     }
 
     @Override
@@ -546,6 +554,8 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         MobclickAgent.onPause(this);
     }
 
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -553,12 +563,10 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
             if (requestCode == REQUESTCODE_LOGIN) {
                 // 登录成功返回
                 L.d(TAG, "登录成功");
-                // iv_account.setImageResource(R.mipmap.login);
             } else if (requestCode == REQUESTCODE_LOGOUT) {
                 L.d(TAG, "注销成功");
                 mTv_nickname.setText(R.string.Login_register);
                 mUser_image.setImageResource(R.mipmap.center_head);
-                // iv_account.setImageResource(R.mipmap.logout);
             }
         }
     }

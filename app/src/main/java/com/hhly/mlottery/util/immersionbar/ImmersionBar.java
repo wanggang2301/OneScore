@@ -31,7 +31,7 @@ import java.util.Set;
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class ImmersionBar {
 
-    private static Map<String, BarParams> mMap = new HashMap<>();
+    private Map<String, BarParams> mMap = new HashMap<>();
     private Activity mActivity;
     private Window mWindow;
     private ViewGroup mViewGroup;

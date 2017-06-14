@@ -2,7 +2,6 @@ package com.hhly.mlottery.util.net;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.android.volley.AuthFailureError;

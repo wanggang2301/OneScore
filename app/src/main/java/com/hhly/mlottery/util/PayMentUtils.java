@@ -47,6 +47,7 @@ public class PayMentUtils {
             public void onResponse(PaymentZFBBean jsonBean) {
 
                 if (jsonBean == null || jsonBean.getData() == null) {
+                    Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_netword_error_txt), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (jsonBean.getData().getBody() != null) {
@@ -58,7 +59,7 @@ public class PayMentUtils {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 L.d("qwer_AliPay===>>", "error");
-                Toast.makeText(mContext, "后台接口访问失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_nodata_to_again), Toast.LENGTH_SHORT).show();
             }
         }, PaymentZFBBean.class);
 
@@ -146,6 +147,7 @@ public class PayMentUtils {
             @Override
             public void onResponse(PaymentWeiXinBean jsondata) {
                 if (jsondata == null || jsondata.getData() == null) {
+                    Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_netword_error_txt), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 PaymentWeiXinBean.DataDetailsBean payData = jsondata.getData();
@@ -154,7 +156,7 @@ public class PayMentUtils {
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                Toast.makeText(mContext, "后台接口访问失败", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_nodata_to_again), Toast.LENGTH_SHORT).show();
             }
         }, PaymentWeiXinBean.class);
     }

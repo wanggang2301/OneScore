@@ -6,6 +6,8 @@ import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 
+import data.utils.Sign;
+
 
 /**
  * @author Tenney
@@ -923,6 +925,14 @@ public class BaseURLs {
      */
     public final static String URL_REGISTER = P_URL_API_HOST + "user/register";
     /**
+     * 专家认证
+     */
+    public final static String EXPERTAUTH = P_URL_API_HOST + "user/expertAuth";
+    /**
+     * 专家详细信息
+     */
+    public final static String EXPERTINFO = P_URL_API_HOST + "user/expertInfo";
+    /**
      * 登录
      */
     public final static String URL_LOGIN = P_URL_API_HOST + "user/login";
@@ -1174,6 +1184,9 @@ public class BaseURLs {
     //足球竞彩
     public final static String FINDBETTINGLIST = URL_API_HOST + "footballBetting.findBettingList.do";
 
+    /*推荐专家*/
+    public final static String EXPERTPROMOTIONS = P_URL_API_HOST + "promotion/info/expertPromotions";
+    public final static String EXPERTINTRODUCT = P_URL_API_HOST + "user/expertIntroduct";
     /**
      * 角球列表
      */
@@ -1181,4 +1194,42 @@ public class BaseURLs {
 
     /***********************************************************************************************************************/
 
+    /**
+     * 竞彩推介
+     */
+    public final static String URL_BETTING_HTTP = "http://";
+
+    //支付接口参数(调用支付宝、微信)
+    public final static String PARAMENT_RECHARGE_PAY = "/user/pay/recharge";
+    //支付接口(调用支付宝、微信)
+    public final static String URL_RECHARGE_PAY = URL_BETTING_HTTP + HOST + PARAMENT_RECHARGE_PAY;
+
+    //推介列表接口参数
+    public final static String PARAMENT_RECOMMEND_LIST = "/promotion/info/list";
+    //推介详情接口参数
+    public final static String PARAMENT_RECOMMEND_DETAILS = "/promotion/info/detail";
+    //充值页面接口参数
+    public final static String PARAMENT_CHARGE_MONEY = "/user/pay/recharge";
+    //支付页面参数
+    public final static String PARAMENT_ORDER_CREATE = "/promotion/order/create";
+    //余额支付接口参数
+    public final static String PARAMENT_ORDER_PAY = "/promotion/order/pay";
+    //余额查询接口参数
+    public final static String PARAMENT_PAY_BALANCE = "/user/pay/balance";
+
+
+    //推介列表
+    public final static String URL_RECOMEND_LIST = URL_BETTING_HTTP + HOST + PARAMENT_RECOMMEND_LIST;
+    //推介详情
+    public final static String URL_REMMEND_DETAILS = URL_BETTING_HTTP + HOST + PARAMENT_RECOMMEND_DETAILS;
+    //充值页面接口
+    public final static String URL_CHARGE_MONEY = URL_BETTING_HTTP + HOST + PARAMENT_CHARGE_MONEY;
+    //支付页面接口
+    public final static String URL_ORDER_CREATE = URL_BETTING_HTTP + HOST + PARAMENT_ORDER_CREATE;
+    //余额支付接口
+    public final static String URL_ORDER_PAY = URL_BETTING_HTTP + HOST + PARAMENT_ORDER_PAY;
+    //余额查询接口
+    public final static String URI_PAY_BALANCE = URL_BETTING_HTTP + HOST + PARAMENT_PAY_BALANCE;
+
+//    String balanceUrl = "http://m.1332255.com:81/user/pay/balance";
 }

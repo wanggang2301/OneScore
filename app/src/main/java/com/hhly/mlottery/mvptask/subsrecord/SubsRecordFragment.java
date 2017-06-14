@@ -25,6 +25,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.mvptask.IContract;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -37,15 +38,17 @@ import butterknife.OnClick;
 import data.bean.SubsRecordBean;
 
 /**
- * @author wangg
- * @desc 订阅记录SubsRecordFragment
- * @date 2017 六一儿童节
+ * @anthor     wangg
+ * @className  SubsRecordFragment
+ * @time       2017 六一儿童节
+ * @changeDesc XXX
+ * @changeTime XXX
+ * @classDesc  订阅记录
  */
-
 public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresenter> implements IContract.IPullLoadMoreDataView, ExactSwipeRefreshLayout.OnRefreshListener {
 
     private static final String PAGE_SIZE = "10"; //每页10条记录
-    private static final String SIGN_FLAG = "sign"; //每页10条记录
+    private static final String SIGN_FLAG = "sign"; //是否需要签名标记
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -61,27 +64,22 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
     RecyclerView recyclerView;
     @BindView(R.id.handle_exception)
     LinearLayout handleException;
-
     @BindView(R.id.refresh)
     ExactSwipeRefreshLayout refresh;
-
-    SubsRecordAdapter mSubsRecordAdapter;
-    ProgressBar progressBar;
-    TextView loadmoreText;
-
-    Activity mActivity;
-
-    View moreView;
-
-    String userId = "HHLY00000136";
-
-    String loginToken = "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJqd3QiLCJpYXQiOjE0OTY0ODU2MDAsInN1YiI6IntcImlkXCI6XCJISExZMDAwMDAxMzZcIixcInBob25lTnVtXCI6XCIxNTAxMzY5NzEwMVwifSJ9.l4jsTaz5tJM5Q4P3s_UK8US-S3HRfN-lfJZJ67XUS98";
-
-    int pageNum = 1;
     @BindView(R.id.tv_nodata)
     TextView tvNodata;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
+
+
+    SubsRecordAdapter mSubsRecordAdapter;
+    ProgressBar progressBar;
+    TextView loadmoreText;
+    Activity mActivity;
+    View moreView;
+    String userId;
+    String loginToken;
+    int pageNum = 1;
 
     private List<SubsRecordBean.PurchaseRecordsBean.ListBean> listBeanList;
 
@@ -101,11 +99,18 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         ButterKnife.bind(this, view);
         initEvent();
 
+        userId = AppConstants.register.getUser().getUserId();
+        loginToken = AppConstants.register.getToken();
+
         mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
         return view;
     }
 
 
+    /**
+     *@desc 初始化view
+     *@@time 2017/6/12 15:54
+     */
     private void initEvent() {
         loadmoreText = (TextView) moreView.findViewById(R.id.loadmore_text);
         progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
@@ -126,6 +131,10 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
         return new SubsRecordPresenter(this);
     }
 
+    /**
+     *@desc 加载。。。
+     *@@time 2017/6/12 15:54
+     */
     @Override
     public void loading() {
         handleException.setVisibility(View.GONE);
@@ -156,7 +165,6 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
-
                         pageNum = pageNum + 1;
                         mPresenter.pullUpLoadMoreData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
                     }
@@ -236,11 +244,9 @@ public class SubsRecordFragment extends ViewFragment<IContract.ISubsRecordPresen
                 pageNum = 1;
                 mPresenter.requestData(userId, String.valueOf(pageNum), PAGE_SIZE, loginToken, SIGN_FLAG);
                 break;
-
             case R.id.btn_confirm:
                 startActivity(new Intent(mActivity, MvpBettingRecommendActivity.class));
-                // MvpBettingRecommendActivity
-
+                mActivity.finish();
                 break;
         }
     }

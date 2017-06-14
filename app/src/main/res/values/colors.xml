@@ -728,4 +728,5 @@
     <color name="betting_recommend_issue_payment_bg">#f7f7f8</color>
 
     <color name="account_trade_name">#4a494a</color>
+    <color name="edit_hint_color">#d7d7d7</color>
 </resources>

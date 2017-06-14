@@ -11,12 +11,13 @@ import data.repository.UserCenterRepository;
 import rx.Subscriber;
 
 /**
- * @author: Wangg
- * @name：xxx
- * @description: 订阅记录的presenter
- * @created on:2017/6/1  19:13.
+ * @anthor     wangg
+ * @className  SubsRecordPresenter
+ * @time       2017/6/1  19:13
+ * @changeDesc XXX
+ * @changeTime XXX
+ * @classDesc  订阅记录的presenter
  */
-
 public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDataView> implements IContract.ISubsRecordPresenter {
 
     private UserCenterRepository userCenterRepository;
@@ -72,8 +73,7 @@ public class SubsRecordPresenter extends BasePresenter<IContract.IPullLoadMoreDa
     @Override
     public void pullUpLoadMoreData(String userId, String pageNum, String pageSize, String loginToken, String sign) {
 
-        //if (!isHasNextPage) {
-        if (false) {
+        if (!isHasNextPage) {
             mView.pullUpLoadMoreDataFail();
             return;
         }

@@ -197,5 +197,13 @@ public interface AccountResultCode {
     /*用户id不能为空*/
     int USER_NOT_NULL = 2004;
 
+    /*用户未提交专家认证信息*/
+    int   NOT_SUBMIT_EXPERT_AUTHENTICATION  = 2005;
+
+    /*语言参数错误*/
+    int  LANGUAGE_PARAMETER_ERROR = 2006;
+
+    /** 用户在其他设备登录 */
+    int TOKEN_LOSE_EFFICACY_BY_OTHER_LOGIN_ERROR_CODE = 1000;
 
 }
