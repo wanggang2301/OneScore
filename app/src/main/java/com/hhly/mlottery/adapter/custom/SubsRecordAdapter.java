@@ -101,8 +101,8 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
                 //专家详情
                 Intent intent = new Intent(mContext, RecommendedExpertDetailsActivity.class);
                 intent.putExtra("expertId", b.getUserId());
-                intent.putExtra("winPoint", b.getWinpointThreeDays());
-                intent.putExtra("errPoint", b.getErrpointThreeDays());
+                intent.putExtra("winPoint", b.getWinpointThreeDays() + "");
+                intent.putExtra("errPoint", b.getErrpointThreeDays() + "");
 
 
                 mContext.startActivity(intent);
