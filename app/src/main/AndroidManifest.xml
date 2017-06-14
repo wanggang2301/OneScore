@@ -396,12 +396,6 @@
         <activity
             android:name=".activity.ExpertsActivity"
             android:screenOrientation="portrait" />
-
-        <!-- 支付相关 -->
-        <!--<activity-->
-        <!--android:name=".activity.BettingRecommendActivity"-->
-        <!--android:screenOrientation="portrait" />-->
-
         <!--专家详情MVP-->
         <activity
             android:name=".activity.BettingRecommendSettingActivity"
@@ -413,16 +407,6 @@
         <activity
             android:name=".mvp.bettingmvp.mvpview.MvpBettingRecommendActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.BettingRecommendSettingActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.FootballCornerActivity"
-            android:screenOrientation="portrait" />
-
         <!--足球动画直播Test-->
         <activity
             android:name=".activity.FootballEventAnimationFragment"
@@ -454,12 +438,6 @@
                 <data android:scheme="wx7ef1da85d0f485e1" />
             </intent-filter>
         </activity>
-        <!-- 微信支付 -->
-        <activity
-            android:name=".wxapi.WXPayEntryActivity"
-            android:exported="true"
-            android:launchMode="singleTop" />
-
         <!-- alipay sdk begin -->
         <!-- 若手机没有安装支付宝，则调用H5支付页面 -->
         <activity
@@ -491,15 +469,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.NotRecommendExpertActivity"
-        <!--账户详情-->
-        <activity
-            android:name=".activity.AccountDetailActivity"
             android:screenOrientation="portrait" />
         <!--角球比分-->
-        <!--<activity-->
-            <!--android:name=".activity.FootballCornerActivity"-->
-            <!--android:screenOrientation="portrait" />-->
-        <!-- 角球比分 -->
         <activity
             android:name=".activity.FootballCornerActivity"
             android:screenOrientation="portrait" />
