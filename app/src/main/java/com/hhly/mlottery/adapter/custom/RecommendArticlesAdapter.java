@@ -77,7 +77,7 @@ public class RecommendArticlesAdapter extends BaseQuickAdapter<RecommendArticles
 
         }
 
-        baseViewHolder.getView(R.id.betting_tobuy_or_check).setOnClickListener(new View.OnClickListener() {
+        baseViewHolder.getView(R.id.ll_recommenditem).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

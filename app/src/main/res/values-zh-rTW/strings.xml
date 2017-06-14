@@ -1614,7 +1614,6 @@
 
     <!--网球-->
     <string name="tennis_match_p2">P2退賽</string>
-    <string name="tennis_match_p1">P1退赛</string>
     <string name="tennis_match_dd">待定</string>
     <string name="tennis_match_tc">推遲</string>
     <string name="tennis_match_zd">中斷</string>
