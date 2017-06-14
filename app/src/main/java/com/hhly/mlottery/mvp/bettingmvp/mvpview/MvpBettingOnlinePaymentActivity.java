@@ -195,11 +195,11 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
                     switch (MODE_PAYMENT){
                         case 0:
                             L.d("支付方式 = ","支付宝");
-                            PayMentUtils.ALiPayData(mContext , MvpBettingOnlinePaymentActivity.this , payUrl , getDataMap(ConstantPool.ZEB_SERVICE , moneyIns));
+                            PayMentUtils.ALiPayData(MvpBettingOnlinePaymentActivity.this , payUrl , getDataMap(ConstantPool.ZEB_SERVICE , moneyIns));
                             break;
                         case 1:
                             L.d("支付方式 = ","微信");
-                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap(ConstantPool.WEIXIN_SERVICE , moneyIns));
+                            PayMentUtils.WeiXinPayData(payUrl , getDataMap(ConstantPool.WEIXIN_SERVICE , moneyIns));
                             break;
                         case 2:
                             L.d("支付方式 = ","余额支付");
