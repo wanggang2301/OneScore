@@ -12,7 +12,7 @@ public class AppConstants {
     /**
      * 是否是测试环境，true为测试，false为生产环境
      */
-    public static final boolean isTestEnv = true;
+    public static final boolean isTestEnv = false;
     /**
      * true是国际版|false内地版
      */
