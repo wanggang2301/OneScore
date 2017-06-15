@@ -17,6 +17,7 @@ import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingSettingResultEvent
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.widget.GrapeGridView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -164,5 +165,18 @@ public class BettingRecommendSettingActivity extends Activity implements View.On
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 }

@@ -469,7 +469,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     @Override
     public void onRefresh() {
         L.d(TAG, "下拉刷新");
-        new Handler().postDelayed(new Runnable() {
+        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mRefreshLayout.setRefreshing(false);
@@ -2998,7 +2998,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
                         mTabsAdapter.addFragments(mBowlFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
-                        mViewPager.setOffscreenPageLimit(4);//设置预加载页面的个数。
+                        mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
                         mViewPager.setAdapter(mTabsAdapter);
                         mTabLayout.setupWithViewPager(mViewPager);
                         isAddFragment = true;

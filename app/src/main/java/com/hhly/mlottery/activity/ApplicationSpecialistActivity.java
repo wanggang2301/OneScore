@@ -38,6 +38,7 @@ import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
 import com.hhly.mlottery.util.net.account.RegisterType;
 import com.hhly.mlottery.view.FlowLayout;
+import com.umeng.analytics.MobclickAgent;
 
 import java.security.PrivateKey;
 import java.util.ArrayList;
@@ -493,6 +494,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         new Timer().schedule(new TimerTask() { //让软键盘延时弹出，以更好的加载Activity
             public void run() {
                 InputMethodManager inputManager = (InputMethodManager) real_name.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -500,5 +502,11 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
             }
 
         }, 300);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }
