@@ -59,7 +59,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 }else{
                     if (TextUtils.isEmpty(detailsEdit.getText())) {
                         inputImg.setVisibility(View.VISIBLE);
-                        detailsEdit.setHint("             最多输入100个字符！");
+                        detailsEdit.setHint("         最多输入100个字符！");
                     }else{
                         inputImg.setVisibility(View.GONE);
                         detailsEdit.setHint("");

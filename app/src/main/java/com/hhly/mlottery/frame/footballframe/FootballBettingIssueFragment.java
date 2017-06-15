@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.TexasWebActivity;
+import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingIssueDetailsActivity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpChargeMoneyActivity;
@@ -50,7 +52,7 @@ import java.util.List;
  * Created by：XQyi on 2017/5/11 11:12
  * Use:内页推介页面
  */
-public class BettingIssueFragment extends Fragment implements View.OnClickListener {
+public class FootballBettingIssueFragment extends Fragment implements View.OnClickListener {
 
     private static final String THIRDID = "param1";
     private String mThirdid;
@@ -66,8 +68,8 @@ public class BettingIssueFragment extends Fragment implements View.OnClickListen
 
     private boolean isFabu = true;//是否是要发布状态（默认true 点击发布）
 
-    public static BettingIssueFragment newInstance(String thirdId) {
-        BettingIssueFragment fragment = new BettingIssueFragment();
+    public static FootballBettingIssueFragment newInstance(String thirdId) {
+        FootballBettingIssueFragment fragment = new FootballBettingIssueFragment();
         Bundle args = new Bundle();
         args.putString(THIRDID, thirdId);
         fragment.setArguments(args);
@@ -134,9 +136,13 @@ public class BettingIssueFragment extends Fragment implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.football_betting_yuyin_img:
-                Toast.makeText(getActivity(), "充值页", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "充值页", Toast.LENGTH_SHORT).show();
 //                setPopupWindow();
-                startActivity(new Intent(getContext() , MvpChargeMoneyActivity.class));
+//                startActivity(new Intent(getContext() , MvpChargeMoneyActivity.class));
+
+                Intent intent = new Intent(getContext(), TexasWebActivity.class);
+                intent.putExtra("key", "http://texas.1332255.com:4007/VideoGameWeb/mobile/index.html");
+                startActivity(intent);
                 break;
             case R.id.football_betting_text_img:
                 Toast.makeText(getActivity(), "发布文字", Toast.LENGTH_SHORT).show();
@@ -182,6 +188,10 @@ public class BettingIssueFragment extends Fragment implements View.OnClickListen
         };
     }
 
+    /**--------------这**里**先**不**删**--------start-------这**里**先**不**删**------------------------------*/
+    /**
+     * 语音发布的popupwindow[本期需求暂时不做，先不删 鬼知道他什么时候要加上]
+     */
     public void setPopupWindow() {
 
         new BlurPopWin.Builder(getActivity())
@@ -268,6 +278,9 @@ public class BettingIssueFragment extends Fragment implements View.OnClickListen
                 }).show(mYuyin);
     }
 
+    /**
+     * 语音播放
+     */
     @SuppressWarnings("deprecation")
     public void play() {
         File file = new File(Environment.getExternalStorageDirectory()
@@ -306,6 +319,9 @@ public class BettingIssueFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    /**
+     * 语音收录
+     */
     @SuppressWarnings("deprecation")
     public void record() {
         int frequency = 11025;
@@ -352,6 +368,9 @@ public class BettingIssueFragment extends Fragment implements View.OnClickListen
         }
     }
 
+    /**
+     * 返回音频时间
+     */
     private String gettime(String string) {   //使用此方法可以直接在后台获取音频文件的播放时间，而不会真的播放音频
         MediaPlayer player = new MediaPlayer();  //首先你先定义一个mediaplayer
         try {
@@ -385,4 +404,6 @@ public class BettingIssueFragment extends Fragment implements View.OnClickListen
         player.release();//释放资源
         return timelong1;  //返回音频时间
     }
+
+    /**--------------这**里**先**不**删**--------end-------这**里**先**不**删**------------------------------*/
 }

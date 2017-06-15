@@ -368,20 +368,20 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
-                            <com.hhly.mlottery.view.DrawableLeftBottomEditText
+                            <EditText
                                 android:id="@+id/betting_issue_details_edit"
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
                                 android:textSize="@dimen/text_size_11"
                                 android:textColor="#d7d7d7"
                                 android:background="@drawable/betting_issues_fabu_edit_text_bg"
-                                android:gravity="top"
                                 android:paddingTop="8dp"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="5dp"
                                 android:maxLength="100"
-                                android:drawableLeft="@mipmap/edit_img"
-                                android:hint="             最多输入100个字符！"/>
+                                android:gravity="top|left"
+                                android:hint="         最多输入100个字符！"
+                                />
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -391,7 +391,7 @@
                                     android:id="@+id/input_edit_img"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@mipmap/danmu_close"/>
+                                    android:background="@mipmap/edit_img"/>
                             </LinearLayout>
                         </RelativeLayout>
                     </LinearLayout>
@@ -423,11 +423,11 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:textSize="@dimen/text_size_14"
+                                android:paddingLeft="5dp"
+                                android:textSize="@dimen/text_size_12"
                                 android:textColor="@color/betting_recommend_issue_wanfa_color"
                                 android:text="RMB"/>
-                        </LinearLayout>
+                        </LinearLayout>ss
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="wrap_content"

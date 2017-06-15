@@ -12,10 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.bettingbean.BettingIssueBean;
-import com.hhly.mlottery.frame.footballframe.BettingIssueFragment;
-import com.hhly.mlottery.util.adapter.CommonAdapter;
-import com.hhly.mlottery.util.adapter.ViewHolder;
-import com.hhly.mlottery.view.CircleImageView;
+import com.hhly.mlottery.frame.footballframe.FootballBettingIssueFragment;
 
 import java.util.List;
 
@@ -28,8 +25,8 @@ public class BettingIssueAdapter extends BaseQuickAdapter<BettingIssueBean> {
     private Context mContext;
     private List<BettingIssueBean> mData;
 
-    private BettingIssueFragment.IssueBuyClickListener mBuyClick;
-    public void setmBuyClick(BettingIssueFragment.IssueBuyClickListener mBuyClicks){
+    private FootballBettingIssueFragment.IssueBuyClickListener mBuyClick;
+    public void setmBuyClick(FootballBettingIssueFragment.IssueBuyClickListener mBuyClicks){
         this.mBuyClick = mBuyClicks;
     }
 

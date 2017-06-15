@@ -126,6 +126,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.ColorPrimaryStatusBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name="com.hhly.mlottery.activity.TexasWebActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.ColorPrimaryStatusBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- 评论activity -->
         <activity
             android:name=".activity.CounselCommentActivity"

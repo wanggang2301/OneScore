@@ -52,7 +52,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footballframe.AnalyzeParentFragment;
-import com.hhly.mlottery.frame.footballframe.BettingIssueFragment;
+import com.hhly.mlottery.frame.footballframe.FootballBettingIssueFragment;
 import com.hhly.mlottery.frame.footballframe.LiveFragment;
 import com.hhly.mlottery.frame.footballframe.OddsFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
@@ -179,7 +179,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private String mPreStatus;
     public final static String BUNDLE_PARAM_THIRDID = "thirdId";
 
-    private BettingIssueFragment mBettingIssueFragment;  //推介
+    private FootballBettingIssueFragment mBettingIssueFragment;  //推介
     private BowlFragment mBowlFragment;
     private LiveFragment mLiveFragment;  //直播
     private OddsFragment mOddsFragment;         //指数
@@ -1795,7 +1795,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     if (!isAddFragment) {
                         // 传值到直播Fragment
                         //推介
-                        mBettingIssueFragment = BettingIssueFragment.newInstance(mThirdId);
+                        mBettingIssueFragment = FootballBettingIssueFragment.newInstance(mThirdId);
 
                         //滚球
 //
