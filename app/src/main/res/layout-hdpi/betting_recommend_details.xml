@@ -25,11 +25,11 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp">
+                    android:layout_height="140dp">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="15dp"
+                        android:paddingBottom="5dp"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp">
 
@@ -199,7 +199,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp"
+                    android:padding="10dp"
                     android:orientation="vertical"
                     >
 
@@ -345,7 +345,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp"
+                    android:padding="10dp"
                     android:orientation="vertical">
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -360,8 +360,9 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp">
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        >
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="0.5dp"
@@ -396,7 +397,7 @@
                                     android:id="@+id/betting_details_txt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="@dimen/text_size_15"
+                                    android:textSize="@dimen/text_size_13"
                                     android:textColor="@color/betting_recommend_name_color"
                                     android:text=""/>
                             </LinearLayout>

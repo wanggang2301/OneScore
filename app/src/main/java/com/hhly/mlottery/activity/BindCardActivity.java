@@ -1,9 +1,13 @@
 package com.hhly.mlottery.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.frame.withdrawandbindcard.BindCardFragment;
+import com.hhly.mlottery.frame.withdrawandbindcard.WithDrawFragment;
 
 /**
  * 描    述：绑定银行卡页面
@@ -12,10 +16,21 @@ import com.hhly.mlottery.R;
  */
 public class BindCardActivity extends AppCompatActivity {
 
+    private String mName;
+    private BindCardFragment mFragment;
     @Override
     public void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bind_card);
+        if(getIntent().getExtras()!=null){
+            mName= (String) getIntent().getExtras().get("cardName");
+        }
+        FragmentManager fragmentManager=getSupportFragmentManager();
 
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+
+        mFragment= BindCardFragment.newInstance(mName);
+        fragmentTransaction.replace(R.id.bind_card_container,mFragment);
+        fragmentTransaction.commit();
     }
 }

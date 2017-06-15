@@ -36,11 +36,19 @@ public class BindCardFragment extends ViewFragment<BindCardContract.Presenter>im
     EditText mCardNumber;
     @BindView(R.id.bind_card_save)
     LinearLayout mSave;
-
+    private String mCardName;
+    private static final String ARG_PARAM1 = "param1";
     public BindCardFragment() {
         // Required empty public constructor
     }
 
+    public static BindCardFragment newInstance(String param1){
+        BindCardFragment fragment=new BindCardFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,15 +60,21 @@ public class BindCardFragment extends ViewFragment<BindCardContract.Presenter>im
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mCardName = getArguments().getString(ARG_PARAM1);
+        }
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         mSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mName.getText().toString().isEmpty()){
-                    Toast.makeText(mActivity, R.string.bind_card_name_null, Toast.LENGTH_SHORT).show();
-                }else if(mBank.getText().toString().isEmpty()){
+                if(mBank.getText().toString().isEmpty()){
                     Toast.makeText(mActivity, R.string.bind_card_bank_null, Toast.LENGTH_SHORT).show();
                 }else if(checkBankCard(mCardNumber.getText().toString())){
                     Toast.makeText(mActivity, R.string.bind_card_card_error, Toast.LENGTH_SHORT).show();
@@ -76,6 +90,8 @@ public class BindCardFragment extends ViewFragment<BindCardContract.Presenter>im
                 getActivity().finish();
             }
         });
+        mName.setText(mCardName);
+        mName.setFocusable(false);
     }
 
     @Override

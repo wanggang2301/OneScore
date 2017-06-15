@@ -47,7 +47,7 @@ public class PayMentUtils {
             public void onResponse(PaymentZFBBean jsonBean) {
 
                 if (jsonBean == null || jsonBean.getData() == null) {
-
+                    Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_netword_error_txt), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (jsonBean.getData().getBody() != null) {
@@ -147,6 +147,7 @@ public class PayMentUtils {
             @Override
             public void onResponse(PaymentWeiXinBean jsondata) {
                 if (jsondata == null || jsondata.getData() == null) {
+                    Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_netword_error_txt), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 PaymentWeiXinBean.DataDetailsBean payData = jsondata.getData();

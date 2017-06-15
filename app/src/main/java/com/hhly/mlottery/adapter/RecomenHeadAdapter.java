@@ -2,6 +2,7 @@ package com.hhly.mlottery.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -48,69 +49,61 @@ public class RecomenHeadAdapter extends BaseQuickAdapter<RecommendationExpertBea
         baseViewHolder.setText(R.id.betting_guest_name, r.getGuestName());
         baseViewHolder.setText(R.id.betting_price, String.valueOf("￥ " + r.getPrice() + ".00"));
         baseViewHolder.setText(R.id.betting_buy_num, String.valueOf(r.getCount()) + mContext.getResources().getString(R.string.yigoumai_txt));
-
-        if (0 == r.getType()) {
-            baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.jingcaidanguan_txt));
-        } else if (1 == r.getType()) {
-            baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.yapan_txt));
-        } else if (2 == r.getType()) {
-            baseViewHolder.setText(R.id.betting_concede_points_spf, mContext.getResources().getString(R.string.daxiaoqiu_txt));
-        }
+        baseViewHolder.setText(R.id.betting_concede_points_spf , r.getTypeStr());
+        boolean lookStatus = false;
         switch (r.getStatus()) {
             case 1:
+                lookStatus = true;
                 baseViewHolder.setVisible(R.id.iv, true);
-                baseViewHolder.setVisible(R.id.textView11, false);
+                baseViewHolder.setVisible(R.id.betting_tobuy_or_check, false);
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zhong);
                 break;
             case 2:
+                lookStatus = true;
                 baseViewHolder.setVisible(R.id.iv, true);
-                baseViewHolder.setVisible(R.id.textView11, false);
+                baseViewHolder.setVisible(R.id.betting_tobuy_or_check, false);
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_shi);
                 break;
             case 6:
+                lookStatus = true;
                 baseViewHolder.setVisible(R.id.iv, true);
-                baseViewHolder.setVisible(R.id.textView11, false);
+                baseViewHolder.setVisible(R.id.betting_tobuy_or_check, false);
                 baseViewHolder.setImageResource(R.id.iv, R.mipmap.jingcai_icon_zou);
                 break;
             default:
+
+                    if (r.getLookStatus() == 2) {
+                        baseViewHolder.setVisible(R.id.betting_tobuy_or_check, true);
+                        baseViewHolder.setVisible(R.id.iv, false);
+                        baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.betting_txt_buy));
+                    } else {
+                        baseViewHolder.setVisible(R.id.betting_tobuy_or_check, true);
+                        baseViewHolder.setVisible(R.id.iv, false);
+                        baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.betting_txt_check));
+                    }
+
                 break;
 
         }
-        boolean lookStatus;
-        if (r.getLookStatus() + "" == null) {
-            lookStatus = false;
-            baseViewHolder.setText(R.id.textView11, "--");
-        } else {
-            lookStatus = true;
-            if (r.getLookStatus() == 2) {
-                baseViewHolder.setVisible(R.id.textView11, true);
-                baseViewHolder.setVisible(R.id.iv, false);
-                baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.betting_txt_buy));
-            } else {
-                baseViewHolder.setVisible(R.id.textView11, true);
-                baseViewHolder.setVisible(R.id.iv, false);
-                baseViewHolder.setText(R.id.textView11, mContext.getResources().getString(R.string.betting_txt_check));
-            }
-        }
-        LinearLayout mBuyOrCheck = baseViewHolder.getView(R.id.betting_tobuy_or_check);
 
-        baseViewHolder.setText(R.id.betting_recommended_reason, mContext.getResources().getString(R.string.tuijianliyou_txt) + (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
+        LinearLayout mBuyOrCheck = baseViewHolder.getView(R.id.betting_tobuy_check);
+
+        baseViewHolder.setText(R.id.betting_recommended_reason,  (TextUtils.isEmpty(r.getContext()) ? "" : r.getContext()));
 
 
         /**
          * 购买（查看）点击
          */
 
-        if (lookStatus) {
+
             mBuyOrCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (mBuyClick != null) {
-                        mBuyClick.BuyOnClick(v, r);
+                        mBuyClick.BuyOnClick(v, r.getId());
                     }
                 }
             });
-        }
 
 
     }

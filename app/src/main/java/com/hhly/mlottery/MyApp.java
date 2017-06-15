@@ -64,9 +64,9 @@ public class MyApp extends Application {
         // 初始化Activity 栈
         mActivityStack = new ActivityStack();
         // 子线程中做初始化操作，提升APP打开速度
-        new Thread() {
-            @Override
-            public void run() {
+//        new Thread() {
+//            @Override
+//            public void run() {
 
                 initLeakCanary();
                 // 初始化TalkingData统计
@@ -113,8 +113,8 @@ public class MyApp extends Application {
 
                 initDagger();
 
-            }
-        }.start();
+//            }
+//        }.start();
 
         super.onCreate();
     }

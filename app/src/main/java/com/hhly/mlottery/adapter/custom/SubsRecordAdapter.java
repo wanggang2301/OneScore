@@ -56,10 +56,8 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
 */
 
 
-
-
         L.d("headimg", b.getHeadImg());
-          Glide.with(mContext).load(b.getHeadImg()).placeholder(R.mipmap.specialist_default).into((CircleImageView) baseViewHolder.getView(R.id.betting_portrait_img));
+        Glide.with(mContext).load(b.getHeadImg()).placeholder(R.mipmap.specialist_default).into((CircleImageView) baseViewHolder.getView(R.id.betting_portrait_img));
         baseViewHolder.setText(R.id.betting_specialist_name, b.getNickName());
         baseViewHolder.setText(R.id.betting_specialist_grade, getSpecialistGrade(b.getLevels()));
         baseViewHolder.setVisible(R.id.betting_lainzhong, false);
@@ -103,6 +101,10 @@ public class SubsRecordAdapter extends BaseQuickAdapter<SubsRecordBean.PurchaseR
                 //专家详情
                 Intent intent = new Intent(mContext, RecommendedExpertDetailsActivity.class);
                 intent.putExtra("expertId", b.getUserId());
+                intent.putExtra("winPoint", b.getWinpointThreeDays() + "");
+                intent.putExtra("errPoint", b.getErrpointThreeDays() + "");
+
+
                 mContext.startActivity(intent);
             }
         });

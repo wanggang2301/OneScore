@@ -1614,7 +1614,6 @@
 
     <!--网球-->
     <string name="tennis_match_p2">P2退賽</string>
-    <string name="tennis_match_p1">P1退赛</string>
     <string name="tennis_match_dd">待定</string>
     <string name="tennis_match_tc">推遲</string>
     <string name="tennis_match_zd">中斷</string>
@@ -1784,6 +1783,7 @@
     <string name="betting_nodata_to_again">暫時無法獲取訂單信息,請稍後重試</string>
     <string name="betting_disclaimer_txt">(免責聲明：個人觀點並不代表壹比分官方網站)</string>
     <string name="betting_paly_choose_txt">必須選擇壹項</string>
+    <string name="betting_netword_error_txt">當前網酪繁忙,請稍後重試!</string>
 
     <string name="corner_score">角球比分</string>
     <string name="higher">高於</string>
@@ -1861,8 +1861,11 @@
     <string name="recommend_articles">推介文章</string>
     <string name="join_qq">加入QQ粉絲群</string>
     <string name="balance">餘額</string>
+    <string name="withdrawals">提現</string>
     <string name="income">收入</string>
-    <string name="history_recommendation">歷史推薦</string>
+    <string name="history_recommendation">賽事推介</string>
+    <string name="cash_balance_payable">可提現餘額</string>
+    <string name="available_balance_a">可用餘額</string>
 
     <string name="real_name">真實姓名</string>
     <string name="Please_enter_your_real_name">請輸入你的真實姓名</string>
@@ -1883,6 +1886,7 @@
     <string name="holidays_are_postponed">節假日時間順延。你可在個人中心查看稽核狀態。</string>
     <string name="realname_authentication_audit">實名認證審核中...</string>
     <string name="please_be_patient">請耐心等待...</string>
+    <string name="recommendation_agreement">認真閱讀推薦付費協定</string>
 
     <string name="audited">審核通過</string>
     <string name="in_audit">審核中</string>

@@ -10,7 +10,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -70,7 +72,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
     public static final String BUNDLE_PARM_TITLE = "headTitle";
     public static final String NET_PARM_PAGE = "currentPage";//网络请求的参数key  页数
     public static final String BUNDLE_PARM_INFOTYPE = "infoType";//网络请求的参数key  列表类型
-
+    private View headView;
     private String expertId;
 
     private Handler mViewHandler = new Handler() {
@@ -116,7 +118,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_experts);
+        setContentView(R.layout.activity_expert_new);
 
         if (getIntent() != null) {
             expertId = getIntent().getStringExtra(EXPERT_ID);
@@ -216,6 +218,12 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getApplicationContext(), StaticValues.REFRASH_OFFSET_END));
+
+
+
+        LayoutInflater layoutInflater = this.getLayoutInflater();
+        headView = layoutInflater.inflate(R.layout.activity_experts_head_view, null);
+        headView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //暂无数据
         match_no_data_txt = (TextView) findViewById(R.id.match_no_data_txt);

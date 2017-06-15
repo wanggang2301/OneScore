@@ -20,7 +20,6 @@ import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ChoseHeadStartBean;
-import com.hhly.mlottery.bean.SpecialistBean;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpChargeMoneyActivity;
@@ -34,7 +33,6 @@ import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.util.net.UnitsUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
-import com.hhly.mlottery.util.net.account.CustomEvent;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
@@ -257,6 +255,9 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     }
 
 
+    /**
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -318,7 +319,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                 if (DeviceInfo.isLogin()) {
 
                     L.d("expert", AppConstants.register.getUser().getIsExpert() + "");
-                    UiUtils.toast(getApplicationContext(), "返回的专家审核值===" + AppConstants.register.getUser().getIsExpert() + "——————说明:0 未审核  1.审核通过  2.审核中  3.审核不通过");
+                   // UiUtils.toast(getApplicationContext(), "返回的专家审核值===" + AppConstants.register.getUser().getIsExpert() + "——————说明:0 未审核  1.审核通过  2.审核中  3.审核不通过");
 
                     if (1 == AppConstants.register.getUser().getIsExpert()) {
                         startActivity(new Intent(this, RecommendArticlesActivity.class));
@@ -513,13 +514,13 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
                     cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance())+"元");
 
                     DeviceInfo.saveRegisterInfo(register);
-                    if (register.getUser().getIsExpert()==0) {
+                    if (register.getUser().getIsExpert()==1) {
                         in_audit.setText(R.string.audited);
-                    } else if (register.getUser().getIsExpert()== 1) {
-                        in_audit.setText(R.string.in_audit);
                     } else if (register.getUser().getIsExpert()== 2) {
+                        in_audit.setText(R.string.in_audit);
+                    } else if (register.getUser().getIsExpert()== 3) {
                         in_audit.setText(R.string.audit_not_through);
-                    } else if (register.getUser().getIsExpert() == 3) {
+                    } else if (register.getUser().getIsExpert() == 0) {
                         in_audit.setText(R.string.not_audited);
                     } else {
                         in_audit.setText("");

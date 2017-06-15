@@ -361,8 +361,6 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
             public void onResponse(ExpertreQuestBean requestBean) {
 
                 if (requestBean != null && requestBean.getCode().equals("200")) {
-
-
                     if (requestBean.getUserInfo().getIsExpert()==3) {
                         to_examine.setVisibility(View.GONE);
                         scrollview.setVisibility(View.VISIBLE);
@@ -419,7 +417,8 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                     }
 
                 } else {
-
+                    to_examine.setVisibility(View.GONE);
+                    scrollview.setVisibility(View.VISIBLE);
                     DeviceInfo.handlerRequestResult(Integer.parseInt(requestBean.getCode()), "未知错误");
                 }
             }
@@ -483,9 +482,9 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
     private void gotoWebActivity() {
 
         Intent intent = new Intent(ApplicationSpecialistActivity.this, WebActivity.class);
-        intent.putExtra(INTENT_PARAM_TITLE, "认真付费推荐协议");//头部名称
+        intent.putExtra(INTENT_PARAM_TITLE, this.getResources().getString(R.string.recommendation_agreement));//头部名称
         intent.putExtra(INTENT_PARAM_JUMPURL, "http://m.13322.com/recommended/argeement.html#/");
-        intent.putExtra("title", "认真付费推荐协议");
+        intent.putExtra("title", this.getResources().getString(R.string.recommendation_agreement));
         intent.putExtra("subtitle", "推荐协议");
         startActivity(intent);
     }

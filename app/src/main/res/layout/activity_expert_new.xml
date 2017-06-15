@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:yxq="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_header" />
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+
+        android:id="@+id/match_swiperefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+
+            android:id="@+id/ex_nestsroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:id="@+id/px_line"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginBottom="-35dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.hhly.mlottery.view.CircleImageView
+
+                        android:id="@+id/ex_image"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@mipmap/basket_default" />
+
+                </FrameLayout>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    app:cardBackgroundColor="#00ffffff"
+                    yxq:cardCornerRadius="5dp"
+                    yxq:cardElevation="3dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/ex_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="105dp"
+                                android:layout_marginTop="10dp"
+                                android:textColor="#333333"
+                                android:textSize="15sp" />
+
+                            <TextView
+
+                                android:id="@+id/ex_zhong"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginTop="10dp"
+                                android:background="@mipmap/ribbon"
+                                android:gravity="center"
+                                android:text="10中6"
+                                android:textColor="@color/white"
+                                android:textSize="13sp" />
+
+                        </RelativeLayout>
+
+
+                        <TextView
+                            android:id="@+id/ex_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginTop="5dp"
+                            android:lineSpacingExtra="6dp"
+                            android:textColor="#666666"
+                            android:textSize="13sp" />
+
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+
+                <!--情报列表-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/ex_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/number_info_two_bg"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
+
+
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/match_no_data_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/nodata"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/match_error_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/refresh" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/exp_net_status_txt"
+            android:textColor="@color/version"
+            android:textSize="@dimen/text_size_14" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:text="@string/exp__check_txt"
+                android:textColor="@color/msg"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/match_error_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exp_refresh_txt"
+                android:textColor="@color/exp_refresh"
+                android:textSize="@dimen/text_size_14" />
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,7 @@ import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.util.AppConstants;
@@ -46,12 +49,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by yuely198 on 2017/6/8.
  * 推荐专家详情页
  */
 
-public class RecommendedExpertDetailsActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class RecommendedExpertDetailsActivity extends Activity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private final String EXPERT_ID = "expertId";
     private final String WINPOINT = "winPoint";
@@ -137,6 +142,9 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_experts);
         mContext = this;
+
+        EventBus.getDefault().register(this);
+
         if (getIntent() != null) {
             expertId =getIntent().getStringExtra(EXPERT_ID);
             winPoint = getIntent().getStringExtra(WINPOINT);
@@ -147,6 +155,12 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
         initHeadData();
         // intiEvent();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initEvent() {
@@ -258,7 +272,7 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
 
     // 购买(查看)的点击监听
     public interface BettingBuyClickListener {
-        void BuyOnClick(View view, RecommendationExpertBean.ExpertPromotionsBean.ListBean s);
+        void BuyOnClick(View view, String s);
     }
 
     /**
@@ -267,10 +281,10 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
     public void buyClicked() {
         mBettingBuyClickListener = new RecommendedExpertDetailsActivity.BettingBuyClickListener() {
             @Override
-            public void BuyOnClick(View view, RecommendationExpertBean.ExpertPromotionsBean.ListBean listData) {
+            public void BuyOnClick(View view, String s) {
                 Intent mIntent = new Intent(mContext, MvpBettingPayDetailsActivity.class);
 //                    mIntent.putExtra(ConstantPool.BETTING_ITEM_DATA , listData);//选中的
-                mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID, listData.getId());//选中的
+                mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID, s);//选中的
                 startActivity(mIntent);
                 overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
             }
@@ -462,9 +476,9 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
                  errorPoint="0";
             }
             allPoint = Integer.parseInt(winPoint)+Integer.parseInt(errorPoint);
-            Glide.with(getApplicationContext()).load(headerDatas.getImageSrc()).into(ex_image);
+            Glide.with(getApplicationContext()).load(headerDatas.getImageSrc()).error(R.mipmap.specialist_default).into(ex_image);
             ex_name.setText(headerDatas.getNickname());
-            ex_zhong.setText(mContext.getResources().getString(R.string.betting_item_jin) + allPoint+ mContext.getResources().getString(R.string.betting_item_zhong) + errorPoint);
+            ex_zhong.setText(mContext.getResources().getString(R.string.betting_item_jin) + allPoint+ mContext.getResources().getString(R.string.betting_item_zhong) + winPoint);
             ex_text.setText("\t\t\t\t" + headerDatas.getIntroduce());
         } catch (Exception e) {
             e.printStackTrace();
@@ -475,5 +489,20 @@ public class RecommendedExpertDetailsActivity extends BaseActivity implements Vi
     public void onRefresh() {
         initData();
         initHeadData();
+    }
+
+    /**
+     * 详情页面返回
+     * @param detailsResuleEventBusEntity
+     */
+    public void onEventMainThread(BettingDetailsResuleEventBusEntity detailsResuleEventBusEntity){
+        L.d("asdfqwer ==> " , "接收成功" + detailsResuleEventBusEntity.getCurrentId());
+        for (RecommendationExpertBean.ExpertPromotionsBean.ListBean currlist : listBeanList) {
+            if (currlist.getId().equals(detailsResuleEventBusEntity.getCurrentId())) {
+                currlist.setLookStatus(-1);
+                break;
+            }
+        }
+        upDataAdapter();
     }
 }
