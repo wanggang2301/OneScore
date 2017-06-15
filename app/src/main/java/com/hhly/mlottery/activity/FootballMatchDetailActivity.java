@@ -52,7 +52,7 @@ import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.frame.ShareFragment;
 import com.hhly.mlottery.frame.chartBallFragment.ChartBallFragment;
 import com.hhly.mlottery.frame.footballframe.AnalyzeParentFragment;
-import com.hhly.mlottery.frame.footballframe.FootballBettingIssueFragment;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.FootballBettingIssueFragment;
 import com.hhly.mlottery.frame.footballframe.LiveFragment;
 import com.hhly.mlottery.frame.footballframe.OddsFragment;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;

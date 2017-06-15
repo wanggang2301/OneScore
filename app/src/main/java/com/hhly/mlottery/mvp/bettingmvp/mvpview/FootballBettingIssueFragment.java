@@ -1,4 +1,4 @@
-package com.hhly.mlottery.frame.footballframe;
+package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
 import android.content.Intent;
 import android.media.AudioFormat;
@@ -25,10 +25,6 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.TexasWebActivity;
-import com.hhly.mlottery.activity.WebActivity;
-import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingIssueDetailsActivity;
-import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
-import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpChargeMoneyActivity;
 import com.hhly.mlottery.adapter.bettingadapter.BettingIssueAdapter;
 import com.hhly.mlottery.bean.bettingbean.BettingIssueBean;
 import com.hhly.mlottery.config.BlurPopWin;

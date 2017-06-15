@@ -12,7 +12,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.bettingbean.BettingIssueBean;
-import com.hhly.mlottery.frame.footballframe.FootballBettingIssueFragment;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.FootballBettingIssueFragment;
 
 import java.util.List;
 
