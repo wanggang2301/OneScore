@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,13 +39,20 @@
             android:layout_height="match_parent"
             android:background="#F5F5F5">
 
-
-            <android.support.v7.widget.RecyclerView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/listview_schedule"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </android.support.v7.widget.RecyclerView>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include layout="@layout/item_football_date_week" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/listview_schedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
 
         </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
@@ -73,7 +81,7 @@
                 android:textSize="@dimen/text_size_14" />
         </RelativeLayout>
 
-        <include layout="@layout/network_exception"/>
+        <include layout="@layout/network_exception" />
 
 
     </FrameLayout>
