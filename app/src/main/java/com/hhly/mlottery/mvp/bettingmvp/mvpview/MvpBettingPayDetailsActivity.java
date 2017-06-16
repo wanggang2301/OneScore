@@ -3,6 +3,7 @@ package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.KeyEvent;
@@ -90,6 +91,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     private ImageView statusImg;
     private TextView scoreTxt;
     private TextView halfscoreTxt;
+    private LinearLayout datailsContextll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,10 +201,12 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         detailsContext = (TextView) findViewById(R.id.betting_details_txt);
         detailsContextBg = (ImageView) findViewById(R.id.betting_details_txt_bg);
         detailsPrice = (TextView) findViewById(R.id.detting_details_price);
+        datailsContextll = (LinearLayout)findViewById(R.id.betting_details_txt_ll);
 
         //默认隐藏
         toPayll.setVisibility(View.GONE);
         detailsContextBg.setVisibility(View.GONE);
+        datailsContextll.setBackgroundColor(mContext.getResources().getColor(R.color.betting_recommend_buy_details_bg_color));
     }
 
     private void initData(){
@@ -361,9 +365,12 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
             if (matchInfoData.getLookStatus().equals("2")) {
                 toPayll.setVisibility(View.VISIBLE);
                 detailsContextBg.setVisibility(View.VISIBLE);
+                datailsContextll.setBackgroundColor(mContext.getResources().getColor(R.color.betting_recommend_buy_details_bg_color));
+
             }else{
                 toPayll.setVisibility(View.GONE);
                 detailsContextBg.setVisibility(View.GONE);
+                datailsContextll.setBackgroundColor(mContext.getResources().getColor(R.color.betting_recommend_zhuanjia_grand_color));
             }
 
             String imgUrl = matchInfoData.getPhotoUrl();

@@ -63,6 +63,7 @@
                             android:layout_height="wrap_content">
 
                             <TextView
+                                android:id="@+id/betting_issue_leagueName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_13"

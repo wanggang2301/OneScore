@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ShareBean;
 import com.hhly.mlottery.frame.ShareFragment;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpChargeMoneyActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.HandMatchId;
@@ -225,8 +226,23 @@ public class WebActivity extends BaseActivity implements OnClickListener {
                 }
                 url = url.replace("{loginToken}", token);
                 url = url.replace("{deviceToken}", deviceId);
+
+
+                String userId = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
+                if (url.contains("?")) {
+                    url += "&uid=" + userId +  "&loginToken=" + token;
+                } else {
+                    url += "?uid=" + userId +  "&loginToken=" + token;
+                }
+
             }
 
+            boolean noShare = intent.getBooleanExtra("noShare" , false);
+            if (noShare) {
+                public_btn_set.setVisibility(View.GONE);
+            }
+
+            L.d("endurl===>> " , url);
             mWebView.loadUrl(url);
             L.d("lzf:" + "imageurl=" + imageurl + "title" + title + "subtitle" + subtitle);
 
@@ -332,6 +348,21 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         @JavascriptInterface
         public String getLoginUserId() {
             return AppConstants.register.getUser().getUserId();
+        }
+
+        /**
+         * 跳充值
+         */
+        @JavascriptInterface
+        public void toChargeMoneyAct(){
+            startActivity(new Intent(WebActivity.this,MvpChargeMoneyActivity.class));
+        }
+        /**
+         * 跳登录
+         */
+        @JavascriptInterface
+        public void toLoginAct(){
+            startActivity(new Intent(WebActivity.this , LoginActivity.class));
         }
 
     }

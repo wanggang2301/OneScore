@@ -25,10 +25,10 @@ public class BettingIssueAdapter extends BaseQuickAdapter<BettingIssueBean> {
     private Context mContext;
     private List<BettingIssueBean> mData;
 
-    private FootballBettingIssueFragment.IssueBuyClickListener mBuyClick;
-    public void setmBuyClick(FootballBettingIssueFragment.IssueBuyClickListener mBuyClicks){
-        this.mBuyClick = mBuyClicks;
-    }
+//    private FootballBettingIssueFragment.IssueBuyClickListener mBuyClick;
+//    public void setmBuyClick(FootballBettingIssueFragment.IssueBuyClickListener mBuyClicks){
+//        this.mBuyClick = mBuyClicks;
+//    }
 
     public BettingIssueAdapter(Context context, List<BettingIssueBean> data) {
         super(R.layout.betting_recommend_issue_item, data);
@@ -54,14 +54,14 @@ public class BettingIssueAdapter extends BaseQuickAdapter<BettingIssueBean> {
         final ViewHolderData viewHolderData = (ViewHolderData) holder;
         viewHolderData.mSpecialistName.setText(mData.get(positions).getName());
 
-        viewHolderData.toBuyCheck.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mBuyClick != null) {
-                    mBuyClick.BuyOnClick(v , mData.get(positions).getName());
-                }
-            }
-        });
+//        viewHolderData.toBuyCheck.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (mBuyClick != null) {
+//                    mBuyClick.BuyOnClick(v , mData.get(positions).getName());
+//                }
+//            }
+//        });
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
@@ -9,6 +10,7 @@ import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,15 +23,29 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.activity.TexasWebActivity;
-import com.hhly.mlottery.adapter.bettingadapter.BettingIssueAdapter;
+import com.hhly.mlottery.activity.LoginActivity;
+import com.hhly.mlottery.activity.RecommendedExpertDetailsActivity;
+import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendMvpAdapter;
 import com.hhly.mlottery.bean.bettingbean.BettingIssueBean;
+import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BlurPopWin;
 import com.hhly.mlottery.config.ConstantPool;
+import com.hhly.mlottery.mvp.bettingmvp.MView;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpFootballBettingIssuePresenter;
+import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.net.SignUtils;
+import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -42,19 +58,35 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by：XQyi on 2017/5/11 11:12
  * Use:内页推介页面
  */
-public class FootballBettingIssueFragment extends Fragment implements View.OnClickListener {
+public class FootballBettingIssueFragment extends Fragment implements MView<BettingListDataBean>, View.OnClickListener {
 
-    private static final String THIRDID = "param1";
+    private Context mContext;
+    /** 签名参数 */
+    private String PARAM_PAGE_SIZE = "pageSize";//每页条数
+//    private String PARAM_PAGE_NO = "pageNo";//页码
+    private String PARAM_PAGE_NUM = "pageNum";//页码
+    private String PARAM_USER_ID = "userId";//用户id
+    private String PARAM_KEY = "key";//联赛key
+    private String PARAM_TYPE = "type";//玩法type
+    private String PARAM_LANG = "lang";
+    private String PARAM_TIMEZONE = "timeZone";
+    private String PARAM_SIGN = "sign";//参数签名
+    private String PARAM_MATCH_ID = "matchId";//比赛id matchId
+
+    private static final String THIRDID = "thirdId";
     private String mThirdid;
     private View mView;
-    private List<BettingIssueBean> list;
-    private BettingIssueAdapter mAdapter;
+    private BettingRecommendMvpAdapter mAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private ImageView mYuyin;
@@ -62,7 +94,23 @@ public class FootballBettingIssueFragment extends Fragment implements View.OnCli
     private ImageView mFabuOrQxiao;
     private boolean isRecording = false;
 
+    private View mOnloadingView;
+    private View mNoLoadingView;
+
+    private int pageNum = 1;//页码 (初次请求第一页)
+    private int pageSize = 10;//每页条数（分页加载每页条数）
+    private String playType = "-1";//选中的玩法（-1 全部）
+    private String leagueKeys = "";//选中联赛的key -string
+
+    private boolean hasNextPage;//是否有下一页
+    private List<BettingListDataBean.PromotionData.BettingListData>  listData = new ArrayList<>();
+
     private boolean isFabu = true;//是否是要发布状态（默认true 点击发布）
+    private MvpFootballBettingIssuePresenter mvpFootballBettingIssuePresenter;
+    private LinearLayout mErrorLayout;
+    private TextView mNoDataLayout;
+    private LinearLayout mLoadingLayout;
+    private TextView mRefreshTxt;
 
     public static FootballBettingIssueFragment newInstance(String thirdId) {
         FootballBettingIssueFragment fragment = new FootballBettingIssueFragment();
@@ -82,11 +130,55 @@ public class FootballBettingIssueFragment extends Fragment implements View.OnCli
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
+        mContext = getActivity();
         mView = inflater.inflate(R.layout.betting_issue_fragment, container, false);
+        mOnloadingView = inflater.inflate(R.layout.onloading, container,false);
+        mNoLoadingView= inflater.inflate(R.layout.nomoredata, container,false);
+
+        mvpFootballBettingIssuePresenter = new MvpFootballBettingIssuePresenter(this);
+
+        EventBus.getDefault().register(this);
         initView();
-        initData();
+        setStatus(SHOW_STATUS_LOADING);
+        initData(pageNum , pageSize);
         return mView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    /**
+     * 设置显示状态
+     *
+     * @param status
+     */
+    //显示状态
+    private static final int SHOW_STATUS_LOADING = 1;//加载中(点击刷新)
+    private static final int SHOW_STATUS_ERROR = 2;//加载失败
+    private static final int SHOW_STATUS_NO_DATA = 3;//暂无数据
+    private static final int SHOW_STATUS_SUCCESS = 4;//加载成功
+//    private final static int SHOW_STATUS_REFRESH_ONCLICK = 5;//点击刷新
+
+    private void setStatus(int status) {
+
+//        if (status == SHOW_STATUS_LOADING) {
+//            recyclerView.setVisibility(View.VISIBLE);
+//        } else if (status == SHOW_STATUS_SUCCESS) {
+//            recyclerView.setVisibility(View.VISIBLE);
+//        } else if (status == SHOW_STATUS_REFRESH_ONCLICK) {
+//            recyclerView.setVisibility(View.GONE);
+//        } else {
+//            recyclerView.setVisibility(View.GONE);
+//        }
+        recyclerView.setVisibility(status == SHOW_STATUS_SUCCESS ? View.VISIBLE : View.GONE);
+
+//        mLoadingLayout.setVisibility((status == SHOW_STATUS_REFRESH_ONCLICK) ? View.VISIBLE : View.GONE);
+        mLoadingLayout.setVisibility((status == SHOW_STATUS_LOADING) ? View.VISIBLE : View.GONE);
+        mErrorLayout.setVisibility(status == SHOW_STATUS_ERROR ? View.VISIBLE : View.GONE);
+        mNoDataLayout.setVisibility(status == SHOW_STATUS_NO_DATA ? View.VISIBLE : View.GONE);
     }
 
     private void initView() {
@@ -101,48 +193,101 @@ public class FootballBettingIssueFragment extends Fragment implements View.OnCli
         mText.setOnClickListener(this);
         mFabuOrQxiao = (ImageView) mView.findViewById(R.id.football_betting_fabuorquxiao_img);
         mFabuOrQxiao.setOnClickListener(this);
+
+        //异常状态
+        //网络不给力
+        mErrorLayout = (LinearLayout) mView.findViewById(R.id.error_layout);
+        //暂无数据
+        mNoDataLayout = (TextView) mView.findViewById(R.id.nodata_txt);
+        //加载中
+        mLoadingLayout = (LinearLayout) mView.findViewById(R.id.custom_loading_ll);
+        //刷新
+        mRefreshTxt = (TextView) mView.findViewById(R.id.reloading_txt);
+        mRefreshTxt.setOnClickListener(this);
+
     }
 
-    public void initData() {
-        list = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            BettingIssueBean data = new BettingIssueBean();
-            data.setName("我是专家 " + i);
-            list.add(data);
-        }
-        buyClicked();
-        if (mAdapter == null) {
-            mAdapter = new BettingIssueAdapter(getActivity(), list);
-            recyclerView.setAdapter(mAdapter);
-            mAdapter.setmBuyClick(mIssueBuyClickListener);
-        } else {
-            updataAdapter();
-        }
+    public void initData(int pageNum , int pageSize) {
+
+        //http://192.168.10.242:8098/promotion/info/matchPromotions
+        // ?pageSize=50&pageNum=1&userId=hhly90944&lang=zh-TW&timezone=8&sign=ef82085fc999d1a7da78cbfa1292986f12&matchId=848856013
+        String url = "http://192.168.10.242:8098/promotion/info/matchPromotions";
+//        String url = BaseURLs.URL_RECOMEND_LIST;
+
+        String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
+        Map<String ,String> mapPrament = new HashMap<>();
+
+        mapPrament.put(PARAM_PAGE_SIZE , pageSize +"");
+        mapPrament.put(PARAM_PAGE_NUM , pageNum + "");
+        mapPrament.put(PARAM_USER_ID , userid);
+//        mapPrament.put(PARAM_KEY , key);
+//        mapPrament.put(PARAM_TYPE , type);
+//        mapPrament.put(PARAM_MATCH_ID , "848856013");
+        mapPrament.put(PARAM_MATCH_ID , mThirdid);
+        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
+//        String signs = SignUtils.getSign("/promotion/info/matchPromotions", mapPrament);
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_MATCH_RECOMMEND, mapPrament);
+
+        Map<String ,String> map = new HashMap<>();
+        map.put(PARAM_PAGE_SIZE , pageSize +""); //每页条数
+        map.put(PARAM_PAGE_NUM , pageNum + "");//页码
+        map.put(PARAM_USER_ID , userid);//用户id
+//        map.put(PARAM_MATCH_ID , "848856013");
+        map.put(PARAM_MATCH_ID , mThirdid);
+//        map.put(PARAM_KEY , key);//联赛key
+//        map.put(PARAM_TYPE , type);
+        map.put(PARAM_SIGN , signs);
+
+        L.d("qwer== >> " + signs);
+
+        mvpFootballBettingIssuePresenter.loadData(url , map);
     }
 
     private void updataAdapter() {
         if (mAdapter == null) {
             return;
         }
-        mAdapter.setData(list);
         mAdapter.notifyDataSetChanged();
     }
+
+    //刷新数据
+    public void dataRefresh(){
+        setStatus(SHOW_STATUS_LOADING);
+        pageNum = 1;
+        initData(pageNum , pageSize);
+    }
+
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.reloading_txt:
+                setStatus(SHOW_STATUS_LOADING);
+                pageNum = 1;
+                initData(pageNum , pageSize);
+                break;
             case R.id.football_betting_yuyin_img:
 //                Toast.makeText(getActivity(), "充值页", Toast.LENGTH_SHORT).show();
 //                setPopupWindow();
-//                startActivity(new Intent(getContext() , MvpChargeMoneyActivity.class));
+//                startActivity(new Intent(mContext , MvpChargeMoneyActivity.class));
 
-                Intent intent = new Intent(getContext(), TexasWebActivity.class);
-                intent.putExtra("key", "http://texas.1332255.com:4007/VideoGameWeb/mobile/index.html");
-                startActivity(intent);
+//                Intent intent = new Intent(mContext, TexasWebActivity.class);
+//                intent.putExtra("key", "http://texas.1332255.com:4007/VideoGameWeb/mobile/index.html");
+//                startActivity(intent);
                 break;
             case R.id.football_betting_text_img:
                 Toast.makeText(getActivity(), "发布文字", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getContext() , MvpBettingIssueDetailsActivity.class));
+                if (DeviceInfo.isLogin()) {
+                    Intent mIntent = new Intent(mContext , MvpBettingIssueDetailsActivity.class);
+                    mIntent.putExtra("matchId" , mThirdid);
+                    startActivity(mIntent);
+                    getActivity().overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
+//                    startActivity(new Intent(mContext , MvpBettingIssueDetailsActivity.class));
+                }else{
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
+                }
                 break;
             case R.id.football_betting_fabuorquxiao_img:
                 if (isFabu) {
@@ -161,25 +306,123 @@ public class FootballBettingIssueFragment extends Fragment implements View.OnCli
         }
     }
 
-    private IssueBuyClickListener mIssueBuyClickListener;
+    @Override
+    public void loadSuccessView(BettingListDataBean bettingListDataBean) {
+//        list = new ArrayList<>();
+//        for (int i = 0; i < 15; i++) {
+//            BettingIssueBean data = new BettingIssueBean();
+//            data.setName("我是专家 " + i);
+//            list.add(data);
+//        }
+//        buyClicked();
+//        if (mAdapter == null) {
+//            mAdapter = new BettingIssueAdapter(getActivity(), list);
+//            recyclerView.setAdapter(mAdapter);
+//            mAdapter.setmBuyClick(mIssueBuyClickListener);
+//        } else {
+//            updataAdapter();
+//        }
 
-    // 购买(查看)的点击监听
-    public interface IssueBuyClickListener {
-        void BuyOnClick(View view, String s);
+        if (bettingListDataBean.getPromotionList() == null || bettingListDataBean.getPromotionList().getList().size() == 0) {
+            setStatus(SHOW_STATUS_NO_DATA);
+            return;
+        }
+        hasNextPage = bettingListDataBean.getPromotionList().isHasNextPage();
+
+        setStatus(SHOW_STATUS_SUCCESS);
+        listData.clear();
+        for (BettingListDataBean.PromotionData.BettingListData data : bettingListDataBean.getPromotionList().getList()) {
+            listData.add(data);
+        }
+        buyClicked();
+        specialistClick();
+
+        L.d("listData >> " + listData.size());
+        mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
+
+        mAdapter.setLoadingView(mOnloadingView);
+        recyclerView.setAdapter(mAdapter);
+        mAdapter.openLoadMore(0 , true);
+
+        setListener();
+
+        mAdapter.setmFragBuyClick(mFragBettingBuyClickListener);
+        mAdapter.setmFragSpecialistClick(mFragBettingSpecialistClickListener);
     }
 
+    @Override
+    public void loadFailView() {
+        setStatus(SHOW_STATUS_ERROR);
+    }
+
+    @Override
+    public void loadNoData() {
+        setStatus(SHOW_STATUS_NO_DATA);
+    }
+    private void setListener(){
+        //上拉加载更多
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (hasNextPage) {
+                            loadMoreData(playType , leagueKeys);
+                        }else{
+                            Toast.makeText(mContext, mContext.getResources().getText(R.string.nodata_txt), Toast.LENGTH_SHORT).show();
+//                            mOnloadingView.findViewById(R.id.loading_text)
+                            mAdapter.addFooterView(mNoLoadingView);
+                        }
+                    }
+                },1000);
+            }
+        });
+    }
+
+//    private IssueBuyClickListener mIssueBuyClickListener;
+//    // 购买(查看)的点击监听
+//    public interface IssueBuyClickListener {
+//        void BuyOnClick(View view, String s);
+//    }
+
+    private BettingBuyClickListenerFrag mFragBettingBuyClickListener;
+    // 购买(查看)的点击监听
+    public interface BettingBuyClickListenerFrag {
+        void FragBuyOnClick(View view , BettingListDataBean.PromotionData.BettingListData s);
+    }
+    private BettingSpecialistClickListenerFrag mFragBettingSpecialistClickListener;
+    // 专家详情的点击监听
+    public interface BettingSpecialistClickListenerFrag {
+        void FragSpecialistOnClick(View view , BettingListDataBean.PromotionData.BettingListData s);
+    }
     /**
      * 购买(查看)的点击事件
      */
     public void buyClicked() {
-        mIssueBuyClickListener = new IssueBuyClickListener() {
+        mFragBettingBuyClickListener = new BettingBuyClickListenerFrag() {
             @Override
-            public void BuyOnClick(View view, String s) {
-                L.d("qwer_name = ", s);
-                Intent mIntent = new Intent(getActivity(), MvpBettingPayDetailsActivity.class);
-                mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID , "id");//推介id
+            public void FragBuyOnClick(View view, BettingListDataBean.PromotionData.BettingListData listData) {
+                Intent mIntent = new Intent(mContext , MvpBettingPayDetailsActivity.class);
+                mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID , listData.getId());//推介id
                 startActivity(mIntent);
-                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+            }
+        };
+    }
+    /**
+     * 专家详情点击事件
+     */
+    public void specialistClick(){
+        mFragBettingSpecialistClickListener = new BettingSpecialistClickListenerFrag() {
+            @Override
+            public void FragSpecialistOnClick(View view, BettingListDataBean.PromotionData.BettingListData s) {
+//                Toast.makeText(mContext, "专家** " + s, Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(mContext,RecommendedExpertDetailsActivity.class);
+                intent.putExtra("expertId",s.getUserid());
+                intent.putExtra("winPoint",s.getWinPoint());
+                intent.putExtra("errPoint",s.getErrPoint());
+                startActivity(intent);
+                // L.d("yxq-0418=== " , "点击了*专家** " + s);
             }
         };
     }
@@ -203,10 +446,10 @@ public class FootballBettingIssueFragment extends Fragment implements View.OnCli
                     public void onPlayRadioGroupOnclick(@IdRes int checkedId, int playType) {
                         switch (playType) {
                             case ConstantPool.PLAY_SPF:
-                                Toast.makeText(getContext(), "胜平负", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "胜平负", Toast.LENGTH_SHORT).show();
                                 break;
                             case ConstantPool.PLAY_LQSPF:
-                                Toast.makeText(getContext(), "让球胜平负", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "让球胜平负", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }
@@ -217,13 +460,13 @@ public class FootballBettingIssueFragment extends Fragment implements View.OnCli
                     public void onSpfRadioGroupOnclick(int checkedId, int spfType) {
                         switch (spfType) {
                             case ConstantPool.SPF_S:
-                                Toast.makeText(getContext(), "胜", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "胜", Toast.LENGTH_SHORT).show();
                                 break;
                             case ConstantPool.SPF_P:
-                                Toast.makeText(getContext(), "平", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "平", Toast.LENGTH_SHORT).show();
                                 break;
                             case ConstantPool.SPF_F:
-                                Toast.makeText(getContext(), "负", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "负", Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     }
@@ -402,4 +645,83 @@ public class FootballBettingIssueFragment extends Fragment implements View.OnCli
     }
 
     /**--------------这**里**先**不**删**--------end-------这**里**先**不**删**------------------------------*/
+
+    /**
+     * 加载更多
+     */
+    private void loadMoreData(String type , String key){
+        pageNum += 1;
+        L.d("上拉加载、、、" + pageNum);
+        String url = "http://192.168.10.242:8098/promotion/info/matchPromotions";
+//        String url = BaseURLs.URL_RECOMEND_LIST;
+        String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
+        Map<String ,String> mapPrament = new HashMap<>();
+
+        mapPrament.put(PARAM_PAGE_SIZE , pageSize +"");
+        mapPrament.put(PARAM_PAGE_NUM , pageNum + "");
+        mapPrament.put(PARAM_USER_ID , userid);
+        mapPrament.put(PARAM_MATCH_ID , mThirdid);
+//        mapPrament.put(PARAM_MATCH_ID , "848856013");
+//        mapPrament.put(PARAM_KEY , key);
+//        mapPrament.put(PARAM_TYPE , type);
+        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
+//        String signs = SignUtils.getSign("/promotion/info/matchPromotions", mapPrament);
+        String signs = SignUtils.getSign(BaseURLs.PARAMENT_MATCH_RECOMMEND, mapPrament);
+
+        Map<String ,String> map = new HashMap<>();
+        map.put(PARAM_PAGE_SIZE , pageSize +""); //每页条数
+        map.put(PARAM_PAGE_NUM , pageNum + "");//页码
+        map.put(PARAM_USER_ID , userid);//用户id
+        map.put(PARAM_MATCH_ID , mThirdid);
+//        map.put(PARAM_MATCH_ID , "848856013");
+//        map.put(PARAM_KEY , key);//联赛key
+//        map.put(PARAM_TYPE , type);
+        map.put(PARAM_SIGN , signs);
+
+        L.d("qwer== >> " + signs);
+
+        VolleyContentFast.requestJsonByGet(url,map , new VolleyContentFast.ResponseSuccessListener<BettingListDataBean>() {
+            @Override
+            public void onResponse(BettingListDataBean jsonBean) {
+                if (jsonBean.getCode() == 200) {
+
+                    if (jsonBean.getPromotionList() != null) {
+
+                        hasNextPage = jsonBean.getPromotionList().isHasNextPage();
+
+                        if (jsonBean.getPromotionList().getList().size() == 0) {
+
+                            mAdapter.notifyDataChangedAfterLoadMore(false);
+                            mAdapter.addFooterView(mNoLoadingView);
+
+                        }else{
+
+                            mAdapter.notifyDataChangedAfterLoadMore(jsonBean.getPromotionList().getList(),true);
+                        }
+                    }
+                }
+
+            }
+        }, new VolleyContentFast.ResponseErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+
+            }
+        },BettingListDataBean.class);
+    }
+    /**
+     * 详情页面返回
+     * @param detailsResuleEventBusEntity
+     */
+    public void onEventMainThread(BettingDetailsResuleEventBusEntity detailsResuleEventBusEntity){
+
+        for (BettingListDataBean.PromotionData.BettingListData currlist : listData) {
+            if (currlist.getId().equals(detailsResuleEventBusEntity.getCurrentId())) {
+                currlist.setLookStatus("**");
+                break;
+            }
+        }
+        updataAdapter();
+    }
 }

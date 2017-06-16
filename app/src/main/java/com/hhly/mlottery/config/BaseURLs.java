@@ -1217,6 +1217,9 @@ public class BaseURLs {
     //余额查询接口参数
     public final static String PARAMENT_PAY_BALANCE = "/user/pay/balance";
 
+    //内页赛事推介
+    public final static String PARAMENT_MATCH_RECOMMEND = "/promotion/info/matchPromotions";
+
 
     //推介列表
     public final static String URL_RECOMEND_LIST = URL_BETTING_HTTP + HOST + PARAMENT_RECOMMEND_LIST;

@@ -363,6 +363,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 //                    mAnalyzeParentFragment.initData();
                     mOddsFragment.oddPlateRefresh(); // 指数刷新
                     mChartBallFragment.onRefresh();// 聊球
+                    mBettingIssueFragment.dataRefresh();//推介刷新
                 }
             }
         }, 500);
