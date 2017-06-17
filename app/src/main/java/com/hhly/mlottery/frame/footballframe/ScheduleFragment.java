@@ -214,12 +214,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         tv_week = (TextView) view.findViewById(R.id.tv_week);
         tv_handicap_name1 = (TextView) view.findViewById(R.id.tv_handicap_name1);
         tv_handicap_name2 = (TextView) view.findViewById(R.id.tv_handicap_name2);
-/*
-        tv_date.setText("ddd");
-        tv_week.setText("dfg");
-        tv_handicap_name1.setText("cccc");
-        tv_handicap_name2.setText("hhhh");*/
-
 
         mSwipeRefreshLayout = (ExactSwipeRefreshLayout) view.findViewById(R.id.football_schedule_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
