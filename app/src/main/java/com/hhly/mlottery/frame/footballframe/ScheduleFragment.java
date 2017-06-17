@@ -586,12 +586,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 break;
 
             case R.id.ll_date_select:
-
                 if (mDateOnClickListener != null) {
                     mDateOnClickListener.onClick(v);
                 }
-
-
                 break;
             default:
                 break;
