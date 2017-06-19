@@ -265,7 +265,7 @@
     <string name="set_goal_txt">進球</string>
 
     <!-- 异常处理 -->
-    <string name="exp_net_status_txt">您當前的網絡不給力</string>
+    <string name="exp_net_status_txt">暫無法提供數據</string>
     <string name="exp__check_txt">請檢查后</string>
     <string name="exp_refresh_txt">刷新</string>
 

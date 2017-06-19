@@ -259,7 +259,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 } else if (mEntryType == 1) {
                     ((FootBallScoreFragment) getParentFragment()).focusCallback();
                 }
-
             }
         };
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
