@@ -783,4 +783,10 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
             }
         },500);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+    }
 }

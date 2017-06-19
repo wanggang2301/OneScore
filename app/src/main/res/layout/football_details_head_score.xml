@@ -4,10 +4,10 @@
     android:id="@+id/ll_over_score_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="40dp"
-    android:layout_marginRight="40dp"
-    android:layout_marginTop="60dp"
-    android:layout_marginBottom="60dp"
+    android:layout_marginLeft="50dp"
+    android:layout_marginRight="50dp"
+    android:layout_marginTop="40dp"
+    android:layout_marginBottom="40dp"
     android:background="@drawable/football_datails_head"
     android:visibility="visible"
     android:orientation="vertical">
@@ -82,14 +82,14 @@
                 android:textColor="@color/linecolor"
                 android:textSize="@dimen/number_desc"
                 android:paddingTop="5dp"
-                tools:text="18:00" />
+                tools:text="(1 : 2)" />
 
             <TextView
                 android:id="@+id/tv_head_over_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/number_red"
-                android:textSize="@dimen/info_center_value"
+                android:textSize="25sp"
                 android:paddingTop="5dp"
                 android:textStyle="bold"
                 tools:text="1 : 1" />

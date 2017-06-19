@@ -1428,4 +1428,10 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
         isThreadRequestData2 = true;// 自动刷新状态,重新获取休眠时间
         numbersDataShow(1);// 刷新加载
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+    }
 }

@@ -64,7 +64,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
     private GifImageView gfi_home_goal_door, gfi_guest_goal_door;
     private TextView tv_home_goal_door_title_time,tv_guest_goal_door_title_time;
     // 界外球
-    private LinearLayout ll_goal_out_content;
+    private RelativeLayout rl_goal_out_content;
     private RelativeLayout rl_home_goal_out, rl_guest_goal_out;
     private GifImageView gif_home_goal_out_position, gif_guest_goal_out_position;
     private GifImageView gif_home_goal_out, gif_guest_goal_out;
@@ -210,7 +210,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         tv_guest_goal_door_title_time = (TextView) findViewById(R.id.tv_guest_goal_door_title_time);
 
         // 界外球
-        ll_goal_out_content = (LinearLayout) findViewById(R.id.ll_goal_out_content);
+        rl_goal_out_content = (RelativeLayout) findViewById(R.id.rl_goal_out_content);
         rl_home_goal_out = (RelativeLayout) findViewById(R.id.rl_home_goal_out);
         rl_guest_goal_out = (RelativeLayout) findViewById(R.id.rl_guest_goal_out);
         gif_home_goal_out_position = (GifImageView) findViewById(R.id.gif_home_goal_out_position);
@@ -761,6 +761,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 tv_home_goal_out_title_time.setVisibility(View.VISIBLE);
                 rl_guest_goal_out.setVisibility(View.INVISIBLE);
                 tv_guest_goal_out_title_time.setVisibility(View.INVISIBLE);
+                gif_guest_goal_out.setVisibility(View.INVISIBLE);
                 gif_home_goal_out_position.setImageResource(R.mipmap.football_home_position_gif);
                 gif_home_goal_out.setImageResource(R.mipmap.football_home_goal_out);
                 tv_home_goal_out_title_time.setText("10'");
@@ -772,6 +773,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
                 tv_home_goal_out_title_time.setVisibility(View.INVISIBLE);
                 rl_guest_goal_out.setVisibility(View.VISIBLE);
                 tv_guest_goal_out_title_time.setVisibility(View.VISIBLE);
+                gif_guest_goal_out.setVisibility(View.VISIBLE);
                 gif_guest_goal_out_position.setImageResource(R.mipmap.football_guest_position_gif);
                 gif_guest_goal_out.setImageResource(R.mipmap.football_guest_goal_out);
                 tv_guest_goal_out_title_time.setText("10'");
@@ -1322,7 +1324,7 @@ public class FootballEventAnimationFragment extends Activity implements View.OnC
         ll_goal_door_content.setVisibility((1053 == type || 2077 == type) ? View.VISIBLE : View.GONE);
 
         // 界外球
-        ll_goal_out_content.setVisibility((1054 == type || 2078 == type) ? View.VISIBLE : View.GONE);
+        rl_goal_out_content.setVisibility((1054 == type || 2078 == type) ? View.VISIBLE : View.GONE);
 
         // 角球
         rl_corner_content.setVisibility((3333 == type || 4444 == type) ? View.VISIBLE : View.GONE);

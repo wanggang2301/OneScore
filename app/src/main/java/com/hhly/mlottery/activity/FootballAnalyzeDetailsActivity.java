@@ -906,4 +906,10 @@ public class FootballAnalyzeDetailsActivity extends BaseActivity implements View
             }
         },500);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+    }
 }

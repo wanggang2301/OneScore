@@ -377,4 +377,10 @@ public class HomeAboutActivity extends BaseActivity implements View.OnClickListe
             e.printStackTrace();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+    }
 }

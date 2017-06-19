@@ -162,6 +162,7 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        mViewHandler.removeCallbacksAndMessages(null);
     }
 
     private void initEvent() {

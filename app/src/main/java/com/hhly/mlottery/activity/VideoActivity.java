@@ -352,5 +352,9 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener,
         mViewHandler.removeCallbacks(mRunnable);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mViewHandler.removeCallbacksAndMessages(null);
+    }
 }

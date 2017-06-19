@@ -315,4 +315,10 @@ public class ProductAdviceActivity extends BaseActivity implements View.OnClickL
             }
         },1000);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
+    }
 }

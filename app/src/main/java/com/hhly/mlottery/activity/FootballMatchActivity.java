@@ -750,6 +750,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
     protected void onDestroy() {
         super.onDestroy();
         closeWebSocket();
+        mViewHandler.removeCallbacksAndMessages(null);
+        mSocketHandler.removeCallbacksAndMessages(null);
     }
 
     /**
