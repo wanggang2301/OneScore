@@ -129,6 +129,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private final static int ERROR = -1;//访问失败
     private final static int SUCCESS = 0;// 访问成功
     private final static int STARTLOADING = 1;// 正在加载中
+    private final static int NODATA = 2;// 暂无数据
     //直播状态 liveStatus
     private final static String BEFOURLIVE = "0";//直播前
     private final static String ONLIVE = "1";//直播中
@@ -219,6 +220,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private ImageView barrage_switch;
     boolean barrage_isFocus = false;
     private RelativeLayout mLayoutScore;
+
+    private ImageView iv_net_error;
+    private TextView tv_nodata;
+    private LinearLayout ll_error_refresh;
+
     //动画WebView
 //    private WebView mWebView;
     private LinearLayout ll_Webview;
@@ -271,6 +277,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         fl_odds_loading = (FrameLayout) findViewById(R.id.fl_odds_loading_details);
         fl_odds_net_error_details = (FrameLayout) findViewById(R.id.fl_odds_networkError_details);
+
+        iv_net_error = (ImageView) findViewById(R.id.iv_net_error);
+        tv_nodata = (TextView) findViewById(R.id.tv_nodata);
+        ll_error_refresh = (LinearLayout) findViewById(R.id.ll_error_refresh);
+
         reLoading = (TextView) findViewById(R.id.reLoading_details);
         reLoading.setOnClickListener(this);
 
@@ -396,14 +407,37 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         Map<String, String> params = new HashMap<>();
         params.put("thirdId", mThirdId);
 
-        VolleyContentFast.requestJsonByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO_FIRST, params, new VolleyContentFast.ResponseSuccessListener<MatchDetail>() {
-            @Override
-            public void onResponse(MatchDetail matchDetail) {
+        String url = "http://192.168.71.187:8080/mlottery/core/footBallMatch.queryAndroidFirstMatchInfos.do";
 
-                if (!"200".equals(matchDetail.getResult())) {
-                    mHandler.sendEmptyMessage(ERROR);
+
+        //BaseURLs.URL_FOOTBALL_DETAIL_INFO_FIRST
+        VolleyContentFast.requestStringByGet(BaseURLs.URL_FOOTBALL_DETAIL_INFO_FIRST, params, null, new VolleyContentFast.ResponseSuccessListener<String>() {
+            @Override
+            public void onResponse(String text) {
+                L.d("wwee", "text==" + text);
+
+                MatchDetail matchDetail = null;
+                try {
+                    L.d("wwee", "sucessrrrrrr");
+
+                    matchDetail = JSON.parseObject(text, MatchDetail.class);
+                } catch (Exception e) {
+                    L.d("wwee", "sucess--error");
+                    mHandler.sendEmptyMessage(NODATA);
                     return;
                 }
+
+
+                //  L.d("wwee", "text==" + );
+
+                if (!"200".equals(matchDetail.getResult())) {
+                    mHandler.sendEmptyMessage(NODATA);
+
+                    L.d("wwee", "error000");
+
+                    return;
+                }
+                L.d("wwee", "sucess");
 
                 mHandler.sendEmptyMessage(SUCCESS);
 
@@ -528,9 +562,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                L.d("wwee", "error");
                 mHandler.sendEmptyMessage(ERROR);
             }
-        }, MatchDetail.class);
+        });
     }
 
 
@@ -1825,6 +1860,25 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         L.d("10299", "错误");
                         fl_odds_loading.setVisibility(View.GONE);
                         fl_odds_net_error_details.setVisibility(View.VISIBLE);
+
+                        iv_net_error.setVisibility(View.VISIBLE);
+                        ll_error_refresh.setVisibility(View.VISIBLE);
+                        mViewPager.setVisibility(View.GONE);
+                        mRefreshLayout.setEnabled(false);
+                    }
+                    break;
+
+                case NODATA:
+                    if (isInitedViewPager) {
+                        Toast.makeText(getApplicationContext(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        fl_odds_loading.setVisibility(View.GONE);
+                        fl_odds_net_error_details.setVisibility(View.VISIBLE);
+
+                        iv_net_error.setVisibility(View.GONE);
+                        ll_error_refresh.setVisibility(View.GONE);
+
                         mViewPager.setVisibility(View.GONE);
                         mRefreshLayout.setEnabled(false);
                     }
