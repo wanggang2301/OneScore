@@ -29,7 +29,7 @@ public class BettingIssueFabuPalyBean {
         this.data = data;
     }
 
-    public class PromotionTypeVo{
+    public static class PromotionTypeVo{
 //        guestTeam	埃尔维斯
 //        homeTeam	拉赫蒂
 //        leagueId	13
@@ -82,7 +82,7 @@ public class BettingIssueFabuPalyBean {
             this.promotionTypeList = promotionTypeList;
         }
 
-        public class PromotionTypeListVo{
+        public static class PromotionTypeListVo{
 //            oddsList	Array
 //            typeName	亚盘
             private List<PromotionOddsVo> oddsList;

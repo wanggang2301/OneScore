@@ -76,7 +76,8 @@ public class BaseURLs {
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.ZH_1332255);
 
             if (url_config == DebugConfigActivity.ZH_1332255) {
-                return "m.1332255.com:81";
+//                return "m.1332255.com:81";
+                return "m.1332255.com:9600";
             } else if (url_config == DebugConfigActivity.TH_1332255) {
                 return "m.th.1332255.com:81";
             } else if (url_config == DebugConfigActivity.VN_1332255) {
@@ -92,7 +93,8 @@ public class BaseURLs {
             } else if (url_config == DebugConfigActivity.DIY_INPUT) {
                 return PreferenceUtil.getString("DIY_INPUT", "m.1332255.com:81");
             } else {
-                return "m.1332255.com:81";
+//                return "m.1332255.com:81";
+                return "m.1332255.com:9600";
             }
         }
 
@@ -1217,9 +1219,12 @@ public class BaseURLs {
     //余额查询接口参数
     public final static String PARAMENT_PAY_BALANCE = "/user/pay/balance";
 
-    //内页赛事推介
+    //内页赛事推介接口参数
     public final static String PARAMENT_MATCH_RECOMMEND = "/promotion/info/matchPromotions";
-
+    //推介发布玩法接口参数
+    public final static String PARAMENT_ISSUE_PLAY = "/promotion/info/getpromotiontype";
+    //推介发布的接口参数
+    public final static String PARAMENT_TO_ISSUE = "/promotion/info/publicpromotion";
 
     //推介列表
     public final static String URL_RECOMEND_LIST = URL_BETTING_HTTP + HOST + PARAMENT_RECOMMEND_LIST;
@@ -1233,6 +1238,11 @@ public class BaseURLs {
     public final static String URL_ORDER_PAY = URL_BETTING_HTTP + HOST + PARAMENT_ORDER_PAY;
     //余额查询接口
     public final static String URI_PAY_BALANCE = URL_BETTING_HTTP + HOST + PARAMENT_PAY_BALANCE;
-
-//    String balanceUrl = "http://m.1332255.com:81/user/pay/balance";
+    //内页赛事推介接口
+    public final static String URI_BETTING_ISSUE_LIST = URL_BETTING_HTTP + HOST + PARAMENT_MATCH_RECOMMEND;
+    //推介发布玩法接口
+    public final static String URI_BETTING_ISSUE_PLAY = URL_BETTING_HTTP + HOST + PARAMENT_ISSUE_PLAY;
+    //推介发布的接口
+    public final static String URI_BETTING_TO_ISSUE = URL_BETTING_HTTP + HOST + PARAMENT_TO_ISSUE;
+//    String balanceUrl = "http://192.168.10.242:8098/promotion/info/publicpromotion";
 }

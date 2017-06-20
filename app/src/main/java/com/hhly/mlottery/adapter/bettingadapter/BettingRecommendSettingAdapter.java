@@ -14,7 +14,7 @@ import java.util.List;
 
 /**
  * Created by：yxq on 2017/4/24 15:21
- * Use:
+ * Use:推荐设置页面adapter
  */
 public class BettingRecommendSettingAdapter extends CommonAdapter<BettingListDataBean.LeagueNameData> {
 
