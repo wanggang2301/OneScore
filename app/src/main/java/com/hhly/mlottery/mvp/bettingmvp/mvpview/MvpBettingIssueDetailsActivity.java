@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -93,7 +94,11 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
     private String chooseLeft = "1";
     private String chooseMiddle = "0";
     private String chooseRight = "-1";
-//    /**赔率是否可选（无赔率时不可点击）*/
+    private RelativeLayout middleOddsSecondll;
+    private RelativeLayout middleOddsFirstll;
+    private TextView oddsPlayFirstTitle;
+    private TextView oddsPlaySecondTitle;
+    //    /**赔率是否可选（无赔率时不可点击）*/
 //    private boolean checkOdds = false;
 
     @Override
@@ -117,6 +122,9 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
 
         toIssue = (LinearLayout)findViewById(R.id.to_issue);
         toIssue.setOnClickListener(this);
+
+        oddsPlayFirstTitle = (TextView)findViewById(R.id.odds_play_first_title);
+        oddsPlaySecondTitle = (TextView)findViewById(R.id.odds_play_second_title);
 
         issuePlayGrid = (GrapeGridView)findViewById(R.id.betting_issue_play_gridview);
         issuePlayGrid.setNumColumns(3);
@@ -182,7 +190,9 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
 
         playOddsFirst = (LinearLayout)findViewById(R.id.betting_issue_play_odds_first);
         playOddsSecond = (LinearLayout)findViewById(R.id.betting_issue_play_odds_second);
+        playOddsFirst.setVisibility(View.GONE);
         playOddsSecond.setVisibility(View.GONE);
+
 
         playLeftImgA = (ImageView)findViewById(R.id.issue_play_left_img_a);
         playMiddleImgA = (ImageView)findViewById(R.id.issue_play_middle_img_a);
@@ -211,6 +221,9 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
         playLeftB.setOnClickListener(this);
         playMiddleB.setOnClickListener(this);
         playRightB.setOnClickListener(this);
+
+        middleOddsFirstll = (RelativeLayout)findViewById(R.id.issue_middle_odds_first);
+        middleOddsSecondll = (RelativeLayout)findViewById(R.id.issue_middle_odds_second);
 
         L.d("qwer===>>rr " , playLeftA.isChecked() + "");
     }
@@ -276,6 +289,8 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                                     playOddsSecond.setVisibility(View.GONE);
                                 }
 
+                                playOddsFirst.setVisibility(View.VISIBLE);
+
                                 switch (datafirst.getOddsList().size()){
                                     case 1:
                                         setPlayOdds(datafirst.getOddsList().get(0), null);
@@ -333,11 +348,16 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 if (!currPlay.equals(typeName)) {
                     rootCurrView();
                 }
+                currPlay = typeName;
                 prositionPlay = prosition;
                 mIssuePlayAdapter.notifyDataSetChanged();
             }
         };
     }
+
+    /**玩法是否可选两个(是否竞彩单关)*/
+    private boolean middleFiest = false;
+    private boolean middleSecond = false;
 
     private void setPlayOdds(BettingIssueFabuPalyBean.PromotionTypeVo.PromotionTypeListVo.PromotionOddsVo  oddsVoFirst , BettingIssueFabuPalyBean.PromotionTypeVo.PromotionTypeListVo.PromotionOddsVo  oddsVoSecond){
 
@@ -345,11 +365,28 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
             playLeftA.setText(filtrateNull(oddsVoFirst.getLeftTitle()) + " (" + filtrateNull(oddsVoFirst.getLeftOdds()) + ")");
             playMiddleA.setText(filtrateNull(oddsVoFirst.getMidTitle()) + " (" + filtrateNull(oddsVoFirst.getMidOdds()) + ")");
             playRightA.setText(filtrateNull(oddsVoFirst.getRightTitle()) + " (" + filtrateNull(oddsVoFirst.getRightOdds()) + ")");
+            oddsPlayFirstTitle.setText(filtrateNull(oddsVoFirst.getTitle()));
+            if (oddsVoFirst.getMidTitle() == null || oddsVoFirst.getMidTitle().equals("")) {
+                middleOddsFirstll.setVisibility(View.GONE);
+                middleFiest = true;
+            }else{
+                middleOddsFirstll.setVisibility(View.VISIBLE);
+                middleFiest = false;
+            }
         }
         if (oddsVoSecond != null) {
             playLeftB.setText(filtrateNull(oddsVoSecond.getLeftTitle()) + " (" + filtrateNull(oddsVoSecond.getLeftOdds()) + ")");
             playMiddleB.setText(filtrateNull(oddsVoSecond.getMidTitle()) + " (" + filtrateNull(oddsVoSecond.getMidOdds()) + ")");
             playRightB.setText(filtrateNull(oddsVoSecond.getRightTitle()) + " (" + filtrateNull(oddsVoSecond.getRightOdds()) + ")");
+            oddsPlaySecondTitle.setText(filtrateNull(oddsVoSecond.getTitle()));
+
+            if (oddsVoSecond.getMidTitle() == null || oddsVoSecond.getMidTitle().equals("")) {
+                middleOddsSecondll.setVisibility(View.GONE);
+                middleSecond = true;
+            }else{
+                middleOddsSecondll.setVisibility(View.VISIBLE);
+                middleSecond = false;
+            }
         }
 
     }
@@ -358,6 +395,13 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
     private boolean oddsFirstCheck = true;
     private boolean oddsSecondCheck = true;
 
+
+    private boolean otherOddsPlayFirst = true;
+    private boolean otherOddsPlaySecond = true;
+    private boolean oddsLeftA = false;
+    private boolean oddsRightA = false;
+    private boolean oddsLeftB = false;
+    private boolean oddsRightB = false;
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -371,40 +415,73 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 break;
             case R.id.issue_play_left_a:
 
-                if (oddsFirstCheck) {
-                    if(playMiddleCheckA && playRightCheckA){
-                        Toast.makeText(this, "最多选择两项a", Toast.LENGTH_SHORT).show();
-                        playLeftA.setChecked(false);
-                        playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
-                    }else{
-                        if (playLeftCheckA) {
+                if (middleFiest) {
+                    if (otherOddsPlayFirst) {
+                        if (oddsLeftA) {
                             playLeftA.setChecked(false);
                             playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
-
-                            setOddsData(null , chooseLeft , "0" , false);
+                            setOddsData(null , chooseLeft , "1" , false);
                         }else{
                             playLeftA.setChecked(true);
                             playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
 
                             if (listVo != null && listVo.size() != 0) {
-                                setOddsData(listVo.get(prositionPlay).getOddsList().get(0),chooseLeft ,"0" ,true);
+                                setOddsData(listVo.get(prositionPlay).getOddsList().get(0),chooseLeft ,"1" ,true);
                             }
+                            if (oddsRightA) {
+                                playRightA.setChecked(false);
+                                playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                                oddsRightA = !oddsRightA;
+                            }
+                        }
+                        oddsLeftA = !oddsLeftA;
+
+                        if (oddsLeftA || oddsRightA) {
+                            otherOddsPlaySecond = false;
+                        }else{
+                            otherOddsPlaySecond = true;
+                        }
+                    }else{
+                        playLeftA.setChecked(false);
+                        playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                    }
+                }else{
+                    if (oddsFirstCheck) {
+                        if(playMiddleCheckA && playRightCheckA){
+                            Toast.makeText(this, "最多选择两项a", Toast.LENGTH_SHORT).show();
+                            playLeftA.setChecked(false);
+                            playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                        }else{
+                            if (playLeftCheckA) {
+                                playLeftA.setChecked(false);
+                                playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+
+                                setOddsData(null , chooseLeft , "0" , false);
+                            }else{
+                                playLeftA.setChecked(true);
+                                playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
+
+                                if (listVo != null && listVo.size() != 0) {
+                                    setOddsData(listVo.get(prositionPlay).getOddsList().get(0),chooseLeft ,"0" ,true);
+                                }
 //                        else{
 //                            setOddsData(null,chooseLeft ,"0" ,true);
 //                        }
+                            }
+                            playLeftCheckA = !playLeftCheckA;
                         }
-                        playLeftCheckA = !playLeftCheckA;
-                    }
 
-                    if (playLeftCheckA || playMiddleCheckA || playRightCheckA) {
-                        oddsSecondCheck = false;
+                        if (playLeftCheckA || playMiddleCheckA || playRightCheckA) {
+                            oddsSecondCheck = false;
+                        }else{
+                            oddsSecondCheck = true;
+                        }
                     }else{
-                        oddsSecondCheck = true;
+                        playLeftA.setChecked(false);
+                        playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                     }
-                }else{
-                    playLeftA.setChecked(false);
-                    playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                 }
+
                 break;
             case R.id.issue_play_middle_a:
 
@@ -444,50 +521,78 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 break;
             case R.id.issue_play_right_a:
 //                L.d("qwer1128==>>right_start" , playLeftCheckA + " == " +playMiddleCheckA + " == " + playRightCheckA);
-                if (oddsFirstCheck) {
-
-                    if (playLeftCheckA && playMiddleCheckA) {
-                        Toast.makeText(this, "最多选择两项a", Toast.LENGTH_SHORT).show();
-                        playRightA.setChecked(false);
-                        playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
-                    }else{
-                        if (playRightCheckA) {
+                if (middleFiest) {
+                    if (otherOddsPlayFirst) {
+                        if (oddsRightA) {
                             playRightA.setChecked(false);
                             playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
-                            setOddsData(null , chooseRight , "0" , false);
+                            setOddsData(null , chooseRight , "1" , false);
                         }else{
                             playRightA.setChecked(true);
                             playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
                             if (listVo != null && listVo.size() != 0) {
-                                setOddsData(listVo.get(prositionPlay).getOddsList().get(0),chooseRight ,"0" ,true);
+                                setOddsData(listVo.get(prositionPlay).getOddsList().get(0),chooseRight ,"1" ,true);
                             }
+                            if (oddsLeftA) {
+                                playLeftA.setChecked(false);
+                                playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                                oddsLeftA = !oddsLeftA;
+                            }
+                        }
+                        oddsRightA = !oddsRightA;
+
+                        if (oddsLeftA || oddsRightA) {
+                            otherOddsPlaySecond = false;
+                        }else{
+                            otherOddsPlaySecond = true;
+                        }
+                    }else{
+                        playRightA.setChecked(false);
+                        playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                    }
+                }else{
+
+                    if (oddsFirstCheck) {
+
+                        if (playLeftCheckA && playMiddleCheckA) {
+                            Toast.makeText(this, "最多选择两项a", Toast.LENGTH_SHORT).show();
+                            playRightA.setChecked(false);
+                            playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                        }else{
+                            if (playRightCheckA) {
+                                playRightA.setChecked(false);
+                                playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                                setOddsData(null , chooseRight , "0" , false);
+                            }else{
+                                playRightA.setChecked(true);
+                                playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
+                                if (listVo != null && listVo.size() != 0) {
+                                    setOddsData(listVo.get(prositionPlay).getOddsList().get(0),chooseRight ,"0" ,true);
+                                }
 //                        else{
 //                            setOddsData(null,chooseRight ,"0" ,true);
 //                        }
+                            }
+                            playRightCheckA = !playRightCheckA;
                         }
-                        playRightCheckA = !playRightCheckA;
-                    }
-                    if (playLeftCheckA || playMiddleCheckA || playRightCheckA) {
-                        oddsSecondCheck = false;
+                        if (playLeftCheckA || playMiddleCheckA || playRightCheckA) {
+                            oddsSecondCheck = false;
+                        }else{
+                            oddsSecondCheck = true;
+                        }
                     }else{
-                        oddsSecondCheck = true;
+                        playRightA.setChecked(false);
+                        playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                     }
-                }else{
-                    playRightA.setChecked(false);
-                    playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                 }
 //                L.d("qwer1128==>>right_end" , playLeftCheckA + " == " +playMiddleCheckA + " == " + playRightCheckA);
                 break;
 
             case R.id.issue_play_left_b:
-                if (oddsSecondCheck) {
 
-                    if (playMiddleCheckB && playRightCheckB) {
-                        Toast.makeText(this, "最多选择两项b", Toast.LENGTH_SHORT).show();
-                        playLeftB.setChecked(false);
-                        playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
-                    }else {
-                        if (playLeftCheckB) {
+                if (middleSecond) {
+                    if (otherOddsPlaySecond) {
+                        if (oddsLeftB) {
                             playLeftB.setChecked(false);
                             playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                             setOddsData(null , chooseLeft , "1" , false);
@@ -497,20 +602,56 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                             if (listVo != null && listVo.size() != 0) {
                                 setOddsData(listVo.get(prositionPlay).getOddsList().get(1),chooseLeft ,"1" ,true);
                             }
+                            if (oddsRightB) {
+                                playRightB.setChecked(false);
+                                playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                                oddsRightB = !oddsRightB;
+                            }
+                        }
+                        oddsLeftB = !oddsLeftB;
+                        if (oddsLeftB || oddsRightB) {
+                            otherOddsPlayFirst = false;
+                        }else{
+                            otherOddsPlayFirst = true;
+                        }
+                    }else{
+                        playLeftB.setChecked(false);
+                        playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                    }
+                }else{
+
+                    if (oddsSecondCheck) {
+
+                        if (playMiddleCheckB && playRightCheckB) {
+                            Toast.makeText(this, "最多选择两项b", Toast.LENGTH_SHORT).show();
+                            playLeftB.setChecked(false);
+                            playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                        }else {
+                            if (playLeftCheckB) {
+                                playLeftB.setChecked(false);
+                                playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                                setOddsData(null , chooseLeft , "0" , false);
+                            }else{
+                                playLeftB.setChecked(true);
+                                playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
+                                if (listVo != null && listVo.size() != 0) {
+                                    setOddsData(listVo.get(prositionPlay).getOddsList().get(1),chooseLeft ,"0" ,true);
+                                }
 //                        else{
 //                            setOddsData(null,chooseLeft ,"1" ,true);
 //                        }
+                            }
+                            playLeftCheckB = !playLeftCheckB;
                         }
-                        playLeftCheckB = !playLeftCheckB;
-                    }
-                    if (playLeftCheckB || playMiddleCheckB || playRightCheckB) {
-                        oddsFirstCheck = false;
+                        if (playLeftCheckB || playMiddleCheckB || playRightCheckB) {
+                            oddsFirstCheck = false;
+                        }else{
+                            oddsFirstCheck = true;
+                        }
                     }else{
-                        oddsFirstCheck = true;
+                        playLeftB.setChecked(false);
+                        playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                     }
-                }else{
-                    playLeftB.setChecked(false);
-                    playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                 }
                 break;
             case R.id.issue_play_middle_b:
@@ -524,12 +665,12 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                         if (playMiddleCheckB) {
                             playMiddleB.setChecked(false);
                             playMiddleImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
-                            setOddsData(null , chooseMiddle , "1" , false);
+                            setOddsData(null , chooseMiddle , "0" , false);
                         }else{
                             playMiddleB.setChecked(true);
                             playMiddleImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
                             if (listVo != null && listVo.size() != 0) {
-                                setOddsData(listVo.get(prositionPlay).getOddsList().get(1),chooseMiddle ,"1" ,true);
+                                setOddsData(listVo.get(prositionPlay).getOddsList().get(1),chooseMiddle ,"0" ,true);
                             }
 //                        else{
 //                            setOddsData(null,chooseMiddle ,"1" ,true);
@@ -548,14 +689,9 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 }
                 break;
             case R.id.issue_play_right_b:
-                if (oddsSecondCheck) {
-
-                    if (playLeftCheckB && playMiddleCheckB) {
-                        Toast.makeText(this, "最多选择两项b", Toast.LENGTH_SHORT).show();
-                        playRightB.setChecked(false);
-                        playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
-                    }else{
-                        if (playRightCheckB) {
+                if (middleSecond) {
+                    if (otherOddsPlaySecond) {
+                        if (oddsRightB) {
                             playRightB.setChecked(false);
                             playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                             setOddsData(null , chooseRight , "1" , false);
@@ -565,20 +701,56 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                             if (listVo != null && listVo.size() != 0) {
                                 setOddsData(listVo.get(prositionPlay).getOddsList().get(1),chooseRight ,"1" ,true);
                             }
+                            if (oddsLeftB) {
+                                playLeftB.setChecked(false);
+                                playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                                oddsLeftB = !oddsLeftB;
+                            }
+                        }
+                        oddsRightB = !oddsRightB;
+                        if (oddsLeftB || oddsRightB) {
+                            otherOddsPlayFirst = false;
+                        }else{
+                            otherOddsPlayFirst = true;
+                        }
+                    }else{
+                        playRightB.setChecked(false);
+                        playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                    }
+                }else{
+
+                    if (oddsSecondCheck) {
+
+                        if (playLeftCheckB && playMiddleCheckB) {
+                            Toast.makeText(this, "最多选择两项b", Toast.LENGTH_SHORT).show();
+                            playRightB.setChecked(false);
+                            playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                        }else{
+                            if (playRightCheckB) {
+                                playRightB.setChecked(false);
+                                playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+                                setOddsData(null , chooseRight , "0" , false);
+                            }else{
+                                playRightB.setChecked(true);
+                                playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
+                                if (listVo != null && listVo.size() != 0) {
+                                    setOddsData(listVo.get(prositionPlay).getOddsList().get(1),chooseRight ,"0" ,true);
+                                }
 //                        else{
 //                            setOddsData(null,chooseRight ,"1" ,true);
 //                        }
+                            }
+                            playRightCheckB = !playRightCheckB;
                         }
-                        playRightCheckB = !playRightCheckB;
-                    }
-                    if (playLeftCheckB || playMiddleCheckB || playRightCheckB) {
-                        oddsFirstCheck = false;
+                        if (playLeftCheckB || playMiddleCheckB || playRightCheckB) {
+                            oddsFirstCheck = false;
+                        }else{
+                            oddsFirstCheck = true;
+                        }
                     }else{
-                        oddsFirstCheck = true;
+                        playRightB.setChecked(false);
+                        playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                     }
-                }else{
-                    playRightB.setChecked(false);
-                    playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                 }
                 break;
             case R.id.issue_price_card_a:
@@ -646,28 +818,27 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
         playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
     }
 
-
-
-
     private List<String> chooseList = new ArrayList<>();
-    private List<String> choose1List = new ArrayList<>();
 
     /**
      *
      * @param oddsVo
      * @param chooseData
-     * @param type 标记第几个赔率 0: choose  1: choose1
+     * @param type 是否是竞彩单关（可否多选赔率） 0 是 1 不是
      * @param addChoose 赔率选中或者取消，true为选中
      */
-    private void setOddsData(BettingIssueFabuPalyBean.PromotionTypeVo.PromotionTypeListVo.PromotionOddsVo oddsVo ,String chooseData , String type , boolean addChoose){
+    private void setOddsData(BettingIssueFabuPalyBean.PromotionTypeVo.PromotionTypeListVo.PromotionOddsVo oddsVo ,
+                             String chooseData , String type , boolean addChoose){
 
         if (oddsVo != null) {
             this.type = oddsVo.getType();
             this.oddsId = oddsVo.getOddsId();
         }
-
+        mChoose="";
+        mChoose1="";
         switch (type){
             case "0":
+                //竞彩单关 choose1会有值
                 if (addChoose) {
                     chooseList.add(chooseData);
                 }else{
@@ -675,37 +846,64 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                         chooseList.remove(chooseData);
                     }
                 }
+                if (chooseList.size() == 1) {
 
-                StringBuffer sb = new StringBuffer();
-                for (String choose : chooseList) {
-                    if (sb.length() == 0) {
-                        sb.append(choose);
-                    }else{
-                        sb.append("," + choose);
-                    }
+                    mChoose = chooseList.get(0);
+                }else if(chooseList.size() == 2){
+
+                    mChoose = chooseList.get(0);
+                    mChoose1 = chooseList.get(1);
                 }
-
-                mChoose = sb.toString();
                 break;
             case "1":
                 if (addChoose) {
-                    choose1List.add(chooseData);
+                    mChoose = chooseData;
                 }else{
-                    if (choose1List.contains(chooseData)) {
-                        choose1List.remove(chooseData);
-                    }
+                    mChoose = "";
                 }
-                StringBuffer sb1 = new StringBuffer();
-                for (String choose : choose1List) {
-                    if (sb1.length() == 0) {
-                        sb1.append(choose);
-                    }else{
-                        sb1.append("," + choose);
-                    }
-                }
-                mChoose1 = sb1.toString();
                 break;
         }
+
+//        switch (type){
+//            case "0":
+//                if (addChoose) {
+//                    chooseList.add(chooseData);
+//                }else{
+//                    if (chooseList.contains(chooseData)) {
+//                        chooseList.remove(chooseData);
+//                    }
+//                }
+//
+//                StringBuffer sb = new StringBuffer();
+//                for (String choose : chooseList) {
+//                    if (sb.length() == 0) {
+//                        sb.append(choose);
+//                    }else{
+//                        sb.append("," + choose);
+//                    }
+//                }
+//
+//                mChoose = sb.toString();
+//                break;
+//            case "1":
+//                if (addChoose) {
+//                    choose1List.add(chooseData);
+//                }else{
+//                    if (choose1List.contains(chooseData)) {
+//                        choose1List.remove(chooseData);
+//                    }
+//                }
+//                StringBuffer sb1 = new StringBuffer();
+//                for (String choose : choose1List) {
+//                    if (sb1.length() == 0) {
+//                        sb1.append(choose);
+//                    }else{
+//                        sb1.append("," + choose);
+//                    }
+//                }
+//                mChoose1 = sb1.toString();
+//                break;
+//        }
     }
 
 
@@ -783,6 +981,14 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                     Toast.makeText(MvpBettingIssueDetailsActivity.this, "发布成功!", Toast.LENGTH_SHORT).show();
                     finish();
                 }else{
+                    switch (jsonBean.getCode()){
+                        case 3012:
+                            Toast.makeText(MvpBettingIssueDetailsActivity.this, "比赛开始前五分钟不可发布", Toast.LENGTH_SHORT).show();
+                            break;
+                        case 3013:
+                            Toast.makeText(MvpBettingIssueDetailsActivity.this, "该用户的该种玩法已经发布过", Toast.LENGTH_SHORT).show();
+                            break;
+                    }
                     L.d("qwerqwer == >" , "发布失败");
                 }
             }

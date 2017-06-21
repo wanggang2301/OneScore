@@ -24,14 +24,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:paddingBottom="20dp"
                 >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp"
+                    android:padding="10dp"
                     android:orientation="vertical"
                     android:background="@drawable/betting_issues_fabu_view_bg">
 
@@ -194,12 +194,14 @@
 
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:paddingRight="5dp">
                             <TextView
+                                android:id="@+id/odds_play_first_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text="胜平负: "/>
+                                android:text="              "/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -234,6 +236,7 @@
                                 android:layout_width="10dp"
                                 android:layout_height="30dp"/>
                             <RelativeLayout
+                                android:id="@+id/issue_middle_odds_first"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 >
@@ -297,12 +300,14 @@
 
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:paddingRight="5dp">
                             <TextView
+                                android:id="@+id/odds_play_second_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text="胜平负: "/>
+                                android:text="              "/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -337,6 +342,7 @@
                                 android:layout_width="10dp"
                                 android:layout_height="30dp"/>
                             <RelativeLayout
+                                android:id="@+id/issue_middle_odds_second"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 >

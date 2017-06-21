@@ -321,8 +321,17 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                 String[] str = detailsData.getChooseStr();
                 if (str.length == 3) {
                     leftOdds.setText(filtraNull(str[0]));
-                    middleOdds.setText(filtraNull(str[1]));
                     rightOdds.setText(filtraNull(str[2]));
+
+                    if (str[1].equals("")) {
+                        middleOdds.setText(filtraNull(detailsData.getHandicap()));
+                        detailsHandicp.setVisibility(View.GONE);
+                        detailsDrawImg.setVisibility(View.GONE);
+                    }else{
+                        middleOdds.setText(filtraNull(str[1]));
+                        detailsHandicp.setVisibility(View.VISIBLE);
+                        detailsDrawImg.setVisibility(View.VISIBLE);
+                    }
                 }
             }
             if (detailsData.getHandicap() == null || detailsData.getHandicap().equals("")) {
