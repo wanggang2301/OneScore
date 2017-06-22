@@ -1,6 +1,7 @@
 package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -17,11 +18,14 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.bettingadapter.BettingIssueAdapter;
 import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendSettingAdapter;
 import com.hhly.mlottery.bean.bettingbean.BettingIssueFabuPalyBean;
 import com.hhly.mlottery.bean.bettingbean.IssueCodeBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.ConstantPool;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.IssueResultEventBus;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.SignUtils;
@@ -32,6 +36,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by：XQyi on 2017/5/31 16:08
@@ -98,6 +104,8 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
     private RelativeLayout middleOddsFirstll;
     private TextView oddsPlayFirstTitle;
     private TextView oddsPlaySecondTitle;
+    /**发布时token 是否失效*/
+    private boolean tokenLost = false;
     //    /**赔率是否可选（无赔率时不可点击）*/
 //    private boolean checkOdds = false;
 
@@ -106,7 +114,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.betting_issue_activity);
-
+        EventBus.getDefault().register(this);
         initView();
         initData();
     }
@@ -256,7 +264,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
             public void onResponse(BettingIssueFabuPalyBean jsonBean) {
                 if (jsonBean.getCode() == 200) {
                     L.d("qwerqwer == >" , "请求成功");
-
+                    tokenLost = false;
                     if (jsonBean.getData() != null) {
                         //TODO==============================
                         BettingIssueFabuPalyBean.PromotionTypeVo playOddsData = jsonBean.getData();
@@ -303,6 +311,8 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                         }
 
                     }
+                }else if(jsonBean.getCode() == 1012 || jsonBean.getCode() == 1013 || jsonBean.getCode() == 1000){
+                    tokenLost = true;
                 }
 
             }
@@ -411,8 +421,15 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
             case R.id.to_issue:
-//                Toast.makeText(this, "to_issue", Toast.LENGTH_SHORT).show();
-                issueCheck();
+                if (!tokenLost) {
+                    issueCheck();
+                }else{
+                    //token 失效（为空）去登陆
+                    AppConstants.register.setToken(null);//token 置空 重新登录
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.putExtra(ConstantPool.PUBLIC_INPUT_PARAMEMT , ConstantPool.PAY_ISSUE_RESULT);
+                    startActivity(intent);
+                }
                 break;
             case R.id.issue_play_left_a:
 
@@ -999,5 +1016,20 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 L.d("qwerqwer == >" , "访问失败");
             }
         },IssueCodeBean.class);
+    }
+
+    /**
+     * 登录页面返回
+     */
+    public void onEventMainThread(IssueResultEventBus issueResult){
+        if (issueResult.issueResult()) {
+            initData();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -2,6 +2,7 @@ package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,11 +15,13 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingOrderDataBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingPaymentResultEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayDetailsResultEventBus;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayMentZFBResultEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpBettingOnlinePaymentPresenter;
 import com.hhly.mlottery.config.ConstantPool;
@@ -272,8 +275,14 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
             }else{
                 balanceFully = false;
             }
-        }
+        }else if(orderDataBean.getCode() == 1012 || orderDataBean.getCode() == 1013 || orderDataBean.getCode() == 1000){
+            //token 失效（为空）去登陆
+            AppConstants.register.setToken(null);//token 置空 重新登录
 
+            Intent intent = new Intent(mContext, LoginActivity.class);
+            intent.putExtra(ConstantPool.PUBLIC_INPUT_PARAMEMT , ConstantPool.PAY_DETAILS_RESULT);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -321,6 +330,14 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
     public void onEventMainThread(BettingBuyResultEventBusEntity buyResultEventBusEntity){
         if (buyResultEventBusEntity.isSuccessBuy()) {
             orderPay();
+        }
+    }
+    /**
+     * 登录页面返回
+     */
+    public void onEventMainThread(PayDetailsResultEventBus detailsResultEventBus){
+        if (detailsResultEventBus.isDetailsResult()) {
+            initData();
         }
     }
     /**
@@ -375,4 +392,5 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
             }
         },BettingOrderDataBean.class);
     }
+
 }
