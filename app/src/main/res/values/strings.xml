@@ -1915,6 +1915,21 @@
     <string name="please_add_eague">请添加联赛</string>
     <string name="agreement_carefully">请认真阅读推荐付费协议</string>
     <string name="recommendation_agreement">认真付费推荐协议</string>
+    <string name="handicap_football">下盘</string>
+    <string name="handicap_hanging">上盘</string>
+    <string name="handicap_matchs">比赛场次</string>
+    <string name="handicap_plate">主客场盘路</string>
+    <string name="handicap_big_ball">大球%</string>
+    <string name="handicap_go">走%</string>
+    <string name="handicap_small_ball">小球%</string>
+    <string name="on_the_lower_panel">上下盘盘路</string>
+    <string name="handicap_clean">净</string>
+    <string name="handcaip_goo">走率</string>
+    <string name="preseason_games">季前赛</string>
+    <string name="regular_season">常规赛</string>
+    <string name="playoff">季后赛</string>
+    <string name="technical_routine">常规</string>
+    <string name="technical_free_throw">罚球</string>
 
 
 </resources>
