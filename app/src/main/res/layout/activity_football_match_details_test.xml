@@ -113,11 +113,13 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/iv_net_error"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/refresh" />
 
                     <TextView
+                        android:id="@+id/tv_nodata"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
@@ -126,6 +128,7 @@
                         android:textSize="@dimen/text_size_14" />
 
                     <LinearLayout
+                        android:id="@+id/ll_error_refresh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="0dip"
