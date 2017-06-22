@@ -546,6 +546,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        mViewHandler.removeCallbacksAndMessages(null);
     }
 
     @Override

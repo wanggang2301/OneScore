@@ -363,6 +363,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         closePollingGifCount();
         EventBus.getDefault().unregister(this);
         closeWebSocket();
+        mSocketHandler.removeCallbacksAndMessages(null);
     }
 
     /**

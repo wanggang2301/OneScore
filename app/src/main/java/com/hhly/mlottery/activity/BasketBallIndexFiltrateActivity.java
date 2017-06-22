@@ -16,6 +16,7 @@ import com.hhly.mlottery.bean.basket.index.BasketIndexBean;
 import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.widget.GrapeGridView;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -262,5 +263,18 @@ public class BasketBallIndexFiltrateActivity extends Activity implements View.On
             mCheckedIds.remove(fileterTagsBean.getLeagueId());
         }
         setHideNumber();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 }

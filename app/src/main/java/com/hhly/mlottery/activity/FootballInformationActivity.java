@@ -380,4 +380,10 @@ public class FootballInformationActivity extends BaseActivity implements View.On
         super.onPause();
         MobclickAgent.onPause(this);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mViewHandler.removeCallbacksAndMessages(null);
+    }
 }

@@ -10,6 +10,7 @@ import android.os.Message;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayMentZFBResultEventBusEntity;
 import com.hhly.mlottery.alipay.PayResult;
@@ -32,22 +33,19 @@ import de.greenrobot.event.EventBus;
 public class PayMentUtils {
 
     private static final int SDK_PAY_FLAG = 1;
-    private static Context mContext;
 
     /* -----------------------------支付宝相关方法 start------------------------------------------------------------------------*/
     /**
      * 支付宝参数接口
      */
-    public static void ALiPayData(Context context, final Activity activity, String payUrl, Map<String, String> payMap) {
-
-        mContext = context;
+    public static void ALiPayData(final Activity activity, String payUrl, Map<String, String> payMap) {
 
         VolleyContentFast.requestJsonByPost(payUrl, payMap, new VolleyContentFast.ResponseSuccessListener<PaymentZFBBean>() {
             @Override
             public void onResponse(PaymentZFBBean jsonBean) {
 
                 if (jsonBean == null || jsonBean.getData() == null) {
-                    Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_netword_error_txt), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApp.getContext(), MyApp.getContext().getResources().getText(R.string.betting_netword_error_txt), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if (jsonBean.getData().getBody() != null) {
@@ -59,7 +57,7 @@ public class PayMentUtils {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 L.d("qwer_AliPay===>>", "error");
-                Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_nodata_to_again), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApp.getContext(), MyApp.getContext().getResources().getText(R.string.betting_nodata_to_again), Toast.LENGTH_SHORT).show();
             }
         }, PaymentZFBBean.class);
 
@@ -110,13 +108,13 @@ public class PayMentUtils {
     /**
      * 判断是否安装有支付宝客户端
      *
-     * @param context
+     * @param
      * @return
      */
-    public static boolean checkAliPayInstalled(Context context) {
+    public static boolean checkAliPayInstalled() {
         Uri uri = Uri.parse("alipays://platformapi/startApp");
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        ComponentName componentName = intent.resolveActivity(context.getPackageManager());
+        ComponentName componentName = intent.resolveActivity(MyApp.getContext().getPackageManager());
         return componentName != null;
     }
     /* -----------------------------支付宝相关方法 end------------------------------------------------------------------------*/
@@ -127,9 +125,7 @@ public class PayMentUtils {
     /**
      * 微信支付参数接口
      */
-    public static void WeiXinPayData(Context context, String payUrl, Map<String, String> payMap) {
-
-        mContext = context;
+    public static void WeiXinPayData(String payUrl, Map<String, String> payMap) {
 
 //        Map<String, String> params = new HashMap<>();
 //        String userid = AppConstants.register.getData().getUser().getUserId();
@@ -147,7 +143,7 @@ public class PayMentUtils {
             @Override
             public void onResponse(PaymentWeiXinBean jsondata) {
                 if (jsondata == null || jsondata.getData() == null) {
-                    Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_netword_error_txt), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyApp.getContext(), MyApp.getContext().getResources().getText(R.string.betting_netword_error_txt), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 PaymentWeiXinBean.DataDetailsBean payData = jsondata.getData();
@@ -156,7 +152,7 @@ public class PayMentUtils {
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_nodata_to_again), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApp.getContext(), MyApp.getContext().getResources().getText(R.string.betting_nodata_to_again), Toast.LENGTH_SHORT).show();
             }
         }, PaymentWeiXinBean.class);
     }
@@ -168,9 +164,9 @@ public class PayMentUtils {
      */
     private static void toWeiXinPay(PaymentWeiXinBean.DataDetailsBean payInfo) {
         //注册appid
-        IWXAPI api = WXAPIFactory.createWXAPI(mContext, ConstantPool.APP_ID);// 通过WXAPIFactory工厂，获取IWXAPI的实例
+        IWXAPI api = WXAPIFactory.createWXAPI(MyApp.getContext(), ConstantPool.APP_ID);// 通过WXAPIFactory工厂，获取IWXAPI的实例
         if (!api.isWXAppInstalled()) {
-            Toast.makeText(mContext, mContext.getResources().getString(R.string.share_uninstall_webchat), Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyApp.getContext(), MyApp.getContext().getResources().getString(R.string.share_uninstall_webchat), Toast.LENGTH_SHORT).show();
         }
         api.registerApp(ConstantPool.APP_ID); //将appid注册到微信
 

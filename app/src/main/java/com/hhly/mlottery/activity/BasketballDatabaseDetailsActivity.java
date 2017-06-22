@@ -435,4 +435,10 @@ public class BasketballDatabaseDetailsActivity extends AppCompatActivity
         mAlertDialog.show();
         mAlertDialog.getWindow().setContentView(view);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandlerData.removeCallbacksAndMessages(null);
+    }
 }

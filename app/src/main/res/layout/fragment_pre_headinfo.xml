@@ -24,7 +24,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/nopage"
-                android:visibility="gone" />
+                android:visibility="visible" />
         </LinearLayout>
 
         <LinearLayout
@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/multiscreen_space_image_height"
         android:gravity="center_vertical"
-        android:visibility="gone"
+        android:visibility="visible"
         >
 
         <RelativeLayout
