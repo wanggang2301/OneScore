@@ -1757,7 +1757,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 gif_home_offside_position.setImageResource(R.mipmap.football_home_position_gif);
                 showGifAnimation(1043);
                 break;
-            case "1027": //主队任意球
+            case "1027": //主队危险任意球
                 isHomeFreeKick = true;
                 break;
             case "2067":  //客队越位
@@ -1771,7 +1771,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 gif_guest_offside_position.setImageResource(R.mipmap.football_guest_position_gif);
                 showGifAnimation(2067);
                 break;
-            case "2051"://客队任意球
+            case "2051"://客队危险任意球
                 isGuestFreeKick = true;
                 break;
             case "1042"://主队犯规
@@ -2261,8 +2261,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                                 showGifAnimation(-9999);
                             }
                         } else {
-                            ll_home_free_kick_bg.setVisibility(View.VISIBLE);
-                            ll_guest_free_kick_bg.setVisibility(View.GONE);
+                            ll_home_free_kick_bg.setVisibility(View.GONE);
+                            ll_guest_free_kick_bg.setVisibility(View.VISIBLE);
                             ll_home_free_kick_fk4_bg.setVisibility(View.GONE);
                             ll_guest_free_kick_fk4_bg.setVisibility(View.GONE);
                             ll_home_free_kick_fk2_bg.setVisibility(View.GONE);
