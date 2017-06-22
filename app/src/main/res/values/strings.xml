@@ -1818,6 +1818,11 @@
     <string name="issue_lay_zero_free">0则为免费</string>
     <string name="issue_to_iss">发布</string>
 
+    <string name="issue_check_odds">请选择赔率</string>
+    <string name="issue_check_title">推介标题不能为空</string>
+    <string name="issue_check_recome">请输入您的推介理由</string>
+    <string name="issue_check_price">请输入您的方案价格</string>
+
 
 
     <string name="roll_desc_txt">胜出</string>
