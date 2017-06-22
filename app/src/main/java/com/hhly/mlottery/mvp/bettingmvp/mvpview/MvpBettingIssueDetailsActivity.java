@@ -396,6 +396,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
     private boolean oddsSecondCheck = true;
 
 
+    /**非竞彩单关玩法时参数*/
     private boolean otherOddsPlayFirst = true;
     private boolean otherOddsPlaySecond = true;
     private boolean oddsLeftA = false;
