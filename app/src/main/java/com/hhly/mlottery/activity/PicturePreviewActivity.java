@@ -286,4 +286,10 @@ public class PicturePreviewActivity extends BaseActivity {
         savePhotoToSDCard(zoomBitmap(bitmap, widthPixels, heightPixels), getLocalPath(url));
         Toast.makeText(getApplicationContext(), mContext.getResources().getString(R.string.foreign_pic), Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
+    }
 }

@@ -14,6 +14,7 @@ import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
 import com.neovisionaries.ws.client.WebSocketFrame;
 import com.neovisionaries.ws.client.WebSocketState;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.IOException;
 import java.util.List;
@@ -120,32 +121,6 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
 
         L.d(TAG, "WebSocket State = " + ws.getState());
 
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        L.d(TAG, "_onResume_");
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                synchronized (this) {
-//        if (ws.getState().equals(WebSocketState.CREATED)) {
-//            L.d(TAG, "run");
-//            try {
-//                ws.connect();
-//            } catch (WebSocketException e) {
-//                onConnectFail();
-//                e.printStackTrace();
-//            }
-//        } else if (ws.getState().equals(WebSocketState.CLOSED)) {
-//            reconnect();
-//        }
-//                }
-//            }
-//        }).start();
 
     }
 
@@ -307,5 +282,18 @@ public abstract class BaseWebSocketActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 }

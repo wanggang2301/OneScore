@@ -24,10 +24,10 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FootballTeamInfoActivity;
 import com.hhly.mlottery.adapter.football.teaminfoadapter.FootTeamArrayAdapter;
 import com.hhly.mlottery.bean.footballteaminfo.FootTeamDataInfoBean;
-import com.hhly.mlottery.bean.footballteaminfo.FootTeamHistoryMatchBean;
 import com.hhly.mlottery.bean.footballteaminfo.FootTeamInfoBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
@@ -325,6 +325,10 @@ public class TeamInfoDataFragment extends Fragment implements View.OnClickListen
     }
 
     public void updataList(List<FootTeamInfoBean> infoList, String date) {
+        if (!CollectionUtils.notEmpty(infoList)) {
+            setStatus(NOTO_DATA);
+            return;
+        }
         if (date == null) {
             setStatus(ERROR);
             return;

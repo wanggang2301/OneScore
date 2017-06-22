@@ -269,6 +269,9 @@
     <color name="foot_team_name_score2">#85c780</color>
     <color name="foot_team_name_score3">#ff2321</color>
 
+    <!--动画直播-->
+    <color name="foot_animation_half_txt">#81b241</color>
+
     <!-- 开奖详情第二列背景色 -->
     <color name="number_info_two_bg">#f5f5f5</color>
     <!-- 开奖列表开奖提示背景色 -->

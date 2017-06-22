@@ -3,6 +3,7 @@ package com.hhly.mlottery.mvptask.recommendarticles;
 import com.hhly.mlottery.mvp.BasePresenter;
 import com.hhly.mlottery.mvptask.IContract;
 import com.hhly.mlottery.util.CollectionUtils;
+import com.hhly.mlottery.util.DeviceInfo;
 
 import java.util.List;
 
@@ -11,12 +12,12 @@ import data.repository.UserCenterRepository;
 import rx.Subscriber;
 
 /**
- * @anthor     wangg
- * @className  RecommendArticlesPresenter
- * @time       2017/6/2  11:19
+ * @anthor wangg
+ * @className RecommendArticlesPresenter
+ * @time 2017/6/2  11:19
  * @changeDesc XXX
  * @changeTime XXX
- * @classDesc  推介文章presenter
+ * @classDesc 推介文章presenter
  */
 
 public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoadMoreDataView> implements IContract.IRecommendArticlesPresenter {
@@ -57,6 +58,7 @@ public class RecommendArticlesPresenter extends BasePresenter<IContract.IPullLoa
             @Override
             public void onNext(RecommendArticlesBean r) {
                 if (!"200".equals(r.getCode())) {
+                    DeviceInfo.handlerRequestResult(Integer.parseInt(r.getCode()), "code");
                     mView.onError();
                     return;
                 }

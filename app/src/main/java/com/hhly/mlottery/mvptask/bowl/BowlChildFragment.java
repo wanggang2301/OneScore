@@ -296,7 +296,7 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
     }
 
     private boolean isNULLOrEmpty(String s) {
-        return s == null || "".equals(s);
+        return s == null || "".equals(s) || "-".equals(s);
     }
 
     @OnClick(R.id.reLoading)

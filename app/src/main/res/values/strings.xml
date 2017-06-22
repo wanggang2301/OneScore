@@ -268,7 +268,7 @@
 
 
     <!-- 异常处理 -->
-    <string name="exp_net_status_txt">您当前的网络不给力</string>
+    <string name="exp_net_status_txt">暂无法提供数据</string>
     <string name="exp__check_txt">请检查后</string>
     <string name="exp_refresh_txt">刷新</string>
     <!-- 赛程 -->
@@ -1916,5 +1916,21 @@
     <string name="agreement_carefully">请认真阅读推荐付费协议</string>
     <string name="recommendation_agreement">认真付费推荐协议</string>
 
+
+    <!--app动画直播-->
+    <string name="football_play_penalty_lose">点球罚失</string>
+    <string name="football_play_free_kick_danger">危险任意球</string>
+    <string name="football_play_free_kick">任意球</string>
+    <string name="football_play_corner">角球</string>
+    <string name="football_play_goal_door">球门球</string>
+    <string name="football_play_hit">射正</string>
+    <string name="football_play_deviate">射偏</string>
+    <string name="football_play_goal_out">界外球</string>
+    <string name="football_play_whistle">犯规</string>
+    <string name="football_play_goal_qx">取消进球</string>
+    <string name="football_play_404">信号中断</string>
+    <string name="football_play_drink_water">喝水时间</string>
+    <string name="football_play_injured">有人受伤</string>
+    <string name="football_play_injured_addtime">伤停补时</string>
 
 </resources>

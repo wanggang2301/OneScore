@@ -274,4 +274,10 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
     public void onRefresh() {
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+    }
 }

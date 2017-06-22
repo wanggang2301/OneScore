@@ -464,6 +464,9 @@ public class CustomActivity extends BaseWebSocketActivity implements View.OnClic
         super.onDestroy();
         //反注册 取消绑定
         EventBus.getDefault().unregister(this);
+        mLoadHandler.removeCallbacksAndMessages(null);
+        mCustomHandler.removeCallbacksAndMessages(null);
+        mSocketHandler.removeCallbacksAndMessages(null);
     }
 
     /*****************************************以下推送方法**********************************************/

@@ -15,7 +15,7 @@ import com.hhly.mlottery.frame.withdrawandbindcard.WithDrawFragment;
  * 提现页面
  * crated by mdy155 on 2017/06/10
  */
-public class WithDrawActivity extends AppCompatActivity {
+public class WithDrawActivity extends BaseActivity {
 
     private String mBalance;
     private WithDrawFragment mFragment;

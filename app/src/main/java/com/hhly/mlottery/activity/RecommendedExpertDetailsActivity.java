@@ -43,6 +43,7 @@ import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.sina.weibo.sdk.component.view.AppProgressDialog;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,6 +162,7 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        mViewHandler.removeCallbacksAndMessages(null);
     }
 
     private void initEvent() {
@@ -504,5 +506,18 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
             }
         }
         upDataAdapter();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
     }
 }

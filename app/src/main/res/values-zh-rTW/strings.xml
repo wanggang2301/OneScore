@@ -265,7 +265,7 @@
     <string name="set_goal_txt">進球</string>
 
     <!-- 异常处理 -->
-    <string name="exp_net_status_txt">您當前的網絡不給力</string>
+    <string name="exp_net_status_txt">暫無法提供數據</string>
     <string name="exp__check_txt">請檢查后</string>
     <string name="exp_refresh_txt">刷新</string>
 
@@ -1895,5 +1895,17 @@
     <string name="please_add_eague">請添加聯賽</string>
     <string name="agreement_carefully">請認真閱讀推薦付費協定</string>
 
+
+    <!--app动画直播-->
+    <string name="football_play_penalty_lose">點球罰失</string>
+    <string name="football_play_free_kick_danger">危險任意球</string>
+    <string name="football_play_free_kick">任意球</string>
+    <string name="football_play_corner">角球</string>
+    <string name="football_play_goal_door">球門球</string>
+    <string name="football_play_hit">射正</string>
+    <string name="football_play_deviate">射偏</string>
+    <string name="football_play_goal_out">界外球</string>
+    <string name="football_play_whistle">犯規</string>
+    <string name="football_play_goal_qx">取消進球</string>
 
 </resources>

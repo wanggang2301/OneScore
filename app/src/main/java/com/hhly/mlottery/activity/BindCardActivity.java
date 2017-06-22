@@ -14,7 +14,7 @@ import com.hhly.mlottery.frame.withdrawandbindcard.WithDrawFragment;
  * 作    者：mady@13322.com
  * 时    间：2017/6/10
  */
-public class BindCardActivity extends AppCompatActivity {
+public class BindCardActivity extends BaseActivity {
 
     private String mName;
     private BindCardFragment mFragment;
