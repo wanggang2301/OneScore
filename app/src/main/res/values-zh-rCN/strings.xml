@@ -1817,6 +1817,24 @@
     <string name="betting_paly_choose_txt">必须选择一项</string>
     <string name="betting_netword_error_txt">当前网络繁忙,请稍后重试!</string>
 
+    <!--发布推介-->
+    <string name="issue_cueernt_isexpert">您还不是专家,请申请成为专家后再发布!</string>
+    <string name="issue_betting">发布推介</string>
+    <string name="issue_inputtext_max">\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020最多输入300个字符</string>
+    <string name="issue_max_check">最多选择两项</string>
+    <string name="issue_success">发布成功</string>
+    <string name="issue_match_fivemin_noissue">比赛开始前五分钟不可发布</string>
+    <string name="issue_play_ok">您已经发布过该玩法</string>
+
+    <string name="issue_lay_betting_iss">推介赛事</string>
+    <string name="issue_lay_issue_play">推介玩法</string>
+    <string name="issue_lay_issue_tittle">推介标题</string>
+    <string name="issue_lay_issue_reason">推介理由</string>
+    <string name="issue_lay_issue_scheme_price">方案定价</string>
+    <string name="issue_lay_max_input">最多输入20个字符</string>
+    <string name="issue_lay_zero_free">0则为免费</string>
+    <string name="issue_to_iss">发布</string>
+
     <string name="recommendarticle_txt">推介文章</string>
     <string name="subsrecord_txt">订阅记录</string>
     <string name="jingcaidanguan_txt">竞彩单关</string>

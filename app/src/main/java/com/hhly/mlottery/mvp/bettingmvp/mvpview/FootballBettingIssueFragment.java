@@ -39,6 +39,7 @@ import com.hhly.mlottery.config.BlurPopWin;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.IssueSuccessResulyEventBus;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpFootballBettingIssuePresenter;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
@@ -281,7 +282,7 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
 ////                startActivity(intent);
 //                break;
             case R.id.football_betting_text_img:
-                Toast.makeText(getActivity(), "发布文字", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "发布文字", Toast.LENGTH_SHORT).show();
 
                     //是否登录
                     if (DeviceInfo.isLogin()) {
@@ -293,7 +294,7 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
                             startActivity(mIntent);
                             getActivity().overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
                         }else{
-                            Toast.makeText(mContext, "您还不是专家,请申请成为专家后再发布!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, mContext.getResources().getText(R.string.issue_cueernt_isexpert), Toast.LENGTH_SHORT).show();
                         }
 
                     }else{
@@ -746,5 +747,15 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
             }
         }
         updataAdapter();
+    }
+
+    /**
+     * 发布成功返回
+     * @param issueSuccessResulyEventBus
+     */
+    public void onEventMainThread(IssueSuccessResulyEventBus issueSuccessResulyEventBus){
+        if (issueSuccessResulyEventBus.issueSucce()) {
+            dataRefresh();//发布成功后刷新数据
+        }
     }
 }

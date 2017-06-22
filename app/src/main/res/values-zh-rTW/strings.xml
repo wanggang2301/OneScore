@@ -1785,6 +1785,24 @@
     <string name="betting_paly_choose_txt">必須選擇壹項</string>
     <string name="betting_netword_error_txt">當前網酪繁忙,請稍後重試!</string>
 
+    <!--发布推介-->
+    <string name="issue_cueernt_isexpert">您還不是專家,請申請成為專家後再發布!</string>
+    <string name="issue_betting">發布推介</string>
+    <string name="issue_inputtext_max">\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020最多輸入300個字符</string>
+    <string name="issue_max_check">最多選擇兩項</string>
+    <string name="issue_success">發布成功</string>
+    <string name="issue_match_fivemin_noissue">比賽開始前五分鐘不可發布</string>
+    <string name="issue_play_ok">您已經發布過該玩法</string>
+
+    <string name="issue_lay_betting_iss">推介賽事</string>
+    <string name="issue_lay_issue_play">推介玩法</string>
+    <string name="issue_lay_issue_tittle">推介標題</string>
+    <string name="issue_lay_issue_reason">推介理由</string>
+    <string name="issue_lay_issue_scheme_price">方案定價</string>
+    <string name="issue_lay_max_input">最多輸入20個字符</string>
+    <string name="issue_lay_zero_free">0則為免費</string>
+    <string name="issue_to_iss">發布</string>
+
     <string name="corner_score">角球比分</string>
     <string name="higher">高於</string>
     <string name="jishi_pan">即時盤</string>

@@ -20,12 +20,12 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.bettingadapter.BettingIssueAdapter;
-import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendSettingAdapter;
 import com.hhly.mlottery.bean.bettingbean.BettingIssueFabuPalyBean;
 import com.hhly.mlottery.bean.bettingbean.IssueCodeBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.IssueResultEventBus;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.IssueSuccessResulyEventBus;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.SignUtils;
@@ -121,7 +121,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
 
     private void initView(){
         TextView title = (TextView)findViewById(R.id.public_txt_title);
-        title.setText("发布推介");
+        title.setText(getApplicationContext().getResources().getText(R.string.issue_betting));
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
 
@@ -153,7 +153,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 }else{
                     if (TextUtils.isEmpty(detailsEdit.getText())) {
                         inputImg.setVisibility(View.VISIBLE);
-                        detailsEdit.setHint("         最多输入300个字符！");
+                        detailsEdit.setHint(getApplicationContext().getResources().getText(R.string.issue_inputtext_max));
                     }else{
                         inputImg.setVisibility(View.GONE);
                         detailsEdit.setHint("");
@@ -466,7 +466,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 }else{
                     if (oddsFirstCheck) {
                         if(playMiddleCheckA && playRightCheckA){
-                            Toast.makeText(this, "最多选择两项a", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_max_check), Toast.LENGTH_SHORT).show();
                             playLeftA.setChecked(false);
                             playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                         }else{
@@ -506,7 +506,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 if (oddsFirstCheck) {
 
                     if (playLeftCheckA && playRightCheckA) {
-                        Toast.makeText(this, "最多选择两项a", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_max_check), Toast.LENGTH_SHORT).show();
                         playMiddleA.setChecked(false);
                         playMiddleImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                     }else{
@@ -573,7 +573,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                     if (oddsFirstCheck) {
 
                         if (playLeftCheckA && playMiddleCheckA) {
-                            Toast.makeText(this, "最多选择两项a", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_max_check), Toast.LENGTH_SHORT).show();
                             playRightA.setChecked(false);
                             playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                         }else{
@@ -641,7 +641,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                     if (oddsSecondCheck) {
 
                         if (playMiddleCheckB && playRightCheckB) {
-                            Toast.makeText(this, "最多选择两项b", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_max_check), Toast.LENGTH_SHORT).show();
                             playLeftB.setChecked(false);
                             playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                         }else {
@@ -676,7 +676,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 if (oddsSecondCheck) {
 
                     if (playLeftCheckB && playRightCheckB) {
-                        Toast.makeText(this, "最多选择两项b", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_max_check), Toast.LENGTH_SHORT).show();
                         playMiddleB.setChecked(false);
                         playMiddleImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                     }else{
@@ -740,7 +740,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                     if (oddsSecondCheck) {
 
                         if (playLeftCheckB && playMiddleCheckB) {
-                            Toast.makeText(this, "最多选择两项b", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_max_check), Toast.LENGTH_SHORT).show();
                             playRightB.setChecked(false);
                             playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                         }else{
@@ -996,15 +996,16 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
             public void onResponse(IssueCodeBean jsonBean) {
                 if (jsonBean.getCode() == 200) {
                     L.d("qwerqwer == >" , "发布成功");
-                    Toast.makeText(MvpBettingIssueDetailsActivity.this, "发布成功!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MvpBettingIssueDetailsActivity.this, getApplicationContext().getResources().getText(R.string.issue_success), Toast.LENGTH_SHORT).show();
+                    EventBus.getDefault().post(new IssueSuccessResulyEventBus(true));
                     finish();
                 }else{
                     switch (jsonBean.getCode()){
                         case 3012:
-                            Toast.makeText(MvpBettingIssueDetailsActivity.this, "比赛开始前五分钟不可发布", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MvpBettingIssueDetailsActivity.this, getApplicationContext().getResources().getText(R.string.issue_match_fivemin_noissue), Toast.LENGTH_SHORT).show();
                             break;
                         case 3013:
-                            Toast.makeText(MvpBettingIssueDetailsActivity.this, "该用户的该种玩法已经发布过", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MvpBettingIssueDetailsActivity.this, getApplicationContext().getResources().getText(R.string.issue_play_ok), Toast.LENGTH_SHORT).show();
                             break;
                     }
                     L.d("qwerqwer == >" , "发布失败");
