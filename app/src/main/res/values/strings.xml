@@ -1930,6 +1930,6 @@
     <string name="playoff">季后赛</string>
     <string name="technical_routine">常规</string>
     <string name="technical_free_throw">罚球</string>
-
+    <string name="login_timeout">登录超时</string>
 
 </resources>

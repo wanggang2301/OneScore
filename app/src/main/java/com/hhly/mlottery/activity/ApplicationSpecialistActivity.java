@@ -28,6 +28,7 @@ import com.hhly.mlottery.bean.SpecialistBean;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.FootBallDetailTypeEnum;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpChargeMoneyActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
 import com.hhly.mlottery.util.L;
@@ -68,7 +69,6 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
     private LinearLayout error_prompt;
     private EditText good_league;
     private TextView tv_comfirm;
-    private GridView gridview;
 
     // 标签云父布局
     private FlowLayout mFlowLayout;
@@ -416,7 +416,13 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                         shen_good_legue.setVisibility(View.GONE);
                     }
 
-                } else {
+                } else if(Integer.parseInt(requestBean.getCode())==AccountResultCode.TOKEN_INVALID){
+
+                    UiUtils.toast(getApplicationContext() ,R.string.name_invalid);
+                    AppConstants.register.setToken(null);
+                    Intent intent = new Intent(ApplicationSpecialistActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }else {
                     to_examine.setVisibility(View.GONE);
                     scrollview.setVisibility(View.VISIBLE);
                     DeviceInfo.handlerRequestResult(Integer.parseInt(requestBean.getCode()), "未知错误");

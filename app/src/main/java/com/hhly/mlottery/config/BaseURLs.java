@@ -1187,6 +1187,8 @@ public class BaseURLs {
     /*推荐专家*/
     public final static String EXPERTPROMOTIONS = P_URL_API_HOST + "promotion/info/expertPromotions";
     public final static String EXPERTINTRODUCT = P_URL_API_HOST + "user/expertIntroduct";
+    /*获取用户信息*/
+    public final static String GETUSERINFO = P_URL_API_HOST + "user/getuserinfo";
     /**
      * 角球列表
      */

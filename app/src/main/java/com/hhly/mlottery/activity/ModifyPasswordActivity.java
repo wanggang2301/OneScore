@@ -1,6 +1,7 @@
 package com.hhly.mlottery.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
@@ -168,8 +169,11 @@ public class ModifyPasswordActivity extends BaseActivity implements View.OnClick
                                 } else if (Integer.parseInt(reset.getCode())== AccountResultCode.USERNAME_PASS_ERROR) {
                                     L.e(TAG, "成功请求，修改密码失败");
                                     UiUtils.toast(MyApp.getInstance(), R.string.username_original_pass_error);
-                                    // CommonUtils.handlerRequestResult(reset.getResult() , reset.getMsg());
-                                } else {
+                                } else if (Integer.parseInt(reset.getCode())  == AccountResultCode.TOKEN_INVALID) {
+                                    UiUtils.toast(getApplicationContext() ,R.string.name_invalid);
+                                    Intent intent = new Intent(ModifyPasswordActivity.this, LoginActivity.class);
+                                    startActivity(intent);
+                                }else {
                                     DeviceInfo.handlerRequestResult(Integer.parseInt(reset.getCode()), "未知错误");
                                 }
                             }
