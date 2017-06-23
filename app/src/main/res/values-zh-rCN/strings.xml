@@ -1163,7 +1163,7 @@
     <string name="unknown_error">未知错误</string>
     <string name="token_null">令牌(token)为空</string>
     <string name="phone_mismatching">用户名与手机号不匹配</string>
-    <string name="token_invalid">令牌(token)失效</string>
+    <string name="token_invalid">登录超时,请重新登录</string>
     <string name="signature_empty">签名为空</string>
     <string name="signature_mismatching">签名不匹配</string>
     <string name="token_mismatchin">令牌(token)与个人信息不匹配</string>

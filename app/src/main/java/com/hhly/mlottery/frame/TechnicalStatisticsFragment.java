@@ -17,8 +17,7 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.TechnicalStatisticBean;
-import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.util.DisplayUtil;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.HashMap;
@@ -109,7 +108,6 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
     private TextView season_3;
     private ScrollView technical_scrollview;
     private TextView match_no_data_txt;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private Activity mActivity;
     private Context mContext;
 
@@ -135,21 +133,18 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
 
     private void initData() {
 
-        String url = "http://m.1332255.com:81/mlottery/core/basketballData.teamTechStatData.do";
+
         Map<String, String> param = new HashMap<>();
         param.put("season", "2016-2017");
         param.put("leagueId", "1");
         param.put("teamId", "1");
 
-        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<TechnicalStatisticBean>() {
+
+        VolleyContentFast.requestJsonByPost(BaseURLs.TEAMTECHSTATDATA, param, new VolleyContentFast.ResponseSuccessListener<TechnicalStatisticBean>() {
             @Override
             public void onResponse(TechnicalStatisticBean handicapStatisticsBean) {
 
-
                 if (handicapStatisticsBean.getResult() == 200) {
-
-                    swipeRefreshLayout.setRefreshing(false);
-                    swipeRefreshLayout.setVisibility(View.VISIBLE);
 
                     //季后赛
                     playoffList = handicapStatisticsBean.getPlayoffList();
@@ -180,11 +175,11 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
     private void inithandicapStatisticDatas(List<TechnicalStatisticBean.DataBean> dataBean) {
 
         if (dataBean.size()==0) {
-            swipeRefreshLayout.setVisibility(View.GONE);
+            technical_scrollview.setVisibility(View.GONE);
             match_no_data_txt.setVisibility(View.VISIBLE);
             return;
         } else {
-            swipeRefreshLayout.setVisibility(View.VISIBLE);
+            technical_scrollview.setVisibility(View.VISIBLE);
             match_no_data_txt.setVisibility(View.GONE);
         }
 
@@ -321,15 +316,6 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
     }
 
     private void initView() {
-
-
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefreshlayout);
-        swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
-
-
-
 
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         preseason_games = (RadioButton) view.findViewById(R.id.odd_plate_btn);

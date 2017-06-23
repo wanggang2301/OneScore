@@ -13,11 +13,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.HandicapStatisticsBean;
 import com.hhly.mlottery.bean.footballDetails.AnalyzeBean;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.cipher.MD5Util;
@@ -103,10 +105,10 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
     private LinearLayout footwall_z_rl;
     private LinearLayout handicap_statisticss_rl;
     private LinearLayout footwall_road_rl;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private Activity mActivity;
     private Context mContext;
     private TextView match_no_data_txt;
+    private ScrollView scrollView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,13 +132,12 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
 
     private void initData() {
 
-        String url = "http://m.1332255.com:81/mlottery/core/basketballData.teamPlateData.do";
         Map<String, String> param = new HashMap<>();
         param.put("season", "2016-2017");
         param.put("leagueId", "1");
         param.put("teamId", "1");
 
-        VolleyContentFast.requestJsonByGet(url, param, new VolleyContentFast.ResponseSuccessListener<HandicapStatisticsBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.TEAMPLATEDATA, param, new VolleyContentFast.ResponseSuccessListener<HandicapStatisticsBean>() {
             @Override
             public void onResponse(HandicapStatisticsBean handicapStatisticsBean) {
 
@@ -144,8 +145,6 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
                 if (handicapStatisticsBean.getResult() == 200) {
 
 
-                    swipeRefreshLayout.setRefreshing(false);
-                    swipeRefreshLayout.setVisibility(View.VISIBLE);
 
                     //大小盘 上下盘盘路
                     trendPlate = handicapStatisticsBean.getTrendPlate();
@@ -159,11 +158,11 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
 
                     if (trendPlate != null && letPlate != null) {
                         match_no_data_txt.setVisibility(View.GONE);
-                        swipeRefreshLayout.setVisibility(View.VISIBLE);
+                        scrollView.setVisibility(View.VISIBLE);
                         initLetSplitDatas();
                     } else {
                         match_no_data_txt.setVisibility(View.VISIBLE);
-                        swipeRefreshLayout.setVisibility(View.GONE);
+                        scrollView.setVisibility(View.GONE);
                     }
                     initEvent();
                 }
@@ -199,11 +198,11 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
                     case R.id.size_disk:
                         if (sizePlate != null) {
                             match_no_data_txt.setVisibility(View.GONE);
-                            swipeRefreshLayout.setVisibility(View.VISIBLE);
+                            scrollView.setVisibility(View.VISIBLE);
                             initSizeDiskDatas();
                         } else {
                             match_no_data_txt.setVisibility(View.VISIBLE);
-                            swipeRefreshLayout.setVisibility(View.GONE);
+                            scrollView.setVisibility(View.GONE);
                         }
                         break;
                     default:
@@ -363,11 +362,7 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
     private void initView() {
 
 
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefreshlayout);
-        swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
-
+        scrollView = (ScrollView) view.findViewById(R.id.handicap_scrollview);
 
         //暂无数据
         match_no_data_txt = (TextView) view.findViewById(R.id.match_no_data_txt);
