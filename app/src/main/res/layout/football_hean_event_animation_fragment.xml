@@ -85,43 +85,10 @@
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
+                        <View
+                            android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:id="@+id/tv_hean_srcoe_time"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/linecolor"
-                                    android:textSize="@dimen/number_desc"
-                                    tools:text="10" />
-
-                                <TextView
-                                    android:id="@+id/tv_hean_srcoe_aop"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@color/linecolor"
-                                    android:textSize="@dimen/number_desc"
-                                    tools:text="'" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:id="@+id/tv_hean_srcoe"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/linecolor"
-                                android:textSize="@dimen/item_filtrate_match_text"
-                                tools:text="(1-0)" />
-
-                        </LinearLayout>
+                            android:layout_weight="0.3" />
 
                         <RelativeLayout
                             android:layout_width="0dp"
@@ -189,6 +156,60 @@
                             android:src="@mipmap/score_default" />
 
                     </RelativeLayout>
+
+                </LinearLayout>
+
+                <!--比赛时间和半场比分-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="5dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_hean_srcoe_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/linecolor"
+                                android:textSize="@dimen/number_desc"
+                                tools:text="10" />
+
+                            <TextView
+                                android:id="@+id/tv_hean_srcoe_aop"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/linecolor"
+                                android:textSize="@dimen/number_desc"
+                                tools:text="'" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_hean_srcoe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/linecolor"
+                            android:textSize="@dimen/number_desc"
+                            tools:text="(1-0)" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5" />
 
                 </LinearLayout>
 
@@ -288,6 +309,7 @@
                         android:src="@mipmap/football_signal_off_icon" />
 
                     <TextView
+                        android:id="@+id/tv_play_off"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -320,6 +342,7 @@
                         android:src="@mipmap/football_drink_water_icon" />
 
                     <TextView
+                        android:id="@+id/tv_drink_water_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -352,6 +375,7 @@
                         android:src="@mipmap/football_injured_icon" />
 
                     <TextView
+                        android:id="@+id/tv_injured_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -384,6 +408,7 @@
                         android:src="@mipmap/football_injured_addtime_icon" />
 
                     <TextView
+                        android:id="@+id/tv_injured_addtime_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -1368,10 +1393,10 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="2.8"
-                                android:orientation="horizontal"
+                                android:background="@drawable/football_animation_offside_bg"
                                 android:gravity="center"
-                                android:paddingLeft="15dp"
-                                android:background="@drawable/football_animation_offside_bg">
+                                android:orientation="horizontal"
+                                android:paddingLeft="15dp">
 
                                 <TextView
                                     android:id="@+id/tv_home_goal_door_title"
@@ -1491,11 +1516,11 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:orientation="horizontal"
-                                android:gravity="center_vertical"
                                 android:layout_weight="2.8"
-                                android:paddingLeft="5dp"
-                                android:background="@drawable/football_animation_offside_bg">
+                                android:background="@drawable/football_animation_offside_bg"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:paddingLeft="5dp">
 
                                 <TextView
                                     android:id="@+id/tv_guest_goal_door_title_time"
@@ -1833,7 +1858,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2"/>
+                    android:layout_weight="2" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -1863,7 +1888,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -4512,7 +4537,6 @@
                 </LinearLayout>
 
             </RelativeLayout>
-
 
 
             <View

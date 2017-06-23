@@ -33,7 +33,10 @@ import com.hhly.mlottery.bean.IsTestLoginBean;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.ConstantPool;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.IssueResultEventBus;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.LoadingResultEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayChargeMoneyResultEventBus;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayDetailsResultEventBus;
 import com.hhly.mlottery.util.AccessTokenKeeper;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.CyUtils;
@@ -94,6 +97,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private TextView tv_forgetpw;
     private String language;
     private TextView login_more;
+    private String inputParament;
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
@@ -103,6 +107,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         if (getIntent().getExtras() != null) {
             isCoustom = getIntent().getBooleanExtra("custom", false);
             isBettingDetail = getIntent().getBooleanExtra(ConstantPool.BETTING_LOAD, false);
+            inputParament = getIntent().getStringExtra(ConstantPool.PUBLIC_INPUT_PARAMEMT);
         }
 
         //应UI要求，把状态栏设置成透明的
@@ -287,6 +292,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             if (isBettingDetail) {
                                 EventBus.getDefault().post(new LoadingResultEventBusEntity(true));
                             }
+
+                            if (inputParament != null){loadResult(inputParament);}
+
                             finish();
                             EventBus.getDefault().post(register);
                             PreferenceUtil.commitString(AppConstants.HEADICON,register.getUser().getImageSrc());
@@ -322,6 +330,25 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
         }
 
+    }
+
+    /**
+     * 调取登录页面完成登录后反回处理
+     */
+    private void loadResult(String type){
+
+        switch (type){
+            case ConstantPool.PAY_DETAILS_RESULT://返回支付
+                EventBus.getDefault().post(new PayDetailsResultEventBus(true));
+                break;
+            case ConstantPool.PAY_CHARGE_MONEY_RESULT://返回充值
+                EventBus.getDefault().post(new PayChargeMoneyResultEventBus(true));
+                break;
+            case ConstantPool.PAY_ISSUE_RESULT://返回发布
+                EventBus.getDefault().post(new IssueResultEventBus(true));
+                break;
+
+        }
     }
 
 

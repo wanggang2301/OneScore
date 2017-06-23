@@ -73,9 +73,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
     private TextView live_error_btn;
     /*下拉刷新*/
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private SwipeRefreshLayout mSwipeRefreshLayout1;
 
-    List headDatas = new ArrayList<>();
 
     private Context mContext;
     private Activity mActivity;
@@ -87,15 +85,11 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
     private int mType;
     private String mLeagueId;
     private View view;
-    private ListView mRecyclerView;
     // private GalleryAdapter galleryAdapter;
     private SnookerPinnedHeaderExpandableListView explistview_live;
-    private GrapeGridView head_gridview;
     private TextView snooker_profile;
     private List<SnookerRaceListitemBean.DataBean.StageMapBean.StageInfoBean> stageInfo;
 
-    private SnookerRaceListitemBean.DataBean.StageMapBean stageMap;
-    private InformationDataAdapter informationDataAdapter;
     private SegmentedGroup segmented5;
     private HorizontalScrollView snooker_race_male_gridview;
     private LinearLayout snooker_race_time_head;
@@ -176,8 +170,6 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
                 if (json.getResult() == 200) {
                     //获取头部数据
                     matchList = json.getData().getMatchList();
-                    //获取整体的头部数据
-                    stageMap = json.getData().getStageMap();
                     //获取头部数据
                     stageInfo = json.getData().getStageMap().getStageInfo();
                     //获取默认头部信息
@@ -315,7 +307,6 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-               /* upLeagueRace("0");*/
                 reFH();
             }
         }, 500);
@@ -352,7 +343,6 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
 
     /*添加Radiobutton*/
     private void addButton(SegmentedGroup group, String stage, String num) {
-
 
         RadioButton radioButton = (RadioButton) mActivity.getLayoutInflater().inflate(R.layout.radio_button_item, null);
         radioButton.setText(stage);

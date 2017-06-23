@@ -32,13 +32,14 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.RecommendedExpertDetailsActivity;
-import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendMvpAdapter;
+import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendDetailsMvpAdapter;
 import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BlurPopWin;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.mvp.bettingmvp.MView;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.IssueSuccessResulyEventBus;
 import com.hhly.mlottery.mvp.bettingmvp.mvppresenter.MvpFootballBettingIssuePresenter;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
@@ -85,7 +86,7 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
     private static final String THIRDID = "thirdId";
     private String mThirdid;
     private View mView;
-    private BettingRecommendMvpAdapter mAdapter;
+    private BettingRecommendDetailsMvpAdapter mAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private ImageView mTextIssue;
@@ -281,7 +282,7 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
 ////                startActivity(intent);
 //                break;
             case R.id.football_betting_text_img:
-                Toast.makeText(getActivity(), "发布文字", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "发布文字", Toast.LENGTH_SHORT).show();
 
                     //是否登录
                     if (DeviceInfo.isLogin()) {
@@ -293,7 +294,7 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
                             startActivity(mIntent);
                             getActivity().overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
                         }else{
-                            Toast.makeText(mContext, "您还不是专家,请申请成为专家后再发布!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, mContext.getResources().getText(R.string.issue_cueernt_isexpert), Toast.LENGTH_SHORT).show();
                         }
 
                     }else{
@@ -321,20 +322,14 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
 
     @Override
     public void loadSuccessView(BettingListDataBean bettingListDataBean) {
-//        list = new ArrayList<>();
-//        for (int i = 0; i < 15; i++) {
-//            BettingIssueBean data = new BettingIssueBean();
-//            data.setName("我是专家 " + i);
-//            list.add(data);
-//        }
-//        buyClicked();
-//        if (mAdapter == null) {
-//            mAdapter = new BettingIssueAdapter(getActivity(), list);
-//            recyclerView.setAdapter(mAdapter);
-//            mAdapter.setmBuyClick(mIssueBuyClickListener);
-//        } else {
-//            updataAdapter();
-//        }
+
+        //是否可发布（发布按钮是否可见)
+        hasPlayIssue = bettingListDataBean.getHasPlay();
+        if (hasPlayIssue == 1) {
+            mTextIssue.setVisibility(View.VISIBLE);
+        }else{
+            mTextIssue.setVisibility(View.GONE);
+        }
 
         if (bettingListDataBean.getPromotionList() == null || bettingListDataBean.getPromotionList().getList().size() == 0) {
             setStatus(SHOW_STATUS_NO_DATA);
@@ -342,13 +337,6 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
         }
         hasNextPage = bettingListDataBean.getPromotionList().isHasNextPage();
 
-        //是否可发布
-        hasPlayIssue = bettingListDataBean.getHasPlay();
-        if (hasPlayIssue == 1) {
-            mTextIssue.setVisibility(View.VISIBLE);
-        }else{
-            mTextIssue.setVisibility(View.GONE);
-        }
 
         setStatus(SHOW_STATUS_SUCCESS);
         listData.clear();
@@ -359,7 +347,7 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
         specialistClick();
 
         L.d("listData >> " + listData.size());
-        mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
+        mAdapter = new BettingRecommendDetailsMvpAdapter(mContext , listData);
 
         mAdapter.setLoadingView(mOnloadingView);
         recyclerView.setAdapter(mAdapter);
@@ -746,5 +734,15 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
             }
         }
         updataAdapter();
+    }
+
+    /**
+     * 发布成功返回
+     * @param issueSuccessResulyEventBus
+     */
+    public void onEventMainThread(IssueSuccessResulyEventBus issueSuccessResulyEventBus){
+        if (issueSuccessResulyEventBus.issueSucce()) {
+            dataRefresh();//发布成功后刷新数据
+        }
     }
 }

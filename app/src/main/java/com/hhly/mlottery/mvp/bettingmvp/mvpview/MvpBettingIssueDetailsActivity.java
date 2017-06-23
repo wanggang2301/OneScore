@@ -1,6 +1,7 @@
 package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.TextUtils;
@@ -17,11 +18,14 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.adapter.bettingadapter.BettingIssueAdapter;
-import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendSettingAdapter;
 import com.hhly.mlottery.bean.bettingbean.BettingIssueFabuPalyBean;
 import com.hhly.mlottery.bean.bettingbean.IssueCodeBean;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.ConstantPool;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.IssueResultEventBus;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.IssueSuccessResulyEventBus;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.SignUtils;
@@ -32,6 +36,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by：XQyi on 2017/5/31 16:08
@@ -45,6 +51,17 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
     private String PARAM_SIGN = "sign";//参数签名
     private String PARAM_LANG = "lang";
     private String PARAM_TIMEZONE = "timeZone";
+
+    /**发布的参数*/
+    private String ISSUE_TITLE = "title"; //标题
+    private String ISSUE_CONTEXT = "context";//推介理由
+    private String ISSUE_PRICE = "price";//推介方案价格
+    private String ISSUE_CHOOSE = "choose";//推介选项，左：1，中：0，右：-1
+    private String ISSUE_CHOOSE1 = "choose1";
+    private String ISSUE_MATCHID = "matchId";//比赛编号
+    private String ISSUE_LEAGUEID = "leagueId";//联赛编号
+    private String ISSUE_TYPE = "type";//类型：0竞彩单关 1亚盘 2大小球 3半场亚盘 4半场大小球
+    private String ISSUE_ODDSID = "oddsId";//赔率编号
 
     private ImageView mBack;
     private ImageView inputImg;
@@ -98,22 +115,54 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
     private RelativeLayout middleOddsFirstll;
     private TextView oddsPlayFirstTitle;
     private TextView oddsPlaySecondTitle;
-    //    /**赔率是否可选（无赔率时不可点击）*/
-//    private boolean checkOdds = false;
+    /**发布时token 是否失效*/
+    private boolean tokenLost = false;
+
+    /**竞彩单关时 上下两组赔率只能单选*/
+    private boolean oddsFirstCheck = true;
+    private boolean oddsSecondCheck = true;
+
+
+    /**非竞彩单关玩法时参数*/
+    private boolean otherOddsPlayFirst = true;
+    private boolean otherOddsPlaySecond = true;
+    private boolean oddsLeftA = false;
+    private boolean oddsRightA = false;
+    private boolean oddsLeftB = false;
+    private boolean oddsRightB = false;
+
+
+    /**玩法是否可选两个(是否竞彩单关)*/
+    private boolean middleFiest = false;
+    private boolean middleSecond = false;
+
+    /**记录选中的玩法赔率*/
+    private List<String> chooseList = new ArrayList<>();
+
+    /**发布时候所传参数*/
+    private String title = ""; //标题
+    private String context = "";//推介理由
+    private String price = "";//推介方案价格
+    private String leagueId = "";//联赛编号
+
+    private String type = "";// 类型：0竞彩单关 1亚盘 2大小球 3半场亚盘 4半场大小球
+    private String oddsId = "";//赔率编号
+    private String mChoose = "";//推介选项，左：1，中：0，右：-1
+    private String mChoose1 = "";//推介选项，左：1，中：0，右：-1
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.betting_issue_activity);
-
+        EventBus.getDefault().register(this);
         initView();
         initData();
     }
 
     private void initView(){
         TextView title = (TextView)findViewById(R.id.public_txt_title);
-        title.setText("发布推介");
+        title.setText(getApplicationContext().getResources().getText(R.string.issue_betting));
         findViewById(R.id.public_btn_filter).setVisibility(View.GONE);
         findViewById(R.id.public_btn_set).setVisibility(View.GONE);
 
@@ -145,7 +194,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 }else{
                     if (TextUtils.isEmpty(detailsEdit.getText())) {
                         inputImg.setVisibility(View.VISIBLE);
-                        detailsEdit.setHint("         最多输入300个字符！");
+                        detailsEdit.setHint(getApplicationContext().getResources().getText(R.string.issue_inputtext_max));
                     }else{
                         inputImg.setVisibility(View.GONE);
                         detailsEdit.setHint("");
@@ -154,7 +203,6 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
             }
         });
         jiageEdit = (EditText) findViewById(R.id.betting_issue_jiage_edit);
-//        jiageEdit.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
 
         issueLeagueName = (TextView) findViewById(R.id.betting_issue_leagueName);
         homeName = (TextView) findViewById(R.id.betting_issue_homename);
@@ -256,7 +304,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
             public void onResponse(BettingIssueFabuPalyBean jsonBean) {
                 if (jsonBean.getCode() == 200) {
                     L.d("qwerqwer == >" , "请求成功");
-
+                    tokenLost = false;
                     if (jsonBean.getData() != null) {
                         //TODO==============================
                         BettingIssueFabuPalyBean.PromotionTypeVo playOddsData = jsonBean.getData();
@@ -303,6 +351,8 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                         }
 
                     }
+                }else if(jsonBean.getCode() == 1012 || jsonBean.getCode() == 1013 || jsonBean.getCode() == 1000){
+                    tokenLost = true;
                 }
 
             }
@@ -320,11 +370,6 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
             @Override
             public void onClick(CompoundButton buttonView, String typeName , int prosition) {
 
-//                if (typeName.equals("竞彩单关")) {
-//                    playOddsSecond.setVisibility(View.VISIBLE);
-//                }else{
-//                    playOddsSecond.setVisibility(View.GONE);
-//                }
                 for (BettingIssueFabuPalyBean.PromotionTypeVo.PromotionTypeListVo voData : listVo){
                     if (voData.getTypeName().equals(typeName)) {
                         if (voData.getOddsList() != null){
@@ -355,9 +400,6 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
         };
     }
 
-    /**玩法是否可选两个(是否竞彩单关)*/
-    private boolean middleFiest = false;
-    private boolean middleSecond = false;
 
     private void setPlayOdds(BettingIssueFabuPalyBean.PromotionTypeVo.PromotionTypeListVo.PromotionOddsVo  oddsVoFirst , BettingIssueFabuPalyBean.PromotionTypeVo.PromotionTypeListVo.PromotionOddsVo  oddsVoSecond){
 
@@ -391,18 +433,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
 
     }
 
-    /**竞彩单关时 上下两组赔率只能单选*/
-    private boolean oddsFirstCheck = true;
-    private boolean oddsSecondCheck = true;
 
-
-    /**非竞彩单关玩法时参数*/
-    private boolean otherOddsPlayFirst = true;
-    private boolean otherOddsPlaySecond = true;
-    private boolean oddsLeftA = false;
-    private boolean oddsRightA = false;
-    private boolean oddsLeftB = false;
-    private boolean oddsRightB = false;
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -411,8 +442,15 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 overridePendingTransition(R.anim.push_fix_out, R.anim.push_left_out);
                 break;
             case R.id.to_issue:
-//                Toast.makeText(this, "to_issue", Toast.LENGTH_SHORT).show();
-                issueCheck();
+                if (!tokenLost) {
+                    issueCheck();
+                }else{
+                    //token 失效（为空）去登陆
+                    AppConstants.register.setToken(null);//token 置空 重新登录
+                    Intent intent = new Intent(this, LoginActivity.class);
+                    intent.putExtra(ConstantPool.PUBLIC_INPUT_PARAMEMT , ConstantPool.PAY_ISSUE_RESULT);
+                    startActivity(intent);
+                }
                 break;
             case R.id.issue_play_left_a:
 
@@ -449,7 +487,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 }else{
                     if (oddsFirstCheck) {
                         if(playMiddleCheckA && playRightCheckA){
-                            Toast.makeText(this, "最多选择两项a", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_max_check), Toast.LENGTH_SHORT).show();
                             playLeftA.setChecked(false);
                             playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                         }else{
@@ -489,7 +527,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 if (oddsFirstCheck) {
 
                     if (playLeftCheckA && playRightCheckA) {
-                        Toast.makeText(this, "最多选择两项a", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_max_check), Toast.LENGTH_SHORT).show();
                         playMiddleA.setChecked(false);
                         playMiddleImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                     }else{
@@ -556,7 +594,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                     if (oddsFirstCheck) {
 
                         if (playLeftCheckA && playMiddleCheckA) {
-                            Toast.makeText(this, "最多选择两项a", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_max_check), Toast.LENGTH_SHORT).show();
                             playRightA.setChecked(false);
                             playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                         }else{
@@ -624,7 +662,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                     if (oddsSecondCheck) {
 
                         if (playMiddleCheckB && playRightCheckB) {
-                            Toast.makeText(this, "最多选择两项b", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_max_check), Toast.LENGTH_SHORT).show();
                             playLeftB.setChecked(false);
                             playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                         }else {
@@ -659,7 +697,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 if (oddsSecondCheck) {
 
                     if (playLeftCheckB && playRightCheckB) {
-                        Toast.makeText(this, "最多选择两项b", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_max_check), Toast.LENGTH_SHORT).show();
                         playMiddleB.setChecked(false);
                         playMiddleImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                     }else{
@@ -723,7 +761,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                     if (oddsSecondCheck) {
 
                         if (playLeftCheckB && playMiddleCheckB) {
-                            Toast.makeText(this, "最多选择两项b", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_max_check), Toast.LENGTH_SHORT).show();
                             playRightB.setChecked(false);
                             playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                         }else{
@@ -819,7 +857,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
         playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
     }
 
-    private List<String> chooseList = new ArrayList<>();
+
 
     /**
      *
@@ -908,16 +946,6 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
     }
 
 
-    private String title = ""; //标题
-    private String context = "";//推介理由
-    private String price = "";//推介方案价格
-    private String leagueId = "";//联赛编号
-
-    private String type = "";// 类型：0竞彩单关 1亚盘 2大小球 3半场亚盘 4半场大小球
-    private String oddsId = "";//赔率编号
-    private String mChoose = "";//推介选项，左：1，中：0，右：-1
-    private String mChoose1 = "";//推介选项，左：1，中：0，右：-1
-
     private void issueCheck(){
 
 //        String issueUrl = "http://192.168.10.242:8098/promotion/info/publicpromotion";
@@ -930,74 +958,91 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
         context = detailsEdit.getText().toString();
         price = jiageEdit.getText().toString();
 
-//        title 标题
-//        context 推介理由
-//        price 推介方案价格
-//        choose 推介选项，左：1，中：0，右：-1
-//        choose1 推介选项，左：1，中：0，右：-1
-//        matchId 比赛编号
-//        leagueId 联赛编号
-//        type 类型：0竞彩单关 1亚盘 2大小球 3半场亚盘 4半场大小球
-//        oddsId 赔率编号
-
-        Map<String ,String> mapPrament = new HashMap<>();
-        mapPrament.put(PARAM_USER_ID , userid);
-        mapPrament.put(PARAM_LOGIN_TOKEN , token); //logintoken
-        mapPrament.put(PARAM_LANG , MyApp.getLanguage());
-        mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
-        mapPrament.put("title" , title);
-        mapPrament.put("context" , context);
-        mapPrament.put("price" ,price);
-        mapPrament.put("choose" ,mChoose);
-        mapPrament.put("choose1" ,mChoose1);
-        mapPrament.put("matchId" ,mMatchId);
-        mapPrament.put("leagueId" ,leagueId);
-        mapPrament.put("type" ,type);
-        mapPrament.put("oddsId" ,oddsId);
-        String signs = SignUtils.getSign(BaseURLs.PARAMENT_TO_ISSUE, mapPrament);
-
-        Map<String ,String> map = new HashMap<>();
-        map.put(PARAM_USER_ID , userid);//用户id
-        map.put(PARAM_LOGIN_TOKEN , token); //logintoken
-        map.put("title" , title);
-        map.put("context" , context);
-        map.put("price" ,price);
-        map.put("choose" ,mChoose);
-        map.put("choose1" ,mChoose1);
-        map.put("matchId" ,mMatchId);
-        map.put("leagueId" ,leagueId);
-        map.put("type" ,type);
-        map.put("oddsId" ,oddsId);
-        map.put(PARAM_SIGN , signs);
-
         L.d("qwer0620==>> " , "type= " + filtrateNull(type) + " oddsId= " + filtrateNull(oddsId) + " mChoose= " + filtrateNull(mChoose)
                 + " mChoose1= "+ filtrateNull(mChoose1) + "========== title= " + filtrateNull(title) + " context= " + filtrateNull(context)
                 + " price= " + price + " matchId= " + mMatchId  + " leagueId= " + leagueId);
 
-        VolleyContentFast.requestJsonByPost(issueUrl,map , new VolleyContentFast.ResponseSuccessListener<IssueCodeBean>() {
-            @Override
-            public void onResponse(IssueCodeBean jsonBean) {
-                if (jsonBean.getCode() == 200) {
-                    L.d("qwerqwer == >" , "发布成功");
-                    Toast.makeText(MvpBettingIssueDetailsActivity.this, "发布成功!", Toast.LENGTH_SHORT).show();
-                    finish();
-                }else{
-                    switch (jsonBean.getCode()){
-                        case 3012:
-                            Toast.makeText(MvpBettingIssueDetailsActivity.this, "比赛开始前五分钟不可发布", Toast.LENGTH_SHORT).show();
-                            break;
-                        case 3013:
-                            Toast.makeText(MvpBettingIssueDetailsActivity.this, "该用户的该种玩法已经发布过", Toast.LENGTH_SHORT).show();
-                            break;
+        if(mChoose.equals("")){
+            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_check_odds), Toast.LENGTH_SHORT).show();
+        }else if(title.equals("")){
+            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_check_title), Toast.LENGTH_SHORT).show();
+        }else if(context.equals("")){
+            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_check_recome), Toast.LENGTH_SHORT).show();
+        }else if (price.equals("")){
+            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_check_price), Toast.LENGTH_SHORT).show();
+        }else{
+
+            Map<String ,String> mapPrament = new HashMap<>();
+            mapPrament.put(PARAM_USER_ID , userid);
+            mapPrament.put(PARAM_LOGIN_TOKEN , token); //logintoken
+            mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+            mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
+            mapPrament.put(ISSUE_TITLE , title);
+            mapPrament.put(ISSUE_CONTEXT , context);
+            mapPrament.put(ISSUE_PRICE ,price);
+            mapPrament.put(ISSUE_CHOOSE ,mChoose);
+            mapPrament.put(ISSUE_CHOOSE1 ,mChoose1);
+            mapPrament.put(ISSUE_MATCHID ,mMatchId);
+            mapPrament.put(ISSUE_LEAGUEID ,leagueId);
+            mapPrament.put(ISSUE_TYPE ,type);
+            mapPrament.put(ISSUE_ODDSID ,oddsId);
+            String signs = SignUtils.getSign(BaseURLs.PARAMENT_TO_ISSUE, mapPrament);
+
+            Map<String ,String> map = new HashMap<>();
+            map.put(PARAM_USER_ID , userid);//用户id
+            map.put(PARAM_LOGIN_TOKEN , token); //logintoken
+            map.put(ISSUE_TITLE , title);
+            map.put(ISSUE_CONTEXT , context);
+            map.put(ISSUE_PRICE ,price);
+            map.put(ISSUE_CHOOSE ,mChoose);
+            map.put(ISSUE_CHOOSE1 ,mChoose1);
+            map.put(ISSUE_MATCHID ,mMatchId);
+            map.put(ISSUE_LEAGUEID ,leagueId);
+            map.put(ISSUE_TYPE ,type);
+            map.put(ISSUE_ODDSID ,oddsId);
+            map.put(PARAM_SIGN , signs);
+
+            VolleyContentFast.requestJsonByPost(issueUrl,map , new VolleyContentFast.ResponseSuccessListener<IssueCodeBean>() {
+                @Override
+                public void onResponse(IssueCodeBean jsonBean) {
+                    if (jsonBean.getCode() == 200) {
+                        L.d("qwerqwer == >" , "发布成功");
+                        Toast.makeText(MvpBettingIssueDetailsActivity.this, getApplicationContext().getResources().getText(R.string.issue_success), Toast.LENGTH_SHORT).show();
+                        EventBus.getDefault().post(new IssueSuccessResulyEventBus(true));
+                        finish();
+                    }else{
+                        switch (jsonBean.getCode()){
+                            case 3012:
+                                Toast.makeText(MvpBettingIssueDetailsActivity.this, getApplicationContext().getResources().getText(R.string.issue_match_fivemin_noissue), Toast.LENGTH_SHORT).show();
+                                break;
+                            case 3013:
+                                Toast.makeText(MvpBettingIssueDetailsActivity.this, getApplicationContext().getResources().getText(R.string.issue_play_ok), Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        L.d("qwerqwer == >" , "发布失败");
                     }
-                    L.d("qwerqwer == >" , "发布失败");
                 }
-            }
-        }, new VolleyContentFast.ResponseErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                L.d("qwerqwer == >" , "访问失败");
-            }
-        },IssueCodeBean.class);
+            }, new VolleyContentFast.ResponseErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                    L.d("qwerqwer == >" , "访问失败");
+                }
+            },IssueCodeBean.class);
+        }
+    }
+
+    /**
+     * 登录页面返回
+     */
+    public void onEventMainThread(IssueResultEventBus issueResult){
+        if (issueResult.issueResult()) {
+            initData();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

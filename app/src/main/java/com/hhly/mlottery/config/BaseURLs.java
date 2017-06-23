@@ -76,11 +76,11 @@ public class BaseURLs {
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.ZH_1332255);
 
             if (url_config == DebugConfigActivity.ZH_1332255) {
-                return "m.1332255.com:9600";
+                return "m.1332255.com:81";
             } else if (url_config == DebugConfigActivity.TH_1332255) {
-                return "m.th.1332255.com:9600";
+                return "m.th.1332255.com:81";
             } else if (url_config == DebugConfigActivity.VN_1332255) {
-                return "m.vn.1332255.com:9600";
+                return "m.vn.1332255.com:81";
             } else if (url_config == DebugConfigActivity.ZH_13322) {
                 return "m.13322.com";
             } else if (url_config == DebugConfigActivity.TH_13322) {
@@ -90,9 +90,9 @@ public class BaseURLs {
             } else if (url_config == DebugConfigActivity.VN_13366) {
                 return "m.13366.vn";
             } else if (url_config == DebugConfigActivity.DIY_INPUT) {
-                return PreferenceUtil.getString("DIY_INPUT", "m.1332255.com:9600");
+                return PreferenceUtil.getString("DIY_INPUT", "m.1332255.com:81");
             } else {
-                return "m.1332255.com:9600";
+                return "m.1332255.com:81";
             }
         }
 
@@ -121,11 +121,11 @@ public class BaseURLs {
             int ws_config = PreferenceUtil.getInt(MyConstants.WS_HOME_CONFIG, DebugConfigActivity.WS_1332255_ZH);
 
             if (ws_config == DebugConfigActivity.WS_1332255_ZH) {
-                return "m.1332255.com:9600/ws";
+                return "m.1332255.com:81/ws";
             } else if (ws_config == DebugConfigActivity.WS_1332255_TH) {
-                return "m.th.1332255.com:9600/ws";
+                return "m.th.1332255.com:81/ws";
             } else if (ws_config == DebugConfigActivity.WS_1332255_VN) {
-                return "m.vn.1332255.com:9600/ws";
+                return "m.vn.1332255.com:81/ws";
             } else if (ws_config == DebugConfigActivity.WS_13322_ZH) {
                 return "m.13322.com/ws";
             } else if (ws_config == DebugConfigActivity.WS_13322_TH) {
@@ -135,9 +135,9 @@ public class BaseURLs {
             } else if (ws_config == DebugConfigActivity.WS_13366_VN) {
                 return "m.13366.vn/ws";
             } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
-                return "m.1332255.com:9600/ws";// 自定义
+                return "m.1332255.com:81/ws";// 自定义
             } else {
-                return "m.1332255.com:9600/ws";
+                return "m.1332255.com:81/ws";
             }
         }
 
@@ -1187,6 +1187,8 @@ public class BaseURLs {
     /*推荐专家*/
     public final static String EXPERTPROMOTIONS = P_URL_API_HOST + "promotion/info/expertPromotions";
     public final static String EXPERTINTRODUCT = P_URL_API_HOST + "user/expertIntroduct";
+    /*获取用户信息*/
+    public final static String GETUSERINFO = P_URL_API_HOST + "user/getuserinfo";
     /**
      * 角球列表
      */
