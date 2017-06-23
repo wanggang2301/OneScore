@@ -288,6 +288,7 @@
                         android:src="@mipmap/football_signal_off_icon" />
 
                     <TextView
+                        android:id="@+id/tv_play_off"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -320,6 +321,7 @@
                         android:src="@mipmap/football_drink_water_icon" />
 
                     <TextView
+                        android:id="@+id/tv_drink_water_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -352,6 +354,7 @@
                         android:src="@mipmap/football_injured_icon" />
 
                     <TextView
+                        android:id="@+id/tv_injured_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
@@ -384,6 +387,7 @@
                         android:src="@mipmap/football_injured_addtime_icon" />
 
                     <TextView
+                        android:id="@+id/tv_injured_addtime_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"

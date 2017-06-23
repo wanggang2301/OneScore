@@ -234,6 +234,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private TextView tv_start, tv_half_txt;
     // 信号中断、喝水、受伤、伤停补时
     private RelativeLayout rl_signal_off, rl_drink_water, rl_injured, rl_injured_addtime;
+    private TextView tv_play_off,tv_drink_water_title,tv_injured_title,tv_injured_addtime_title;
     // 后场控球、进攻、危险进攻
     private LinearLayout ll_control_content;
     // 后场控球
@@ -1927,6 +1928,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_drink_water.setVisibility(View.GONE);
                 rl_injured.setVisibility(View.GONE);
                 rl_injured_addtime.setVisibility(View.GONE);
+                tv_play_off.setText(R.string.football_play_404);
                 showGifAnimation(515);
                 break;
             case "311"://喝水
@@ -1935,6 +1937,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_drink_water.setVisibility(View.VISIBLE);
                 rl_injured.setVisibility(View.GONE);
                 rl_injured_addtime.setVisibility(View.GONE);
+                tv_drink_water_title.setText(R.string.football_play_drink_water);
                 showGifAnimation(311);
                 break;
             case "132"://受伤
@@ -1943,6 +1946,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_drink_water.setVisibility(View.GONE);
                 rl_injured.setVisibility(View.VISIBLE);
                 rl_injured_addtime.setVisibility(View.GONE);
+                tv_injured_title.setText(R.string.football_play_injured);
                 showGifAnimation(132);
                 break;
             case "260"://伤停补时
@@ -1951,6 +1955,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_drink_water.setVisibility(View.GONE);
                 rl_injured.setVisibility(View.GONE);
                 rl_injured_addtime.setVisibility(View.VISIBLE);
+                tv_injured_addtime_title.setText(R.string.football_play_injured_addtime);
                 showGifAnimation(260);
                 break;
             case "1051"://主队后场控球
@@ -3555,6 +3560,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         rl_drink_water = (RelativeLayout) findViewById(R.id.rl_drink_water);
         rl_injured = (RelativeLayout) findViewById(R.id.rl_injured);
         rl_injured_addtime = (RelativeLayout) findViewById(R.id.rl_injured_addtime);
+        tv_play_off = (TextView) findViewById(R.id.tv_play_off);
+        tv_drink_water_title = (TextView) findViewById(R.id.tv_drink_water_title);
+        tv_injured_title = (TextView) findViewById(R.id.tv_injured_title);
+        tv_injured_addtime_title = (TextView) findViewById(R.id.tv_injured_addtime_title);
 
         // 后场控球、进攻、危险进攻
         ll_control_content = (LinearLayout) findViewById(R.id.ll_control_content);
