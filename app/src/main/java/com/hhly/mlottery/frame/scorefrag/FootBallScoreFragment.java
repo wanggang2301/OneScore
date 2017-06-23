@@ -231,11 +231,8 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
         fragments = new ArrayList<>();
         rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT, isNewFrameWork, entryType);
-        TechnicalStatisticsFragment technicalStatisticsFragment=new TechnicalStatisticsFragment();
-        fragments.add(technicalStatisticsFragment);
-        HandicapStatisticsFragment handicapStatisticsFragment=new HandicapStatisticsFragment();
-        fragments.add(handicapStatisticsFragment);
-       // fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork, entryType));
+        fragments.add(rollBallFragment);
+        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork, entryType));
         fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT, entryType));
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT, entryType));
         fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT, entryType));
