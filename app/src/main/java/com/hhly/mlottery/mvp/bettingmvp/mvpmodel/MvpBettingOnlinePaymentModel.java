@@ -27,7 +27,7 @@ public class MvpBettingOnlinePaymentModel implements MModel {
         VolleyContentFast.requestJsonByGet(url, parametMap, new VolleyContentFast.ResponseSuccessListener<BettingOrderDataBean>() {
             @Override
             public void onResponse(BettingOrderDataBean jsonObject) {
-                if (jsonObject == null || jsonObject.getCode() != 3000) {
+                if (jsonObject == null || jsonObject.getCode() == null) {
                     mPresenter.noData();
                 }else{
                     mPresenter.loadSuccess(jsonObject);

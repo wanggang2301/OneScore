@@ -46,5 +46,12 @@ public class ConstantPool {
     public final static String PARAMENT_CHANNEL = "1"; //0：PC 1：安卓 2:IOS 3:H5
     public final static String PARAMENT_PAY_TYPE = "3"; //1微信2支付宝3账户余额  （目前只支持3）
 
+    /*跳转登录页完成登录后返回码*/
+    public final static String PUBLIC_INPUT_PARAMEMT = "inputparament"; //intent 传入参数
+    public final static String PAY_DETAILS_RESULT = "paydetailsresult"; //支付页面返回（需要重新生成订单）
+    public final static String PAY_CHARGE_MONEY_RESULT = "paychargemoneyresult"; //充值页面返回（需要重新查询余额）
+    public final static String PAY_ISSUE_RESULT = "issueresult"; //发布页面返回（需要重新请求玩法数据）
+
+
 
 }

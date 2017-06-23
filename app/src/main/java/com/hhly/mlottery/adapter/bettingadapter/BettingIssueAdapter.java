@@ -58,7 +58,7 @@ public class BettingIssueAdapter extends CommonAdapter<BettingIssueFabuPalyBean.
                     }
                 }else{
                     if (playId.equals(buttonView.getTag())) {
-                        Toast.makeText(mContext, "必须选择一种玩法", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, mContext.getResources().getText(R.string.issue_check_singlg), Toast.LENGTH_SHORT).show();
                     }
                 }
             }

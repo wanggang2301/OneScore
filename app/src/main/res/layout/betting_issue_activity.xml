@@ -46,7 +46,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_size_14"
                             android:textColor="@color/betting_recommend_zhuanjia_spf_color"
-                            android:text="推介赛事"/>
+                            android:text="@string/issue_lay_betting_iss"/>
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_13"
                                 android:textColor="@color/betting_recommend_issue_leaguename_color"
-                                android:text="中超"/>
+                                android:text="--"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -108,12 +108,13 @@
 
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:paddingRight="5dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text="推荐玩法: "/>
+                                android:text="@string/issue_lay_issue_play"/>
                         </LinearLayout>
 
                         <com.hhly.mlottery.widget.GrapeGridView
@@ -404,12 +405,13 @@
                         android:paddingTop="15dp">
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:paddingRight="5dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text="推介标题: "/>
+                                android:text="@string/issue_lay_issue_tittle"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -420,9 +422,11 @@
                                 android:layout_height="30dp"
                                 android:textSize="@dimen/text_size_11"
                                 android:textColor="#d7d7d7"
-                                android:hint="最多输入20个字符"
+                                android:hint="@string/issue_lay_max_input"
                                 android:maxLength="20"
                                 android:paddingLeft="5dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
                                 android:background="@drawable/betting_issues_fabu_edit_text_bg"
                                 />
                         </LinearLayout>
@@ -433,12 +437,13 @@
                         android:paddingTop="15dp">
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:paddingRight="5dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text="推介理由  "/>
+                                android:text="@string/issue_lay_issue_reason"/>
                         </LinearLayout>
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -455,7 +460,7 @@
                                 android:paddingRight="5dp"
                                 android:maxLength="300"
                                 android:gravity="top|left"
-                                android:hint="         最多输入300个字符！"
+                                android:hint="@string/issue_inputtext_max"
                                 />
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -477,12 +482,13 @@
                         android:paddingTop="10dp">
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:paddingRight="5dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text="方案定价: "/>
+                                android:text="@string/issue_lay_issue_scheme_price"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -495,8 +501,10 @@
                                 android:textColor="#d7d7d7"
                                 android:inputType="number"
                                 android:cursorVisible="false"
-                                android:hint="0则为免费"
+                                android:hint="@string/issue_lay_zero_free"
                                 android:paddingLeft="8dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
                                 android:background="@drawable/betting_issues_fabu_edit_text_bg"
                                 />
                             <TextView
@@ -634,7 +642,7 @@
                                 android:layout_alignBottom="@+id/issue_price_card_a"
                                 android:layout_centerHorizontal="true"
                                 android:paddingBottom="5dp"
-                                android:text="@string/betting_txt_amount_ten" />
+                                android:text="@string/betting_txt_amount_two" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:layout_width="0dp"
@@ -656,7 +664,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:paddingBottom="5dp"
                                 android:gravity="center"
-                                android:text="@string/betting_txt_amount_twenty" />
+                                android:text="@string/betting_txt_amount_five" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:layout_width="0dp"
@@ -676,7 +684,7 @@
                                 android:layout_alignBottom="@+id/issue_price_card_c"
                                 android:layout_centerHorizontal="true"
                                 android:paddingBottom="5dp"
-                                android:text="@string/betting_txt_amount_fifty" />
+                                android:text="@string/betting_txt_amount_ten" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:layout_width="0dp"
@@ -697,13 +705,14 @@
                                 android:layout_alignBottom="@+id/issue_price_card_d"
                                 android:layout_centerHorizontal="true"
                                 android:paddingBottom="5dp"
-                                android:text="@string/betting_txt_amount_one_hundred" />
+                                android:text="@string/betting_txt_amount_fifteen" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/to_issue"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
                     >
                     <TextView
@@ -713,7 +722,7 @@
                         android:background="#dff2ff"
                         android:textColor="@color/betting_recommend_zhuanjia_spf_color"
                         android:textSize="@dimen/text_size_15"
-                        android:text="发布"
+                        android:text="@string/issue_to_issue"
                         />
                 </LinearLayout>
             </LinearLayout>
