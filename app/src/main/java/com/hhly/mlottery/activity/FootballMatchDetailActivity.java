@@ -3261,6 +3261,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 break;
             case R.id.iv_home_icon:// 主队logo
             case R.id.iv_head_home_icon:// 主队logo
+            case R.id.tv_head_home_name:// name
                 if (mMatchDetail.getHomeTeamInfo().getId() != null) {
                     Intent homeIntent = new Intent(this, FootballTeamInfoActivity.class);
                     homeIntent.putExtra("TEAM_ID", mMatchDetail.getHomeTeamInfo().getId());
@@ -3270,12 +3271,18 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 break;
             case R.id.iv_guest_icon:// 客队logo
             case R.id.iv_head_guest_icon:// 客队logo
+            case R.id.tv_head_guest_name:// name
                 if (mMatchDetail.getGuestTeamInfo().getId() != null) {
                     Intent guestIntent = new Intent(this, FootballTeamInfoActivity.class);
                     guestIntent.putExtra("TEAM_ID", mMatchDetail.getGuestTeamInfo().getId());
                     guestIntent.putExtra("TITLE_TEAM_NAME", mMatchDetail.getGuestTeamInfo().getName());
                     startActivity(guestIntent);
                 }
+                break;
+            case R.id.tv_head_match_name:// 点击联赛跳转到
+
+                // TODO
+
                 break;
             default:
                 break;
@@ -3543,8 +3550,11 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         // 比赛未进行中
         ll_over_score_content = (LinearLayout) findViewById(R.id.ll_over_score_content);
         tv_head_match_name = (TextView) findViewById(R.id.tv_head_match_name);
+        tv_head_match_name.setOnClickListener(this);
         tv_head_home_name = (TextView) findViewById(R.id.tv_head_home_name);
+        tv_head_home_name.setOnClickListener(this);
         tv_head_guest_name = (TextView) findViewById(R.id.tv_head_guest_name);
+        tv_head_guest_name.setOnClickListener(this);
         tv_head_data_or_score = (TextView) findViewById(R.id.tv_head_data_or_score);
         tv_head_time = (TextView) findViewById(R.id.tv_head_time);
         tv_head_over_score = (TextView) findViewById(R.id.tv_head_over_score);
