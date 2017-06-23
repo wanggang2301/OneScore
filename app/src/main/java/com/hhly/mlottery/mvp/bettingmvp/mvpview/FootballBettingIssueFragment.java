@@ -322,20 +322,14 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
 
     @Override
     public void loadSuccessView(BettingListDataBean bettingListDataBean) {
-//        list = new ArrayList<>();
-//        for (int i = 0; i < 15; i++) {
-//            BettingIssueBean data = new BettingIssueBean();
-//            data.setName("我是专家 " + i);
-//            list.add(data);
-//        }
-//        buyClicked();
-//        if (mAdapter == null) {
-//            mAdapter = new BettingIssueAdapter(getActivity(), list);
-//            recyclerView.setAdapter(mAdapter);
-//            mAdapter.setmBuyClick(mIssueBuyClickListener);
-//        } else {
-//            updataAdapter();
-//        }
+
+        //是否可发布（发布按钮是否可见)
+        hasPlayIssue = bettingListDataBean.getHasPlay();
+        if (hasPlayIssue == 1) {
+            mTextIssue.setVisibility(View.VISIBLE);
+        }else{
+            mTextIssue.setVisibility(View.GONE);
+        }
 
         if (bettingListDataBean.getPromotionList() == null || bettingListDataBean.getPromotionList().getList().size() == 0) {
             setStatus(SHOW_STATUS_NO_DATA);
@@ -343,13 +337,6 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
         }
         hasNextPage = bettingListDataBean.getPromotionList().isHasNextPage();
 
-        //是否可发布
-        hasPlayIssue = bettingListDataBean.getHasPlay();
-        if (hasPlayIssue == 1) {
-            mTextIssue.setVisibility(View.VISIBLE);
-        }else{
-            mTextIssue.setVisibility(View.GONE);
-        }
 
         setStatus(SHOW_STATUS_SUCCESS);
         listData.clear();

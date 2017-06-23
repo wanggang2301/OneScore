@@ -425,6 +425,8 @@
                                 android:hint="@string/issue_lay_max_input"
                                 android:maxLength="20"
                                 android:paddingLeft="5dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
                                 android:background="@drawable/betting_issues_fabu_edit_text_bg"
                                 />
                         </LinearLayout>
@@ -501,6 +503,8 @@
                                 android:cursorVisible="false"
                                 android:hint="@string/issue_lay_zero_free"
                                 android:paddingLeft="8dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
                                 android:background="@drawable/betting_issues_fabu_edit_text_bg"
                                 />
                             <TextView
@@ -638,7 +642,7 @@
                                 android:layout_alignBottom="@+id/issue_price_card_a"
                                 android:layout_centerHorizontal="true"
                                 android:paddingBottom="5dp"
-                                android:text="@string/betting_txt_amount_ten" />
+                                android:text="@string/betting_txt_amount_two" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:layout_width="0dp"
@@ -660,7 +664,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:paddingBottom="5dp"
                                 android:gravity="center"
-                                android:text="@string/betting_txt_amount_twenty" />
+                                android:text="@string/betting_txt_amount_five" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:layout_width="0dp"
@@ -680,7 +684,7 @@
                                 android:layout_alignBottom="@+id/issue_price_card_c"
                                 android:layout_centerHorizontal="true"
                                 android:paddingBottom="5dp"
-                                android:text="@string/betting_txt_amount_fifty" />
+                                android:text="@string/betting_txt_amount_ten" />
                         </RelativeLayout>
                         <RelativeLayout
                             android:layout_width="0dp"
@@ -701,13 +705,14 @@
                                 android:layout_alignBottom="@+id/issue_price_card_d"
                                 android:layout_centerHorizontal="true"
                                 android:paddingBottom="5dp"
-                                android:text="@string/betting_txt_amount_one_hundred" />
+                                android:text="@string/betting_txt_amount_fifteen" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/to_issue"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
                     >
                     <TextView
@@ -717,7 +722,7 @@
                         android:background="#dff2ff"
                         android:textColor="@color/betting_recommend_zhuanjia_spf_color"
                         android:textSize="@dimen/text_size_15"
-                        android:text="@string/issue_to_iss"
+                        android:text="@string/issue_to_issue"
                         />
                 </LinearLayout>
             </LinearLayout>

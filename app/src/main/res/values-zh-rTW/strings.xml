@@ -1762,6 +1762,9 @@
     <string name="betting_txt_balance_account">賬戶余額:</string>
     <string name="betting_txt_recharge_integer">充值金額需為整數</string>
     <string name="betting_txt_recharge_quota">￥1-10000</string>
+    <string name="betting_txt_amount_two">2元</string>
+    <string name="betting_txt_amount_five">5元</string>
+    <string name="betting_txt_amount_fifteen">15元</string>
     <string name="betting_txt_amount_ten">10元</string>
     <string name="betting_txt_amount_twenty">20元</string>
     <string name="betting_txt_amount_fifty">50元</string>
@@ -1801,7 +1804,7 @@
     <string name="issue_lay_issue_scheme_price">方案定價</string>
     <string name="issue_lay_max_input">最多輸入20個字符</string>
     <string name="issue_lay_zero_free">0則為免費</string>
-    <string name="issue_to_iss">發布</string>
+    <string name="issue_to_issue">確定</string>
 
     <string name="issue_check_odds">請選擇賠率</string>
     <string name="issue_check_title">推介標題不能為空</string>
