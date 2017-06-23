@@ -228,7 +228,6 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
         String[] tabNames = {getString(R.string.foot_rollball_txt), getString(R.string.foot_jishi_txt), getString(R.string.foot_saiguo_txt), getString(R.string.foot_saicheng_txt), getString(R.string.foot_guanzhu_txt)};
 
-
         fragments = new ArrayList<>();
         rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT, isNewFrameWork, entryType);
         fragments.add(rollBallFragment);
