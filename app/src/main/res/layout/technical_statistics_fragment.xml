@@ -1,0 +1,1250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="4">
+
+        <!--亚盘-->
+        <RadioButton
+            android:id="@+id/odd_plate_btn"
+            style="@style/odds_radio_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="-1dp"
+            android:layout_marginRight="-1dp"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button_left"
+            android:checked="true"
+            android:text="@string/preseason_games" />
+        <!--大小-->
+        <RadioButton
+            android:id="@+id/odd_big_btn"
+            style="@style/odds_radio_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button_center"
+            android:text="@string/regular_season" />
+        <!--欧赔-->
+        <RadioButton
+            android:id="@+id/odd_op_btn"
+            style="@style/odds_radio_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="-1dp"
+            android:layout_marginStart="-1dp"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button_right"
+            android:text="@string/playoff" />
+
+    </RadioGroup>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+
+        android:id="@+id/swiperefreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <ScrollView
+        android:visibility="visible"
+        android:id="@+id/technical_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+        <!--指数-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:background="@color/line_football_footer">
+
+
+                <TextView style="@style/handicap_statisticss" />
+
+                <TextView
+                    android:id="@+id/season_1"
+                    style="@style/handicap_statisticss"
+                    android:text="16-17" />
+
+                <TextView
+                    android:id="@+id/season_2"
+                    style="@style/handicap_statisticss"
+                    android:text="15-16" />
+
+                <TextView
+                    android:id="@+id/season_3"
+                    style="@style/handicap_statisticss"
+                    android:text="14-15" />
+
+            </LinearLayout>
+
+
+            <View style="@style/technial_ve_line" />
+            <!--常规-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+
+                    <View style="@style/technial_hr_line" />
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="@string/technical_routine"
+                        android:textColor="@color/snooker"
+                        android:textSize="12sp" />
+
+
+                    <View style="@style/technial_hr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="胜" />
+
+                        <View style="@style/technial_vr_line" />
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="负" />
+                    </LinearLayout>
+
+
+                    <View style="@style/technial_hr_line" />
+
+                </LinearLayout>
+
+
+                <View style="@style/technial_hr_line" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+
+                        <TextView
+                            android:id="@+id/routine_win_11"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/routine_win_22"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/routine_win_33"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+                    <View style="@style/technial_vr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+
+                        <TextView
+                            android:id="@+id/routine_lose_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/routine_lose_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/routine_lose_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <View style="@style/technial_ve_line" />
+            <!--加时-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+
+                <View style="@style/technial_hr_line" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="@string/fottball_home_jiashi"
+                        android:textColor="@color/snooker"
+                        android:textSize="12sp" />
+
+
+                    <View style="@style/technial_hr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="胜" />
+
+                        <View style="@style/technial_vr_line" />
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="负" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View style="@style/technial_hr_line" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+
+                        <TextView
+                            android:id="@+id/overtime_win_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/overtime_win_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/overtime_win_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+                    <View style="@style/technial_vr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/overtime_lose_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/overtime_lose_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/overtime_lose_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+                        <View style="@style/technial_hr_line" />>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <View style="@style/technial_ve_line" />
+            <!--投篮-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+
+                <View style="@style/technial_hr_line" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="@string/basket_player_shoot"
+                        android:textColor="@color/snooker"
+                        android:textSize="12sp" />
+
+                    <View style="@style/technial_hr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="总(场均)" />
+
+                        <View style="@style/technial_vr_line" />
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="进(场均)" />
+
+                        <View style="@style/technial_vr_line" />
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="命中%" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View style="@style/technial_hr_line" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+
+                        <TextView
+                            android:id="@+id/shoot_zong_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/shoot_zong_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/shoot_zong_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+                    <View style="@style/technial_vr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/shoot_in_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/shoot_in_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/shoot_in_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+                    <View style="@style/technial_vr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/shoot_hit_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/shoot_hit_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/shoot_hit_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.2dp"
+                android:background="@color/item_match_jingcai" />
+            <!--三分-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <View style="@style/technial_hr_line" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/textView24"
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="@string/basket_player_three"
+                        android:textColor="@color/snooker"
+                        android:textSize="12sp" />
+
+
+                    <View style="@style/technial_hr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="总(场均)" />
+
+                        <View style="@style/technial_vr_line" />
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="进(场均)" />
+
+                        <View style="@style/technial_vr_line" />
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="命中%" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View style="@style/technial_hr_line" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/three_points_zong_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/three_points_zong_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/three_points_zong_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+                    <View style="@style/technial_vr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/three_points_in_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/three_points_in_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/three_points_in_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+                    <View style="@style/technial_vr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/three_points_hit_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/three_points_hit_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/three_points_hit_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <View style="@style/technial_ve_line" />
+            <!--罚球-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+
+                <View style="@style/technial_hr_line" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="@string/technical_free_throw"
+                        android:textColor="@color/snooker"
+                        android:textSize="12sp" />
+
+                    <View style="@style/technial_hr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="总(场均)" />
+
+                        <View style="@style/technial_vr_line" />
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="进(场均)" />
+
+                        <View style="@style/technial_vr_line" />
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="命中%" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View style="@style/technial_hr_line" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+
+                        <TextView
+                            android:id="@+id/free_throw_zong_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/free_throw_zong_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/free_throw_zong_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+                    <View style="@style/technial_vr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/free_throw_in_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/free_throw_in_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/free_throw_in_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+                    <View style="@style/technial_vr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/free_throw_hit_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/free_throw_hit_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/free_throw_hit_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <View style="@style/technial_ve_line" />
+            <!--篮板-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+
+                <View style="@style/technial_hr_line" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:text="@string/basket_rebound"
+                        android:textColor="@color/snooker"
+                        android:textSize="12sp" />
+
+
+                    <View style="@style/technial_hr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="总数" />
+
+                        <View style="@style/technial_vr_line" />
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="进攻" />
+
+                        <View style="@style/technial_vr_line" />
+
+                        <TextView
+                            style="@style/technial_stctistic"
+                            android:text="防守" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <View style="@style/technial_hr_line" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/rebound_zong_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/rebound_zong_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/rebound_zong_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+                    <View style="@style/technial_vr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+
+                        <TextView
+                            android:id="@+id/rebound_in_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/rebound_in_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/rebound_in_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                    </LinearLayout>
+
+                    <View style="@style/technial_vr_line" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+
+                        <TextView
+                            android:id="@+id/rebound_hit_1"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/rebound_hit_2"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+                        <View style="@style/technial_hr_line" />
+
+                        <TextView
+                            android:id="@+id/rebound_hit_3"
+                            style="@style/handicap_statisticss"
+                            android:text="16-17" />
+
+
+                        <View style="@style/technial_hr_line" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+            <View style="@style/technial_ve_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/assists_1"
+                    style="@style/handicap_statisticss"
+                    android:text="@string/basket_assist" />
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/assists_2"
+
+                    style="@style/handicap_statisticss"
+                    android:text="16-17" />
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/assists_3"
+                    style="@style/handicap_statisticss"
+                    android:text="15-16" />
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    style="@style/handicap_statisticss"
+                    android:text="14-15" />
+
+
+                <View style="@style/technial_hr_line" />
+
+            </LinearLayout>
+
+
+            <View style="@style/technial_ve_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    style="@style/handicap_statisticss"
+                    android:text="@string/basket_steal" />
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/steals_1"
+                    style="@style/handicap_statisticss"
+                    android:text="16-17" />
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/steals_2"
+                    style="@style/handicap_statisticss"
+                    android:text="15-16" />
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/steals_3"
+                    style="@style/handicap_statisticss"
+                    android:text="14-15" />
+
+
+                <View style="@style/technial_hr_line" />
+
+            </LinearLayout>
+
+            <View style="@style/technial_ve_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/textView21"
+                    style="@style/handicap_statisticss"
+                    android:text="@string/basket_blockshoot" />
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/shot_1"
+                    style="@style/handicap_statisticss"
+                    android:text="16-17" />
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/shot_2"
+                    style="@style/handicap_statisticss"
+                    android:text="15-16" />
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/shot_3"
+                    style="@style/handicap_statisticss"
+                    android:text="14-15" />
+
+
+                <View style="@style/technial_hr_line" />
+
+            </LinearLayout>
+
+            <View style="@style/technial_ve_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    style="@style/handicap_statisticss"
+                    android:text="@string/basket_foul" />
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/foul_1"
+                    style="@style/handicap_statisticss"
+                    android:text="16-17" />
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/foul_2"
+                    style="@style/handicap_statisticss"
+                    android:text="15-16" />
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/foul_3"
+                    style="@style/handicap_statisticss"
+                    android:text="14-15" />
+
+                <View style="@style/technial_hr_line" />
+            </LinearLayout>
+
+            <View style="@style/technial_ve_line" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    style="@style/handicap_statisticss"
+                    android:text="@string/basket_turnover" />
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/error_1"
+                    style="@style/handicap_statisticss"
+                    android:text="16-17" />
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/error_2"
+                    style="@style/handicap_statisticss"
+                    android:text="15-16" />
+
+                <View style="@style/technial_hr_line" />
+
+                <TextView
+                    android:id="@+id/error_3"
+                    style="@style/handicap_statisticss"
+                    android:text="14-15" />
+
+                <View style="@style/technial_hr_line" />
+
+            </LinearLayout>
+
+            <TextView style="@style/technial_ve_line" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/match_no_data_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/nodata"
+        android:textSize="20sp"
+        android:visibility="gone" />
+</LinearLayout>

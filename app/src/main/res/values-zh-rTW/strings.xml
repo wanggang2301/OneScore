@@ -1164,7 +1164,7 @@
     <string name="expert_certification_audit">專家認證審核中</string>
     <string name="user_already_expert">用戶已經是專家</string>
     <string name="user_not_null">用戶id不能為空</string>
-
+    <string name="login_timeout">登陸超時</string>
 
     <string name="home_win_rate">主勝率</string>
     <string name="home_lose_rate">主負率</string>
