@@ -839,6 +839,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
      */
     public void setCurrentShowTab(String matchstatus) {
         switch (current_tab) {
+            case FootBallDetailTypeEnum.FOOT_DATAIL_BETTING:
+                mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DATAIL_BETTING, false);
+                break;
             case FootBallDetailTypeEnum.FOOT_DETAIL_ROLL:
                 mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_ROLL, false);
                 break;
@@ -1263,7 +1266,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_injured_addtime.setVisibility(View.GONE);
                 tv_half_txt.setText(getString(R.string.fragme_home_shangbanchang_text));
                 showGifAnimation(11);
-                mHalfScore.setVisibility(View.GONE);
+                mHalfScore.setVisibility(View.INVISIBLE);
                 break;
             case "1"://上半场结束
                 date.setText(mContext.getString(R.string.immediate_status_midfield));
@@ -4046,7 +4049,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 date.setVisibility(View.VISIBLE);
                 tv_hean_srcoe_aop.setVisibility(View.VISIBLE);
                 score.setVisibility(View.VISIBLE);
-                mHalfScore.setVisibility(View.GONE);
+                mHalfScore.setVisibility(View.INVISIBLE);
                 tv_hean_srcoe_aop.setText("'");
                 try {
                     date.setText(keepTime > 45 ? "45+" : String.valueOf(keepTime));
@@ -4074,7 +4077,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case "4":// 加时
                 date.setVisibility(View.VISIBLE);
                 tv_hean_srcoe_aop.setVisibility(View.GONE);
-                mHalfScore.setVisibility(View.GONE);
+                mHalfScore.setVisibility(View.INVISIBLE);
                 score.setVisibility(View.VISIBLE);
                 date.setText(mContext.getString(R.string.immediate_status_overtime));
                 break;
@@ -4082,7 +4085,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 date.setVisibility(View.VISIBLE);
                 tv_hean_srcoe_aop.setVisibility(View.GONE);
                 score.setVisibility(View.VISIBLE);
-                mHalfScore.setVisibility(View.GONE);
+                mHalfScore.setVisibility(View.INVISIBLE);
                 date.setText(mContext.getString(R.string.immediate_status_point));
                 break;
             case "-1":// 完场
@@ -4097,7 +4100,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 date.setVisibility(View.VISIBLE);
                 tv_hean_srcoe_aop.setVisibility(View.GONE);
                 score.setVisibility(View.VISIBLE);
-                mHalfScore.setVisibility(View.GONE);
+                mHalfScore.setVisibility(View.INVISIBLE);
                 date.setText(mContext.getString(R.string.immediate_status_cancel));
                 date.setTextColor(mContext.getResources().getColor(R.color.red));
                 break;
@@ -4105,7 +4108,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 date.setVisibility(View.VISIBLE);
                 tv_hean_srcoe_aop.setVisibility(View.GONE);
                 score.setVisibility(View.VISIBLE);
-                mHalfScore.setVisibility(View.GONE);
+                mHalfScore.setVisibility(View.INVISIBLE);
                 date.setText(mContext.getString(R.string.immediate_status_hold));
                 date.setTextColor(mContext.getResources().getColor(R.color.red));
                 break;
@@ -4113,7 +4116,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 date.setVisibility(View.VISIBLE);
                 tv_hean_srcoe_aop.setVisibility(View.GONE);
                 score.setVisibility(View.VISIBLE);
-                mHalfScore.setVisibility(View.GONE);
+                mHalfScore.setVisibility(View.INVISIBLE);
                 date.setText(mContext.getString(R.string.immediate_status_cut));
                 date.setTextColor(mContext.getResources().getColor(R.color.red));
                 break;
@@ -4121,7 +4124,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 date.setVisibility(View.VISIBLE);
                 tv_hean_srcoe_aop.setVisibility(View.GONE);
                 score.setVisibility(View.VISIBLE);
-                mHalfScore.setVisibility(View.GONE);
+                mHalfScore.setVisibility(View.INVISIBLE);
                 date.setText(mContext.getString(R.string.immediate_status_mesomere));
                 date.setTextColor(mContext.getResources().getColor(R.color.red));
                 break;
@@ -4129,7 +4132,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 date.setVisibility(View.VISIBLE);
                 tv_hean_srcoe_aop.setVisibility(View.GONE);
                 score.setVisibility(View.VISIBLE);
-                mHalfScore.setVisibility(View.GONE);
+                mHalfScore.setVisibility(View.INVISIBLE);
                 date.setText(mContext.getString(R.string.immediate_status_postpone));
                 date.setTextColor(mContext.getResources().getColor(R.color.red));
                 break;
