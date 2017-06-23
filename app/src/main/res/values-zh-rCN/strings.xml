@@ -1842,6 +1842,7 @@
     <string name="issue_check_title">推介标题不能为空</string>
     <string name="issue_check_recome">请输入您的推介理由</string>
     <string name="issue_check_price">请输入您的方案价格</string>
+    <string name="issue_check_singlg">必须选择一种玩法</string>
 
 
     <string name="recommendarticle_txt">推介文章</string>
