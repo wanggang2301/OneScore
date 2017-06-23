@@ -41,6 +41,7 @@ import com.hhly.mlottery.bean.footballDetails.MatchTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MatchTimeLiveBean;
 import com.hhly.mlottery.bean.footballDetails.MathchStatisInfo;
 import com.hhly.mlottery.bean.footballDetails.PreLiveText;
+import com.hhly.mlottery.bean.footballDetails.database.DataBaseBean;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumKeepTime;
 import com.hhly.mlottery.bean.websocket.WebSocketStadiumLiveTextEvent;
 import com.hhly.mlottery.config.BaseURLs;
@@ -104,6 +105,7 @@ import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD;
 import static com.hhly.mlottery.config.FootBallTypeEnum.RED_CARD1;
 import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE;
 import static com.hhly.mlottery.config.FootBallTypeEnum.SCORE1;
+import static com.hhly.mlottery.config.FootBallTypeEnum.SECONDHALF;
 import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT;
 import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOT1;
 import static com.hhly.mlottery.config.FootBallTypeEnum.SHOOTASIDE;
@@ -234,7 +236,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private TextView tv_start, tv_half_txt;
     // 信号中断、喝水、受伤、伤停补时
     private RelativeLayout rl_signal_off, rl_drink_water, rl_injured, rl_injured_addtime;
-    private TextView tv_play_off,tv_drink_water_title,tv_injured_title,tv_injured_addtime_title;
+    private TextView tv_play_off, tv_drink_water_title, tv_injured_title, tv_injured_addtime_title;
     // 后场控球、进攻、危险进攻
     private LinearLayout ll_control_content;
     // 后场控球
@@ -362,6 +364,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private String state;// 当前赛事状态
     private String halfScore = "";// 上半场比分
+    private String playInfo;// 危险任意球区域位置
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -1219,11 +1222,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         // 上半场
         if (FIRSTHALF.equals(matchTextLiveBean.getState()) && Integer.parseInt(time) >= (45 * 60 * 1000)) {
-            if (matchTextLiveBean.getState().equals(FIRSTHALF) || matchTextLiveBean.getState().equals(HALFTIME)) {//上半场补时中场时间轴不变
-                time = 45 * 60 * 1000 + "";//时间继续赋值为45分钟
-            }
+            time = "45+'";
         }
-        time = StadiumUtils.convertStringToInt(time) + "'";
+        // 下半场
+        else if (SECONDHALF.equals(matchTextLiveBean.getState()) && Integer.parseInt(time) >= (90 * 60 * 1000)) {
+            time = "90+'";
+        } else {
+            time = StadiumUtils.convertStringToInt(time) + "'";
+        }
 
         // 完场
         if (MATCHFINISH.equals(matchTextLiveBean.getState()) || "20".equals(matchTextLiveBean.getCode())) {
@@ -1958,7 +1964,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_drink_water.setVisibility(View.GONE);
                 rl_injured.setVisibility(View.GONE);
                 rl_injured_addtime.setVisibility(View.VISIBLE);
-                tv_injured_addtime_title.setText(R.string.football_play_injured_addtime);
+                tv_injured_addtime_title.setText(matchTextLiveBean.getMsgText());
                 showGifAnimation(260);
                 break;
             case "1051"://主队后场控球
@@ -2021,8 +2027,16 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 gif_guest_penalty_lose_position.setImageResource(R.mipmap.football_guest_position_gif);
                 showGifAnimation(2084);
                 break;
+            case "262"://危险任意球的区域位置
+                playInfo = matchTextLiveBean.getPlayInfo();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        playInfo = null;
+                    }
+                },2000);
+                break;
             case "1028"://主队任意球
-                final String playInfo = matchTextLiveBean.getPlayInfo();
                 final String finalTime = time;
                 mHandler.postDelayed(new Runnable() {
                     public void run() {
@@ -2175,15 +2189,14 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 }, 2000);
                 break;
             case "2052"://客队任意球
-                final String guestPlayInfo = matchTextLiveBean.getPlayInfo();
                 final String finalTime1 = time;
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         L.d("wwwww", "客队任意球  isGuestFreeKick: " + isGuestFreeKick);
                         if (isGuestFreeKick) {
-                            if (!TextUtils.isEmpty(guestPlayInfo)) {
-                                switch (guestPlayInfo) {
+                            if (!TextUtils.isEmpty(playInfo)) {
+                                switch (playInfo) {
                                     case "FK1":
                                         ll_home_free_kick_fk1_bg.setVisibility(View.INVISIBLE);
                                         ll_guest_free_kick_fk1_bg.setVisibility(View.VISIBLE);
@@ -3166,7 +3179,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         // 聊球
                         mChartBallFragment = ChartBallFragment.newInstance(0, mThirdId);
 
-                        mTabsAdapter.addFragments(mBettingIssueFragment , mBowlFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
+                        mTabsAdapter.addFragments(mBettingIssueFragment, mBowlFragment, mLiveFragment, mOddsFragment, mAnalyzeParentFragment, mChartBallFragment);
                         mViewPager.setOffscreenPageLimit(5);//设置预加载页面的个数。
                         mViewPager.setAdapter(mTabsAdapter);
                         mTabLayout.setupWithViewPager(mViewPager);
@@ -3280,9 +3293,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 }
                 break;
             case R.id.tv_head_match_name:// 点击联赛跳转到
-
-                // TODO
-
+                Intent intent = new Intent(FootballMatchDetailActivity.this, FootballDatabaseDetailsActivity.class);
+                if (mMatchDetail != null) {
+                    intent.putExtra("league", new DataBaseBean(mMatchDetail.getLeagueType() + "", mMatchDetail.getLeagueId() + "", "", ""));
+                }
+                intent.putExtra("isIntegral", false);
+                startActivity(intent);
                 break;
             default:
                 break;
