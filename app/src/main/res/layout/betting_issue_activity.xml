@@ -107,7 +107,7 @@
                         android:paddingTop="10dp">
 
                         <LinearLayout
-                            android:layout_width="75dp"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             >
                             <TextView
@@ -194,7 +194,7 @@
                         android:paddingTop="10dp">
 
                         <LinearLayout
-                            android:layout_width="75dp"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
 
                             >
@@ -203,7 +203,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text=""/>
+                                android:text="半场"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -317,7 +317,7 @@
                         android:paddingTop="10dp">
 
                         <LinearLayout
-                            android:layout_width="75dp"
+                            android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TextView
@@ -325,7 +325,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text=""/>
+                                android:text="让球胜平负"/>
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
