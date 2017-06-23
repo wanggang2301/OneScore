@@ -36,6 +36,8 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.frame.BallType;
+import com.hhly.mlottery.frame.HandicapStatisticsFragment;
+import com.hhly.mlottery.frame.TechnicalStatisticsFragment;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.frame.footballframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footballframe.ResultFragment;
@@ -229,8 +231,11 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
 
         fragments = new ArrayList<>();
         rollBallFragment = RollBallFragment.newInstance(ROLLBALL_FRAGMENT, isNewFrameWork, entryType);
-        fragments.add(rollBallFragment);
-        fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork, entryType));
+        TechnicalStatisticsFragment technicalStatisticsFragment=new TechnicalStatisticsFragment();
+        fragments.add(technicalStatisticsFragment);
+        HandicapStatisticsFragment handicapStatisticsFragment=new HandicapStatisticsFragment();
+        fragments.add(handicapStatisticsFragment);
+       // fragments.add(ImmediateFragment.newInstance(IMMEDIA_FRAGMENT, isNewFrameWork, entryType));
         fragments.add(ResultFragment.newInstance(RESULT_FRAGMENT, entryType));
         fragments.add(ScheduleFragment.newInstance(SCHEDULE_FRAGMENT, entryType));
         fragments.add(FocusFragment.newInstance(FOCUS_FRAGMENT, entryType));
@@ -260,7 +265,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
                             break;
                         case IMMEDIA_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
-                            ((ImmediateFragment) fragments.get(position)).reLoadData();
+                           // ((ImmediateFragment) fragments.get(position)).reLoadData();
                             break;
                         case RESULT_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);

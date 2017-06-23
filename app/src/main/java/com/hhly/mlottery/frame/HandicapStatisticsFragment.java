@@ -1,9 +1,12 @@
 package com.hhly.mlottery.frame;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,9 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.HandicapStatisticsBean;
+import com.hhly.mlottery.bean.footballDetails.AnalyzeBean;
+import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
@@ -25,7 +31,7 @@ import java.util.Map;
  * 篮球盘口统计
  */
 
-public class HandicapStatisticsFragment extends Fragment {
+public class HandicapStatisticsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
 
     private View view;
@@ -97,6 +103,10 @@ public class HandicapStatisticsFragment extends Fragment {
     private LinearLayout footwall_z_rl;
     private LinearLayout handicap_statisticss_rl;
     private LinearLayout footwall_road_rl;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private Activity mActivity;
+    private Context mContext;
+    private TextView match_no_data_txt;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -110,7 +120,7 @@ public class HandicapStatisticsFragment extends Fragment {
 
 
         view = inflater.inflate(R.layout.handicap_statistics_fragment, container, false);
-
+        mContext = mActivity;
         initView();
         initData();
 
@@ -120,18 +130,22 @@ public class HandicapStatisticsFragment extends Fragment {
 
     private void initData() {
 
-        String url = "http://192.168.71.154:8080/mlottery/core/basketballData.teamPlateData.do";
+        String url = "http://m.1332255.com:81/mlottery/core/basketballData.teamPlateData.do";
         Map<String, String> param = new HashMap<>();
         param.put("season", "2016-2017");
         param.put("leagueId", "1");
         param.put("teamId", "1");
 
-        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<HandicapStatisticsBean>() {
+        VolleyContentFast.requestJsonByGet(url, param, new VolleyContentFast.ResponseSuccessListener<HandicapStatisticsBean>() {
             @Override
             public void onResponse(HandicapStatisticsBean handicapStatisticsBean) {
 
 
                 if (handicapStatisticsBean.getResult() == 200) {
+
+
+                    swipeRefreshLayout.setRefreshing(false);
+                    swipeRefreshLayout.setVisibility(View.VISIBLE);
 
                     //大小盘 上下盘盘路
                     trendPlate = handicapStatisticsBean.getTrendPlate();
@@ -143,8 +157,13 @@ public class HandicapStatisticsFragment extends Fragment {
                     letPlate = handicapStatisticsBean.getLetPlate();
 
 
-                    if (trendPlate != null &&letPlate != null) {
+                    if (trendPlate != null && letPlate != null) {
+                        match_no_data_txt.setVisibility(View.GONE);
+                        swipeRefreshLayout.setVisibility(View.VISIBLE);
                         initLetSplitDatas();
+                    } else {
+                        match_no_data_txt.setVisibility(View.VISIBLE);
+                        swipeRefreshLayout.setVisibility(View.GONE);
                     }
                     initEvent();
                 }
@@ -178,10 +197,14 @@ public class HandicapStatisticsFragment extends Fragment {
 
                         break;
                     case R.id.size_disk:
-                        if ( sizePlate != null) {
+                        if (sizePlate != null) {
+                            match_no_data_txt.setVisibility(View.GONE);
+                            swipeRefreshLayout.setVisibility(View.VISIBLE);
                             initSizeDiskDatas();
+                        } else {
+                            match_no_data_txt.setVisibility(View.VISIBLE);
+                            swipeRefreshLayout.setVisibility(View.GONE);
                         }
-
                         break;
                     default:
                         break;
@@ -196,6 +219,8 @@ public class HandicapStatisticsFragment extends Fragment {
 
     /*更新大小盘数据*/
     private void initSizeDiskDatas() {
+
+
         clean_rl.setVisibility(View.GONE);
         handicap_statisticss_rl.setVisibility(View.GONE);
         footwall_road_rl.setVisibility(View.GONE);
@@ -332,12 +357,20 @@ public class HandicapStatisticsFragment extends Fragment {
         c_wall_l.setText(trendPlate.getGuestPlate().getDownLose());
 
 
-
     }
 
 
     private void initView() {
 
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefreshlayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
+
+
+        //暂无数据
+        match_no_data_txt = (TextView) view.findViewById(R.id.match_no_data_txt);
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         let_split = (RadioButton) view.findViewById(R.id.let_split);
         size_disk = (RadioButton) view.findViewById(R.id.size_disk);
@@ -435,5 +468,16 @@ public class HandicapStatisticsFragment extends Fragment {
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = (Activity) context;
+    }
 
+    @Override
+    public void onRefresh() {
+        let_split.setChecked(true);
+        size_disk.setChecked(false);
+        initData();
+    }
 }

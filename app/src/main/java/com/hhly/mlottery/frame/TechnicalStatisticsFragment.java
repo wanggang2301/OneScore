@@ -1,9 +1,12 @@
 package com.hhly.mlottery.frame;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,8 @@ import android.widget.TextView;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.TechnicalStatisticBean;
+import com.hhly.mlottery.config.StaticValues;
+import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.HashMap;
@@ -25,7 +30,7 @@ import java.util.Map;
  * 技术统计
  */
 
-public class TechnicalStatisticsFragment extends Fragment {
+public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefreshLayout.OnRefreshListener{
 
 
     private View view;
@@ -104,6 +109,11 @@ public class TechnicalStatisticsFragment extends Fragment {
     private TextView season_3;
     private ScrollView technical_scrollview;
     private TextView match_no_data_txt;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private Activity mActivity;
+    private Context mContext;
+
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -115,6 +125,8 @@ public class TechnicalStatisticsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.technical_statistics_fragment, container, false);
+
+        mContext = mActivity;
         initView();
         initData();
         initEvent();
@@ -136,6 +148,9 @@ public class TechnicalStatisticsFragment extends Fragment {
 
                 if (handicapStatisticsBean.getResult() == 200) {
 
+                    swipeRefreshLayout.setRefreshing(false);
+                    swipeRefreshLayout.setVisibility(View.VISIBLE);
+
                     //季后赛
                     playoffList = handicapStatisticsBean.getPlayoffList();
                     //常规赛
@@ -144,8 +159,8 @@ public class TechnicalStatisticsFragment extends Fragment {
                     preseasonList = handicapStatisticsBean.getPreseasonList();
 
                     inithandicapStatisticDatas(preseasonList);
-
                     initEvent();
+
                 }
             }
 
@@ -165,11 +180,11 @@ public class TechnicalStatisticsFragment extends Fragment {
     private void inithandicapStatisticDatas(List<TechnicalStatisticBean.DataBean> dataBean) {
 
         if (dataBean.size()==0) {
-            technical_scrollview.setVisibility(View.GONE);
+            swipeRefreshLayout.setVisibility(View.GONE);
             match_no_data_txt.setVisibility(View.VISIBLE);
             return;
         } else {
-            technical_scrollview.setVisibility(View.VISIBLE);
+            swipeRefreshLayout.setVisibility(View.VISIBLE);
             match_no_data_txt.setVisibility(View.GONE);
         }
 
@@ -288,9 +303,11 @@ public class TechnicalStatisticsFragment extends Fragment {
                         break;
                     case R.id.odd_big_btn://常规赛
                         inithandicapStatisticDatas(regularList);
+
                         break;
                     case R.id.odd_op_btn://季后赛
                         inithandicapStatisticDatas(playoffList);
+
                         break;
                     default:
                         break;
@@ -304,6 +321,14 @@ public class TechnicalStatisticsFragment extends Fragment {
     }
 
     private void initView() {
+
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefreshlayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        swipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
+
+
 
 
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
@@ -400,5 +425,18 @@ public class TechnicalStatisticsFragment extends Fragment {
         error_3 = (TextView) view.findViewById(R.id.error_3);
 
 
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity= (Activity) context;
+    }
+
+    @Override
+    public void onRefresh() {
+        preseason_games.setChecked(true);
+        regular_season.setChecked(false);
+        playoff.setChecked(false);
+        initData();
     }
 }
