@@ -6,15 +6,15 @@
     android:orientation="vertical">
     <RelativeLayout
         android:id="@+id/betting_issue_item"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="70dp"
+        android:layout_height="28dp"
         >
 
         <CheckBox
             android:id="@+id/betting_issue_item_checkbox"
             style="@style/betting_recommend_issue_fabu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:button="@null"
             android:background="@drawable/betting_issue_fabu_check_bg"
             android:text="让球胜平负"

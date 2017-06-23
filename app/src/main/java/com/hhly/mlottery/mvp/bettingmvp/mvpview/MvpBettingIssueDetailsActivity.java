@@ -149,6 +149,9 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
     private String oddsId = "";//赔率编号
     private String mChoose = "";//推介选项，左：1，中：0，右：-1
     private String mChoose1 = "";//推介选项，左：1，中：0，右：-1
+    private TextView titleHandicap;
+    private TextView middleHandicapFirst;
+    private TextView middleHandicapSecond;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -272,6 +275,11 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
 
         middleOddsFirstll = (RelativeLayout)findViewById(R.id.issue_middle_odds_first);
         middleOddsSecondll = (RelativeLayout)findViewById(R.id.issue_middle_odds_second);
+
+
+        titleHandicap = (TextView)findViewById(R.id.odds_play_second_title_handicap);//竞彩推介盘口
+        middleHandicapFirst = (TextView)findViewById(R.id.issue_middle_handicap_first);//其它玩法盘口
+        middleHandicapSecond = (TextView)findViewById(R.id.issue_middle_handicap_second);//其它玩法盘口
 
         L.d("qwer===>>rr " , playLeftA.isChecked() + "");
     }
@@ -410,9 +418,12 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
             oddsPlayFirstTitle.setText(filtrateNull(oddsVoFirst.getTitle()));
             if (oddsVoFirst.getMidTitle() == null || oddsVoFirst.getMidTitle().equals("")) {
                 middleOddsFirstll.setVisibility(View.GONE);
+                middleHandicapFirst.setText(filtrateNull(oddsVoFirst.getHandicap()));
+                middleHandicapFirst.setVisibility(View.VISIBLE);
                 middleFiest = true;
             }else{
                 middleOddsFirstll.setVisibility(View.VISIBLE);
+                middleHandicapFirst.setVisibility(View.GONE);
                 middleFiest = false;
             }
         }
@@ -424,9 +435,16 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
 
             if (oddsVoSecond.getMidTitle() == null || oddsVoSecond.getMidTitle().equals("")) {
                 middleOddsSecondll.setVisibility(View.GONE);
+                middleHandicapSecond.setText(filtrateNull(oddsVoSecond.getHandicap()));
+                middleHandicapSecond.setVisibility(View.VISIBLE);
+                titleHandicap.setVisibility(View.GONE);
                 middleSecond = true;
             }else{
                 middleOddsSecondll.setVisibility(View.VISIBLE);
+                middleHandicapSecond.setVisibility(View.GONE);
+
+                titleHandicap.setText("(" + filtrateNull(oddsVoSecond.getHandicap()) + ")");
+                titleHandicap.setVisibility(View.VISIBLE);
                 middleSecond = false;
             }
         }
@@ -831,7 +849,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
     private String filtrateNull(String str){
 
         if (str == null) {
-            return "-";
+            return "";
         }else{
             return str;
         }

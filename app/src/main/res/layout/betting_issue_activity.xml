@@ -104,12 +104,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:paddingTop="15dp">
+                        android:paddingTop="10dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="75dp"
                             android:layout_height="wrap_content"
-                            android:paddingRight="5dp">
+                            >
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -191,25 +191,26 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:paddingTop="15dp">
+                        android:paddingTop="10dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="75dp"
                             android:layout_height="wrap_content"
-                            android:paddingRight="5dp">
+
+                            >
                             <TextView
                                 android:id="@+id/odds_play_first_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text="              "/>
+                                android:text=""/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                             <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_width="75dp"
+                                android:layout_height="28dp"
                                 >
                                 <RadioButton
                                     android:id="@+id/issue_play_left_a"
@@ -234,12 +235,28 @@
                                     />
                             </RelativeLayout>
                             <View
-                                android:layout_width="10dp"
+                                android:layout_width="3dp"
                                 android:layout_height="30dp"/>
+
                             <RelativeLayout
-                                android:id="@+id/issue_middle_odds_first"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+                                >
+                                <TextView
+                                    android:id="@+id/issue_middle_handicap_first"
+                                    android:layout_width="75dp"
+                                    android:layout_height="28dp"
+                                    style="@style/betting_recommend_issue_fabu"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/betting_issues_fabu_edit_text_bg"
+                                    android:text="pankou"
+                                    android:visibility="gone"
+                                    />
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:id="@+id/issue_middle_odds_first"
+                                android:layout_width="75dp"
+                                android:layout_height="28dp"
                                 >
                                 <RadioButton
                                     android:id="@+id/issue_play_middle_a"
@@ -263,11 +280,11 @@
                                     />
                             </RelativeLayout>
                             <View
-                                android:layout_width="10dp"
+                                android:layout_width="3dp"
                                 android:layout_height="30dp"/>
                             <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_width="75dp"
+                                android:layout_height="28dp"
                                 >
                                 <RadioButton
                                     android:id="@+id/issue_play_right_a"
@@ -297,25 +314,38 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:paddingTop="15dp">
+                        android:paddingTop="10dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="75dp"
                             android:layout_height="wrap_content"
-                            android:paddingRight="5dp">
+                            android:orientation="vertical">
                             <TextView
                                 android:id="@+id/odds_play_second_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text="              "/>
+                                android:text=""/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center">
+                                <TextView
+                                    android:id="@+id/odds_play_second_title_handicap"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    style="@style/betting_recommend_issue_fabu_key"
+                                    android:textColor="@color/colorPrimary"
+                                    android:visibility="gone"
+                                    android:text=""/>
+                            </LinearLayout>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                             <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_width="75dp"
+                                android:layout_height="28dp"
                                 >
                                 <RadioButton
                                     android:id="@+id/issue_play_left_b"
@@ -340,12 +370,28 @@
                                     />
                             </RelativeLayout>
                             <View
-                                android:layout_width="10dp"
+                                android:layout_width="3dp"
                                 android:layout_height="30dp"/>
+
                             <RelativeLayout
-                                android:id="@+id/issue_middle_odds_second"
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
+                                >
+                                <TextView
+                                    android:id="@+id/issue_middle_handicap_second"
+                                    android:layout_width="75dp"
+                                    android:layout_height="28dp"
+                                    style="@style/betting_recommend_issue_fabu"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/betting_issues_fabu_edit_text_bg"
+                                    android:text="pankou"
+                                    android:visibility="gone"
+                                    />
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:id="@+id/issue_middle_odds_second"
+                                android:layout_width="75dp"
+                                android:layout_height="28dp"
                                 >
                                 <RadioButton
                                     android:id="@+id/issue_play_middle_b"
@@ -369,11 +415,11 @@
                                     />
                             </RelativeLayout>
                             <View
-                                android:layout_width="10dp"
+                                android:layout_width="3dp"
                                 android:layout_height="30dp"/>
                             <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_width="75dp"
+                                android:layout_height="28dp"
                                 >
                                 <RadioButton
                                     android:id="@+id/issue_play_right_b"
@@ -421,7 +467,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="#d7d7d7"
+                                android:textColor="#4A4A4A"
                                 android:hint="@string/issue_lay_max_input"
                                 android:maxLength="20"
                                 android:paddingLeft="5dp"
@@ -453,7 +499,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="#d7d7d7"
+                                android:textColor="#4A4A4A"
                                 android:background="@drawable/betting_issues_fabu_edit_text_bg"
                                 android:paddingTop="8dp"
                                 android:paddingLeft="5dp"
@@ -498,7 +544,7 @@
                                 android:layout_width="150dp"
                                 android:layout_height="30dp"
                                 android:textSize="@dimen/text_size_12"
-                                android:textColor="#d7d7d7"
+                                android:textColor="#4A4A4A"
                                 android:inputType="number"
                                 android:cursorVisible="false"
                                 android:hint="@string/issue_lay_zero_free"
