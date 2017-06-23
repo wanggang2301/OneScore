@@ -32,6 +32,7 @@ import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.activity.RecommendedExpertDetailsActivity;
+import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendDetailsMvpAdapter;
 import com.hhly.mlottery.adapter.bettingadapter.BettingRecommendMvpAdapter;
 import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.BaseURLs;
@@ -86,7 +87,7 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
     private static final String THIRDID = "thirdId";
     private String mThirdid;
     private View mView;
-    private BettingRecommendMvpAdapter mAdapter;
+    private BettingRecommendDetailsMvpAdapter mAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
     private ImageView mTextIssue;
@@ -347,7 +348,7 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
         specialistClick();
 
         L.d("listData >> " + listData.size());
-        mAdapter = new BettingRecommendMvpAdapter(mContext , listData);
+        mAdapter = new BettingRecommendDetailsMvpAdapter(mContext , listData);
 
         mAdapter.setLoadingView(mOnloadingView);
         recyclerView.setAdapter(mAdapter);
