@@ -549,6 +549,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     matchDetail = JSON.parseObject(text, MatchDetail.class);
                 } catch (Exception e) {
                     L.d("wwee", "sucess--error");
+
+
                     mHandler.sendEmptyMessage(NODATA);
                     return;
                 }

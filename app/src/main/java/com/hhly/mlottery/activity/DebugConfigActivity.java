@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.umeng.analytics.MobclickAgent;
@@ -179,7 +178,7 @@ public class DebugConfigActivity extends BaseActivity {
                 //   public LeagueCup(int type, List<String> thirdId, String racename, String raceId, int count, boolean hot) {
 
 
-                startActivity(new Intent(DebugConfigActivity.this, MvpBettingRecommendActivity.class));
+                startActivity(new Intent(DebugConfigActivity.this, MyFocusActivity.class));
 
             }
         });

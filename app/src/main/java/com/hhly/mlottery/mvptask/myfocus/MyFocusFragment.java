@@ -30,7 +30,6 @@ import butterknife.OnClick;
  */
 public class MyFocusFragment extends Fragment {
 
-
     private Activity mActivity;
 
     @BindView(R.id.focus_back)
@@ -66,6 +65,8 @@ public class MyFocusFragment extends Fragment {
 
 
     private void initEvent() {
+
+        //gifMatchStart.setImageResource(R.mipmap.football_match_start_gif);
         fragments = new ArrayList<>();
         fragments.add(MyFocusChildFragment.newInstance());
         fragments.add(MyFocusChildFragment.newInstance());
