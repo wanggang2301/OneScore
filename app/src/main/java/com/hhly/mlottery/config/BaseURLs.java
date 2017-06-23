@@ -1183,6 +1183,10 @@ public class BaseURLs {
     public final static String IOSBASKETBALLMATCH = URL_API_HOST + "IOSBasketballMatch.fuzzySearch.do";
     //足球竞彩
     public final static String FINDBETTINGLIST = URL_API_HOST + "footballBetting.findBettingList.do";
+    //技术统计
+    public final static String TEAMTECHSTATDATA = URL_API_HOST + "basketballData.teamTechStatData.do";
+    //盘口统计
+    public final static String TEAMPLATEDATA = URL_API_HOST + "basketballData.teamPlateData.do";
 
     /*推荐专家*/
     public final static String EXPERTPROMOTIONS = P_URL_API_HOST + "promotion/info/expertPromotions";

@@ -261,7 +261,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
                             break;
                         case IMMEDIA_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);
-                           // ((ImmediateFragment) fragments.get(position)).reLoadData();
+                            ((ImmediateFragment) fragments.get(position)).reLoadData();
                             break;
                         case RESULT_FRAGMENT:
                             mFilterImgBtn.setVisibility(View.VISIBLE);

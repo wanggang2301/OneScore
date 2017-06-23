@@ -3,19 +3,13 @@ package com.hhly.mlottery.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -24,23 +18,15 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.ExpertreQuestBean;
-import com.hhly.mlottery.bean.SpecialistBean;
 import com.hhly.mlottery.bean.account.Register;
 import com.hhly.mlottery.config.BaseURLs;
-import com.hhly.mlottery.config.FootBallDetailTypeEnum;
-import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpChargeMoneyActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DeviceInfo;
-import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.UiUtils;
-import com.hhly.mlottery.util.cipher.MD5Util;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.util.net.account.AccountResultCode;
-import com.hhly.mlottery.util.net.account.RegisterType;
 import com.hhly.mlottery.view.FlowLayout;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,7 +34,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by yuely198 on 2017/6/1.

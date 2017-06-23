@@ -1154,7 +1154,7 @@
     <string name="unknown_error">未知錯誤</string>
     <string name="token_null">令牌(token)爲空</string>
     <string name="phone_mismatching">用戶名和手機號不匹配</string>
-    <string name="token_invalid">令牌(token)失效</string>
+    <string name="token_invalid">登入超時，請重新登入</string>
     <string name="signature_empty">簽名爲空</string>
     <string name="signature_mismatching">簽名不匹配</string>
     <string name="token_mismatchin">令牌(token)與個人信息不匹配</string>
