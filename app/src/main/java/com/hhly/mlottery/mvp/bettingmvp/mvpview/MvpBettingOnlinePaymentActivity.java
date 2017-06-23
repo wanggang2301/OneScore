@@ -211,7 +211,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
                     }
                 }else{
-                    Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_network_anomaly), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_network_anomaly), Toast.LENGTH_SHORT).show();
                     //刷新接口
                     initData();
                 }
