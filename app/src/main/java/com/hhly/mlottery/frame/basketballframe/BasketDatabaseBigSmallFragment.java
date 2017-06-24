@@ -271,7 +271,6 @@ public class BasketDatabaseBigSmallFragment extends Fragment implements View.OnC
         }
     }
     private BasketballBigSmallDetailsClickListener basketballHandicpDetailsClickListener;
-    // 购买(查看)的点击监听
     public interface BasketballBigSmallDetailsClickListener {
         void IntegralDetailsOnClick(View view,  BasketDatabaseBigSmallDetailsBean teamData);
     }
