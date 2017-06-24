@@ -550,6 +550,7 @@
                                 android:hint="@string/issue_lay_zero_free"
                                 android:paddingLeft="8dp"
                                 android:maxLines="1"
+                                android:maxLength="5"
                                 android:singleLine="true"
                                 android:background="@drawable/betting_issues_fabu_edit_text_bg"
                                 />

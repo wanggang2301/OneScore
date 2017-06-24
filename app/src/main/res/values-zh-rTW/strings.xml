@@ -1811,6 +1811,7 @@
     <string name="issue_check_recome">請輸入您的推介理由</string>
     <string name="issue_check_price">請輸入您的方案價格</string>
     <string name="issue_check_singlg">必須選擇壹種玩法</string>
+    <string name="issue_price_spill">價格需在0-68元之間</string>
 
     <string name="corner_score">角球比分</string>
     <string name="higher">高於</string>
