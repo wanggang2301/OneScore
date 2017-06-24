@@ -1934,5 +1934,9 @@
     <string name="football_play_goal_out">界外球</string>
     <string name="football_play_whistle">犯規</string>
     <string name="football_play_goal_qx">取消進球</string>
+    <string name="football_play_404">訊號中斷</string>
+    <string name="football_play_drink_water">喝水時間</string>
+    <string name="football_play_injured">有人受傷</string>
+    <string name="football_play_injured_addtime">傷停補時</string>
 
 </resources>
