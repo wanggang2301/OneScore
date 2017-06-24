@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.basketball.BasketDatabaseDetailsAdapter;
@@ -99,6 +100,7 @@ public class BasketDatabaseHandicapFragment extends Fragment implements View.OnC
         mView = inflater.inflate(R.layout.basket_database_details_handicap, container, false);
 
         initView();
+        setIntegralDetailsOnClick();
         mHandlerData.postDelayed(mRun, 500); // 加载数据
         return mView;
     }
@@ -201,6 +203,7 @@ public class BasketDatabaseHandicapFragment extends Fragment implements View.OnC
                         mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA); // 暂无数据
                     }else{
                         mAdapter = new BasketDatabaseDetailsAdapter(getContext() , mAllList, R.layout.basket_database_details_item);
+                        mAdapter.setBasketballHandicpDetailsClickListener(basketballHandicpDetailsClickListener);
                         mListView.setAdapter(mAdapter);
                         mHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                     }
@@ -269,5 +272,19 @@ public class BasketDatabaseHandicapFragment extends Fragment implements View.OnC
                 mHandlerData.postDelayed(mRun , 500);
                 break;
         }
+    }
+
+    private BasketballHandicpDetailsClickListener basketballHandicpDetailsClickListener;
+    // 购买(查看)的点击监听
+    public interface BasketballHandicpDetailsClickListener {
+        void IntegralDetailsOnClick(View view, BasketDatabaseHandicapDetailsBean teamData);
+    }
+    private void setIntegralDetailsOnClick(){
+        basketballHandicpDetailsClickListener = new BasketballHandicpDetailsClickListener() {
+            @Override
+            public void IntegralDetailsOnClick(View view, BasketDatabaseHandicapDetailsBean teamData) {
+//                Toast.makeText(getContext(), teamData.getTeamName(), Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }

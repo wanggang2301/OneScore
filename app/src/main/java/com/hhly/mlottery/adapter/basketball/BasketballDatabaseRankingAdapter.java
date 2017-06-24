@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.entity.SectionEntity;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingTeam;
+import com.hhly.mlottery.frame.basketballframe.BasketDatabaseRankingFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.StringUtils;
 
@@ -40,6 +41,11 @@ public class BasketballDatabaseRankingAdapter
 
     public BasketballDatabaseRankingAdapter(List<Section> data) {
         super(R.layout.item_basket_datatbase_ranking_team, R.layout.item_basket_datatbase_ranking_title, data);
+    }
+
+    private BasketDatabaseRankingFragment.BasketballRankingDetailsClickListener basketballRankingDetailsClickListener;
+    public void setBasketballRankingDetailsClickListener(BasketDatabaseRankingFragment.BasketballRankingDetailsClickListener basketballRankingDetailsClickListener){
+        this.basketballRankingDetailsClickListener = basketballRankingDetailsClickListener;
     }
 
     public void setType(int type) {
@@ -79,7 +85,7 @@ public class BasketballDatabaseRankingAdapter
 
     @Override
     protected void convert(BaseViewHolder holder, Section section) {
-        RankingTeam team = section.t;
+        final RankingTeam team = section.t;
 
         if (holder instanceof FormTitleViewHolder) {
             if (0 == matchType) {
@@ -131,6 +137,15 @@ public class BasketballDatabaseRankingAdapter
                 recent.setTextColor(ContextCompat.getColor(mContext, R.color.content_txt_dark_grad));
             }
         }
+
+        holder.setOnClickListener(R.id.name, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (basketballRankingDetailsClickListener != null) {
+                    basketballRankingDetailsClickListener.IntegralDetailsOnClick(v , team);
+                }
+            }
+        });
     }
 
     @Override
