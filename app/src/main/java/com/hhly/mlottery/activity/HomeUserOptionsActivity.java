@@ -451,7 +451,7 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
         if (DeviceInfo.isLogin()) {
             // 0 未审核  1.审核通过  2.审核中  3.审核不通过
-            login();
+            getUserInfo();
             available_balance_rl.setVisibility(View.VISIBLE);
             cash_balance_payable_rl.setVisibility(View.VISIBLE);
             not_login_balance.setVisibility(View.GONE);
@@ -472,17 +472,16 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
     }
 
 
+
     /**
      * 登录
      */
-    private void login() {
-
-        final String url = BaseURLs.URL_LOGIN;
+    private void getUserInfo() {
 
 
         Map<String, String> mapPrament = new HashMap<>();
-        mapPrament.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
-        mapPrament.put("password", MD5Util.getMD5(PreferenceUtil.getString("et_password", "")));
+        mapPrament.put("userId", AppConstants.register.getUser().getUserId());
+        mapPrament.put("loginToken", AppConstants.register.getToken());
 
         if (MyApp.isLanguage.equals("rCN")) {
             // 如果是中文简体的语言环境
@@ -493,15 +492,14 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
         }
         mapPrament.put("timeZone", "8");
 
-        String signs = SignUtils.getSign("/user/login", mapPrament);
-
+        String signs = SignUtils.getSign("/user/getuserinfo", mapPrament);
 
         Map<String, String> param = new HashMap<>();
-        param.put("phoneNum", AppConstants.register.getUser().getPhoneNum());
-        param.put("password", MD5Util.getMD5(PreferenceUtil.getString("et_password", "")));
+        param.put("userId", AppConstants.register.getUser().getUserId());
+        param.put("loginToken", AppConstants.register.getToken());
         param.put("sign", signs);
 
-        VolleyContentFast.requestJsonByPost(url, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.GETUSERINFO, param, new VolleyContentFast.ResponseSuccessListener<Register>() {
             @Override
             public void onResponse(Register register) {
 
@@ -510,15 +508,15 @@ public class HomeUserOptionsActivity extends Activity implements View.OnClickLis
 
                     subscribe_tv.setText(register.getUser().getBuyCount());
                     promotion_tv.setText(register.getUser().getPushCount());
-                    available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance())+"元");
-                    cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance())+"元");
+                    available_balance.setText(UnitsUtil.fenToYuan(register.getUser().getAvailableBalance()) + "元");
+                    cash_balance_payable.setText(UnitsUtil.fenToYuan(register.getUser().getCashBalance()) + "元");
 
-                    DeviceInfo.saveRegisterInfo(register);
-                    if (register.getUser().getIsExpert()==1) {
+                    //DeviceInfo.saveRegisterInfo(register);
+                    if (register.getUser().getIsExpert() == 1) {
                         in_audit.setText(R.string.audited);
-                    } else if (register.getUser().getIsExpert()== 2) {
+                    } else if (register.getUser().getIsExpert() == 2) {
                         in_audit.setText(R.string.in_audit);
-                    } else if (register.getUser().getIsExpert()== 3) {
+                    } else if (register.getUser().getIsExpert() == 3) {
                         in_audit.setText(R.string.audit_not_through);
                     } else if (register.getUser().getIsExpert() == 0) {
                         in_audit.setText(R.string.not_audited);

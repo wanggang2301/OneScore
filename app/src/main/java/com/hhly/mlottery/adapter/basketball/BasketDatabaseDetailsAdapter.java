@@ -1,9 +1,11 @@
 package com.hhly.mlottery.adapter.basketball;
 
 import android.content.Context;
+import android.view.View;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseHandicapDetailsBean;
+import com.hhly.mlottery.frame.basketballframe.BasketDatabaseHandicapFragment;
 import com.hhly.mlottery.util.adapter.CommonAdapter;
 import com.hhly.mlottery.util.adapter.ViewHolder;
 
@@ -23,11 +25,16 @@ public class BasketDatabaseDetailsAdapter extends CommonAdapter<BasketDatabaseHa
 //        this.mDatas = datas;
     }
 
+    private BasketDatabaseHandicapFragment.BasketballHandicpDetailsClickListener basketballHandicpDetailsClickListener;
+    public void setBasketballHandicpDetailsClickListener(BasketDatabaseHandicapFragment.BasketballHandicpDetailsClickListener basketballHandicpDetailsClickListener){
+        this.basketballHandicpDetailsClickListener = basketballHandicpDetailsClickListener;
+    }
+
     public void updateDatas(List<BasketDatabaseHandicapDetailsBean> datas) {
         this.mDatas = datas;
     }
     @Override
-    public void convert(ViewHolder holder, BasketDatabaseHandicapDetailsBean bean) {
+    public void convert(ViewHolder holder, final BasketDatabaseHandicapDetailsBean bean) {
 
         if (bean != null) {
 
@@ -53,6 +60,16 @@ public class BasketDatabaseDetailsAdapter extends CommonAdapter<BasketDatabaseHa
             holder.setText(R.id.basket_database_details_over, bean.getOver());
             holder.setText(R.id.basket_database_details_under, bean.getUnder());
             holder.setText(R.id.basket_database_details_win_lose_draw, bean.getWin() + "/" + bean.getDraw() + "/" + bean.getLose());
+
+            holder.setOnClickListener(R.id.basket_database_details_name, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (basketballHandicpDetailsClickListener != null) {
+                        basketballHandicpDetailsClickListener.IntegralDetailsOnClick(v , bean );
+                    }
+                }
+            });
+
         }
     }
 }

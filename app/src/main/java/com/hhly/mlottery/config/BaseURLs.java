@@ -121,11 +121,11 @@ public class BaseURLs {
             int ws_config = PreferenceUtil.getInt(MyConstants.WS_HOME_CONFIG, DebugConfigActivity.WS_1332255_ZH);
 
             if (ws_config == DebugConfigActivity.WS_1332255_ZH) {
-                return "m.1332255.com:9600/ws";
+                return "m.1332255.com:81/ws";
             } else if (ws_config == DebugConfigActivity.WS_1332255_TH) {
-                return "m.th.1332255.com:9600/ws";
+                return "m.th.1332255.com:81/ws";
             } else if (ws_config == DebugConfigActivity.WS_1332255_VN) {
-                return "m.vn.1332255.com:9600/ws";
+                return "m.vn.1332255.com:81/ws";
             } else if (ws_config == DebugConfigActivity.WS_13322_ZH) {
                 return "m.13322.com/ws";
             } else if (ws_config == DebugConfigActivity.WS_13322_TH) {
@@ -135,9 +135,9 @@ public class BaseURLs {
             } else if (ws_config == DebugConfigActivity.WS_13366_VN) {
                 return "m.13366.vn/ws";
             } else if (ws_config == DebugConfigActivity.DIY_INPUT) {
-                return "m.1332255.com:9600/ws";// 自定义
+                return "m.1332255.com:81/ws";// 自定义
             } else {
-                return "m.1332255.com:9600/ws";
+                return "m.1332255.com:81/ws";
             }
         }
 
@@ -1183,10 +1183,16 @@ public class BaseURLs {
     public final static String IOSBASKETBALLMATCH = URL_API_HOST + "IOSBasketballMatch.fuzzySearch.do";
     //足球竞彩
     public final static String FINDBETTINGLIST = URL_API_HOST + "footballBetting.findBettingList.do";
+    //技术统计
+    public final static String TEAMTECHSTATDATA = URL_API_HOST + "basketballData.teamTechStatData.do";
+    //盘口统计
+    public final static String TEAMPLATEDATA = URL_API_HOST + "basketballData.teamPlateData.do";
 
     /*推荐专家*/
     public final static String EXPERTPROMOTIONS = P_URL_API_HOST + "promotion/info/expertPromotions";
     public final static String EXPERTINTRODUCT = P_URL_API_HOST + "user/expertIntroduct";
+    /*获取用户信息*/
+    public final static String GETUSERINFO = P_URL_API_HOST + "user/getuserinfo";
     /**
      * 角球列表
      */

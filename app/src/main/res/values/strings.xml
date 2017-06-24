@@ -1165,7 +1165,7 @@
     <string name="unknown_error">未知错误</string>
     <string name="token_null">令牌(token)为空</string>
     <string name="phone_mismatching">用户名与手机号不匹配</string>
-    <string name="token_invalid">令牌(token)失效</string>
+    <string name="token_invalid">登录超时,请重新登录</string>
     <string name="signature_empty">签名为空</string>
     <string name="signature_mismatching">签名不匹配</string>
     <string name="token_mismatchin">令牌(token)与个人信息不匹配</string>
@@ -1942,7 +1942,26 @@
     <string name="please_add_eague">请添加联赛</string>
     <string name="agreement_carefully">请认真阅读推荐付费协议</string>
     <string name="recommendation_agreement">认真付费推荐协议</string>
-
+    <string name="handicap_football">下盘</string>
+    <string name="handicap_hanging">上盘</string>
+    <string name="handicap_matchs">比赛场次</string>
+    <string name="handicap_plate">主客场盘路</string>
+    <string name="handicap_big_ball">大球%</string>
+    <string name="handicap_go">走%</string>
+    <string name="handicap_small_ball">小球%</string>
+    <string name="on_the_lower_panel">上下盘盘路</string>
+    <string name="handicap_clean">净</string>
+    <string name="handcaip_goo">走率</string>
+    <string name="preseason_games">季前赛</string>
+    <string name="regular_season">常规赛</string>
+    <string name="playoff">季后赛</string>
+    <string name="technical_routine">常规</string>
+    <string name="technical_free_throw">罚球</string>
+    <string name="login_timeout">登录超时</string>
+    <string name="zong_field">总(场均)</string>
+    <string name="in_field">进(场均)</string>
+    <string name="hit">命中%</string>
+    <string name="technical_total">总数</string>
 
     <!--app动画直播-->
     <string name="football_play_penalty_lose">点球罚失</string>

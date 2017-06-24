@@ -1154,7 +1154,7 @@
     <string name="unknown_error">未知錯誤</string>
     <string name="token_null">令牌(token)爲空</string>
     <string name="phone_mismatching">用戶名和手機號不匹配</string>
-    <string name="token_invalid">令牌(token)失效</string>
+    <string name="token_invalid">登入超時，請重新登入</string>
     <string name="signature_empty">簽名爲空</string>
     <string name="signature_mismatching">簽名不匹配</string>
     <string name="token_mismatchin">令牌(token)與個人信息不匹配</string>
@@ -1164,7 +1164,7 @@
     <string name="expert_certification_audit">專家認證審核中</string>
     <string name="user_already_expert">用戶已經是專家</string>
     <string name="user_not_null">用戶id不能為空</string>
-
+    <string name="login_timeout">登陸超時</string>
 
     <string name="home_win_rate">主勝率</string>
     <string name="home_lose_rate">主負率</string>
@@ -1934,5 +1934,9 @@
     <string name="football_play_goal_out">界外球</string>
     <string name="football_play_whistle">犯規</string>
     <string name="football_play_goal_qx">取消進球</string>
+    <string name="football_play_404">訊號中斷</string>
+    <string name="football_play_drink_water">喝水時間</string>
+    <string name="football_play_injured">有人受傷</string>
+    <string name="football_play_injured_addtime">傷停補時</string>
 
 </resources>
