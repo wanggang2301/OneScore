@@ -815,7 +815,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 issuePriceCardB.setChecked(false);
                 issuePriceCardC.setChecked(false);
                 issuePriceCardD.setChecked(false);
-                jiageEdit.setText("10");
+                jiageEdit.setText(getApplicationContext().getResources().getText(R.string.betting_txt_amount_two));
                 jiageEdit.setSelection(jiageEdit.getText().length());
                 break;
             case R.id.issue_price_card_b:
@@ -823,7 +823,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 issuePriceCardB.setChecked(true);
                 issuePriceCardC.setChecked(false);
                 issuePriceCardD.setChecked(false);
-                jiageEdit.setText("20");
+                jiageEdit.setText(getApplicationContext().getResources().getText(R.string.betting_txt_amount_five));
                 jiageEdit.setSelection(jiageEdit.getText().length());
                 break;
             case R.id.issue_price_card_c:
@@ -831,7 +831,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 issuePriceCardB.setChecked(false);
                 issuePriceCardC.setChecked(true);
                 issuePriceCardD.setChecked(false);
-                jiageEdit.setText("50");
+                jiageEdit.setText(getApplicationContext().getResources().getText(R.string.betting_txt_amount_ten));
                 jiageEdit.setSelection(jiageEdit.getText().length());
                 break;
             case R.id.issue_price_card_d:
@@ -839,7 +839,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 issuePriceCardB.setChecked(false);
                 issuePriceCardC.setChecked(false);
                 issuePriceCardD.setChecked(true);
-                jiageEdit.setText("100");
+                jiageEdit.setText(getApplicationContext().getResources().getText(R.string.betting_txt_amount_fifteen));
                 jiageEdit.setSelection(jiageEdit.getText().length());
                 break;
 
