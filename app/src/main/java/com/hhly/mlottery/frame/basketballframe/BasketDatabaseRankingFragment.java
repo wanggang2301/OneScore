@@ -390,7 +390,6 @@ public class BasketDatabaseRankingFragment extends Fragment {
 
 
     private BasketballRankingDetailsClickListener basketballHandicpDetailsClickListener;
-    // 购买(查看)的点击监听
     public interface BasketballRankingDetailsClickListener {
         void IntegralDetailsOnClick(View view, RankingTeam teamData);
     }

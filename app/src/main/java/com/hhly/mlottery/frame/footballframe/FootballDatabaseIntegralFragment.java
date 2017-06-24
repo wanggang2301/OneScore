@@ -457,7 +457,6 @@ public class FootballDatabaseIntegralFragment extends Fragment implements View.O
     }
 
     private FootballTeamIntegralDetailsClickListener footballTeamIntegralDetailsClickListener;
-    // 购买(查看)的点击监听
     public interface FootballTeamIntegralDetailsClickListener {
         void IntegralDetailsOnClick(View view, FootballRankingData teamData);
     }
