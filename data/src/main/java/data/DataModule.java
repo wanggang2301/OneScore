@@ -10,11 +10,13 @@ import java.util.concurrent.TimeUnit;
 import javax.inject.Singleton;
 
 import data.api.AccountDetailApi;
+import data.api.BasketTeamDataApi;
 import data.api.UserCenterApiService;
 import dagger.Module;
 import dagger.Provides;
 import data.api.WithDrawApi;
 import data.repository.AccountDetailRepository;
+import data.repository.BasketTeamDataRepository;
 import data.repository.UserCenterRepository;
 import data.repository.WithdrawRepository;
 import okhttp3.OkHttpClient;
@@ -129,5 +131,16 @@ public class DataModule {
     @Singleton
     WithdrawRepository providesWithDrawRepository(WithDrawApi withDrawApi){
         return new WithdrawRepository(withDrawApi);
+    }
+
+    @Provides
+    @Singleton
+    BasketTeamDataApi providesBasketTeamDataApi(Retrofit retrofit){
+        return retrofit.create(BasketTeamDataApi.class);
+    }
+    @Provides
+    @Singleton
+    BasketTeamDataRepository providesBasketTeamRepository(BasketTeamDataApi basketTeamDataApi){
+        return new BasketTeamDataRepository(basketTeamDataApi);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import javax.inject.Inject;
 
 import data.repository.AccountDetailRepository;
+import data.repository.BasketTeamDataRepository;
 import data.repository.UserCenterRepository;
 import data.repository.WithdrawRepository;
 
@@ -25,6 +26,9 @@ public class DataManager {
 
     @Inject
     public WithdrawRepository mWithdrawRepository;
+
+    @Inject
+    public BasketTeamDataRepository mTeamDataRepository;
 
     public DataManager(Context context, String apiHostUrl, String timeZone, String lang) {
 

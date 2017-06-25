@@ -3,7 +3,7 @@
     package="com.hhly.mlottery">
 
     <!-- 录音权限 -->
-    <!--<uses-permission android:name="android.permission.RECORD_AUDIO" />-->
+    <!-- <uses-permission android:name="android.permission.RECORD_AUDIO" /> -->
     <!-- 调用系统下载权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
@@ -51,10 +51,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <!-- 环境选择 -->
         <activity
@@ -69,15 +69,25 @@
         </activity>
 
         <!-- 内地版的key-begin -->
-        <meta-data android:name="UMENG_APPKEY" android:value="5625a606e0f55aad6700244f" />
-        <meta-data android:name="UMENG_MESSAGE_SECRET" android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
-        <meta-data android:name="UMENG_CHANNEL" android:value="BETA" />
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5625a606e0f55aad6700244f" />
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="0d9e3f2d89c05a6f2bbd4a28b83c3cfc" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="BETA" />
         <!-- 内地版的key-end -->
 
 
         <!-- TalkingData key  begin -->
-        <meta-data android:name="TD_APP_ID" android:value="28673E18FAF2475F8C42D20D4A140B27" />
-        <meta-data android:name="TD_CHANNEL_ID" android:value="BETA" />
+        <meta-data
+            android:name="TD_APP_ID"
+            android:value="28673E18FAF2475F8C42D20D4A140B27" />
+        <meta-data
+            android:name="TD_CHANNEL_ID"
+            android:value="BETA" />
 
         <service
             android:name="com.talkingdata.sdk.TDAntiCheatingService"
@@ -506,7 +516,7 @@
         <activity
             android:name=".activity.RecommendedExpertDetailsActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".activity.BasketballTeamActivity"></activity>
     </application>
 
 </manifest>

@@ -1116,14 +1116,15 @@
 
     <!--竞彩推荐页-->
     <style name="betting_recommend_style">
-            <item name="android:layout_width">wrap_content</item>
-            <item name="android:layout_height">wrap_content</item>
-            <item name="android:paddingTop">3dp</item>
-            <item name="android:paddingBottom">3dp</item>
-            <item name="android:paddingLeft">10dp</item>
-            <item name="android:paddingRight">10dp</item>
-            <item name="android:textSize">@dimen/text_size_11</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:textSize">@dimen/text_size_11</item>
     </style>
+
     <style name="betting_recommend_details_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -1131,12 +1132,14 @@
         <item name="android:textSize">@dimen/text_size_12</item>
         <item name="android:textColor">@color/betting_recommend_zhuanjia_details_color</item>
     </style>
+
     <style name="betting_recommend_team_name_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_size_16</item>
         <item name="android:textColor">@color/betting_recommend_name_color</item>
     </style>
+
     <style name="betting_recommend_buy_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -1214,5 +1217,36 @@
         <item name="android:textColorPrimary">@android:color/white</item>
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="colorControlActivated">@android:color/white</item>
+    </style>
+    <!--篮球球队技术-->
+    <style name="basket_team_data_left">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/home_item_lottery_title_des</item>
+        <item name="android:textSize">@dimen/text_size_13</item>
+        <item name="android:text">排名</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--篮球球队技术-->
+    <style name="basket_team_data_right">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/snooker</item>
+        <item name="android:textSize">@dimen/text_size_15</item>
+        <item name="android:text">排名</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!--篮球球队技术场均那些-->
+    <style name="basket_team_changjun">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/snooker</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
+        <item name="android:text">场均得分</item>
+        <item name="android:gravity">center</item>
     </style>
 </resources>
