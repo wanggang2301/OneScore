@@ -24,14 +24,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
                 android:paddingBottom="20dp"
                 >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="15dp"
+                    android:padding="10dp"
                     android:orientation="vertical"
                     android:background="@drawable/betting_issues_fabu_view_bg">
 
@@ -46,7 +46,7 @@
                             android:layout_height="wrap_content"
                             android:textSize="@dimen/text_size_14"
                             android:textColor="@color/betting_recommend_zhuanjia_spf_color"
-                            android:text="推介赛事"/>
+                            android:text="@string/issue_lay_betting_iss"/>
                     </LinearLayout>
                     <View
                         android:layout_width="match_parent"
@@ -63,11 +63,12 @@
                             android:layout_height="wrap_content">
 
                             <TextView
+                                android:id="@+id/betting_issue_leagueName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_13"
                                 android:textColor="@color/betting_recommend_issue_leaguename_color"
-                                android:text="中超"/>
+                                android:text="--"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -75,11 +76,27 @@
                             android:paddingLeft="10dp">
 
                             <TextView
+                                android:id="@+id/betting_issue_homename"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="@dimen/text_size_15"
                                 android:textColor="@color/betting_recommend_issue_wanfa_color"
-                                android:text="XX vs XX"/>
+                                android:text="XX"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_13"
+                                android:textColor="@color/betting_recommend_issue_wanfa_color"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="5dp"
+                                android:text="VS"/>
+                            <TextView
+                                android:id="@+id/betting_issue_guestname"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="@dimen/text_size_15"
+                                android:textColor="@color/betting_recommend_issue_wanfa_color"
+                                android:text="XX"/>
                         </LinearLayout>
                     </LinearLayout>
 
@@ -87,47 +104,138 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:paddingTop="15dp">
+                        android:paddingTop="10dp">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            >
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text="推荐玩法: "/>
+                                android:text="@string/issue_lay_issue_play"/>
                         </LinearLayout>
 
+                        <com.hhly.mlottery.widget.GrapeGridView
+                            android:id="@+id/betting_issue_play_gridview"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:columnWidth="0dp"
+                            android:gravity="center"
+                            android:horizontalSpacing="0dp"
+                            android:numColumns="4"
+                            android:scrollbars="none"
+                            android:stretchMode="columnWidth"
+                            >
+
+                        </com.hhly.mlottery.widget.GrapeGridView>
+                        <!--<LinearLayout-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content">-->
+
+                            <!--<RelativeLayout-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--&gt;-->
+                                <!--<TextView-->
+                                    <!--android:id="@+id/textView_spf"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--style="@style/betting_recommend_issue_fabu"-->
+                                    <!--android:background="@drawable/betting_issue_fabu_check_bg"-->
+                                    <!--android:text="胜平负"-->
+                                    <!--android:layout_alignParentTop="true"-->
+                                    <!--android:layout_alignParentLeft="true"-->
+                                    <!--android:layout_alignParentStart="true" />-->
+                                <!--<ImageView-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:background="@mipmap/checked_blue"-->
+                                    <!--android:layout_alignParentBottom="true"-->
+                                    <!--android:layout_alignRight="@+id/textView_spf"-->
+                                    <!--android:layout_alignEnd="@+id/textView_spf" />-->
+                            <!--</RelativeLayout>-->
+
+                            <!--<View-->
+                                <!--android:layout_width="10dp"-->
+                                <!--android:layout_height="30dp"/>-->
+
+                            <!--<RelativeLayout-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--&gt;-->
+                                <!--<TextView-->
+                                    <!--android:id="@+id/textView_lqspf"-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--style="@style/betting_recommend_issue_fabu"-->
+                                    <!--android:background="@drawable/betting_issue_fabu_check_bg"-->
+                                    <!--android:text="让球胜平负"-->
+                                    <!--/>-->
+                                <!--<ImageView-->
+                                    <!--android:layout_width="wrap_content"-->
+                                    <!--android:layout_height="wrap_content"-->
+                                    <!--android:background="@drawable/betting_issue_fabu_imgcheck"-->
+                                    <!--android:layout_alignParentBottom="true"-->
+                                    <!--android:layout_alignRight="@+id/textView_lqspf"-->
+                                    <!--android:layout_alignEnd="@+id/textView_lqspf"-->
+                                    <!--android:focusable="true"-->
+                                    <!--android:clickable="true"-->
+                                    <!--/>-->
+                            <!--</RelativeLayout>-->
+                        <!--</LinearLayout>-->
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/betting_issue_play_odds_first"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+
+                            >
+                            <TextView
+                                android:id="@+id/odds_play_first_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/betting_recommend_issue_fabu_key"
+                                android:text="半场"/>
+                        </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
-
                             <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
+                                android:layout_width="75dp"
+                                android:layout_height="28dp"
                                 >
-                                <TextView
-                                    android:id="@+id/textView_spf"
+                                <RadioButton
+                                    android:id="@+id/issue_play_left_a"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerHorizontal="true"
                                     style="@style/betting_recommend_issue_fabu"
+                                    android:text="     --     "
                                     android:background="@drawable/betting_issue_fabu_check_bg"
-                                    android:text="胜平负"
-                                    android:layout_alignParentTop="true"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_alignParentStart="true" />
+                                    android:button="@null"
+                                    />
                                 <ImageView
+                                    android:id="@+id/issue_play_left_img_a"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@mipmap/checked_blue"
+                                    android:background="@drawable/betting_issue_fabu_imgcheck"
                                     android:layout_alignParentBottom="true"
-                                    android:layout_alignRight="@+id/textView_spf"
-                                    android:layout_alignEnd="@+id/textView_spf" />
+                                    android:layout_alignRight="@+id/issue_play_left_a"
+                                    android:layout_alignEnd="@+id/issue_play_left_a"
+                                    android:focusable="true"
+                                    android:clickable="true"
+                                    />
                             </RelativeLayout>
-
                             <View
-                                android:layout_width="10dp"
+                                android:layout_width="3dp"
                                 android:layout_height="30dp"/>
 
                             <RelativeLayout
@@ -135,50 +243,205 @@
                                 android:layout_height="match_parent"
                                 >
                                 <TextView
-                                    android:id="@+id/textView_lqspf"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:id="@+id/issue_middle_handicap_first"
+                                    android:layout_width="75dp"
+                                    android:layout_height="28dp"
                                     style="@style/betting_recommend_issue_fabu"
-                                    android:background="@drawable/betting_issue_fabu_check_bg"
-                                    android:text="让球胜平负"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/betting_issues_fabu_edit_text_bg"
+                                    android:text="pankou"
+                                    android:visibility="gone"
                                     />
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:id="@+id/issue_middle_odds_first"
+                                android:layout_width="75dp"
+                                android:layout_height="28dp"
+                                >
+                                <RadioButton
+                                    android:id="@+id/issue_play_middle_a"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerHorizontal="true"
+                                    style="@style/betting_recommend_issue_fabu"
+                                    android:text="     --     "
+                                    android:background="@drawable/betting_issue_fabu_check_bg"
+                                    android:button="@null"  />
                                 <ImageView
+                                    android:id="@+id/issue_play_middle_img_a"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/betting_issue_fabu_imgcheck"
                                     android:layout_alignParentBottom="true"
-                                    android:layout_alignRight="@+id/textView_lqspf"
-                                    android:layout_alignEnd="@+id/textView_lqspf"
+                                    android:layout_alignRight="@+id/issue_play_middle_a"
+                                    android:layout_alignEnd="@+id/issue_play_middle_a"
                                     android:focusable="true"
                                     android:clickable="true"
                                     />
                             </RelativeLayout>
-                            <!--<RadioGroup-->
-                            <!--android:id="@+id/play_gendergroup"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:orientation="horizontal">-->
+                            <View
+                                android:layout_width="3dp"
+                                android:layout_height="30dp"/>
+                            <RelativeLayout
+                                android:layout_width="75dp"
+                                android:layout_height="28dp"
+                                >
+                                <RadioButton
+                                    android:id="@+id/issue_play_right_a"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerHorizontal="true"
+                                    style="@style/betting_recommend_issue_fabu"
+                                    android:text="     --     "
+                                    android:background="@drawable/betting_issue_fabu_check_bg"
+                                    android:button="@null"  />
+                                <ImageView
+                                    android:id="@+id/issue_play_right_img_a"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/betting_issue_fabu_imgcheck"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignRight="@+id/issue_play_right_a"
+                                    android:layout_alignEnd="@+id/issue_play_right_a"
+                                    android:focusable="true"
+                                    android:clickable="true"
+                                    />
+                            </RelativeLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/betting_issue_play_odds_second"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:paddingTop="10dp">
 
-                            <!--<RadioButton-->
-                            <!--android:id="@+id/play_spf_radio"-->
-                            <!--style="@style/betting_recommend_issue_check"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:text="胜平负"-->
-                            <!--android:background="@drawable/betting_issue_check_color_bg"-->
-                            <!--android:checked="true"-->
-                            <!--/>-->
-                            <!--<View-->
-                            <!--android:layout_width="10dp"-->
-                            <!--android:layout_height="30dp"/>-->
-                            <!--<RadioButton-->
-                            <!--android:id="@+id/play_lqspf_radio"-->
-                            <!--style="@style/betting_recommend_issue_check"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:background="@drawable/betting_issue_check_color_bg"-->
-                            <!--android:text="让球胜平负"/>-->
-                            <!--</RadioGroup>-->
+                        <LinearLayout
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/odds_play_second_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                style="@style/betting_recommend_issue_fabu_key"
+                                android:text="让球胜平负"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center">
+                                <TextView
+                                    android:id="@+id/odds_play_second_title_handicap"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    style="@style/betting_recommend_issue_fabu_key"
+                                    android:textColor="@color/colorPrimary"
+                                    android:visibility="gone"
+                                    android:text=""/>
+                            </LinearLayout>
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <RelativeLayout
+                                android:layout_width="75dp"
+                                android:layout_height="28dp"
+                                >
+                                <RadioButton
+                                    android:id="@+id/issue_play_left_b"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerHorizontal="true"
+                                    style="@style/betting_recommend_issue_fabu"
+                                    android:text="     --     "
+                                    android:background="@drawable/betting_issue_fabu_check_bg"
+                                    android:button="@null"
+                                    />
+                                <ImageView
+                                    android:id="@+id/issue_play_left_img_b"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/betting_issue_fabu_imgcheck"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignRight="@+id/issue_play_left_b"
+                                    android:layout_alignEnd="@+id/issue_play_left_b"
+                                    android:focusable="true"
+                                    android:clickable="true"
+                                    />
+                            </RelativeLayout>
+                            <View
+                                android:layout_width="3dp"
+                                android:layout_height="30dp"/>
+
+                            <RelativeLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                >
+                                <TextView
+                                    android:id="@+id/issue_middle_handicap_second"
+                                    android:layout_width="75dp"
+                                    android:layout_height="28dp"
+                                    style="@style/betting_recommend_issue_fabu"
+                                    android:layout_centerHorizontal="true"
+                                    android:background="@drawable/betting_issues_fabu_edit_text_bg"
+                                    android:text="pankou"
+                                    android:visibility="gone"
+                                    />
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:id="@+id/issue_middle_odds_second"
+                                android:layout_width="75dp"
+                                android:layout_height="28dp"
+                                >
+                                <RadioButton
+                                    android:id="@+id/issue_play_middle_b"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerHorizontal="true"
+                                    style="@style/betting_recommend_issue_fabu"
+                                    android:text="     --     "
+                                    android:background="@drawable/betting_issue_fabu_check_bg"
+                                    android:button="@null"  />
+                                <ImageView
+                                    android:id="@+id/issue_play_middle_img_b"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/betting_issue_fabu_imgcheck"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignRight="@+id/issue_play_middle_b"
+                                    android:layout_alignEnd="@+id/issue_play_middle_b"
+                                    android:focusable="true"
+                                    android:clickable="true"
+                                    />
+                            </RelativeLayout>
+                            <View
+                                android:layout_width="3dp"
+                                android:layout_height="30dp"/>
+                            <RelativeLayout
+                                android:layout_width="75dp"
+                                android:layout_height="28dp"
+                                >
+                                <RadioButton
+                                    android:id="@+id/issue_play_right_b"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_centerHorizontal="true"
+                                    style="@style/betting_recommend_issue_fabu"
+                                    android:text="     --     "
+                                    android:background="@drawable/betting_issue_fabu_check_bg"
+                                    android:button="@null"  />
+                                <ImageView
+                                    android:id="@+id/issue_play_right_img_b"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/betting_issue_fabu_imgcheck"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_alignRight="@+id/issue_play_right_b"
+                                    android:layout_alignEnd="@+id/issue_play_right_b"
+                                    android:focusable="true"
+                                    android:clickable="true"
+                                    />
+                            </RelativeLayout>
                         </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
@@ -186,158 +449,15 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:paddingTop="15dp">
-
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:paddingRight="5dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text="胜平负: "/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:id="@+id/textView_s"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    style="@style/betting_recommend_issue_fabu"
-                                    android:background="@drawable/betting_issue_fabu_check_bg"
-                                    android:text="胜  (1.76)"
-                                    />
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/betting_issue_fabu_imgcheck"
-                                    android:layout_alignParentBottom="true"
-                                    android:layout_alignRight="@+id/textView_s"
-                                    android:layout_alignEnd="@+id/textView_s"
-                                    android:focusable="true"
-                                    android:clickable="true"
-                                    />
-                            </RelativeLayout>
-                            <View
-                                android:layout_width="10dp"
-                                android:layout_height="30dp"/>
-                            <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:id="@+id/textView_p"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    style="@style/betting_recommend_issue_fabu"
-                                    android:background="@drawable/betting_issue_fabu_check_bg"
-                                    android:text="平  (1.76)"
-                                    />
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/betting_issue_fabu_imgcheck"
-                                    android:layout_alignParentBottom="true"
-                                    android:layout_alignRight="@+id/textView_p"
-                                    android:layout_alignEnd="@+id/textView_p"
-                                    android:focusable="true"
-                                    android:clickable="true"
-                                    />
-                            </RelativeLayout>
-                            <View
-                                android:layout_width="10dp"
-                                android:layout_height="30dp"/>
-                            <RelativeLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                >
-                                <TextView
-                                    android:id="@+id/textView_f"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    style="@style/betting_recommend_issue_fabu"
-                                    android:background="@drawable/betting_issue_fabu_check_bg"
-                                    android:text="负  (1.76)"
-                                    />
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/betting_issue_fabu_imgcheck"
-                                    android:layout_alignParentBottom="true"
-                                    android:layout_alignRight="@+id/textView_f"
-                                    android:layout_alignEnd="@+id/textView_f"
-                                    android:focusable="true"
-                                    android:clickable="true"
-                                    />
-                            </RelativeLayout>
-                            <!--<RadioGroup-->
-                            <!--android:id="@+id/spf_gendergroup"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:orientation="horizontal">-->
-                            <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_height="wrap_content">&ndash;&gt;-->
-
-                            <!--<RadioButton-->
-                            <!--android:id="@+id/spf_radio_s"-->
-                            <!--style="@style/betting_recommend_issue_check"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:background="@drawable/betting_issue_check_color_bg"-->
-                            <!--android:text="胜(1.76)"-->
-                            <!--/>-->
-                            <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:paddingLeft="10dp">&ndash;&gt;-->
-                            <!--<View-->
-                            <!--android:layout_width="10dp"-->
-                            <!--android:layout_height="30dp"/>-->
-                            <!--<RadioButton-->
-                            <!--android:id="@+id/spf_radio_p"-->
-                            <!--style="@style/betting_recommend_issue_check"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:background="@drawable/betting_issue_check_color_bg"-->
-                            <!--android:text="平(1.76)"/>-->
-                            <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:paddingLeft="10dp">&ndash;&gt;-->
-                            <!--<View-->
-                            <!--android:layout_width="10dp"-->
-                            <!--android:layout_height="30dp"/>-->
-                            <!--<RadioButton-->
-                            <!--android:id="@+id/spf_radio_f"-->
-                            <!--style="@style/betting_recommend_issue_check"-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:background="@drawable/betting_issue_check_color_bg"-->
-                            <!--android:text="负(1.76)"/>-->
-                            <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
-                            <!--</RadioGroup>-->
-                        </LinearLayout>
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:paddingTop="15dp">
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                style="@style/betting_recommend_issue_fabu_key"
-                                android:text="推介标题: "/>
+                                android:text="@string/issue_lay_issue_tittle"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -347,7 +467,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="#d7d7d7"
+                                android:textColor="#4A4A4A"
+                                android:hint="@string/issue_lay_max_input"
+                                android:maxLength="20"
+                                android:paddingLeft="5dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
                                 android:background="@drawable/betting_issues_fabu_edit_text_bg"
                                 />
                         </LinearLayout>
@@ -358,12 +483,13 @@
                         android:paddingTop="15dp">
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:paddingRight="5dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text="推介理由  "/>
+                                android:text="@string/issue_lay_issue_reason"/>
                         </LinearLayout>
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -373,15 +499,15 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
                                 android:textSize="@dimen/text_size_11"
-                                android:textColor="#d7d7d7"
+                                android:textColor="#4A4A4A"
                                 android:background="@drawable/betting_issues_fabu_edit_text_bg"
-                                android:gravity="top"
                                 android:paddingTop="8dp"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="5dp"
-                                android:maxLength="100"
-                                android:drawableLeft="@mipmap/edit_img"
-                                android:hint="             最多输入100个字符！"/>
+                                android:maxLength="300"
+                                android:gravity="top|left"
+                                android:hint="@string/issue_inputtext_max"
+                                />
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -402,12 +528,13 @@
                         android:paddingTop="10dp">
                         <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:paddingRight="5dp">
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/betting_recommend_issue_fabu_key"
-                                android:text="方案定价: "/>
+                                android:text="@string/issue_lay_issue_scheme_price"/>
                         </LinearLayout>
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -417,124 +544,221 @@
                                 android:layout_width="150dp"
                                 android:layout_height="30dp"
                                 android:textSize="@dimen/text_size_12"
-                                android:textColor="#d7d7d7"
+                                android:textColor="#4A4A4A"
+                                android:inputType="number"
+                                android:cursorVisible="false"
+                                android:hint="@string/issue_lay_zero_free"
+                                android:paddingLeft="8dp"
+                                android:maxLines="1"
+                                android:singleLine="true"
                                 android:background="@drawable/betting_issues_fabu_edit_text_bg"
                                 />
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingLeft="10dp"
-                                android:textSize="@dimen/text_size_14"
+                                android:paddingLeft="5dp"
+                                android:textSize="@dimen/text_size_12"
                                 android:textColor="@color/betting_recommend_issue_wanfa_color"
                                 android:text="RMB"/>
                         </LinearLayout>
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="5dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="                  "/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/betting_recommend_issue_mianfei_color"
-                            android:textSize="@dimen/text_size_12"
-                            android:text="0则为免费"
-                            />
-                    </LinearLayout>
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:paddingTop="5dp">-->
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:text="                  "/>-->
+                        <!--<TextView-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:textColor="@color/betting_recommend_issue_mianfei_color"-->
+                            <!--android:textSize="@dimen/text_size_12"-->
+                            <!--android:text="0则为免费"-->
+                            <!--/>-->
+                    <!--</LinearLayout>-->
 
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:paddingTop="15dp">-->
+                        <!--<RelativeLayout-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_weight="1"-->
+                            <!--&gt;-->
+                            <!--<ImageView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:background="@mipmap/price_card"-->
+                                <!--android:id="@+id/price_card_1" />-->
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:paddingBottom="5dp"-->
+                                <!--android:layout_alignBottom="@+id/price_card_1"-->
+                                <!--android:layout_centerHorizontal="true"-->
+                                <!--style="@style/betting_recommend_issue_fabu_jiage"-->
+                                <!--android:text="10元"-->
+                                <!--/>-->
+                        <!--</RelativeLayout>-->
+
+                        <!--<RelativeLayout-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_weight="1"-->
+                            <!--&gt;-->
+                            <!--<ImageView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:background="@mipmap/price_card"-->
+                                <!--android:id="@+id/price_card_2" />-->
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:paddingBottom="5dp"-->
+                                <!--android:layout_alignBottom="@+id/price_card_2"-->
+                                <!--android:layout_centerHorizontal="true"-->
+                                <!--style="@style/betting_recommend_issue_fabu_jiage"-->
+                                <!--android:text="10元"-->
+                                <!--/>-->
+                        <!--</RelativeLayout>-->
+                        <!--<RelativeLayout-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_weight="1"-->
+                            <!--&gt;-->
+                            <!--<ImageView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:background="@mipmap/price_card"-->
+                                <!--android:id="@+id/price_card_3" />-->
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:paddingBottom="5dp"-->
+                                <!--android:layout_alignBottom="@+id/price_card_3"-->
+                                <!--android:layout_centerHorizontal="true"-->
+                                <!--style="@style/betting_recommend_issue_fabu_jiage"-->
+                                <!--android:text="10元"-->
+                                <!--/>-->
+                        <!--</RelativeLayout>-->
+                        <!--<RelativeLayout-->
+                            <!--android:layout_height="wrap_content"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_weight="1"-->
+                            <!--&gt;-->
+                            <!--<ImageView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:background="@mipmap/price_card"-->
+                                <!--android:id="@+id/price_card_4" />-->
+                            <!--<TextView-->
+                                <!--android:layout_width="wrap_content"-->
+                                <!--android:layout_height="wrap_content"-->
+                                <!--android:paddingBottom="5dp"-->
+                                <!--android:layout_alignBottom="@+id/price_card_4"-->
+                                <!--android:layout_centerHorizontal="true"-->
+                                <!--style="@style/betting_recommend_issue_fabu_jiage"-->
+                                <!--android:text="10元"-->
+                                <!--/>-->
+                        <!--</RelativeLayout>-->
+                    <!--</LinearLayout>-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="15dp">
+                        android:paddingTop="10dp"
+                        >
                         <RelativeLayout
-                            android:layout_height="wrap_content"
                             android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             >
-                            <ImageView
+                            <RadioButton
+                                android:id="@+id/issue_price_card_a"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@mipmap/price_card"
-                                android:id="@+id/price_card_1" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingBottom="5dp"
-                                android:layout_alignBottom="@+id/price_card_1"
                                 android:layout_centerHorizontal="true"
-                                style="@style/betting_recommend_issue_fabu_jiage"
-                                android:text="10元"
-                                />
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_height="wrap_content"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            >
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@mipmap/price_card"
-                                android:id="@+id/price_card_2" />
+                                android:button="@drawable/payment_checked" />
                             <TextView
+                                style="@style/betting_recommend_issue_fabu_jiage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingBottom="5dp"
-                                android:layout_alignBottom="@+id/price_card_2"
+                                android:layout_alignBottom="@+id/issue_price_card_a"
                                 android:layout_centerHorizontal="true"
-                                style="@style/betting_recommend_issue_fabu_jiage"
-                                android:text="10元"
-                                />
+                                android:paddingBottom="5dp"
+                                android:text="@string/betting_txt_amount_two" />
                         </RelativeLayout>
                         <RelativeLayout
-                            android:layout_height="wrap_content"
                             android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             >
-                            <ImageView
+                            <RadioButton
+                                android:id="@+id/issue_price_card_b"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@mipmap/price_card"
-                                android:id="@+id/price_card_3" />
+                                android:button="@drawable/payment_checked"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true" />
                             <TextView
+                                style="@style/betting_recommend_issue_fabu_jiage"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:paddingBottom="5dp"
-                                android:layout_alignBottom="@+id/price_card_3"
+                                android:layout_alignBottom="@+id/issue_price_card_b"
                                 android:layout_centerHorizontal="true"
-                                style="@style/betting_recommend_issue_fabu_jiage"
-                                android:text="10元"
-                                />
+                                android:paddingBottom="5dp"
+                                android:gravity="center"
+                                android:text="@string/betting_txt_amount_five" />
                         </RelativeLayout>
                         <RelativeLayout
-                            android:layout_height="wrap_content"
                             android:layout_width="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             >
-                            <ImageView
+                            <RadioButton
+                                android:id="@+id/issue_price_card_c"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@mipmap/price_card"
-                                android:id="@+id/price_card_4" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingBottom="5dp"
-                                android:layout_alignBottom="@+id/price_card_4"
                                 android:layout_centerHorizontal="true"
+                                android:button="@drawable/payment_checked" />
+                            <TextView
                                 style="@style/betting_recommend_issue_fabu_jiage"
-                                android:text="10元"
-                                />
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignBottom="@+id/issue_price_card_c"
+                                android:layout_centerHorizontal="true"
+                                android:paddingBottom="5dp"
+                                android:text="@string/betting_txt_amount_ten" />
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            >
+                            <RadioButton
+                                android:id="@+id/issue_price_card_d"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:button="@drawable/payment_checked" />
+                            <TextView
+                                style="@style/betting_recommend_issue_fabu_jiage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignBottom="@+id/issue_price_card_d"
+                                android:layout_centerHorizontal="true"
+                                android:paddingBottom="5dp"
+                                android:text="@string/betting_txt_amount_fifteen" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/to_issue"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
                     >
                     <TextView
@@ -544,7 +768,7 @@
                         android:background="#dff2ff"
                         android:textColor="@color/betting_recommend_zhuanjia_spf_color"
                         android:textSize="@dimen/text_size_15"
-                        android:text="确定"
+                        android:text="@string/issue_to_issue"
                         />
                 </LinearLayout>
             </LinearLayout>

@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.FootballBettingIssueFragment;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.view.CircleImageView;
@@ -100,6 +101,9 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
                     if (mBuyClick != null){
                         mBuyClick.BuyOnClick(v , data);
                     }
+//                    if (mFragBuyClick != null) {
+//                        mFragBuyClick.FragBuyOnClick(v , data);
+//                    }
                 }
             });
         }
@@ -113,6 +117,9 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
                 if (mSpecialistClick != null) {
                     mSpecialistClick.SpecialistOnClick(v , data);
                 }
+//                if (mFragSpecialistClick != null) {
+//                    mFragSpecialistClick.FragSpecialistOnClick(v , data);
+//                }
             }
         });
         mGameDetailsLay.setOnClickListener(new View.OnClickListener() {
@@ -133,6 +140,13 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
     public void setmBuyClick(MvpBettingRecommendActivity.BettingBuyClickListener mBuyClick) {
         this.mBuyClick = mBuyClick;
     }
+//    /**
+//     * 购买（查看）监听(内页)
+//     */
+//    private FootballBettingIssueFragment.BettingBuyClickListenerFrag mFragBuyClick; //关注监听回掉
+//    public void setmFragBuyClick(FootballBettingIssueFragment.BettingBuyClickListenerFrag mFragBuyClick) {
+//        this.mFragBuyClick = mFragBuyClick;
+//    }
     /**
      * 专家详情监听
      */
@@ -140,6 +154,13 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
     public void setmSpecialistClick(MvpBettingRecommendActivity.BettingSpecialistClickListener mSpecialistClick) {
         this.mSpecialistClick = mSpecialistClick;
     }
+//    /**
+//     * 专家详情监听
+//     */
+//    private FootballBettingIssueFragment.BettingSpecialistClickListenerFrag mFragSpecialistClick; //关注监听回掉
+//    public void setmFragSpecialistClick(FootballBettingIssueFragment.BettingSpecialistClickListenerFrag mFragSpecialistClick) {
+//        this.mFragSpecialistClick = mFragSpecialistClick;
+//    }
 
     /**
      * 内页详情监听

@@ -365,5 +365,6 @@ public class SnookerMatchDetailActivity extends BaseWebSocketActivity implements
     protected void onDestroy() {
         super.onDestroy();
         closeWebSocket();
+        mWebSocketHandler.removeCallbacksAndMessages(null);
     }
 }

@@ -425,6 +425,7 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
             }
         }
         clearList();
+        handler.removeCallbacksAndMessages(null);
     }
 
     @Override
@@ -461,4 +462,5 @@ public class PlayHighLightActivity extends Activity implements MediaPlayer.OnPre
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }

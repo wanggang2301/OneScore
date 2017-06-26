@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -124,6 +125,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
 
         initListener();
 
+        setIntegralDetailsOnClick();
         initRecycler();
 
         load(null);
@@ -214,6 +216,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
     private void initRecycler() {
         mSections = new ArrayList<>();
         mAdapter = new BasketballDatabaseRankingAdapter(mSections);
+        mAdapter.setBasketballRankingDetailsClickListener(basketballHandicpDetailsClickListener);
         mAdapter.setEmptyView(mEmptyView);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setAdapter(mAdapter);
@@ -383,5 +386,19 @@ public class BasketDatabaseRankingFragment extends Fragment {
         this.season = season;
         Bundle args = getArguments();
         if (args != null) args.putString(PARAM_SEASON, season);
+    }
+
+
+    private BasketballRankingDetailsClickListener basketballHandicpDetailsClickListener;
+    public interface BasketballRankingDetailsClickListener {
+        void IntegralDetailsOnClick(View view, RankingTeam teamData);
+    }
+    private void setIntegralDetailsOnClick(){
+        basketballHandicpDetailsClickListener = new BasketballRankingDetailsClickListener() {
+            @Override
+            public void IntegralDetailsOnClick(View view, RankingTeam teamData) {
+//                Toast.makeText(getContext(), teamData.getTeamName(), Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }

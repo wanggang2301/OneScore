@@ -295,4 +295,10 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
         initData();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mViewHandler.removeCallbacksAndMessages(null);
+    }
 }

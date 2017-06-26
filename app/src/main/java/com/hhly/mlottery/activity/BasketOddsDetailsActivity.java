@@ -334,4 +334,10 @@ public class BasketOddsDetailsActivity extends BaseActivity implements SwipeRefr
             }
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+    }
 }

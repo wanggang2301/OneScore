@@ -105,6 +105,20 @@ public class HomeMuenFragment extends Fragment {
                             switch (jumpType) {
                                 case 0:// 无
                                     break;
+                                case 4:// 无
+                                    if (DeviceInfo.isLogin()) {
+                                        Intent intent = new Intent(getContext(), WebActivity.class);
+                                        intent.putExtra("key", jumpAddr);// 跳转地址
+                                        intent.putExtra("infoTypeName", title);
+                                        intent.putExtra("reqMethod", reqMethod);// 跳转方式 get or post
+                                        intent.putExtra("noShare" , true);
+                                        getContext().startActivity(intent);
+                                    } else {// 跳转到登录界面
+                                        getContext().startActivity(new Intent(getContext(), LoginActivity.class));
+                                    }
+
+
+                                    break;
                                 case 1:// 页面
                                 {
                                     if (jumpAddr.contains("{loginToken}")) {// 是否需要登录

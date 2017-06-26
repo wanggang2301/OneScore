@@ -127,6 +127,13 @@ public class ProfileActivity extends PictureSelectActivity implements View.OnCli
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+        mViewHandler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @Override

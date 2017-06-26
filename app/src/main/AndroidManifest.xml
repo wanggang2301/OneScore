@@ -80,7 +80,6 @@
             android:value="BETA" />
         <!-- 内地版的key-end -->
 
-
         <!-- TalkingData key  begin -->
         <meta-data
             android:name="TD_APP_ID"
@@ -121,6 +120,11 @@
         <!-- 彩种定制 -->
         <activity
             android:name=".activity.WebActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.ColorPrimaryStatusBar"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity
+            android:name="com.hhly.mlottery.activity.TexasWebActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.ColorPrimaryStatusBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
@@ -218,6 +222,11 @@
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
+        <!-- 微信支付 -->
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop" />
         <!-- QQ分享 -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -339,9 +348,9 @@
             android:name=".activity.FootballMatchSearchActivity"
             android:screenOrientation="portrait" />
         <!-- 1.2.3改版后的新首页 -->
-        <!-- <activity -->
-        <!-- android:name=".activity.IndexActivity" -->
-        <!-- android:screenOrientation="portrait" /> -->
+        <!--<activity-->
+        <!--android:name=".activity.IndexActivity"-->
+        <!--android:screenOrientation="portrait" />-->
         <!-- 斯诺克球员信息 -->
         <activity
             android:name=".activity.SnookerPlayerInfoActivity"
@@ -402,6 +411,7 @@
         <activity
             android:name=".activity.ExpertsActivity"
             android:screenOrientation="portrait" />
+        <!--专家详情MVP-->
         <activity
             android:name=".activity.BettingRecommendSettingActivity"
             android:screenOrientation="portrait" />
@@ -412,6 +422,11 @@
         <activity
             android:name=".mvp.bettingmvp.mvpview.MvpBettingRecommendActivity"
             android:screenOrientation="portrait" />
+        <!--足球动画直播Test-->
+        <activity
+            android:name=".activity.FootballEventAnimationFragment"
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".mvp.bettingmvp.mvpview.MvpBettingOnlinePaymentActivity"
             android:exported="true"
@@ -419,18 +434,11 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:scheme="wx7ef1da85d0f485e1" />
-
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:scheme="wx7ef1da85d0f485e1" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".mvp.bettingmvp.mvpview.MvpBettingIssueDetailsActivity"
             android:screenOrientation="portrait"
@@ -441,24 +449,10 @@
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:scheme="wx7ef1da85d0f485e1" />
-
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:scheme="wx7ef1da85d0f485e1" />
             </intent-filter>
         </activity>
-        <!-- 微信支付 -->
-        <activity
-            android:name=".wxapi.WXPayEntryActivity"
-            android:exported="true"
-            android:launchMode="singleTop" />
-
         <!-- alipay sdk begin -->
         <!-- 若手机没有安装支付宝，则调用H5支付页面 -->
         <activity
@@ -477,6 +471,7 @@
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
+
         <activity
             android:name=".activity.SubsRecordActivity"
             android:screenOrientation="portrait" />
@@ -490,7 +485,7 @@
         <activity
             android:name=".activity.NotRecommendExpertActivity"
             android:screenOrientation="portrait" />
-        <!-- 角球比分 -->
+        <!--角球比分-->
         <activity
             android:name=".activity.FootballCornerActivity"
             android:screenOrientation="portrait" />

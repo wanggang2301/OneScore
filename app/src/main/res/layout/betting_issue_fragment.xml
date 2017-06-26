@@ -30,10 +30,10 @@
             android:paddingBottom="10dp"
             >
             <ImageView
-                android:id="@+id/football_betting_text_img"
+                android:id="@+id/football_betting_text_img_old"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/football_icon_text"
+                android:background="@mipmap/football_icon_fabu"
                 android:visibility="gone"
                 />
         </LinearLayout>
@@ -62,10 +62,10 @@
                 android:layout_height="40dp">
 
                 <ImageView
-                    android:id="@+id/football_betting_fabuorquxiao_img"
+                    android:id="@+id/football_betting_text_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@mipmap/football_icon_fabu"/>
+                    android:background="@mipmap/football_icon_text"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

@@ -2,6 +2,7 @@ package com.hhly.mlottery.mvp.bettingmvp.mvpview;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
@@ -16,9 +17,11 @@ import android.widget.Toast;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.LoginActivity;
 import com.hhly.mlottery.bean.bettingbean.BalanceDataBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingBuyResultEventBusEntity;
+import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayChargeMoneyResultEventBus;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.PayMentZFBResultEventBusEntity;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.util.AppConstants;
@@ -168,6 +171,13 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
             public void onResponse(BalanceDataBean jsonObject) {
                 if (jsonObject == null || jsonObject.getCode() != 200) {
                     L.d("balance == >>>" , "余额接口无数据返回");
+                    if (jsonObject.getCode() == 1012 || jsonObject.getCode() == 1013 || jsonObject.getCode() == 1000) {
+                        //token 失效（为空）去登陆
+                        AppConstants.register.setToken(null);//token 置空 重新登录
+                        Intent intent = new Intent(mContext, LoginActivity.class);
+                        intent.putExtra(ConstantPool.PUBLIC_INPUT_PARAMEMT , ConstantPool.PAY_CHARGE_MONEY_RESULT);
+                        startActivity(intent);
+                    }
                     return;
                 }else{
                     if (jsonObject.getData() != null) {
@@ -258,10 +268,10 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
                     L.d("充值的金额 ：" , moneyIn);
                     switch (PAYMENT_MONEY){
                         case 0:
-                            PayMentUtils.ALiPayData(mContext , MvpChargeMoneyActivity.this ,payUrl ,getDataMap(ConstantPool.ZEB_SERVICE , moneyIn));
+                            PayMentUtils.ALiPayData(MvpChargeMoneyActivity.this ,payUrl ,getDataMap(ConstantPool.ZEB_SERVICE , moneyIn));
                             break;
                         case 1:
-                            PayMentUtils.WeiXinPayData(mContext , payUrl , getDataMap(ConstantPool.WEIXIN_SERVICE , moneyIn));
+                            PayMentUtils.WeiXinPayData(payUrl , getDataMap(ConstantPool.WEIXIN_SERVICE , moneyIn));
                             break;
                     }
                 }
@@ -343,6 +353,17 @@ public class MvpChargeMoneyActivity extends Activity implements View.OnClickList
     public void onEventMainThread(BettingBuyResultEventBusEntity buyResultEventBusEntity){
         if (buyResultEventBusEntity.isSuccessBuy()) {
             /** 支付成功后回到当前页刷新余额接口*/
+            initData();
+        }
+    }
+
+    /**
+     * 登录页面返回
+     * @param chargeMoneyResult
+     */
+    public void onEventMainThread(PayChargeMoneyResultEventBus chargeMoneyResult){
+        if (chargeMoneyResult.isChargeResult()) {
+            /**登录失效重新登录后返回 刷余额接口*/
             initData();
         }
     }

@@ -13,8 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
-import com.hhly.mlottery.bean.Match;
-import com.hhly.mlottery.bean.MatchOdd;
 import com.hhly.mlottery.bean.scheduleBean.OddsBean;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleMatchDto;
 import com.hhly.mlottery.bean.scheduleBean.ScheduleMatchOdd;
@@ -25,7 +23,6 @@ import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.HandicapUtils;
 import com.hhly.mlottery.util.ImageLoader;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.ResultDateUtil;
@@ -103,6 +100,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_football_date_week, viewGroup, false);
             final DateViewHolder dateViewHolder = new DateViewHolder(view);
 
+
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -133,16 +131,33 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
 
+ /*   public void setVisibility(boolean isVisible){
+        RecyclerView.LayoutParams param = (RecyclerView.LayoutParams)itemView.getLayoutParams();
+        if (isVisible){
+            param.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            param.width = LinearLayout.LayoutParams.MATCH_PARENT;
+            itemView.setVisibility(View.VISIBLE);
+        }else{
+            itemView.setVisibility(View.GONE);
+            param.height = 0;
+            param.width = 0;
+        }
+        itemView.setLayoutParams(param);
+    }*/
+
+
     @Override
     public int getItemViewType(int position) {
 
-        if (0 == datas.get(position).getType()) {
+        return VIEW_MATCH_INDEX;
+
+      /*  if (0 == datas.get(position).getType()) {
             return VIEW_DATE_INDEX;
         } else if (1 == datas.get(position).getType()) {
             return VIEW_MATCH_INDEX;
         } else {
             return 100;
-        }
+        }*/
     }
 
     @Override
@@ -155,6 +170,8 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         if (holder instanceof DateViewHolder) {
 
             DateViewHolder dateViewHolder = (DateViewHolder) holder;
+            dateViewHolder.ll_date_select.setVisibility(View.GONE);
+
             dateViewHolder.tv_date.setText(DateUtil.convertDateToNation(scheduleMatchDto.getDate()));
             dateViewHolder.tv_week.setText(ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0, scheduleMatchDto.getDate()))));
 
@@ -427,6 +444,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         protected static final String TAG = "TextViewHolder";
 
+        LinearLayout ll_date_select;
         TextView tv_date;
         TextView tv_week;
         TextView handicapName1;
@@ -434,6 +452,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         public DateViewHolder(View itemView) {
             super(itemView);
+            ll_date_select = (LinearLayout) itemView.findViewById(R.id.ll_date_select);
             tv_date = (TextView) itemView.findViewById(R.id.tv_date);
             tv_week = (TextView) itemView.findViewById(R.id.tv_week);
             handicapName1 = (TextView) itemView.findViewById(R.id.tv_handicap_name1);

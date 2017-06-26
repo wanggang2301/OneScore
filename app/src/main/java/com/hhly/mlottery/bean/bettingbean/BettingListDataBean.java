@@ -15,6 +15,7 @@ public class BettingListDataBean {
     private PromotionData promotionList;
     private List<LeagueNameData> leagueNames;
     private int code;
+    private Integer hasPlay;
 
 
     public static class PromotionData{
@@ -688,5 +689,13 @@ public class BettingListDataBean {
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public Integer getHasPlay() {
+        return hasPlay;
+    }
+
+    public void setHasPlay(Integer hasPlay) {
+        this.hasPlay = hasPlay;
     }
 }

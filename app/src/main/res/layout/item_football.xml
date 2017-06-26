@@ -259,7 +259,7 @@
                         android:id="@+id/ll_all_score"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="0.3"
+                        android:layout_weight="0.5"
                         android:orientation="vertical">
 
 

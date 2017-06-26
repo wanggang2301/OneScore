@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
 import com.hhly.mlottery.activity.FootballMatchDetailActivity;
-import com.hhly.mlottery.adapter.ResultMultiAdapter;
 import com.hhly.mlottery.adapter.ScheduleAdapter;
 import com.hhly.mlottery.adapter.ScheduleDateAdapter;
 import com.hhly.mlottery.bean.LeagueCup;
@@ -49,7 +48,9 @@ import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
 import com.hhly.mlottery.util.HandMatchId;
 import com.hhly.mlottery.util.L;
+import com.hhly.mlottery.util.MyConstants;
 import com.hhly.mlottery.util.PreferenceUtil;
+import com.hhly.mlottery.util.ResultDateUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
@@ -117,7 +118,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     public static final int LOAD_DATA_STATUS_SUCCESS = 2;
     public static final int LOAD_DATA_STATUS_ERROR = 3;
 
-    public final static int VIEW_DATE_INDEX = 0;
+
+    // public final static int VIEW_DATE_INDEX = 0;
     public final static int VIEW_MATCH_INDEX = 1;
 
     public static int mLoadDataStatus = LOAD_DATA_STATUS_INIT;// 加载数据状态
@@ -154,6 +156,13 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     private static int currentDatePosition = 0;
 
     private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
+
+    private LinearLayout ll_date_select;
+
+    private TextView tv_date;
+    private TextView tv_week;
+    private TextView tv_handicap_name1;
+    private TextView tv_handicap_name2;
 
     public static ScheduleFragment newInstance(String param1, String param2) {
         ScheduleFragment fragment = new ScheduleFragment();
@@ -199,6 +208,13 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void initView() {
+        //顶部日期选择保留
+        ll_date_select = (LinearLayout) view.findViewById(R.id.ll_date_select);
+        tv_date = (TextView) view.findViewById(R.id.tv_date);
+        tv_week = (TextView) view.findViewById(R.id.tv_week);
+        tv_handicap_name1 = (TextView) view.findViewById(R.id.tv_handicap_name1);
+        tv_handicap_name2 = (TextView) view.findViewById(R.id.tv_handicap_name2);
+
         mSwipeRefreshLayout = (ExactSwipeRefreshLayout) view.findViewById(R.id.football_schedule_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
@@ -215,6 +231,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         mErrorLayout = (LinearLayout) view.findViewById(R.id.network_exception_layout);
         mReloadTvBtn = (TextView) view.findViewById(R.id.network_exception_reload_btn);
         mReloadTvBtn.setOnClickListener(this);
+
+        ll_date_select.setOnClickListener(this);
 
         mNoDataTextView = (TextView) view.findViewById(R.id.football_schedule_unfocus_no_data_tv);
 
@@ -241,7 +259,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 } else if (mEntryType == 1) {
                     ((FootBallScoreFragment) getParentFragment()).focusCallback();
                 }
-
             }
         };
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
@@ -362,11 +379,16 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 }
 
                 if (current != null) {
-                    ScheduleMatchDto scheduleMatchDto = new ScheduleMatchDto();
-                    scheduleMatchDto.setDate(json.getCurrent().getDate());
-                    scheduleMatchDto.setType(VIEW_DATE_INDEX);
+                    // ScheduleMatchDto scheduleMatchDto = new ScheduleMatchDto();
 
-                    mAllMatchs.add(scheduleMatchDto);
+
+                    setTopDateSelect(json.getCurrent().getDate());
+                    setTopHandicap();
+
+                    // scheduleMatchDto.setDate(json.getCurrent().getDate());
+                    //  scheduleMatchDto.setType(VIEW_DATE_INDEX);
+
+                    //  mAllMatchs.add(scheduleMatchDto);
 
                     for (SchMatch match : current.getMatch()) {
                         ScheduleMatchDto dtoMatch = new ScheduleMatchDto();
@@ -375,7 +397,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                         mAllMatchs.add(dtoMatch);
                     }
                     if (isFirstLoadDate) {
-
                         mCurrentDate = json.getCurrent().getDate();
 
                         initListDateAndWeek(mCurrentDate, currentDatePosition);
@@ -386,10 +407,10 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                         mMatchs.clear();
                         for (ScheduleMatchDto sch : mAllMatchs) {
 
-                            if (sch.getType() == VIEW_DATE_INDEX) {
+                         /*   if (sch.getType() == VIEW_DATE_INDEX) {
                                 mMatchs.add(sch);
                                 continue;
-                            }
+                            }*/
 
                             for (LeagueCup cup : mCheckedCups) {
                                 if ((sch.getType() == VIEW_MATCH_INDEX) && cup.getRaceId().equals(sch.getSchmatchs().getRaceId())) {
@@ -402,10 +423,10 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                         if (PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE).size() > 0) {
                             List<String> list = PreferenceUtil.getDataList(FootBallMatchFilterTypeEnum.FOOT_SCHEDULE);
                             for (ScheduleMatchDto sch : mAllMatchs) {
-                                if (sch.getType() == VIEW_DATE_INDEX) {
+                             /*   if (sch.getType() == VIEW_DATE_INDEX) {
                                     mMatchs.add(sch);
                                     continue;
-                                }
+                                }*/
 
                                 for (String raceId : list) {
                                     if ((sch.getType() == VIEW_MATCH_INDEX) && raceId.equals(sch.getSchmatchs().getRaceId())) {
@@ -454,6 +475,51 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         }, ScheduleMatchs.class);
 
         choiceDateList();
+    }
+
+    private void setTopDateSelect(String date) {
+        tv_date.setText(DateUtil.convertDateToNation(date));
+        tv_week.setText(ResultDateUtil.getWeekOfDate(DateUtil.parseDate(ResultDateUtil.getDate(0, date))));
+    }
+
+
+    private void setTopHandicap() {
+        boolean alet = PreferenceUtil.getBoolean(MyConstants.RBSECOND, true);
+        boolean asize = PreferenceUtil.getBoolean(MyConstants.rbSizeBall, false);
+        boolean eur = PreferenceUtil.getBoolean(MyConstants.RBOCOMPENSATE, true);
+        boolean noshow = PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false);
+        // 隐藏赔率name
+        if (noshow) {
+            tv_handicap_name1.setVisibility(View.GONE);
+            tv_handicap_name2.setVisibility(View.GONE);
+        } else if ((asize && eur) || (asize && alet) || (eur && alet)) {
+            tv_handicap_name1.setVisibility(View.VISIBLE);
+            tv_handicap_name2.setVisibility(View.VISIBLE);
+        } else {
+            tv_handicap_name1.setVisibility(View.VISIBLE);
+            tv_handicap_name2.setVisibility(View.GONE);
+        }
+
+        // 亚盘赔率
+        if (alet) {
+            tv_handicap_name1.setText(mContext.getResources().getString(R.string.roll_asialet));
+        }
+        // 大小盘赔率
+        if (asize) {
+            if (!alet) {
+                tv_handicap_name1.setText(mContext.getResources().getString(R.string.roll_asiasize));
+            } else {
+                tv_handicap_name2.setText(mContext.getResources().getString(R.string.roll_asiasize));
+            }
+        }
+        // 欧盘赔率
+        if (eur) {
+            if (!alet && !asize) {
+                tv_handicap_name1.setText(mContext.getResources().getString(R.string.roll_euro));
+            } else {
+                tv_handicap_name2.setText(mContext.getResources().getString(R.string.roll_euro));
+            }
+        }
     }
 
 
@@ -511,6 +577,12 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
                 initData(currentDatePosition);
                 break;
+
+            case R.id.ll_date_select:
+                if (mDateOnClickListener != null) {
+                    mDateOnClickListener.onClick(v);
+                }
+                break;
             default:
                 break;
         }
@@ -531,10 +603,10 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
             mMatchs.clear();
             if (checkedIds.length != 0) {
                 for (ScheduleMatchDto match : mAllMatchs) {
-                    if (match.getType() == VIEW_DATE_INDEX) {
+                /*    if (match.getType() == VIEW_DATE_INDEX) {
                         mMatchs.add(match);
                         continue;
-                    }
+                    }*/
 
                     for (String checkedId : checkedIds) {
                         if ((match.getType() == VIEW_MATCH_INDEX) && checkedId.equals(match.getSchmatchs().getRaceId())) {
@@ -564,13 +636,13 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 updateAdapter();
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
             } else {
-                for (ScheduleMatchDto match : mAllMatchs) {
-                    if (match.getType() == ResultMultiAdapter.VIEW_DATE_INDEX) {
+               /* for (ScheduleMatchDto match : mAllMatchs) {
+                    if (match.getType() == VIEW_DATE_INDEX) {
                         mMatchs.add(match);
                         continue;
                     }
                 }
-
+*/
                 mCheckedCups = new LeagueCup[]{};//选择0场  把选中联赛为 空集
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_FLITER_NO_DATA);
                 updateAdapter();
@@ -588,6 +660,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
     public void onEventMainThread(ScoresMatchSettingEventBusEntity scoresMatchSettingEventBusEntity) {
         updateAdapter();
+        setTopHandicap();
     }
 
     /**

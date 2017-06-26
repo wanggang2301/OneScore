@@ -268,7 +268,7 @@
 
 
     <!-- 异常处理 -->
-    <string name="exp_net_status_txt">您当前的网络不给力</string>
+    <string name="exp_net_status_txt">暂无法提供数据</string>
     <string name="exp__check_txt">请检查后</string>
     <string name="exp_refresh_txt">刷新</string>
     <!-- 赛程 -->
@@ -1163,7 +1163,7 @@
     <string name="unknown_error">未知错误</string>
     <string name="token_null">令牌(token)为空</string>
     <string name="phone_mismatching">用户名与手机号不匹配</string>
-    <string name="token_invalid">令牌(token)失效</string>
+    <string name="token_invalid">登录超时,请重新登录</string>
     <string name="signature_empty">签名为空</string>
     <string name="signature_mismatching">签名不匹配</string>
     <string name="token_mismatchin">令牌(token)与个人信息不匹配</string>
@@ -1766,7 +1766,7 @@
     <string name="bow_corner_left">高于</string>
     <string name="bow_corner_middle">即时盘</string>
     <string name="bow_corner_right">低于</string>
-    <!--竞彩推介-->
+    <!--竞彩推荐-->
     <string name="betting_setting_palying_method">玩法</string>
     <string name="betting_setting_league">联赛</string>
     <string name="betting_issue_title">推介</string>
@@ -1794,6 +1794,9 @@
     <string name="betting_txt_balance_account">账户余额:</string>
     <string name="betting_txt_recharge_integer">充值金额需为整数</string>
     <string name="betting_txt_recharge_quota">￥1-10000</string>
+    <string name="betting_txt_amount_two">2元</string>
+    <string name="betting_txt_amount_five">5元</string>
+    <string name="betting_txt_amount_fifteen">15元</string>
     <string name="betting_txt_amount_ten">10元</string>
     <string name="betting_txt_amount_twenty">20元</string>
     <string name="betting_txt_amount_fifty">50元</string>
@@ -1816,6 +1819,31 @@
     <string name="betting_disclaimer_txt">(免责声明：个人观点并不代表一比分官方网站)</string>
     <string name="betting_paly_choose_txt">必须选择一项</string>
     <string name="betting_netword_error_txt">当前网络繁忙,请稍后重试!</string>
+
+    <!--发布推介-->
+    <string name="issue_cueernt_isexpert">您还不是专家,请申请成为专家后再发布!</string>
+    <string name="issue_betting">发布推介</string>
+    <string name="issue_inputtext_max">\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020\u0020最多输入300个字符</string>
+    <string name="issue_max_check">最多选择两项</string>
+    <string name="issue_success">发布成功</string>
+    <string name="issue_match_fivemin_noissue">比赛开始前五分钟不可发布</string>
+    <string name="issue_play_ok">您已经发布过该玩法</string>
+
+    <string name="issue_lay_betting_iss">推介赛事</string>
+    <string name="issue_lay_issue_play">推介玩法</string>
+    <string name="issue_lay_issue_tittle">推介标题</string>
+    <string name="issue_lay_issue_reason">推介理由</string>
+    <string name="issue_lay_issue_scheme_price">方案定价</string>
+    <string name="issue_lay_max_input">最多输入20个字符</string>
+    <string name="issue_lay_zero_free">0则为免费</string>
+    <string name="issue_to_issue">确定</string>
+
+    <string name="issue_check_odds">请选择赔率</string>
+    <string name="issue_check_title">推介标题不能为空</string>
+    <string name="issue_check_recome">请输入您的推介理由</string>
+    <string name="issue_check_price">请输入您的方案价格</string>
+    <string name="issue_check_singlg">必须选择一种玩法</string>
+
 
     <string name="recommendarticle_txt">推介文章</string>
     <string name="subsrecord_txt">订阅记录</string>
@@ -1884,6 +1912,22 @@
     <string name="good_league">擅长联赛</string>
     <string name="enter_the_league_name">请输入联赛名称,多余联赛用逗号分开</string>
     <string name="add_to">添加</string>
+
+    <!--app动画直播-->
+    <string name="football_play_penalty_lose">点球罚失</string>
+    <string name="football_play_free_kick_danger">危险任意球</string>
+    <string name="football_play_free_kick">任意球</string>
+    <string name="football_play_corner">角球</string>
+    <string name="football_play_goal_door">球门球</string>
+    <string name="football_play_hit">射正</string>
+    <string name="football_play_deviate">射偏</string>
+    <string name="football_play_goal_out">界外球</string>
+    <string name="football_play_whistle">犯规</string>
+    <string name="football_play_goal_qx">取消进球</string>
+    <string name="football_play_404">信号中断</string>
+    <string name="football_play_drink_water">喝水时间</string>
+    <string name="football_play_injured">有人受伤</string>
+    <string name="football_play_injured_addtime">伤停补时</string>
 
 
 

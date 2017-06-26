@@ -359,6 +359,7 @@ public class MyApp extends Application {
     private void getVersion() {
         try {
             channelNumber = DeviceInfo.getAppMetaData(this, "UMENG_CHANNEL");// 获取渠道号
+
             PackageManager manager = getPackageManager();
             PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
             versionCode = info.versionCode;

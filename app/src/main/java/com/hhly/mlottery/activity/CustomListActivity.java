@@ -618,4 +618,10 @@ public class CustomListActivity extends BaseActivity implements View.OnClickList
         setState(VIEW_STATUS_LOADING);
         mLoadHandler.postDelayed(mRun, 500);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mLoadHandler.removeCallbacksAndMessages(null);
+    }
 }

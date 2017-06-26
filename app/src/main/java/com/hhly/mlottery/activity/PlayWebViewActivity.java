@@ -190,5 +190,6 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
     protected void onDestroy() {
         mWebView.destroy();
         super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
     }
 }

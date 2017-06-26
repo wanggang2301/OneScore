@@ -83,10 +83,14 @@ public class FootballTeamInfoActivity extends BaseActivity implements View.OnCli
                 if (json != null && json.getCode() == 200) {
                     seasonList.clear();
                     yearList.clear();
+
                     seasonList.addAll(json.getSeasonList());
                     yearList.addAll(json.getYearList());
+
+
                     viewPager.setIsScrollable(true);
                     if (leagueDate == null && seasonList.size() != 0) {
+
                         leagueDate = seasonList.get(0);
                         if (!isOddsPager) {
                             currentData.setText(leagueDate == null ? "" : leagueDate);

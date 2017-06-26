@@ -1178,9 +1178,9 @@
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/betting_issue_check_txt_color</item>
-        <item name="android:textSize">@dimen/text_size_12</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textSize">@dimen/text_size_11</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
         <item name="android:paddingLeft">12dp</item>
         <item name="android:paddingRight">12dp</item>
     </style>
@@ -1249,4 +1249,46 @@
         <item name="android:text">--</item>
         <item name="android:gravity">center</item>
     </style>
+    <!--盘口统计-->
+    <style name="handicap_statisticss" >
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/home_item_lottery_title</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--技术统计-->
+    <style name="technial_stctistic" >
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/home_item_lottery_title</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--竖线条-->
+
+    <style name="technial_ve_line" >
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:background">@color/item_match_jingcai</item>
+    </style>
+    <style name="technial_vr_line" >
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/item_match_jingcai</item>
+    </style>
+    <!--竖线条-->
+    <style name="technial_hr_line" >
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0.5dp</item>
+
+        <item name="android:background">@color/item_match_jingcai</item>
+    </style>
+
 </resources>

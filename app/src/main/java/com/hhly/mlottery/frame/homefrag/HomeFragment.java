@@ -37,8 +37,8 @@ import com.android.volley.DefaultRetryPolicy;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.AccountDetailActivity;
-import com.hhly.mlottery.activity.BasketballTeamActivity;
 import com.hhly.mlottery.activity.DebugConfigActivity;
+import com.hhly.mlottery.activity.FootballEventAnimationFragment;
 import com.hhly.mlottery.activity.HomeUserOptionsActivity;
 import com.hhly.mlottery.activity.ProductAdviceActivity;
 import com.hhly.mlottery.adapter.homePagerAdapter.HomeListBaseAdapter;
@@ -605,8 +605,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         switch (v.getId()) {
             case R.id.iv_home_pic:
                 MobclickAgent.onEvent(mContext, "HomePager_User_Info_Start");
-//                startActivityForResult(new Intent(mContext, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
-                startActivity(new Intent(mContext, BasketballTeamActivity.class));
+                startActivityForResult(new Intent(mContext, HomeUserOptionsActivity.class), REQUESTCODE_LOGIN);
                 break;
             default:
                 break;
