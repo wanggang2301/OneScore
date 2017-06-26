@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupClickListener;
 
 /**
  * @author: Wangg
@@ -17,7 +18,7 @@ import android.widget.ExpandableListView;
  * @created on:2017/6/23  15:30.
  */
 
-public class MyFocusPinnedHeaderExpandableListView extends ExpandableListView implements AbsListView.OnScrollListener,ExpandableListView.OnGroupClickListener {
+public class MyFocusPinnedHeaderExpandableListView extends ExpandableListView implements AbsListView.OnScrollListener,OnGroupClickListener {
     public MyFocusPinnedHeaderExpandableListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         registerListener();
@@ -94,7 +95,7 @@ public class MyFocusPinnedHeaderExpandableListView extends ExpandableListView im
 
     public void setHeaderView(View view) {
         mHeaderView = view;
-        AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
+        LayoutParams lp = new LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         view.setLayoutParams(lp);
 
@@ -114,9 +115,14 @@ public class MyFocusPinnedHeaderExpandableListView extends ExpandableListView im
      * 点击 HeaderView 触发的事件
      */
     private void headerViewClick() {
+
+
         long packedPosition = getExpandableListPosition(this.getFirstVisiblePosition());
 
         int groupPosition = ExpandableListView.getPackedPositionGroup(packedPosition);
+
+
+
 
         if (mAdapter.getGroupClickStatus(groupPosition) == 1) {
             this.collapseGroup(groupPosition);
@@ -128,6 +134,9 @@ public class MyFocusPinnedHeaderExpandableListView extends ExpandableListView im
         }
 
         this.setSelectedGroup(groupPosition);
+
+
+
     }
 
     private float mDownX;
@@ -157,6 +166,9 @@ public class MyFocusPinnedHeaderExpandableListView extends ExpandableListView im
                     if (x <= mHeaderViewWidth && y <= mHeaderViewHeight
                             && offsetX <= mHeaderViewWidth && offsetY <= mHeaderViewHeight) {
                         if (mHeaderView != null) {
+
+
+
                             headerViewClick();
                         }
 
@@ -296,7 +308,7 @@ public class MyFocusPinnedHeaderExpandableListView extends ExpandableListView im
     }
 
     @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+    public void onScroll(AbsListView view, int firstVisibleItem,int visibleItemCount, int totalItemCount) {
         final long flatPos = getExpandableListPosition(firstVisibleItem);
         int groupPosition = ExpandableListView.getPackedPositionGroup(flatPos);
         int childPosition = ExpandableListView.getPackedPositionChild(flatPos);
@@ -307,5 +319,4 @@ public class MyFocusPinnedHeaderExpandableListView extends ExpandableListView im
     @Override
     public void onScrollStateChanged(AbsListView view, int scrollState) {
     }
-
 }

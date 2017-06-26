@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.view.MyFocusPinnedHeaderExpandableListView;
 
 import java.util.List;
@@ -20,11 +21,10 @@ import data.bean.myfocus.FocusBean;
  * @author: Wangg
  * @name：xxx
  * @description: xxx
- * @created on:2017/6/23  14:21.
+ * @created on:2017/6/26  16:00.
  */
 
-
-public class MyFocusPinnedHeaderExpandableAdapter extends BaseExpandableListAdapter implements MyFocusPinnedHeaderExpandableListView.HeaderAdapter {
+public class AddMyFocusPinnedHeaderExpandableAdapter extends BaseExpandableListAdapter implements MyFocusPinnedHeaderExpandableListView.HeaderAdapter {
     /* private String[][] childrenData;
      private String[] groupData;
  */
@@ -34,13 +34,16 @@ public class MyFocusPinnedHeaderExpandableAdapter extends BaseExpandableListAdap
     private MyFocusPinnedHeaderExpandableListView listView;
     private LayoutInflater inflater;
 
-    private IDeleteMyFocus iDeleteMyFocus;
+/*    public MyFocusPinnedHeaderExpandableAdapter(String[][] childrenData, String[] groupData
+            , Context context, MyFocusPinnedHeaderExpandableListView listView) {
+        this.groupData = groupData;
+        this.childrenData = childrenData;
+        this.context = context;
+        this.listView = listView;
+        inflater = LayoutInflater.from(this.context);
+    }*/
 
-    public void setiDeleteMyFocus(IDeleteMyFocus iDeleteMyFocus) {
-        this.iDeleteMyFocus = iDeleteMyFocus;
-    }
-
-    public MyFocusPinnedHeaderExpandableAdapter(List<FocusBean> list, Context context, MyFocusPinnedHeaderExpandableListView listView) {
+    public AddMyFocusPinnedHeaderExpandableAdapter(List<FocusBean> list, Context context, MyFocusPinnedHeaderExpandableListView listView) {
 
         this.data = list;
         this.context = context;
@@ -78,15 +81,24 @@ public class MyFocusPinnedHeaderExpandableAdapter extends BaseExpandableListAdap
         ivchildStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //  ivchildStar.setImageResource(R.mipmap.attention_star);
 
-                if (iDeleteMyFocus != null) {
-                    iDeleteMyFocus.deleteMyFocusChild(groupPosition, childPosition);
+                if (data.get(groupPosition).getList().get(childPosition).isSelected()) {
+                    data.get(groupPosition).getList().get(childPosition).setSelected(false);
+                    ivchildStar.setImageResource(R.mipmap.attention_star2);
+                    L.d("myfocus", "未选中");
+
+                } else {
+                    data.get(groupPosition).getList().get(childPosition).setSelected(true);
+                    ivchildStar.setImageResource(R.mipmap.attention_star);
+
+                    L.d("myfocus", "选中");
                 }
 
 
-             /*   data.get(groupPosition).getList().remove(childPosition);
                 notifyDataSetChanged();
-*/
+
+
             }
         });
 
@@ -145,18 +157,28 @@ public class MyFocusPinnedHeaderExpandableAdapter extends BaseExpandableListAdap
         ivGroupStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (iDeleteMyFocus != null) {
-                    iDeleteMyFocus.deleteMyFocusGroup(groupPosition);
+                if (data.get(groupPosition).isSelected()) {
+                    data.get(groupPosition).setSelected(false);
+                    ivGroupStar.setImageResource(R.mipmap.attention_star2);
+
+                    for (FocusBean.Bean bean : data.get(groupPosition).getList()) {
+                        bean.setSelected(false);
+                    }
+
+
+                } else {
+                    data.get(groupPosition).setSelected(true);
+                    ivGroupStar.setImageResource(R.mipmap.attention_star);
+                    for (FocusBean.Bean bean : data.get(groupPosition).getList()) {
+                        bean.setSelected(true);
+                    }
+
+
                 }
-/*
-
-                data.remove(groupPosition);
-
                 L.d("myfocus", "ivGroupStar");
 
 
                 notifyDataSetChanged();
-*/
 
 
             }

@@ -3,19 +3,27 @@ package com.hhly.mlottery.mvptask.myfocus;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.MyFocusActivity;
+import com.hhly.mlottery.adapter.myfocus.IDeleteMyFocus;
 import com.hhly.mlottery.adapter.myfocus.MyFocusPinnedHeaderExpandableAdapter;
 import com.hhly.mlottery.view.MyFocusPinnedHeaderExpandableListView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import data.bean.myfocus.FocusBean;
 
 /**
  * @author wangg
@@ -24,9 +32,15 @@ import butterknife.ButterKnife;
 public class MyFocusChildFragment extends Fragment {
 
 
+    @BindView(R.id.tv_add)
+    TextView tvAdd;
     @BindView(R.id.explistview)
     MyFocusPinnedHeaderExpandableListView explistview;
+    @BindView(R.id.tv_noRaces)
+    TextView tvNoRaces;
+    private List<FocusBean> list;
 
+    private View mView;
 
     MyFocusPinnedHeaderExpandableAdapter adapter;
 
@@ -36,6 +50,11 @@ public class MyFocusChildFragment extends Fragment {
     private Activity mActivity;
 
     private View headView;
+
+    private LayoutInflater layoutInflater;
+
+    private IDeleteMyFocus iDeleteMyFocus;
+
 
 
     public static MyFocusChildFragment newInstance() {
@@ -50,12 +69,11 @@ public class MyFocusChildFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_focus_child, container, false);
-        headView = inflater.inflate(R.layout.my_focus_group_head, explistview, false);
-        ButterKnife.bind(this, view);
-
+        mView = inflater.inflate(R.layout.fragment_my_focus_child, container, false);
+        ButterKnife.bind(this, mView);
         initData();
-        return view;
+        initEvent();
+        return mView;
     }
 
 
@@ -63,47 +81,87 @@ public class MyFocusChildFragment extends Fragment {
      * 初始化数据
      */
     private void initData() {
-        for (int i = 0; i < 10; i++) {
-            groupData[i] = "分组" + i;
+
+        list = new ArrayList<>();
+
+        for (int i = 0; i < 2; i++) {
+            List<FocusBean.Bean> child = new ArrayList<>();
+
+            for (int j = 0; j < 3; j++) {
+                child.add(new FocusBean.Bean("国安" + i + "-" + j, true));
+            }
+            list.add(new FocusBean("中超" + i, true, child));
+        }
+
+
+   /*     for (int i = 0; i < 10; i++) {
+            groupData[i] = "中超" + i;
         }
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                childrenData[i][j] = "好友" + i + "-" + j;
+                childrenData[i][j] = "国安" + i + "-" + j;
             }
-        }
+        }*/
+
+        //  View  headView = inflater.inflate(R.layout.my_focus_group_head, explistview, false);
+
+
         //设置悬浮头部VIEW
-        explistview.setHeaderView(headView);
-        adapter = new MyFocusPinnedHeaderExpandableAdapter(childrenData, groupData, mActivity, explistview);
+        explistview.setHeaderView(LayoutInflater.from(this.mActivity).inflate(R.layout.my_focus_group_head, explistview, false));
+        adapter = new MyFocusPinnedHeaderExpandableAdapter(list, mActivity, explistview);
         explistview.setAdapter(adapter);
+
 
         //设置单个分组展开
         //explistview.setOnGroupClickListener(new GroupClickListener());
     }
 
-    class GroupClickListener implements ExpandableListView.OnGroupClickListener {
-        @Override
-        public boolean onGroupClick(ExpandableListView parent, View v,
-                                    int groupPosition, long id) {
-            if (expandFlag == -1) {
-                // 展开被选的group
-                explistview.expandGroup(groupPosition);
-                // 设置被选中的group置于顶端
-                explistview.setSelectedGroup(groupPosition);
-                expandFlag = groupPosition;
-            } else if (expandFlag == groupPosition) {
-                explistview.collapseGroup(expandFlag);
-                expandFlag = -1;
-            } else {
-                explistview.collapseGroup(expandFlag);
-                // 展开被选的group
-                explistview.expandGroup(groupPosition);
-                // 设置被选中的group置于顶端
-                explistview.setSelectedGroup(groupPosition);
-                expandFlag = groupPosition;
+
+    private void initEvent() {
+        iDeleteMyFocus = new IDeleteMyFocus() {
+            @Override
+            public void deleteMyFocusGroup(int groupPosition) {
+
+                list.remove(groupPosition);
+                if (list.size() == 0) {
+
+                    explistview.setVisibility(View.GONE);
+
+                    tvNoRaces.setVisibility(View.VISIBLE);
+                    return;
+                }
+                adapter.notifyDataSetChanged();
             }
-            return true;
-        }
+
+            @Override
+            public void deleteMyFocusChild(int groupPosition, int childPosition) {
+
+
+                list.get(groupPosition).getList().remove(childPosition);
+                if (list.get(groupPosition).getList().size() == 0) {
+                    list.remove(groupPosition);
+                    if (list.size() == 0) {
+                        explistview.setVisibility(View.GONE);
+                        tvNoRaces.setVisibility(View.VISIBLE);
+                        return;
+                    }
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+
+        };
+
+        adapter.setiDeleteMyFocus(iDeleteMyFocus);
+    }
+
+
+    @OnClick(R.id.tv_add)
+    public void onClick() {
+        Intent intent = new Intent(mActivity, MyFocusActivity.class);
+        intent.putExtra("type", 1);
+        mActivity.startActivity(intent);
     }
 
 
@@ -112,5 +170,6 @@ public class MyFocusChildFragment extends Fragment {
         super.onAttach(context);
         mActivity = (Activity) context;
     }
+
 
 }

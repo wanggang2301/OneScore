@@ -21,9 +21,12 @@ public class MyFocusActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.focus_my);
+
+
+
         MyFocusFragment myFocusFragment = (MyFocusFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         if (myFocusFragment == null) {
-            myFocusFragment = MyFocusFragment.newInstance();
+            myFocusFragment = MyFocusFragment.newInstance(getIntent().getIntExtra("type",0));
             if (getSupportFragmentManager() != null && myFocusFragment != null) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.add(R.id.contentFrame, myFocusFragment);

@@ -2,9 +2,11 @@ package com.hhly.mlottery.mvptask.myfocus;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -13,8 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +48,18 @@ public class MyFocusFragment extends Fragment {
     private List<Fragment> fragments;
     private Fragment currentFragment;
 
-    public static MyFocusFragment newInstance() {
+    private int type;
+    boolean isSaveFocus = false;
+
+
+    public static MyFocusFragment newInstance(int type) {
         MyFocusFragment myFocusFragment = new MyFocusFragment();
+
+
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", type);
+        myFocusFragment.setArguments(bundle);
+
         return myFocusFragment;
     }
 
@@ -53,11 +67,21 @@ public class MyFocusFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            type = getArguments().getInt("type");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_focus, container, false);
         ButterKnife.bind(this, view);
+
+        L.d("type", "type=" + type);
 
         initEvent();
         return view;
@@ -66,10 +90,16 @@ public class MyFocusFragment extends Fragment {
 
     private void initEvent() {
 
-        //gifMatchStart.setImageResource(R.mipmap.football_match_start_gif);
         fragments = new ArrayList<>();
-        fragments.add(MyFocusChildFragment.newInstance());
-        fragments.add(MyFocusChildFragment.newInstance());
+
+        if (type == 0) {
+            fragments.add(MyFocusChildFragment.newInstance());
+            fragments.add(MyFocusChildFragment.newInstance());
+        } else {
+            fragments.add(AddMyFocusChildFragment.newInstance());
+            fragments.add(AddMyFocusChildFragment.newInstance());
+        }
+
 
         focusRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -96,6 +126,8 @@ public class MyFocusFragment extends Fragment {
 
 
     private void switchFragment(int position) {
+
+
         fragmentManager = getChildFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.myfocus_content, fragments.get(position));
@@ -121,12 +153,56 @@ public class MyFocusFragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.focus_back:
-                mActivity.finish();
+
+                if (type == 0) {
+                    isDeletedFocusMatch();
+                } else {
+                    mActivity.finish();
+                }
+
                 break;
             case R.id.focus_search:
                 break;
         }
     }
+
+
+    private void isDeletedFocusMatch() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity, R.style.AlertDialog);
+        final AlertDialog alertDialog = builder.create();
+        LayoutInflater infla = LayoutInflater.from(mActivity);
+        View alertDialogView = infla.inflate(R.layout.myfocus_delete_notice, null);
+        TextView tv_unsave = (TextView) alertDialogView.findViewById(R.id.tv_unsave);
+        TextView tv_save = (TextView) alertDialogView.findViewById(R.id.tv_save);
+        tv_unsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                alertDialog.dismiss();
+                mActivity.finish();
+
+            }
+        });
+
+        tv_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //保存数据
+
+                alertDialog.dismiss();
+                mActivity.finish();
+
+            }
+        });
+
+        alertDialog.show();
+        alertDialog.getWindow().setContentView(alertDialogView);
+        alertDialog.setCanceledOnTouchOutside(true);
+
+
+    }
+
 
     @Override
     public void onAttach(Context context) {
