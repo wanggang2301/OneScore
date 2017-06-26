@@ -174,6 +174,8 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 
        popupWindow.showAsDropDown(mSelect,0,0, Gravity.RIGHT);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
+
+//        popupWindow.setBackgroundDrawable(getApplicationContext().getResources().getDrawable(R.drawable.four_radius));
 //        Toast.makeText(this, ">>>", Toast.LENGTH_SHORT).show();
 
         mSeasonListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
