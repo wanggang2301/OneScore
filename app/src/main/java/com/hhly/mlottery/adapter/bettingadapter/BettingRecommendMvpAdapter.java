@@ -86,6 +86,30 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
             }
         }
 
+        switch (data.getStatus()){
+            case "1"://中
+                holder.setVisible(R.id.betting_status_imageView , true);
+                holder.setVisible(R.id.betting_tobuy_or_check , false);
+                holder.setImageDrawable(R.id.betting_status_imageView , mContext.getResources().getDrawable(R.mipmap.jingcai_icon_zhong));
+                break;
+            case "2"://失
+                holder.setVisible(R.id.betting_status_imageView , true);
+                holder.setVisible(R.id.betting_tobuy_or_check , false);
+                holder.setImageDrawable(R.id.betting_status_imageView , mContext.getResources().getDrawable(R.mipmap.jingcai_icon_shi));
+                break;
+            case "6"://走
+                holder.setVisible(R.id.betting_status_imageView , true);
+                holder.setVisible(R.id.betting_tobuy_or_check , false);
+                holder.setImageDrawable(R.id.betting_status_imageView , mContext.getResources().getDrawable(R.mipmap.jingcai_icon_zou));
+                break;
+            default:
+                holder.setVisible(R.id.betting_status_imageView , false);
+                holder.setVisible(R.id.betting_tobuy_or_check , true);
+                break;
+
+
+        }
+
         LinearLayout mBuyOrCheck = holder.getView(R.id.betting_tobuy_or_check);
         LinearLayout mSpecialistLay = holder.getView(R.id.betting_specialist_lay);
         LinearLayout mGameDetailsLay = holder.getView(R.id.betting_game_details_lay);

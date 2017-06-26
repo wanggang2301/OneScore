@@ -1826,6 +1826,7 @@
     <string name="issue_check_recome">请输入您的推介理由</string>
     <string name="issue_check_price">请输入您的方案价格</string>
     <string name="issue_check_singlg">必须选择一种玩法</string>
+    <string name="issue_price_spill">价格需在0-68元之间</string>
 
 
 
