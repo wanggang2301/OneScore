@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -209,7 +210,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                 break;
             case R.id.immediate_authentication:
                 if (isChecked) {
-                    if (real_name.getText().toString() != null && id_datas.getText().toString() != null && good_league.getText().toString() != null && specalist_edittext.getText().toString() != null) {
+                    if (!TextUtils.isEmpty(real_name.getText().toString()) && !TextUtils.isEmpty(id_datas.getText().toString()) && !TextUtils.isEmpty(good_league.getText().toString()) && !TextUtils.isEmpty(specalist_edittext.getText().toString())) {
                         specalist_error_tv.setVisibility(View.GONE);
                         if (new_leauue==null){
                             UiUtils.toast(this, R.string.please_add_eague);
@@ -219,6 +220,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
 
                     } else {
                         specalist_error_tv.setVisibility(View.VISIBLE);
+                        specalist_error_text.setText(getResources().getString(R.string.application_write_datas));
                     }
 
                 } else {

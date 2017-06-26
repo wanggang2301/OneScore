@@ -1935,5 +1935,7 @@
     <string name="in_field">进(场均)</string>
     <string name="hit">命中%</string>
     <string name="technical_total">总数</string>
+    <string name="recomend_no_datas">专家忙于分析赛事,资料都忘了填写了</string>
+    <string name="application_write_datas">请认真填写以下信息,不能为空</string>
 
 </resources>
