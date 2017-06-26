@@ -546,15 +546,15 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     handicapValue = odds.getMediumOdds();
                     break;
                 default:
-                    handicapValue = "-";
+                    handicapValue = " ";
                     break;
             }
 
-            tvLeft.setText((Integer.parseInt(data.getKeepTime()) < 89 ? ("-".equals(handicapValue) ? "--" : handicapValue == null ? "--" : handicapValue) : "--")); // 中
+            tvLeft.setText((Integer.parseInt(data.getKeepTime()) < 89 ? ("-".equals(handicapValue) ? " " : handicapValue == null ? " " : handicapValue) : " ")); // 中
 
-            tvMedium.setText((Integer.parseInt(data.getKeepTime()) < 89 ? ("-".equals(odds.getLeftOdds()) ? context.getResources().getString(R.string.basket_handicap_feng) : odds.getLeftOdds() == null ? "--" : odds.getLeftOdds()) : context.getResources().getString(R.string.basket_handicap_feng))); // 上
+            tvMedium.setText((Integer.parseInt(data.getKeepTime()) < 89 ? ("-".equals(odds.getLeftOdds()) ? context.getResources().getString(R.string.basket_handicap_feng) : odds.getLeftOdds() == null ? " " : odds.getLeftOdds()) : context.getResources().getString(R.string.basket_handicap_feng))); // 上
 
-            tvRight.setText((Integer.parseInt(data.getKeepTime()) < 89 ? ("-".equals(odds.getRightOdds()) ? "--" : odds.getRightOdds() == null ? "--" : odds.getRightOdds()) : "--")); // 下
+            tvRight.setText((Integer.parseInt(data.getKeepTime()) < 89 ? ("-".equals(odds.getRightOdds()) ? " " : odds.getRightOdds() == null ? " " : odds.getRightOdds()) : " ")); // 下
         } else {
             this.setText(tvLeft, tvMedium, tvRight);
         }
@@ -612,7 +612,7 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     private void setText(TextView... textViews) {
         for (TextView textView : textViews) {
-            textView.setText("-");
+            textView.setText(" ");
         }
     }
 
