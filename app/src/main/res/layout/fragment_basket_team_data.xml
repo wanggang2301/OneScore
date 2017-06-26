@@ -20,6 +20,7 @@
                 >
                 <TextView
                     style="@style/basket_team_data_left"
+                    android:text="@string/basket_ranking"
                     />
                 <TextView
                     android:id="@+id/basket_team_rank"
@@ -35,7 +36,7 @@
                 >
                 <TextView
                     style="@style/basket_team_data_left"
-                    android:text="战绩"
+                    android:text="@string/basket_team_zhanji"
                     />
                 <TextView
                     android:id="@+id/basket_team_win_lose"
@@ -53,7 +54,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     style="@style/basket_team_data_left"
-                    android:text="教练"/>
+                    android:text="@string/basket_team_jiaolian"/>
                 <TextView
                     android:id="@+id/basket_team_coach_name"
                     style="@style/basket_team_data_right" />
@@ -119,7 +120,7 @@
                             android:layout_marginBottom="8dp"
                             android:singleLine="true"
                             android:textSize="13sp"
-                            android:text="总场次"
+                            android:text="@string/basket_team_total_chang"
                             android:textColor="@color/mdy_666"
                             />
                     </LinearLayout>
@@ -165,7 +166,7 @@
                             android:layout_marginBottom="8dp"
                             android:singleLine="true"
                             android:textSize="13sp"
-                            android:text="主场"
+                            android:text="@string/basket_analyze_home"
                             android:textColor="@color/mdy_666"
                             />
                     </LinearLayout>
@@ -213,7 +214,7 @@
                             android:layout_marginBottom="8dp"
                             android:singleLine="true"
                             android:textSize="13sp"
-                            android:text="客场"
+                            android:text="@string/basket_analyze_guest"
                             android:textColor="@color/mdy_666"
                             />
                     </LinearLayout>
@@ -253,7 +254,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="阵容"
+                        android:text="@string/foot_lineup"
                         android:textSize="@dimen/text_size_15"
                         android:textColor="@color/snooker"
                         android:layout_centerVertical="true"
@@ -263,10 +264,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
-                    android:text="前锋"
+                    android:text="@string/basket_team_forward"
                     android:textColor="@color/snooker"
                     android:gravity="center"
-                    android:background="@color/betting_recommend_issue_payment_bg"
+                    android:background="@color/mdy_dfdfdf"
                     />
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/basket_team_recycler_forward"
@@ -276,10 +277,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
-                    android:text="中锋"
+                    android:text="@string/basket_team_center"
                     android:textColor="@color/snooker"
                     android:gravity="center"
-                    android:background="@color/betting_recommend_issue_payment_bg"
+                    android:background="@color/mdy_dfdfdf"
                     />
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/basket_team_recycler_center"
@@ -289,10 +290,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="25dp"
-                    android:text="后卫"
+                    android:text="@string/basket_team_defender"
                     android:textColor="@color/snooker"
                     android:gravity="center"
-                    android:background="@color/betting_recommend_issue_payment_bg"
+                    android:background="@color/mdy_dfdfdf"
                     />
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/basket_team_recycler_defender"

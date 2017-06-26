@@ -50,7 +50,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     private static final String INTENT_PARAMS_TITLE = "title";
     private ImageView public_btn_set;
 
-    private RelativeLayout mHeadLayout;
+    private LinearLayout mHeadLayout;
     private String showHead="show";
 
     private float y;
@@ -99,7 +99,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
 
     private void initView() {
-        mHeadLayout= (RelativeLayout) findViewById(R.id.web_header);
+        mHeadLayout= (LinearLayout) findViewById(R.id.header_layout);
         findViewById(R.id.comment).setVisibility(View.GONE);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.header_layout);
         linearLayout.setLayoutParams(

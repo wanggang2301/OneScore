@@ -1938,5 +1938,20 @@
     <string name="football_play_drink_water">喝水時間</string>
     <string name="football_play_injured">有人受傷</string>
     <string name="football_play_injured_addtime">傷停補時</string>
+    <string name="basket_team_zhanji">戰績</string>
+    <string name="basket_team_jiaolian">教練</string>
+    <string name="basket_team_avg_score">場均得分</string>
+    <string name="basket_team_avg_assitant">場均助攻</string>
+    <string name="basket_team_avg_borad">場均籃板</string>
+    <string name="basket_team_avg_lose">場均失分</string>
+    <string name="basket_team_abg_misplay">場均失誤</string>
+    <string name="basket_team_total_chang">總場次</string>
+    <string name="basket_team_forward">前鋒</string>
+    <string name="basket_team_center">中鋒</string>
+    <string name="basket_team_defender">後衛</string>
+    <string name="basket_team_statistics">球隊統計</string>
+    <string name="basket_team_result_schdule">賽程賽果</string>
+    <string name="basket_team_handicap_statistics">盤口統計</string>
+    <string name="basket_team_tech_staticss">技術統計</string>
 
 </resources>
