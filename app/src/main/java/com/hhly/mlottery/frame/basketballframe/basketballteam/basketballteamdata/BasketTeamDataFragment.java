@@ -156,7 +156,7 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mEmptyView=inflater.inflate(R.layout.layout_nodata,container,false);
+//        mEmptyView=inflater.inflate(R.layout.layout_nodata,container,false);
         mView=inflater.inflate(R.layout.fragment_basket_team_data, container, false);
         ButterKnife.bind(this,mView);
 
@@ -197,14 +197,14 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
         mCenterAdapter=new BasketBallTeamPlayerAdapter(mPresenter.getCenter(),getActivity());
         mDefenderAdapter=new BasketBallTeamPlayerAdapter(mPresenter.getDefender(),getActivity());
 
-        mForwordAdapter.setEmptyView(mEmptyView);
-        mCenterAdapter.setEmptyView(mEmptyView);
-        mDefenderAdapter.setEmptyView(mEmptyView);
+//        mForwordAdapter.setEmptyView(mEmptyView);
+//        mCenterAdapter.setEmptyView(mEmptyView);
+//        mDefenderAdapter.setEmptyView(mEmptyView);
 
         GridLayoutManager layoutManager=new GridLayoutManager(getActivity(),2);
         mForwardRecycler.setLayoutManager(layoutManager);
-        mCenterRecycler.setLayoutManager(layoutManager);
-        mDefenderRecycler.setLayoutManager(layoutManager);
+        mCenterRecycler.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        mDefenderRecycler.setLayoutManager(new GridLayoutManager(getActivity(),2));
         mForwardRecycler.setAdapter(mForwordAdapter);
         mCenterRecycler.setAdapter(mCenterAdapter);
         mDefenderRecycler.setAdapter(mDefenderAdapter);
