@@ -1167,7 +1167,7 @@
     <string name="login_timeout">登陸超時</string>
 
     <string name="home_win_rate">主勝率</string>
-    <string name="home_lose_rate">主負率</string>
+    <string name="home_lose_rate">主負率</string>`
     <string name="size_win_rate">大球率</string>
     <string name="size_lose_rate">小球率</string>
     <string name="asia_win_rate">贏盤率</string>
