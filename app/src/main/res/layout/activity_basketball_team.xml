@@ -65,7 +65,8 @@
                     android:id="@+id/basket_team_header_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    >
 
                     <RelativeLayout
                         android:layout_width="match_parent"

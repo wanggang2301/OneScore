@@ -28,8 +28,12 @@ import com.hhly.mlottery.util.ImageLoader;
 import com.hhly.mlottery.util.MDStatusBarCompat;
 import com.hhly.mlottery.widget.ExactSwipeRefreshLayout;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,8 +71,6 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
     LinearLayout mSelect;
     @BindView(R.id.basket_team_title)
     TextView mTitleLeagueName;
-
-    private PopupWindow mPopupWindow;
 
     private ListView mSeasonListView;
 
@@ -136,9 +138,10 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
             }
         });
 
-        lists.add("2015-2016");
-        lists.add("2013-2014");
-        lists.add("2016-2017");
+
+        lists=  getRecentThreeSeason();
+
+        mSeasonText.setText(lists.get(0));
 
 
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, mToolbar);
@@ -149,6 +152,29 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
                 showPopup();
             }
         });
+    }
+
+    /**
+     *
+     * @return
+     */
+    private  List<String> getRecentThreeSeason(){
+        List<String> reset = new ArrayList<>();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        Calendar calendar = null;
+        for (int i = 0; i < 3 ; i++) {
+            calendar =  Calendar.getInstance();
+            calendar.add(Calendar.YEAR, -i);
+            String sim = sdf.format(calendar.getTime());
+
+            calendar.add(Calendar.YEAR, -1);
+            String sim1 = sdf.format(calendar.getTime());
+
+            String season = sim1 +"-"+ sim;
+            reset.add(season);
+        }
+        return reset;
     }
 
     /**

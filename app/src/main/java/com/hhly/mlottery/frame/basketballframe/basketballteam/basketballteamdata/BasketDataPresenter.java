@@ -1,6 +1,7 @@
 package com.hhly.mlottery.frame.basketballframe.basketballteam.basketballteamdata;
 
 import com.hhly.mlottery.mvp.BasePresenter;
+import com.hhly.mlottery.util.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,7 @@ public class BasketDataPresenter extends BasePresenter<BasketDataContract.View> 
 
     @Override
     public void refreshData(String season, String leagueId, String teamId) {
-        Observable<BasketTeamDataBean> observable=mRepository.getTeamData(season, leagueId, teamId);
+        Observable<BasketTeamDataBean> observable=mRepository.getTeamData("2016-2017", "1", "1");
         addSubscription(observable, new Subscriber<BasketTeamDataBean>() {
             @Override
             public void onCompleted() {
@@ -46,18 +47,21 @@ public class BasketDataPresenter extends BasePresenter<BasketDataContract.View> 
             public void onError(Throwable e) {
                 mView.setRefresh(false);
                 mView.onError();
+                L.e("?????",e.getMessage().toString());
             }
 
             @Override
             public void onNext(BasketTeamDataBean bean) {
                 if(bean.getResult()==200){
-
+                    L.e("?????","sucesss");
                     mRankInfo=bean.getTeamInfo();
                     mView.showRankInfo();
                     if(null!=mRankInfo){
+                        mView.recyclerNotify();
                         mRateInfo=mRankInfo.getMatchStat();
                         mView.showWinRateDescription();
                         if(null!=mRankInfo.getLineUp()){
+                            L.e("?????","sucesss???");
                             mListForward.clear();
                             mListCenter.clear();
                             mListDefender.clear();

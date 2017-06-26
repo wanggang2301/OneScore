@@ -1236,7 +1236,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/snooker</item>
         <item name="android:textSize">@dimen/text_size_15</item>
-        <item name="android:text">排名</item>
+        <item name="android:text">--</item>
         <item name="android:gravity">center</item>
     </style>
     <!--篮球球队技术场均那些-->
@@ -1246,7 +1246,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/snooker</item>
         <item name="android:textSize">@dimen/text_size_12</item>
-        <item name="android:text">场均得分</item>
+        <item name="android:text">--</item>
         <item name="android:gravity">center</item>
     </style>
 </resources>

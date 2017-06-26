@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -156,24 +157,24 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        mEmptyView=inflater.inflate(R.layout.layout_nodata,container,false);
+        mEmptyView=inflater.inflate(R.layout.layout_nodata,container,false);
         mView=inflater.inflate(R.layout.fragment_basket_team_data, container, false);
         ButterKnife.bind(this,mView);
 
-        mRoundTotal.setCircleColor(R.color.snooker_line);
-        mRoundTotal.setCircleProgressColor(R.color.basket_team_circle);
+        mRoundTotal.setCircleColor(ContextCompat.getColor(getActivity(),R.color.snooker_line));
+        mRoundTotal.setCircleProgressColor(ContextCompat.getColor(getActivity(),R.color.basket_team_circle));
         mRoundTotal.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_analyze_width));
         mRoundTotal.setTextIsDisplayable(false);
         mRoundTotal.setIsprogress(true);
 
-        mRoundGuest.setCircleColor(R.color.snooker_line);
-        mRoundGuest.setCircleProgressColor(R.color.basket_team_circle);
+        mRoundGuest.setCircleColor(ContextCompat.getColor(getActivity(),R.color.snooker_line));
+        mRoundGuest.setCircleProgressColor(ContextCompat.getColor(getActivity(),R.color.basket_team_circle));
         mRoundGuest.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_analyze_width));
         mRoundGuest.setTextIsDisplayable(false);
         mRoundGuest.setIsprogress(true);
 
-        mRoundHome.setCircleColor(R.color.snooker_line);
-        mRoundHome.setCircleProgressColor(R.color.basket_team_circle);
+        mRoundHome.setCircleColor(ContextCompat.getColor(getActivity(),R.color.snooker_line));
+        mRoundHome.setCircleProgressColor(ContextCompat.getColor(getActivity(),R.color.basket_team_circle));
         mRoundHome.setRoundWidth(getResources().getDimension(R.dimen.round_progressbar_analyze_width));
         mRoundHome.setTextIsDisplayable(false);
         mRoundHome.setIsprogress(true);
@@ -190,6 +191,9 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
         mExceptionLayout.setVisibility(View.GONE);
         mProgressBarLayout.setVisibility(View.GONE);
 
+        mCenterRecycler.setFocusable(false);
+        mForwardRecycler.setFocusable(false);
+        mDefenderRecycler.setFocusable(false);
 
         mPresenter.refreshData(mSeason,mLeagueId,mTeamId);
 
@@ -197,6 +201,10 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
         mCenterAdapter=new BasketBallTeamPlayerAdapter(mPresenter.getCenter(),getActivity());
         mDefenderAdapter=new BasketBallTeamPlayerAdapter(mPresenter.getDefender(),getActivity());
 
+//        mEmptyView=getActivity().getLayoutInflater().inflate(R.layout.layout_nodata, (ViewGroup) mView.getParent(),false);
+//
+//
+        /**不能用同一个emptyview。会报错*/
 //        mForwordAdapter.setEmptyView(mEmptyView);
 //        mCenterAdapter.setEmptyView(mEmptyView);
 //        mDefenderAdapter.setEmptyView(mEmptyView);
@@ -251,7 +259,10 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
 
     @Override
     public void recyclerNotify() {
-
+        mDataLayout.setVisibility(View.VISIBLE);
+        mNodataLayout.setVisibility(View.GONE);
+        mProgressBarLayout.setVisibility(View.GONE);
+        mExceptionLayout.setVisibility(View.GONE);
     }
 
     @Override
@@ -277,7 +288,8 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
         }
 
         mRank.setText(info.getAlianceName());
-        mRecord.setText(info.getWinTime()+"胜"+info.getLoseTime()+"负");
+        mRecord.setText(info.getWinTime()+getActivity().getString(R.string.league_statistics_today_victor)+info.getLoseTime()+
+                getActivity().getString(R.string.league_statistics_today_loss));
         mCoach.setText(info.getMasterName());
         mScore.setText(info.getAvgScore()+"");
         mScoreRank.setText(mNum+info.getAvgScoreRank());
@@ -305,9 +317,9 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
         String a[] = rateInfo.getTotalPercentage().split("%");
         String b[] = rateInfo.getHomePercentage().split("%");
         String c[] = rateInfo.getGuestPercentage().split("%");
-        int totalPercent = Integer.parseInt(a[0]);
-        int homePercent = Integer.parseInt(b[0]);
-        int guestPercent = Integer.parseInt(c[0]);
+        int totalPercent = (int)Double.parseDouble(a[0]);
+        int homePercent = (int)Double.parseDouble(b[0]);
+        int guestPercent = (int)Double.parseDouble(c[0]);
         mRoundTotal.setProgress(totalPercent);
         mRoundHome.setProgress(homePercent);
         mRoundGuest.setProgress(guestPercent);
@@ -320,16 +332,16 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
      */
     private void setDescription(BasketTeamDataBean.TeamInfoEntity.MatchStatEntity rateInfo) {
 
-        String text = getActivity().getString(R.string.snooker_state_zong)+":"+rateInfo.getTotal()+getActivity().getString((R.string.filtrate_match_session))+","+ "<font color='#85c780'><b>" +rateInfo.getTotalWin() + "</b></font>"+ getActivity().getString(R.string.league_statistics_today_victor)
-                +  "<font color='#ff2221'><b>" + rateInfo.getTotalLose()+ "</b></font>" + getActivity().getString(R.string.league_statistics_today_loss) +"," +
+        String text = getActivity().getString(R.string.snooker_state_zong)+": "+rateInfo.getTotal()+getActivity().getString((R.string.filtrate_match_session))+", "+ "<font color='#85c780'><b>" +rateInfo.getTotalWin() + "</b></font>"+ getActivity().getString(R.string.league_statistics_today_victor)
+                +  "<font color='#ff2221'><b>" + rateInfo.getTotalLose()+ "</b></font>" + getActivity().getString(R.string.league_statistics_today_loss) +", " +
                 getActivity().getString(R.string.basket_database_details_win_offset_title)+ "<font color='#6ca8ff'><b>" + rateInfo.getTotalAbs()+ "</b></font>" + getActivity().getString((R.string.filtrate_match_session))+
                 ","
                 +getActivity().getString(R.string.basket_database_details_home)+rateInfo.getTotalHome()+getActivity().getString((R.string.filtrate_match_session))+","+ "<font color='#85c780'><b>" +rateInfo.getHomeWin() + "</b></font>"+ getActivity().getString(R.string.league_statistics_today_victor)
-                +  "<font color='#ff2221'><b>" + rateInfo.getHomeLose()+ "</b></font>" + getActivity().getString(R.string.league_statistics_today_loss) +"," +
-                getActivity().getString(R.string.basket_database_details_win_offset_title)+ "<font color='#6ca8ff'><b>" + rateInfo.getHomeAbs()+ "</b></font>" + getActivity().getString((R.string.filtrate_match_session))+","+
+                +  "<font color='#ff2221'><b>" + rateInfo.getHomeLose()+ "</b></font>" + getActivity().getString(R.string.league_statistics_today_loss) +", " +
+                getActivity().getString(R.string.basket_database_details_win_offset_title)+ "<font color='#6ca8ff'><b>" + rateInfo.getHomeAbs()+ "</b></font>" + getActivity().getString((R.string.filtrate_match_session))+", "+
 
                 getActivity().getString(R.string.basket_database_details_guest)+rateInfo.getTotalGuest()+getActivity().getString((R.string.filtrate_match_session))+","+ "<font color='#85c780'><b>" +rateInfo.getGuestWin() + "</b></font>"+ getActivity().getString(R.string.league_statistics_today_victor)
-                +  "<font color='#ff2221'><b>" + rateInfo.getGuestLose()+ "</b></font>" + getActivity().getString(R.string.league_statistics_today_loss) +"," +
+                +  "<font color='#ff2221'><b>" + rateInfo.getGuestLose()+ "</b></font>" + getActivity().getString(R.string.league_statistics_today_loss) +", " +
                 getActivity().getString(R.string.basket_database_details_win_offset_title)+ "<font color='#6ca8ff'><b>" + rateInfo.getGuestAbs()+ "</b></font>" + getActivity().getString((R.string.filtrate_match_session))
                 ;
         mDescription.setText(Html.fromHtml(text));
