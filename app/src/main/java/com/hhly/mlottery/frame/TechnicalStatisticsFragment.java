@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
@@ -29,7 +30,7 @@ import java.util.Map;
  * 技术统计
  */
 
-public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefreshLayout.OnRefreshListener{
+public class TechnicalStatisticsFragment extends Fragment  implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
 
 
     private View view;
@@ -111,11 +112,34 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
     private Activity mActivity;
     private Context mContext;
 
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
+
+    private String mSeason;
+    private String mLeagueId;
+    private String mTeamId;
+    private LinearLayout match_error_btn;
+
+    public static TechnicalStatisticsFragment newInstance(String season, String leagueId,String teamId) {
+        TechnicalStatisticsFragment fragment = new TechnicalStatisticsFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, season);
+        args.putString(ARG_PARAM2, leagueId);
+        args.putString(ARG_PARAM3, teamId);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mSeason = getArguments().getString(ARG_PARAM1);
+            mLeagueId = getArguments().getString(ARG_PARAM2);
+            mTeamId = getArguments().getString(ARG_PARAM3);
+        }
     }
 
     @Nullable
@@ -135,9 +159,9 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
 
 
         Map<String, String> param = new HashMap<>();
-        param.put("season", "2016-2017");
-        param.put("leagueId", "1");
-        param.put("teamId", "1");
+        param.put("season", mSeason);
+        param.put("leagueId", mLeagueId);
+        param.put("teamId", mTeamId);
 
 
         VolleyContentFast.requestJsonByPost(BaseURLs.TEAMTECHSTATDATA, param, new VolleyContentFast.ResponseSuccessListener<TechnicalStatisticBean>() {
@@ -155,7 +179,6 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
 
                     inithandicapStatisticDatas(preseasonList);
                     initEvent();
-
                 }
             }
 
@@ -163,7 +186,9 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
-
+                match_error_btn.setVisibility(View.VISIBLE);
+                technical_scrollview.setVisibility(View.GONE);
+                match_no_data_txt.setVisibility(View.GONE);
             }
 
         }, TechnicalStatisticBean.class);
@@ -177,10 +202,12 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
         if (dataBean.size()==0) {
             technical_scrollview.setVisibility(View.GONE);
             match_no_data_txt.setVisibility(View.VISIBLE);
+            match_error_btn.setVisibility(View.GONE);
             return;
         } else {
             technical_scrollview.setVisibility(View.VISIBLE);
             match_no_data_txt.setVisibility(View.GONE);
+            match_error_btn.setVisibility(View.GONE);
         }
 
 
@@ -326,6 +353,11 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
         technical_scrollview = (ScrollView) view.findViewById(R.id.technical_scrollview);
         //暂无数据
         match_no_data_txt = (TextView) view.findViewById(R.id.match_no_data_txt);
+
+        //网络异常
+        match_error_btn = (LinearLayout) view.findViewById(R.id.match_error_ll);
+        view.findViewById(R.id.match_error_btn).setOnClickListener(this);
+
         //赛季时间
         season_1 = (TextView) view.findViewById(R.id.season_1);
         season_2 = (TextView) view.findViewById(R.id.season_2);
@@ -412,6 +444,18 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
 
 
     }
+
+    /**
+     * 父类调用下拉刷新
+     */
+    public void refreshFragment(String season){
+        mSeason=season;
+        preseason_games.setChecked(true);
+        regular_season.setChecked(false);
+        playoff.setChecked(false);
+        initData();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -424,5 +468,22 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
         regular_season.setChecked(false);
         playoff.setChecked(false);
         initData();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+
+            case R.id.match_error_btn:
+                preseason_games.setChecked(true);
+                regular_season.setChecked(false);
+                playoff.setChecked(false);
+                initData();
+                break;
+
+            default:
+                break;
+
+        }
     }
 }
