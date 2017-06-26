@@ -49,6 +49,7 @@ import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusE
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
+import com.hhly.mlottery.util.AnimUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
@@ -71,6 +72,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -170,6 +172,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     private TextView tv_week;
     private LinearLayout ll_odd;
 
+    private LinearLayout promptContent;
+    private TextView promptTxt;
 
 //    public static ImmediateFragment newInstance(String param1, String param2) {
 //        ImmediateFragment fragment = new ImmediateFragment();
@@ -286,6 +290,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             }
         };
 
+        promptContent = (LinearLayout) mView.findViewById(R.id.ll_prompt_content);
+        promptTxt = (TextView) mView.findViewById(R.id.tv_prompt_txt);
 
     }
 
@@ -335,6 +341,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     titleContainer.setVisibility(View.VISIBLE);
 
                     ll_odd.setVisibility(PreferenceUtil.getBoolean(MyConstants.RBNOTSHOW, false) ? View.GONE : View.VISIBLE);
+
                     break;
                 case VIEW_STATUS_NET_ERROR:
                     //mListView.setVisibility(View.GONE);
@@ -538,6 +545,16 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                         isLoadedData = true;
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
 //                        startWebsocket();
+
+                        // 更新提示
+                        AnimUtils.tAnimShow(promptContent);
+                        mViewHandler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                AnimUtils.tAnimHide(promptContent);
+                            }
+                        },2000);
+                        promptTxt.setText(String.format(getString(R.string.football_up_data_prompt), mAllMatchs.size(), mAllMatchs.size() - mMatchs.size()));
                     }
                 });
             }

@@ -867,9 +867,9 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private void setOddsData(TextView topView, TextView centerView, TextView bottomView, MatchOdd odds, Match match, int type) {
 
         if (odds == null) {
-            topView.setText("-");
-            centerView.setText("-");
-            bottomView.setText("-");
+            topView.setText(" ");
+            centerView.setText(" ");
+            bottomView.setText(" ");
             return;
         }
         String handicapValue;
@@ -884,7 +884,7 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 handicapValue = odds.getMediumOdds();
                 break;
             default:
-                handicapValue = "-";
+                handicapValue = " ";
                 break;
         }
 
@@ -895,8 +895,8 @@ public class ResultMultiAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         if ((!"-1".equals(match.getStatusOrigin()) && keeptime >= 89) || "-".equals(handicapValue) || "|".equals(handicapValue)) {// 封盘,完场不会有封盘的情况
             topView.setText(mContext.getString(R.string.immediate_status_entertained));
-            centerView.setText("-");
-            bottomView.setText("-");
+            centerView.setText(" ");
+            bottomView.setText(" ");
         } else {
             centerView.setText(handicapValue);
             topView.setText(odds.getLeftOdds());

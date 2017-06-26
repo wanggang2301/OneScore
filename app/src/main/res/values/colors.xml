@@ -729,4 +729,8 @@
 
     <color name="account_trade_name">#4a494a</color>
     <color name="edit_hint_color">#d7d7d7</color>
+
+    <color name="foot_ball_score_title_bg">#ffde00</color>
+    <color name="foot_ball_score_title_txt">#0097ff</color>
+
 </resources>

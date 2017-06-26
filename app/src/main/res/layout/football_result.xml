@@ -69,5 +69,7 @@
 
         <include layout="@layout/network_exception"/>
 
+        <include layout="@layout/football_public_prompt_item"/>
+
     </FrameLayout>
 </LinearLayout>

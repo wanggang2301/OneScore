@@ -571,9 +571,9 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
      */
     private void setOddsData(TextView topView, TextView centerView, TextView bottomView, MatchOdd odd, Match match, int type) {
         if (odd == null) {
-            topView.setText("-");
-            centerView.setText("-");
-            bottomView.setText("-");
+            topView.setText(" ");
+            centerView.setText(" ");
+            bottomView.setText(" ");
             return;
         }
         String handicapValue;
@@ -588,7 +588,7 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 handicapValue = odd.getMediumOdds();
                 break;
             default:
-                handicapValue = "-";
+                handicapValue = " ";
                 break;
         }
         int keeptime = 0;
@@ -597,8 +597,8 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
         if ((!"-1".equals(match.getStatusOrigin()) && keeptime >= 89) || "-".equals(handicapValue) || "|".equals(handicapValue)) {// 封盘,完场不会有封盘的情况
             topView.setText(mContext.getString(R.string.immediate_status_entertained));
-            centerView.setText("-");
-            bottomView.setText("-");
+            centerView.setText(" ");
+            bottomView.setText(" ");
         } else {
             centerView.setText(handicapValue);
             topView.setText(odd.getLeftOdds());

@@ -249,21 +249,21 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private RelativeLayout rl_attack_danger;
     private GifImageView gif_home_attack_danger, gif_guest_attack_danger;
     // 射正、射偏1
-    private LinearLayout ll_offside_content1;
-    private RelativeLayout rl_home_offside1, rl_guest_offside1, rl_home_offside_title1, rl_guest_offside_title1;
+    private LinearLayout ll_offside_content1, ll_guest_offside_title1, ll_home_offside_title1;
+    private RelativeLayout rl_home_offside1, rl_guest_offside1;
     private TextView tv_home_title1, tv_guest_title1;
     private GifImageView gif_home_position1, gif_guest_position1;
     private GifImageView gif_home_ball1, gif_guest_ball1, gif_home_hit1, gif_guest_hit1;
     private TextView tv_home_title1_time, tv_guest_title1_time;
     // 射正、射偏2
-    private LinearLayout ll_offside_content2;
-    private RelativeLayout rl_home_offside2, rl_guest_offside2, rl_home_offside_title2, rl_guest_offside_title2;
+    private LinearLayout ll_offside_content2, ll_home_offside_title2, ll_guest_offside_title2;
+    private RelativeLayout rl_home_offside2, rl_guest_offside2;
     private TextView tv_home_title2, tv_guest_title2;
     private GifImageView gif_home_position2, gif_guest_position2;
     private GifImageView gif_home_ball2, gif_guest_ball2, gif_guest_hit2, gif_home_hit2;
     private TextView tv_home_title2_time, tv_guest_title2_time;
     // 球门球
-    private LinearLayout ll_goal_door_content;
+    private LinearLayout ll_goal_door_content,ll_home_goal_door_title,ll_guest_goal_door_title;
     private RelativeLayout rl_home_goal_door, rl_guest_goal_door;
     private GifImageView gif_home_goal_door_position, gif_guest_goal_door_position;
     private GifImageView gfi_home_goal_door, gfi_guest_goal_door;
@@ -1614,8 +1614,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     rl_guest_offside1.setVisibility(View.INVISIBLE);
                     gif_home_position1.setVisibility(View.VISIBLE);
                     gif_guest_position1.setVisibility(View.INVISIBLE);
-                    rl_home_offside_title1.setVisibility(View.VISIBLE);
-                    rl_guest_offside_title1.setVisibility(View.INVISIBLE);
+                    ll_home_offside_title1.setVisibility(View.VISIBLE);
+                    ll_guest_offside_title1.setVisibility(View.INVISIBLE);
                     gif_home_ball1.setVisibility(View.INVISIBLE);
                     gif_guest_ball1.setVisibility(View.INVISIBLE);
                     gif_home_hit1.setVisibility(View.VISIBLE);
@@ -1630,8 +1630,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     rl_guest_offside2.setVisibility(View.INVISIBLE);
                     gif_home_position2.setVisibility(View.VISIBLE);
                     gif_guest_position2.setVisibility(View.INVISIBLE);
-                    rl_home_offside_title2.setVisibility(View.VISIBLE);
-                    rl_guest_offside_title2.setVisibility(View.INVISIBLE);
+                    ll_home_offside_title2.setVisibility(View.VISIBLE);
+                    ll_guest_offside_title2.setVisibility(View.INVISIBLE);
                     gif_home_ball2.setVisibility(View.INVISIBLE);
                     gif_guest_ball2.setVisibility(View.INVISIBLE);
                     gif_home_hit2.setVisibility(View.VISIBLE);
@@ -1667,8 +1667,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     rl_guest_offside1.setVisibility(View.VISIBLE);
                     gif_home_position1.setVisibility(View.INVISIBLE);
                     gif_guest_position1.setVisibility(View.VISIBLE);
-                    rl_home_offside_title1.setVisibility(View.INVISIBLE);
-                    rl_guest_offside_title1.setVisibility(View.VISIBLE);
+                    ll_home_offside_title1.setVisibility(View.INVISIBLE);
+                    ll_guest_offside_title1.setVisibility(View.VISIBLE);
                     gif_home_ball1.setVisibility(View.INVISIBLE);
                     gif_guest_ball1.setVisibility(View.INVISIBLE);
                     gif_home_hit1.setVisibility(View.INVISIBLE);
@@ -1683,8 +1683,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     rl_guest_offside2.setVisibility(View.VISIBLE);
                     gif_home_position2.setVisibility(View.INVISIBLE);
                     gif_guest_position2.setVisibility(View.VISIBLE);
-                    rl_home_offside_title2.setVisibility(View.INVISIBLE);
-                    rl_guest_offside_title2.setVisibility(View.VISIBLE);
+                    ll_home_offside_title2.setVisibility(View.INVISIBLE);
+                    ll_guest_offside_title2.setVisibility(View.VISIBLE);
                     gif_home_ball2.setVisibility(View.INVISIBLE);
                     gif_guest_ball2.setVisibility(View.INVISIBLE);
                     gif_home_hit2.setVisibility(View.INVISIBLE);
@@ -1701,8 +1701,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_guest_offside1.setVisibility(View.INVISIBLE);
                 gif_home_position1.setVisibility(View.VISIBLE);
                 gif_guest_position1.setVisibility(View.INVISIBLE);
-                rl_home_offside_title1.setVisibility(View.VISIBLE);
-                rl_guest_offside_title1.setVisibility(View.INVISIBLE);
+                ll_home_offside_title1.setVisibility(View.VISIBLE);
+                ll_guest_offside_title1.setVisibility(View.INVISIBLE);
                 gif_home_ball1.setVisibility(View.VISIBLE);
                 gif_guest_ball1.setVisibility(View.INVISIBLE);
                 gif_home_hit1.setVisibility(View.INVISIBLE);
@@ -1718,8 +1718,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_guest_offside2.setVisibility(View.INVISIBLE);
                 gif_home_position2.setVisibility(View.VISIBLE);
                 gif_guest_position2.setVisibility(View.INVISIBLE);
-                rl_home_offside_title2.setVisibility(View.VISIBLE);
-                rl_guest_offside_title2.setVisibility(View.INVISIBLE);
+                ll_home_offside_title2.setVisibility(View.VISIBLE);
+                ll_guest_offside_title2.setVisibility(View.INVISIBLE);
                 gif_home_ball2.setVisibility(View.VISIBLE);
                 gif_guest_ball2.setVisibility(View.INVISIBLE);
                 gif_home_hit2.setVisibility(View.INVISIBLE);
@@ -1735,8 +1735,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_guest_offside1.setVisibility(View.VISIBLE);
                 gif_home_position1.setVisibility(View.INVISIBLE);
                 gif_guest_position1.setVisibility(View.VISIBLE);
-                rl_home_offside_title1.setVisibility(View.INVISIBLE);
-                rl_guest_offside_title1.setVisibility(View.VISIBLE);
+                ll_home_offside_title1.setVisibility(View.INVISIBLE);
+                ll_guest_offside_title1.setVisibility(View.VISIBLE);
                 gif_home_ball1.setVisibility(View.INVISIBLE);
                 gif_guest_ball1.setVisibility(View.VISIBLE);
                 gif_home_hit1.setVisibility(View.INVISIBLE);
@@ -1752,8 +1752,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 rl_guest_offside2.setVisibility(View.VISIBLE);
                 gif_home_position2.setVisibility(View.INVISIBLE);
                 gif_guest_position2.setVisibility(View.VISIBLE);
-                rl_home_offside_title2.setVisibility(View.INVISIBLE);
-                rl_guest_offside_title2.setVisibility(View.VISIBLE);
+                ll_home_offside_title2.setVisibility(View.INVISIBLE);
+                ll_guest_offside_title2.setVisibility(View.VISIBLE);
                 gif_home_ball2.setVisibility(View.INVISIBLE);
                 gif_guest_ball2.setVisibility(View.VISIBLE);
                 gif_home_hit2.setVisibility(View.INVISIBLE);
@@ -1988,6 +1988,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case "1053"://主队球门球
                 rl_home_goal_door.setVisibility(View.VISIBLE);
                 tv_home_goal_door_title_time.setVisibility(View.VISIBLE);
+                ll_home_goal_door_title.setVisibility(View.VISIBLE);
+                ll_guest_goal_door_title.setVisibility(View.INVISIBLE);
                 rl_guest_goal_door.setVisibility(View.INVISIBLE);
                 tv_guest_goal_door_title_time.setVisibility(View.INVISIBLE);
                 gif_home_goal_door_position.setImageResource(R.mipmap.football_home_position_gif);
@@ -1998,6 +2000,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             case "2077"://客队球门球
                 rl_home_goal_door.setVisibility(View.INVISIBLE);
                 tv_home_goal_door_title_time.setVisibility(View.INVISIBLE);
+                ll_home_goal_door_title.setVisibility(View.INVISIBLE);
+                ll_guest_goal_door_title.setVisibility(View.VISIBLE);
                 rl_guest_goal_door.setVisibility(View.VISIBLE);
                 tv_guest_goal_door_title_time.setVisibility(View.VISIBLE);
                 gif_guest_goal_door_position.setImageResource(R.mipmap.football_guest_position_gif);
@@ -3610,8 +3614,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         ll_offside_content1 = (LinearLayout) findViewById(R.id.ll_offside_content1);
         rl_home_offside1 = (RelativeLayout) findViewById(R.id.rl_home_offside1);
         rl_guest_offside1 = (RelativeLayout) findViewById(R.id.rl_guest_offside1);
-        rl_home_offside_title1 = (RelativeLayout) findViewById(R.id.rl_home_offside_title1);
-        rl_guest_offside_title1 = (RelativeLayout) findViewById(R.id.rl_guest_offside_title1);
+        ll_home_offside_title1 = (LinearLayout) findViewById(R.id.ll_home_offside_title1);
+        ll_guest_offside_title1 = (LinearLayout) findViewById(R.id.ll_guest_offside_title1);
         tv_home_title1 = (TextView) findViewById(R.id.tv_home_title1);
         tv_guest_title1 = (TextView) findViewById(R.id.tv_guest_title1);
         gif_home_position1 = (GifImageView) findViewById(R.id.gif_home_position1);
@@ -3627,8 +3631,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         ll_offside_content2 = (LinearLayout) findViewById(R.id.ll_offside_content2);
         rl_home_offside2 = (RelativeLayout) findViewById(R.id.rl_home_offside2);
         rl_guest_offside2 = (RelativeLayout) findViewById(R.id.rl_guest_offside2);
-        rl_home_offside_title2 = (RelativeLayout) findViewById(R.id.rl_home_offside_title2);
-        rl_guest_offside_title2 = (RelativeLayout) findViewById(R.id.rl_guest_offside_title2);
+        ll_home_offside_title2 = (LinearLayout) findViewById(R.id.ll_home_offside_title2);
+        ll_guest_offside_title2 = (LinearLayout) findViewById(R.id.ll_guest_offside_title2);
         tv_home_title2 = (TextView) findViewById(R.id.tv_home_title2);
         tv_guest_title2 = (TextView) findViewById(R.id.tv_guest_title2);
         gif_home_position2 = (GifImageView) findViewById(R.id.gif_home_position2);
@@ -3642,6 +3646,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         // 球门球
         ll_goal_door_content = (LinearLayout) findViewById(R.id.ll_goal_door_content);
+        ll_home_goal_door_title = (LinearLayout) findViewById(R.id.ll_home_goal_door_title);
+        ll_guest_goal_door_title = (LinearLayout) findViewById(R.id.ll_guest_goal_door_title);
         rl_home_goal_door = (RelativeLayout) findViewById(R.id.rl_home_goal_door);
         rl_guest_goal_door = (RelativeLayout) findViewById(R.id.rl_guest_goal_door);
         gif_home_goal_door_position = (GifImageView) findViewById(R.id.gif_home_goal_door_position);

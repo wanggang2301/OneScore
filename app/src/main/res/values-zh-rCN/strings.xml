@@ -1951,4 +1951,7 @@
     <string name="please_add_eague">请添加联赛</string>
     <string name="agreement_carefully">请认真阅读推荐付费协议</string>
     <string name="recommendation_agreement">认真付费推荐协议</string>
+
+    <string name="football_up_data_prompt">更新了%1$d场比赛，隐藏了%2$d场比赛</string>
+
 </resources>

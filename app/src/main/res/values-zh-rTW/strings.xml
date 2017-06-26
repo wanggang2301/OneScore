@@ -1939,4 +1939,6 @@
     <string name="football_play_injured">有人受傷</string>
     <string name="football_play_injured_addtime">傷停補時</string>
 
+    <string name="football_up_data_prompt">更新了%1$d場比賽，隱藏了%2$d場比賽</string>
+
 </resources>

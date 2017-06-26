@@ -304,7 +304,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="-"
+                            tools:text="-"
                             android:textColor="@color/res_pl_color"
                             android:textSize="@dimen/item_football_half_score" />
 
@@ -314,7 +314,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="-"
+                            tools:text="-"
                             android:textColor="@color/res_pl_color"
                             android:textSize="@dimen/item_football_half_score" />
 
@@ -324,7 +324,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="-"
+                            tools:text="-"
                             android:textColor="@color/res_pl_color"
                             android:textSize="@dimen/item_football_half_score" />
 
@@ -347,7 +347,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="-"
+                            tools:text="-"
                             android:textColor="@color/res_pl_color"
                             android:textSize="@dimen/item_football_half_score" />
 
@@ -357,7 +357,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="-"
+                            tools:text="-"
                             android:textColor="@color/res_pl_color"
                             android:textSize="@dimen/item_football_half_score" />
 
@@ -367,7 +367,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="-"
+                            tools:text="-"
                             android:textColor="@color/res_pl_color"
                             android:textSize="@dimen/item_football_half_score" />
 
