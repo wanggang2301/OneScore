@@ -210,6 +210,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
                 mCurrentPosition=i;
                 popupWindow.dismiss();
                 mSeasonText.setText(lists.get(i));
+                chooseSeasonToRefresh();
             }
         });
     }
@@ -240,6 +241,13 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
     }
 
     /**
+     * 切换日期刷新
+     */
+    private void chooseSeasonToRefresh(){
+        mResultFragment.refreshFragment(lists.get(mCurrentPosition));
+        mTeamDataFragment.refreshFragment(lists.get(mCurrentPosition));
+    }
+    /**
      * 下拉刷新
      * @param refresh 刷新与否
      */
@@ -249,7 +257,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 
     @Override
     public void onRefresh() {
-        mResultFragment.refreshFragment();
-        mTeamDataFragment.refreshFragment();
+        mResultFragment.refreshFragment(lists.get(mCurrentPosition));
+        mTeamDataFragment.refreshFragment(lists.get(mCurrentPosition));
     }
 }

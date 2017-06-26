@@ -275,7 +275,7 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
     /**
      * 父类调用下拉刷新
      */
-    public void refreshFragment(){
+    public void refreshFragment(String mSeason){
         mPresenter.refreshData(mSeason,mLeagueId,mTeamId);
     }
 
