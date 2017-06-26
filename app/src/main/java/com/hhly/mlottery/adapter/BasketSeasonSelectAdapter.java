@@ -53,7 +53,11 @@ public class BasketSeasonSelectAdapter extends BaseAdapter{
         if (convertView != null) {
             ((TextView) convertView.findViewById(R.id.item_basket_season)).setText(seasons.get(position));
             if (position == currentDatePosition) {
-                convertView.setBackgroundColor(context.getResources().getColor(R.color.recycler_view_shadow));
+//                convertView.setBackgroundColor(context.getResources().getColor(R.color.recycler_view_shadow));
+                convertView.setBackground(context.getResources().getDrawable(R.drawable.four_radius_check));
+            }else{
+                convertView.setBackground(context.getResources().getDrawable(R.drawable.four_radius));
+//                convertView.setBackgroundColor(context.getResources().getColor(R.color.white));
             }
         }
         return convertView;

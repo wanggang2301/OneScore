@@ -1,7 +1,9 @@
 package com.hhly.mlottery.activity;
 
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -10,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -147,6 +150,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, mToolbar);
 
         mSelect.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View view) {
                 showPopup();
@@ -180,6 +184,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
     /**
      * 选择赛季
      */
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void showPopup() {
 
         View contentView=View.inflate(getApplicationContext(),R.layout.basket_season_select_popup,null);
@@ -193,8 +198,10 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 //
 //        popupWindow.showAtLocation(mSelect, Gravity.NO_GRAVITY, location[0] - mSelect.getWidth() - mSelect.getPaddingRight(), location[1] + mSelect.getHeight());
 
-       popupWindow.showAsDropDown(mSelect);
+       popupWindow.showAsDropDown(mSelect,0,0, Gravity.RIGHT);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
+
+//        popupWindow.setBackgroundDrawable(getApplicationContext().getResources().getDrawable(R.drawable.four_radius));
 //        Toast.makeText(this, ">>>", Toast.LENGTH_SHORT).show();
 
         mSeasonListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

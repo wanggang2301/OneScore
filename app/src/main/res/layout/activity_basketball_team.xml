@@ -99,7 +99,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:gravity="center"
-                            android:paddingRight="30dp">
+                            android:paddingRight="15dp">
 
                             <TextView
                                 android:id="@+id/basket_team_season"
