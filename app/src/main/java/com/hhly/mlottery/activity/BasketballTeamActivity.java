@@ -25,6 +25,8 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.BasketSeasonSelectAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
+import com.hhly.mlottery.frame.HandicapStatisticsFragment;
+import com.hhly.mlottery.frame.TechnicalStatisticsFragment;
 import com.hhly.mlottery.frame.basketballframe.basketballteam.basketballteamdata.BasketTeamDataFragment;
 import com.hhly.mlottery.frame.basketballframe.basketballteam.resultschedule.BasketTeamResultFragment;
 import com.hhly.mlottery.util.ImageLoader;
@@ -88,6 +90,8 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 
     private BasketTeamDataFragment mTeamDataFragment; //球队统计
     private BasketTeamResultFragment mResultFragment; //赛程赛果
+    private TechnicalStatisticsFragment technicalStatisticsFragment;
+    private HandicapStatisticsFragment handicapStatisticsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,9 +115,13 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 
         mTeamDataFragment=BasketTeamDataFragment.newInstance(mSeason,mLeagueId,mTeamId);
         mResultFragment=BasketTeamResultFragment.newInstance(mSeason,mLeagueId,mTeamId);
+        technicalStatisticsFragment = TechnicalStatisticsFragment.newInstance(mSeason,mLeagueId,mTeamId);
+        handicapStatisticsFragment = HandicapStatisticsFragment.newInstance(mSeason,mLeagueId,mTeamId);
+
 
         String[] titles = new String[]{
-                "球队统计","赛程赛果"
+                "球队统计","赛程赛果",
+                "盘口统计","技术统计"
         };
 //        ,"盘口统计","技术统计"
         setSupportActionBar(mToolbar);
@@ -132,6 +140,8 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 
         mTabsAdapter.addFragments(mTeamDataFragment);
         mTabsAdapter.addFragments(mResultFragment);
+        mTabsAdapter.addFragments(technicalStatisticsFragment);
+        mTabsAdapter.addFragments(handicapStatisticsFragment);
 
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
@@ -248,6 +258,8 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
     private void chooseSeasonToRefresh(){
         mResultFragment.refreshFragment(lists.get(mCurrentPosition));
         mTeamDataFragment.refreshFragment(lists.get(mCurrentPosition));
+        handicapStatisticsFragment.refreshFragment(lists.get(mCurrentPosition));
+        technicalStatisticsFragment.refreshFragment(lists.get(mCurrentPosition));
     }
     /**
      * 下拉刷新
@@ -261,5 +273,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
     public void onRefresh() {
         mResultFragment.refreshFragment(lists.get(mCurrentPosition));
         mTeamDataFragment.refreshFragment(lists.get(mCurrentPosition));
+        handicapStatisticsFragment.refreshFragment(lists.get(mCurrentPosition));
+        technicalStatisticsFragment.refreshFragment(lists.get(mCurrentPosition));
     }
 }

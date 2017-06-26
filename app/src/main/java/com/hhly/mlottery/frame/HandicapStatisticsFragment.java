@@ -33,7 +33,7 @@ import java.util.Map;
  * 篮球盘口统计
  */
 
-public class HandicapStatisticsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class HandicapStatisticsFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
 
     private View view;
@@ -110,9 +110,36 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
     private TextView match_no_data_txt;
     private ScrollView scrollView;
 
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
+
+
+    private String mSeason;
+    private String mLeagueId;
+    private String mTeamId;
+    private LinearLayout match_error_btn;
+
+
+    public static HandicapStatisticsFragment newInstance(String season, String leagueId,String teamId) {
+        HandicapStatisticsFragment fragment = new HandicapStatisticsFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, season);
+        args.putString(ARG_PARAM2, leagueId);
+        args.putString(ARG_PARAM3, teamId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mSeason = getArguments().getString(ARG_PARAM1);
+            mLeagueId = getArguments().getString(ARG_PARAM2);
+            mTeamId = getArguments().getString(ARG_PARAM3);
+        }
     }
 
 
@@ -133,9 +160,9 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
     private void initData() {
 
         Map<String, String> param = new HashMap<>();
-        param.put("season", "2016-2017");
-        param.put("leagueId", "1");
-        param.put("teamId", "1");
+        param.put("season", mSeason);
+        param.put("leagueId", mLeagueId);
+        param.put("teamId", mTeamId);
 
         VolleyContentFast.requestJsonByGet(BaseURLs.TEAMPLATEDATA, param, new VolleyContentFast.ResponseSuccessListener<HandicapStatisticsBean>() {
             @Override
@@ -159,12 +186,18 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
                     if (trendPlate != null && letPlate != null) {
                         match_no_data_txt.setVisibility(View.GONE);
                         scrollView.setVisibility(View.VISIBLE);
+                        match_error_btn.setVisibility(View.GONE);
                         initLetSplitDatas();
                     } else {
                         match_no_data_txt.setVisibility(View.VISIBLE);
                         scrollView.setVisibility(View.GONE);
+                        match_error_btn.setVisibility(View.GONE);
                     }
                     initEvent();
+                }else{
+                    match_no_data_txt.setVisibility(View.GONE);
+                    scrollView.setVisibility(View.GONE);
+                    match_error_btn.setVisibility(View.VISIBLE);
                 }
 
 
@@ -174,7 +207,9 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
 
-
+                match_no_data_txt.setVisibility(View.GONE);
+                scrollView.setVisibility(View.GONE);
+                match_error_btn.setVisibility(View.VISIBLE);
             }
 
         }, HandicapStatisticsBean.class);
@@ -199,10 +234,12 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
                         if (sizePlate != null) {
                             match_no_data_txt.setVisibility(View.GONE);
                             scrollView.setVisibility(View.VISIBLE);
+                            match_error_btn.setVisibility(View.GONE);
                             initSizeDiskDatas();
                         } else {
                             match_no_data_txt.setVisibility(View.VISIBLE);
                             scrollView.setVisibility(View.GONE);
+                            match_error_btn.setVisibility(View.GONE);
                         }
                         break;
                     default:
@@ -366,6 +403,11 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
 
         //暂无数据
         match_no_data_txt = (TextView) view.findViewById(R.id.match_no_data_txt);
+        //网络异常
+        match_error_btn = (LinearLayout) view.findViewById(R.id.match_error_ll);
+        view.findViewById(R.id.match_error_btn).setOnClickListener(this);
+
+
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         let_split = (RadioButton) view.findViewById(R.id.let_split);
         size_disk = (RadioButton) view.findViewById(R.id.size_disk);
@@ -463,6 +505,18 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
 
     }
 
+    /**
+     * 父类调用下拉刷新
+     */
+    public void refreshFragment(String season){
+        mSeason=season;
+        let_split.setChecked(true);
+        size_disk.setChecked(false);
+        initData();
+    }
+
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -474,5 +528,21 @@ public class HandicapStatisticsFragment extends Fragment implements SwipeRefresh
         let_split.setChecked(true);
         size_disk.setChecked(false);
         initData();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+
+            case R.id.match_error_btn:
+                let_split.setChecked(true);
+                size_disk.setChecked(false);
+                initData();
+                break;
+
+            default:
+                break;
+
+        }
     }
 }
