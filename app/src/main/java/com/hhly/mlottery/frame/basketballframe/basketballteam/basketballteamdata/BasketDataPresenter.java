@@ -36,7 +36,7 @@ public class BasketDataPresenter extends BasePresenter<BasketDataContract.View> 
 
     @Override
     public void refreshData(String season, String leagueId, String teamId) {
-        Observable<BasketTeamDataBean> observable=mRepository.getTeamData("2016-2017", "1", "1");
+        Observable<BasketTeamDataBean> observable=mRepository.getTeamData(season, leagueId, teamId);
         addSubscription(observable, new Subscriber<BasketTeamDataBean>() {
             @Override
             public void onCompleted() {

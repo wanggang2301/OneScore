@@ -13,6 +13,15 @@ public class BasketDatabaseBigSmallDetailsBean {
     private String high;//: 4,
     private String draw;//: 0,
     private String low;//: 4
+    private String teamId;
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
 
     public String getRanking() {
         return ranking;

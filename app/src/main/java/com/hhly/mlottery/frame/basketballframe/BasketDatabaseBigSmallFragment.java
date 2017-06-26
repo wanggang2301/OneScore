@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.basketballframe;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketballTeamActivity;
 import com.hhly.mlottery.adapter.basketball.BasketDatabaseDetailsBigSmallAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBigSmallBean;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBigSmallDetailsBean;
@@ -278,7 +280,11 @@ public class BasketDatabaseBigSmallFragment extends Fragment implements View.OnC
         basketballHandicpDetailsClickListener = new BasketballBigSmallDetailsClickListener() {
             @Override
             public void IntegralDetailsOnClick(View view, BasketDatabaseBigSmallDetailsBean teamData) {
-//                Toast.makeText(getContext(), teamData.getTeamName(), Toast.LENGTH_SHORT).show();
+
+                Intent intent=new Intent(getActivity(), BasketballTeamActivity.class);
+                intent.putExtra("leagueId",mLeagueId);
+                intent.putExtra("teamId",teamData.getTeamId());
+                startActivity(intent);
             }
         };
     }

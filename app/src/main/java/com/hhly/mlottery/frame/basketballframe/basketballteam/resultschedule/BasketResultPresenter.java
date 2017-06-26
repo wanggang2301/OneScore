@@ -36,7 +36,7 @@ public class BasketResultPresenter extends BasePresenter<BasketResultContract.Vi
     @Override
     public void refreshData(String season, String leagueId, String teamId, String pageNum) {
         mPage.index=1;
-        Observable<BasketTeamResultBean> observable=mRepository.getMatchResult("2016-2017","1","1",mPage.index+"");
+        Observable<BasketTeamResultBean> observable=mRepository.getMatchResult(season,leagueId,teamId,mPage.index+"");
 
 
         addSubscription(observable, new Subscriber<BasketTeamResultBean>() {

@@ -94,9 +94,8 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basketball_team);
         if(getIntent()!=null){
-            mSeason=getIntent().getStringExtra("");
-            mLeagueId=getIntent().getStringExtra("");
-            mTeamId=getIntent().getStringExtra("");
+            mLeagueId=getIntent().getStringExtra("leagueId");
+            mTeamId=getIntent().getStringExtra("teamId");
         }
         ButterKnife.bind(this);
 
@@ -104,6 +103,11 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
     }
 
     private void initView() {
+
+        lists=  getRecentThreeSeason();
+
+        mSeasonText.setText(lists.get(0));
+        mSeason=lists.get(mCurrentPosition);
 
         mTeamDataFragment=BasketTeamDataFragment.newInstance(mSeason,mLeagueId,mTeamId);
         mResultFragment=BasketTeamResultFragment.newInstance(mSeason,mLeagueId,mTeamId);
@@ -142,9 +146,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
         });
 
 
-        lists=  getRecentThreeSeason();
 
-        mSeasonText.setText(lists.get(0));
 
 
         MDStatusBarCompat.setCollapsingToolbar(this, mCoordinatorLayout, appBarLayout, mBasketLayoutHeader, mToolbar);

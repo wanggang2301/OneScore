@@ -21,6 +21,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketballTeamActivity;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.adapter.BasketBallTeamPlayerAdapter;
+import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.mvp.ViewFragment;
 import com.hhly.mlottery.view.RoundProgressBar;
 
@@ -222,6 +223,9 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
     }
 
     private void setListener() {
+
+        final String url= BaseURLs.P_URL_API_HOST+"data/basket/playerInfo.html?playerId=";
+
         mBtnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -235,7 +239,7 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
             @Override
             public void onItemClick(View view, int i) {
                 Intent intent1=new Intent(getActivity(), WebActivity.class);
-                intent1.putExtra("",mPresenter.getForward().get(i).getPlayerId());
+                intent1.putExtra("key",url+mPresenter.getDefender().get(i).getPlayerId()+"#/");
                 startActivity(intent1);
             }
         });
@@ -243,7 +247,7 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
             @Override
             public void onItemClick(View view, int i) {
                 Intent intent1=new Intent(getActivity(), WebActivity.class);
-                intent1.putExtra("",mPresenter.getCenter().get(i).getPlayerId());
+                intent1.putExtra("key",url+mPresenter.getDefender().get(i).getPlayerId()+"#/");
                 startActivity(intent1);
             }
         });
@@ -251,7 +255,7 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
             @Override
             public void onItemClick(View view, int i) {
                 Intent intent1=new Intent(getActivity(), WebActivity.class);
-                intent1.putExtra("",mPresenter.getDefender().get(i).getPlayerId());
+                intent1.putExtra("key",url+mPresenter.getDefender().get(i).getPlayerId()+"#/");
                 startActivity(intent1);
             }
         });
