@@ -5,12 +5,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.FootballMatchActivity;
 import com.hhly.mlottery.bean.FootballLotteryBean;
 import com.hhly.mlottery.bean.infoCenterBean.ListEntity;
 
@@ -36,10 +38,29 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
 
         datas = bean;
     }
+    /**
+     * jianting
+     */
+    private FootballMatchActivity.BettingBuyClickListener mBuyClick; //关注监听回掉
 
+    public void  setmBuyClick(FootballMatchActivity.BettingBuyClickListener mBuyClick) {
+        this.mBuyClick = mBuyClick;
+    }
 
     @Override
-    protected void convert(final BaseViewHolder baseViewHolder, FootballLotteryBean.BettingListBean listEntity) {
+    protected void convert(final BaseViewHolder baseViewHolder, final FootballLotteryBean.BettingListBean listEntity) {
+
+        LinearLayout itemOnclik=baseViewHolder.getView(R.id.football_match_child);
+
+        itemOnclik.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mBuyClick != null) {
+                    mBuyClick.BuyOnClick(view, listEntity.getMatchId());
+                }
+            }
+        });
+
         if (getViewHolderPosition(baseViewHolder) == 0) {
             baseViewHolder.setVisible(R.id.tv_back, false);
         } else {
@@ -379,4 +400,7 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
     }
 
 
+    public void updateData(List<FootballLotteryBean.BettingListBean> bettingList) {
+        this.datas = bettingList;
+    }
 }
