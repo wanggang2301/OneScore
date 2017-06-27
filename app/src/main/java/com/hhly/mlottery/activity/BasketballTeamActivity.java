@@ -120,8 +120,8 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 
 
         String[] titles = new String[]{
-                "球队统计","赛程赛果",
-                "盘口统计","技术统计"
+                getString(R.string.basket_team_statistics),getString(R.string.basket_team_result_schdule),
+                getString(R.string.basket_team_handicap_statistics),getString(R.string.basket_team_tech_staticss)
         };
 //        ,"盘口统计","技术统计"
         setSupportActionBar(mToolbar);

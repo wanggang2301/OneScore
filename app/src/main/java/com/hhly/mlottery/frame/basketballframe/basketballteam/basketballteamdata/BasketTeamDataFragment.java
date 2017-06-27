@@ -238,25 +238,28 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
         mForwordAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                Intent intent1=new Intent(getActivity(), WebActivity.class);
-                intent1.putExtra("key",url+mPresenter.getDefender().get(i).getPlayerId()+"#/");
-                startActivity(intent1);
+                Intent intent=new Intent(getActivity(), WebActivity.class);
+                intent.putExtra("key",url+mPresenter.getForward().get(i).getPlayerId()+"#/");
+                intent.putExtra("show","show");
+                startActivity(intent);
             }
         });
         mCenterAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                Intent intent1=new Intent(getActivity(), WebActivity.class);
-                intent1.putExtra("key",url+mPresenter.getDefender().get(i).getPlayerId()+"#/");
-                startActivity(intent1);
+                Intent intent=new Intent(getActivity(), WebActivity.class);
+                intent.putExtra("key",url+mPresenter.getCenter().get(i).getPlayerId()+"#/");
+                intent.putExtra("show","show");
+                startActivity(intent);
             }
         });
         mDefenderAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                Intent intent1=new Intent(getActivity(), WebActivity.class);
-                intent1.putExtra("key",url+mPresenter.getDefender().get(i).getPlayerId()+"#/");
-                startActivity(intent1);
+                Intent intent=new Intent(getActivity(), WebActivity.class);
+                intent.putExtra("key",url+mPresenter.getDefender().get(i).getPlayerId()+"#/");
+                intent.putExtra("show","show");
+                startActivity(intent);
             }
         });
     }

@@ -400,12 +400,12 @@ public class BasketDatabaseRankingFragment extends Fragment {
         basketballHandicpDetailsClickListener = new BasketballRankingDetailsClickListener() {
             @Override
             public void IntegralDetailsOnClick(View view, RankingTeam teamData) {
-                Intent intent=new Intent(getActivity(), WebActivity.class);
-//                intent.putExtra("leagueId",league.getLeagueId());
-//                intent.putExtra("teamId",teamData.getTeamId());
-                intent.putExtra("key",BaseURLs.P_URL_API_HOST+"data/basket/team.html?teamId="+teamData.getTeamId()+"&leagueId="
-                +league.getLeagueId()+"#/");
-                intent.putExtra("show","show");
+                Intent intent=new Intent(getActivity(), BasketballTeamActivity.class);
+                intent.putExtra("leagueId",league.getLeagueId());
+                intent.putExtra("teamId",teamData.getTeamId());
+//                intent.putExtra("key",BaseURLs.P_URL_API_HOST+"data/basket/team.html?teamId="+teamData.getTeamId()+"&leagueId="
+//                +league.getLeagueId()+"#/");
+//                intent.putExtra("show","show");
                 startActivity(intent);
             }
         };

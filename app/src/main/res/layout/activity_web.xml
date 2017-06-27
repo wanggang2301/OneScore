@@ -20,12 +20,14 @@
         android:layout_height="@dimen/header_height"
         android:background="@color/colorPrimary"
         android:orientation="vertical"
-        android:paddingTop="@dimen/status_bar_offset">
+        android:paddingTop="@dimen/status_bar_offset"
+        >
 
         <RelativeLayout
             android:id="@+id/web_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <ImageView
                 android:id="@+id/public_img_back"

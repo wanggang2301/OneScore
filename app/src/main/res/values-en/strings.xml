@@ -1685,7 +1685,21 @@
     <string name="holidays_are_postponed">Holidays are postponed. You can view the audit status at the personal center.</string>
     <string name="realname_authentication_audit">Real name authentication audit...</string>
     <string name="please_be_patient">Please be patient...</string>
-
+    <string name="basket_team_zhanji">战绩</string>
+    <string name="basket_team_jiaolian">教练</string>
+    <string name="basket_team_avg_score">场均得分</string>
+    <string name="basket_team_avg_assitant">场均助攻</string>
+    <string name="basket_team_avg_borad">场均篮板</string>
+    <string name="basket_team_avg_lose">场均失分</string>
+    <string name="basket_team_abg_misplay">场均失误</string>
+    <string name="basket_team_total_chang">总场次</string>
+    <string name="basket_team_forward">前锋</string>
+    <string name="basket_team_center">中锋</string>
+    <string name="basket_team_defender">后卫</string>
+    <string name="basket_team_statistics">球队统计</string>
+    <string name="basket_team_result_schdule">赛程赛果</string>
+    <string name="basket_team_handicap_statistics">盘口统计</string>
+    <string name="basket_team_tech_staticss">技术统计</string>
 
 
 </resources>

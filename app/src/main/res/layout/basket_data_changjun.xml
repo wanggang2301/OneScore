@@ -10,7 +10,7 @@
         >
         <TextView
             style="@style/basket_team_changjun"
-            android:text="场均得分"
+            android:text="@string/basket_team_avg_score"
             />
         <View
             android:layout_width="0.5dp"
@@ -19,7 +19,7 @@
             />
         <TextView
             style="@style/basket_team_changjun"
-            android:text="场均助攻"
+            android:text="@string/basket_team_avg_assitant"
             />
         <View
             android:layout_width="0.5dp"
@@ -28,7 +28,7 @@
             />
         <TextView
             style="@style/basket_team_changjun"
-            android:text="场均篮板"
+            android:text="@string/basket_team_avg_borad"
             />
         <View
             android:layout_width="0.5dp"
@@ -37,7 +37,7 @@
             />
         <TextView
             style="@style/basket_team_changjun"
-            android:text="场均失分"
+            android:text="@string/basket_team_avg_lose"
             />
         <View
             android:layout_width="0.5dp"
@@ -46,7 +46,7 @@
             />
         <TextView
             style="@style/basket_team_changjun"
-            android:text="场均失误"
+            android:text="@string/basket_team_abg_misplay"
             />
 
     </LinearLayout>
