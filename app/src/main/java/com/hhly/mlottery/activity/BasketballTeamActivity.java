@@ -115,8 +115,9 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 
         mTeamDataFragment=BasketTeamDataFragment.newInstance(mSeason,mLeagueId,mTeamId);
         mResultFragment=BasketTeamResultFragment.newInstance(mSeason,mLeagueId,mTeamId);
-        technicalStatisticsFragment = TechnicalStatisticsFragment.newInstance(mSeason,mLeagueId,mTeamId);
         handicapStatisticsFragment = HandicapStatisticsFragment.newInstance(mSeason,mLeagueId,mTeamId);
+        technicalStatisticsFragment = TechnicalStatisticsFragment.newInstance(mSeason,mLeagueId,mTeamId);
+
 
 
         String[] titles = new String[]{
@@ -140,8 +141,8 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 
         mTabsAdapter.addFragments(mTeamDataFragment);
         mTabsAdapter.addFragments(mResultFragment);
-        mTabsAdapter.addFragments(technicalStatisticsFragment);
         mTabsAdapter.addFragments(handicapStatisticsFragment);
+        mTabsAdapter.addFragments(technicalStatisticsFragment);
 
         mViewPager.setAdapter(mTabsAdapter);
         mTabLayout.setupWithViewPager(mViewPager);

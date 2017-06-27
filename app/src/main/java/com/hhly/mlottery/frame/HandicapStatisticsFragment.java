@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,7 +109,7 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
     private Activity mActivity;
     private Context mContext;
     private TextView match_no_data_txt;
-    private ScrollView scrollView;
+    private NestedScrollView scrollView;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -187,14 +188,17 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
                         match_no_data_txt.setVisibility(View.GONE);
                         scrollView.setVisibility(View.VISIBLE);
                         match_error_btn.setVisibility(View.GONE);
+                        radioGroup.setVisibility(View.VISIBLE);
                         initLetSplitDatas();
                     } else {
+                        radioGroup.setVisibility(View.VISIBLE);
                         match_no_data_txt.setVisibility(View.VISIBLE);
                         scrollView.setVisibility(View.GONE);
                         match_error_btn.setVisibility(View.GONE);
                     }
                     initEvent();
                 }else{
+                    radioGroup.setVisibility(View.GONE);
                     match_no_data_txt.setVisibility(View.GONE);
                     scrollView.setVisibility(View.GONE);
                     match_error_btn.setVisibility(View.VISIBLE);
@@ -206,7 +210,7 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
+                radioGroup.setVisibility(View.GONE);
                 match_no_data_txt.setVisibility(View.GONE);
                 scrollView.setVisibility(View.GONE);
                 match_error_btn.setVisibility(View.VISIBLE);
@@ -399,7 +403,7 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
     private void initView() {
 
 
-        scrollView = (ScrollView) view.findViewById(R.id.handicap_scrollview);
+        scrollView = (NestedScrollView) view.findViewById(R.id.handicap_scrollview);
 
         //暂无数据
         match_no_data_txt = (TextView) view.findViewById(R.id.match_no_data_txt);

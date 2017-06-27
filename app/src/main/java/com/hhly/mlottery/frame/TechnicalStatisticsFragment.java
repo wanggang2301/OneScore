@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,7 +109,7 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
     private TextView season_1;
     private TextView season_2;
     private TextView season_3;
-    private ScrollView technical_scrollview;
+    private NestedScrollView technical_scrollview;
     private TextView match_no_data_txt;
     private Activity mActivity;
     private Context mContext;
@@ -169,7 +171,6 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
             public void onResponse(TechnicalStatisticBean handicapStatisticsBean) {
 
                 if (handicapStatisticsBean.getResult() == 200) {
-
                     //季后赛
                     playoffList = handicapStatisticsBean.getPlayoffList();
                     //常规赛
@@ -185,7 +186,7 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
+                radioGroup.setVisibility(View.GONE);
                 match_error_btn.setVisibility(View.VISIBLE);
                 technical_scrollview.setVisibility(View.GONE);
                 match_no_data_txt.setVisibility(View.GONE);
@@ -200,11 +201,13 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
     private void inithandicapStatisticDatas(List<TechnicalStatisticBean.DataBean> dataBean) {
 
         if (dataBean.size()==0) {
+            radioGroup.setVisibility(View.VISIBLE);
             technical_scrollview.setVisibility(View.GONE);
             match_no_data_txt.setVisibility(View.VISIBLE);
             match_error_btn.setVisibility(View.GONE);
             return;
         } else {
+            radioGroup.setVisibility(View.VISIBLE);
             technical_scrollview.setVisibility(View.VISIBLE);
             match_no_data_txt.setVisibility(View.GONE);
             match_error_btn.setVisibility(View.GONE);
@@ -222,6 +225,7 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
         season_3.setText(dataBean3.getSeason());
         //常规
         routine_win_1.setText(dataBean1.getWinRoutine() + "");
+        Log.i("sdasd","sadasd"+dataBean1.getWinRoutine() + "");
         routine_win_2.setText(dataBean2.getWinRoutine() + "");
         routine_win_3.setText(dataBean3.getWinRoutine() + "");
 
@@ -321,14 +325,20 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
 
                 switch (radioButtonId) {
                     case R.id.odd_plate_btn://季前赛
-                        inithandicapStatisticDatas(preseasonList);
+                        if(preseasonList!=null){
+                            inithandicapStatisticDatas(preseasonList);
+                        }
                         break;
                     case R.id.odd_big_btn://常规赛
-                        inithandicapStatisticDatas(regularList);
+                        if (regularList!=null){
+                            inithandicapStatisticDatas(regularList);
+                        }
 
                         break;
                     case R.id.odd_op_btn://季后赛
-                        inithandicapStatisticDatas(playoffList);
+                        if (playoffList!=null){
+                            inithandicapStatisticDatas(playoffList);
+                        }
 
                         break;
                     default:
@@ -350,7 +360,7 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
         playoff = (RadioButton) view.findViewById(R.id.odd_op_btn);
 
 
-        technical_scrollview = (ScrollView) view.findViewById(R.id.technical_scrollview);
+        technical_scrollview = (NestedScrollView) view.findViewById(R.id.technical_scrollview);
         //暂无数据
         match_no_data_txt = (TextView) view.findViewById(R.id.match_no_data_txt);
 

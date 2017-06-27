@@ -39,7 +39,7 @@ public class FootballMatchListAdapter extends BaseQuickAdapter<FootballLotteryBe
         datas = bean;
     }
     /**
-     * jianting
+     * 条目监听
      */
     private FootballMatchActivity.BettingBuyClickListener mBuyClick; //关注监听回掉
 

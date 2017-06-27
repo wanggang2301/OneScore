@@ -50,7 +50,7 @@
 
     </RadioGroup>
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:visibility="visible"
         android:id="@+id/technical_scrollview"
         android:layout_width="match_parent"
@@ -1229,7 +1229,7 @@
         </LinearLayout>
 
 
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
     <TextView
         android:id="@+id/match_no_data_txt"
@@ -1242,10 +1242,11 @@
         android:textSize="20sp"
         android:visibility="gone" />
     <LinearLayout
+        android:paddingTop="90dp"
         android:id="@+id/match_error_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
         android:visibility="gone">
 
