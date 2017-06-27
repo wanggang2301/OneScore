@@ -211,6 +211,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 //        popupWindow.showAtLocation(mSelect, Gravity.NO_GRAVITY, location[0] - mSelect.getWidth() - mSelect.getPaddingRight(), location[1] + mSelect.getHeight());
 
        popupWindow.showAsDropDown(mSelect,0,0, Gravity.RIGHT);
+        popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
 
 //        popupWindow.setBackgroundDrawable(getApplicationContext().getResources().getDrawable(R.drawable.four_radius));

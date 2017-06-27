@@ -186,11 +186,6 @@ public class WebActivity extends BaseActivity implements OnClickListener {
             Intent intent = getIntent();
             url = intent.getStringExtra("key");
             showHead=intent.getStringExtra("show");
-            if(showHead.equals("show")){
-                mHeadLayout.setVisibility(View.GONE);
-            }else {
-                mHeadLayout.setVisibility(View.VISIBLE);
-            }
             L.d("CommonUtils初始url" + url);
 //            url = "http://192.168.33.14:8080/gameweb/h5/index";
 //            url = "http://192.168.37.6:8080/gameweb/h5/index";

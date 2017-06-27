@@ -451,12 +451,12 @@ public class BasketDatabaseScheduleFragment extends Fragment {
         basketballDetailsClickListener = new BasketballDetailsClickListener() {
             @Override
             public void DetailsOnClick(View view, String thirdId) {
-//                Intent intent = new Intent(getActivity(), BasketDetailsActivityTest.class);
-//                intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, thirdId);//跳转到详情 4830987
-//                intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID, league.getLeagueId());
-//                intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE, league.getMatchType().toString());
-//                startActivity(intent);
-//                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
+                Intent intent = new Intent(getActivity(), BasketDetailsActivityTest.class);
+                intent.putExtra(BasketDetailsActivityTest.BASKET_THIRD_ID, thirdId);//跳转到详情 4830987
+                intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_LEAGUEID, league.getLeagueId());
+                intent.putExtra(BasketDetailsActivityTest.BASKET_MATCH_MATCHTYPE, league.getMatchType().toString());
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.push_left_in, R.anim.push_fix_out);
 //                Toast.makeText(getContext(), "aaa " + thirdId, Toast.LENGTH_SHORT).show();
             }
         };

@@ -32,6 +32,7 @@ import com.hhly.mlottery.bean.basket.basketdetails.BasketEachTextLiveBean;
 import com.hhly.mlottery.bean.footballDetails.DetailsCollectionCountBean;
 import com.hhly.mlottery.bean.websocket.DataEntity;
 import com.hhly.mlottery.bean.websocket.WebSocketBasketBallDetails;
+import com.hhly.mlottery.callback.BasketTeamParams;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.config.StaticValues;
@@ -65,6 +66,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 
 
@@ -192,6 +195,16 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
     boolean barrage_isFocus = false;
     private int chartBallView = -1;// 聊球界面转标记
 
+    @BindView(R.id.rl_iv)
+    RelativeLayout mLayoutGuestIcon;
+    @BindView(R.id.ll_guest)
+    LinearLayout mLayoutGuestName;
+    @BindView(R.id.rl_iv2)
+    RelativeLayout mLayoutHomeIcon;
+    @BindView(R.id.linearLayout2)
+    LinearLayout mLayoutHomeName;
+
+
     /**
      * 请求数据之后展示
      */
@@ -248,6 +261,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         setContentView(R.layout.activity_basket_details_activity_test);
         mContext = this;
 
+        ButterKnife.bind(this);
 
         initView();
         loadData();
@@ -499,6 +513,11 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
 
             }
         });
+
+        mLayoutGuestIcon.setOnClickListener(this);
+        mLayoutGuestName.setOnClickListener(this);
+        mLayoutHomeIcon.setOnClickListener(this);
+        mLayoutHomeName.setOnClickListener(this);
     }
 
     /**
@@ -871,6 +890,20 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
                     barrage_isFocus = true;
                     barrage_view.setAlpha(0);
                 }
+                break;
+            case R.id.rl_iv: //客队图标
+            case R.id.ll_guest : //客队队名
+                Intent intent=new Intent(this,BasketballTeamActivity.class);
+                intent.putExtra(BasketTeamParams.LEAGUE_ID,mLeagueId);
+                intent.putExtra(BasketTeamParams.TEAM_ID,mMatch.getHomeTeamId());
+                startActivity(intent);
+                break;
+            case R.id.rl_iv2:
+            case R.id.linearLayout2:
+                Intent intent1=new Intent(this,BasketballTeamActivity.class);
+                intent1.putExtra(BasketTeamParams.LEAGUE_ID,mLeagueId);
+                intent1.putExtra(BasketTeamParams.TEAM_ID,mMatch.getGuestTeamId());
+                startActivity(intent1);
                 break;
         }
     }
