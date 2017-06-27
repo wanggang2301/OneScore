@@ -57,6 +57,7 @@ public class BettingDetailsBean {
 //        oddsCompany: null,
 //        serNum: ""
 //        chooseStr
+//        typeStr: "大小球",
         private String id;
         private String userid;
         private String matchid;
@@ -82,6 +83,16 @@ public class BettingDetailsBean {
         private String userId;
         private String serNum;
         private String[] chooseStr;
+
+        private String typeStr;
+
+        public String getTypeStr() {
+            return typeStr;
+        }
+
+        public void setTypeStr(String typeStr) {
+            this.typeStr = typeStr;
+        }
 
         public String getId() {
             return id;

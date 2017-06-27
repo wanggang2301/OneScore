@@ -198,7 +198,7 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
 
     private void initData(String type , String key , int pageNum , int pageSize){
 
-//        String url = "http://192.168.10.242:8092/promotion/info/list";
+//        String url = "http://192.168.10.242:8098/promotion/info/list";
 //        String url = "http://m.1332255.com:81/promotion/info/list";
         String url = BaseURLs.URL_RECOMEND_LIST;
 
