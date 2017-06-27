@@ -15,11 +15,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -64,7 +66,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
     private int currentIndexDate;
     private ExactSwipeRefreshLayout mSwipeRefreshLayout;
-
+    private View mOnloadingView;
+    private View mNoLoadingView;
 
     private TextView public_txt_title;
     private ImageView public_btn_filter;
@@ -81,7 +84,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
     String Currentselection = "";
 
 
-    private static final int PAGE_SIZE = 30;
+    private static final int PAGE_SIZE = 15;
     private int pageNum = 1;
 
     private final static int VIEW_STATUS_LOADING = 11;
@@ -140,6 +143,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
     private ProgressBar progressBar;
     private TextView loadmore_text;
     private View view;
+    private Context context;
+    private View headView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -147,6 +152,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         setWebSocketUri(BaseURLs.WS_SERVICE);
         setTopic(BaseUserTopics.footballBetting);
         super.onCreate(savedInstanceState);
+
+        context = this;
 
         initView();
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
@@ -391,15 +398,9 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
     }
 
-    private void initEvent() {
-
-    }
-
 
     private void initDate(String date) {
         mSwipeRefreshLayout.setRefreshing(true);
-
-        pageNum = 1;
         Map<String, String> params = new HashMap<>();
         params.put("date", date);
         params.put("pageNum", pageNum + "");
@@ -452,36 +453,49 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         }, FootballLotteryBean.class);
     }
 
+    public void buyClicked() {
+        mBettingBuyClickListener = new BettingBuyClickListener() {
+            @Override
+            public void BuyOnClick(View view, String s) {
+                Intent intent = new Intent(FootballMatchActivity.this, FootballMatchDetailActivity.class);
+                intent.putExtra("thirdId", s);
+                intent.putExtra("match_details", 1);
+                startActivity(intent);
+            }
+        };
+    }
     private void initViewData() {
 
-        footballMatchListAdapter = new FootballMatchListAdapter(getApplicationContext(), R.layout.football_match_child, null);
-        mRecyclerView.setAdapter(footballMatchListAdapter);
-        footballMatchListAdapter.openLoadMore(0, true);
-        footballMatchListAdapter.setLoadingView(view);
+            footballMatchListAdapter = new FootballMatchListAdapter(getApplicationContext(), R.layout.football_match_child, null);
+            buyClicked();
+            footballMatchListAdapter.setmBuyClick(mBettingBuyClickListener);
+            footballMatchListAdapter.setLoadingView(view);
+            mRecyclerView.setAdapter(footballMatchListAdapter);
+            footballMatchListAdapter.openLoadMore(0, true);
 
+        //上拉加载更多
         footballMatchListAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                mRecyclerView.post(new Runnable() {
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
 
                         pullUpLoadMoreData();
                     }
-                });
+                }, 1000);
             }
         });
-        footballMatchListAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int i) {
-                String thirdId = bettingList.get(i).getMatchId();
-                L.d("xxx", "thirdId: " + thirdId);
-                Intent intent = new Intent(FootballMatchActivity.this, FootballMatchDetailActivity.class);
-                intent.putExtra("thirdId", thirdId);
-                intent.putExtra("match_details", 1);
-                startActivity(intent);
-            }
-        });
+    }
+
+    private void upDataAdapter() {
+
+        if (footballMatchListAdapter == null) {
+            return;
+        }
+        footballMatchListAdapter.updateData(bettingList);
+        footballMatchListAdapter.notifyDataSetChanged();
+
     }
 
     private List<Map<String, String>> dateList;
@@ -582,6 +596,8 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
         emptyView = View.inflate(this, R.layout.layout_nodata, null);
 
+        mOnloadingView = getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecyclerView.getParent(), false);
+        mNoLoadingView = getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) mRecyclerView.getParent(), false);
 
     }
 
@@ -590,7 +606,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
     private void pullUpLoadMoreData() {
 
-        pageNum++;
+        pageNum += 1;
         Map<String, String> params = new HashMap<>();
         params.put("date", Currentselection);
         params.put("pageNum", pageNum + "");
@@ -604,18 +620,18 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 if (jsonObject != null) {
 
                     if (jsonObject.getResult() == 200) {
-                        if (jsonObject.getBettingList() != null && jsonObject.getBettingList().size() > 0) {
-                            loadmore_text.setText(FootballMatchActivity.this.getResources().getString(R.string.loading_data_txt));
+                        if (jsonObject.getBettingList()==null||jsonObject.getBettingList().size()==0) {
+                            footballMatchListAdapter.notifyDataChangedAfterLoadMore(false);
+                            footballMatchListAdapter.addFooterView(mNoLoadingView);
+                     /*       loadmore_text.setText(FootballMatchActivity.this.getResources().getString(R.string.loading_data_txt));
                             progressBar.setVisibility(View.VISIBLE);
                             bettingList.addAll(jsonObject.getBettingList());
                             footballMatchListAdapter.addData(bettingList);
                             //mRecyclerView.getRecycledViewPool().clear();
-                            footballMatchListAdapter.notifyDataChangedAfterLoadMore(true);
+                            footballMatchListAdapter.notifyDataChangedAfterLoadMore(true);*/
                         } else {
                             // loadmore_text.setText(FootballMatchActivity.this.getResources().getString(R.string.nodata_txt));
-                            loadmore_text.setText("");
-                            progressBar.setVisibility(View.GONE);
-                            return;
+                            footballMatchListAdapter.notifyDataChangedAfterLoadMore(jsonObject.getBettingList(), true);
                         }
                     }
                 }
@@ -713,6 +729,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 finish();
                 break;
             case R.id.match_error_btn:
+                pageNum=1;
                 isSelect = false;
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
                 initDate(currentDate);
@@ -721,6 +738,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 showDateChooseDialog();
                 break;
             case R.id.iv_left:
+                pageNum=1;
                 if (currentIndexDate > 0) {
                     currentIndexDate--;
                 }
@@ -728,7 +746,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
                 break;
             case R.id.iv_right:
-
+                pageNum=1;
                 if (currentIndexDate < dateList.size() - 1) {
                     currentIndexDate++;
                 }
@@ -754,6 +772,13 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         mSocketHandler.removeCallbacksAndMessages(null);
     }
 
+    private FootballMatchActivity.BettingBuyClickListener mBettingBuyClickListener;
+
+    public interface BettingBuyClickListener {
+        void BuyOnClick(View view, String s);
+    }
+
+
     /**
      * 设置刷新状态
      *
@@ -766,6 +791,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
     @Override
     public void onRefresh() {
+        pageNum=1;
         initDate(Currentselection);
     }
 }

@@ -417,7 +417,7 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
         view = layoutInflater.inflate(R.layout.view_load_more, null);
         headView = layoutInflater.inflate(R.layout.activity_experts_head_view, null);
         headView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        
+
         //暂无数据
         match_no_data_txt = (TextView) findViewById(R.id.match_no_data_txt);
 

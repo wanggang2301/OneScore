@@ -13,6 +13,7 @@
         android:layout_marginTop="10dp"
         android:gravity="center"
         android:orientation="horizontal"
+        android:visibility="visible"
         android:weightSum="4">
 
         <RadioButton
@@ -41,23 +42,361 @@
     </RadioGroup>
 
 
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/handicap_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:visibility="visible">
 
-        <ScrollView
-            android:id="@+id/handicap_scrollview"
-            android:scrollbars="none"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="22dp"
+                android:background="@color/white">
+
+                <View
+                    android:layout_width="3dp"
+                    android:layout_height="19dp"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/colorPrimary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center"
+                    android:text="@string/handicap_plate"
+                    android:textColor="@color/snooker"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:background="@color/line_football_footer">
+
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <TextView
+                    style="@style/handicap_statisticss"
+                    android:text="@string/foot_team_info_total" />
+
+                <TextView
+                    style="@style/handicap_statisticss"
+                    android:text="@string/foot_team_info_zu" />
+
+                <TextView
+                    style="@style/handicap_statisticss"
+                    android:text="@string/foot_team_info_ke" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="29dp">
+
+
+                <TextView
+                    style="@style/handicap_statisticss"
+                    android:layout_weight="1"
+                    android:text="@string/handicap_matchs" />
+
+                <TextView
+                    android:id="@+id/screenings_z"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/screenings_h"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/screenings_g"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/handicap_statisticss_rl"
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                android:background="@color/tennis_details_pager_bg">
+
+                <TextView
+                    style="@style/handicap_statisticss"
+                    android:text="@string/handicap_hanging" />
+
+                <TextView
+                    android:id="@+id/hanging_z"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/hanging_h"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/hanging_g"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/footwall_z_rl"
+                android:layout_width="match_parent"
+                android:layout_height="29dp">
+
+
+                <TextView
+                    style="@style/handicap_statisticss"
+                    android:text="@string/handicap_football" />
+
+                <TextView
+                    android:id="@+id/footwall_z"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/footwall_h"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/footwall_g"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                android:background="@color/tennis_details_pager_bg">
+
+
+                <TextView
+                    android:id="@+id/bigball_z_tv"
+                    style="@style/handicap_statisticss"
+                    android:text="@string/foot_team_odds_hdpw" />
+
+                <TextView
+                    android:id="@+id/bigball_z"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/bigball_h"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/bigball_g"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="29dp">
+
+
+                <TextView
+                    style="@style/handicap_statisticss"
+                    android:text="@string/analyze_draw_rate" />
+
+                <TextView
+                    android:id="@+id/water_z"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/water_h"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/water_g"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                android:background="@color/tennis_details_pager_bg">
+
+
+                <TextView
+
+                    android:id="@+id/ball_z_tv"
+                    style="@style/handicap_statisticss"
+                    android:text="@string/foot_team_odds_hdpl" />
+
+                <TextView
+                    android:id="@+id/ball_z"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/ball_h"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/ball_g"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/clean_rl"
+                android:layout_width="match_parent"
+                android:layout_height="29dp">
+
+                <TextView
+                    style="@style/handicap_statisticss"
+                    android:text="@string/handicap_clean" />
+
+                <TextView
+                    android:id="@+id/clean_z"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/clean_h"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/clean_g"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="29dp">
+
+
+                <TextView
+                    android:id="@+id/big_ball_z_tv"
+                    style="@style/handicap_statisticss"
+                    android:text="@string/winpro" />
+
+                <TextView
+                    android:id="@+id/big_ball_z"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/big_ball_h"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/big_ball_g"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                android:background="@color/tennis_details_pager_bg">
+
+
+                <TextView
+                    android:id="@+id/go_z_tv"
+                    style="@style/handicap_statisticss"
+                    android:text="@string/handcaip_goo" />
+
+                <TextView
+                    android:id="@+id/go_z"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/go_h"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/go_g"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="29dp">
+
+
+                <TextView
+                    android:id="@+id/smallball_z_tv"
+                    style="@style/handicap_statisticss"
+                    android:text="@string/foot_team_odds_loserate" />
+
+                <TextView
+                    android:id="@+id/smallball_z"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/smallball_h"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+                <TextView
+                    android:id="@+id/smallball_g"
+                    style="@style/handicap_statisticss"
+                    android:text="--" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/footwall_road_rl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="50dp">
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="22dp"
+                    android:layout_marginBottom="5dp"
                     android:background="@color/white">
 
                     <View
@@ -71,7 +410,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
-                        android:text="@string/handicap_plate"
+                        android:text="@string/on_the_lower_panel"
                         android:textColor="@color/snooker"
                         android:textSize="13sp" />
 
@@ -79,29 +418,37 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="25dp"
+                    android:layout_height="29dp"
                     android:background="@color/line_football_footer">
-
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
 
                     <TextView
                         style="@style/handicap_statisticss"
+                        android:layout_weight="1"
                         android:text="@string/foot_team_info_total" />
 
                     <TextView
                         style="@style/handicap_statisticss"
-                        android:text="@string/foot_team_info_zu" />
+                        android:layout_weight="1"
+                        android:text="@string/basket_database_details_match_num_title"
+                        android:textColor="@color/betting_recommend_issue_fangan_color" />
 
                     <TextView
                         style="@style/handicap_statisticss"
-                        android:text="@string/foot_team_info_ke" />
+                        android:text="@string/foot_team_odds_hdpw"
+                        android:textColor="@color/betting_recommend_issue_fangan_color" />
 
+                    <TextView
+                        style="@style/handicap_statisticss"
+                        android:text="@string/analyze_draw_rate"
+                        android:textColor="@color/betting_recommend_issue_fangan_color" />
+
+                    <TextView
+                        style="@style/handicap_statisticss"
+                        android:text="@string/foot_team_odds_hdpl"
+                        android:textColor="@color/betting_recommend_issue_fangan_color" />
 
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -109,50 +456,28 @@
 
 
                     <TextView
-                        style="@style/handicap_statisticss"
-                        android:layout_weight="1"
-                        android:text="@string/handicap_matchs" />
 
-                    <TextView
-                        android:id="@+id/screenings_z"
-                        style="@style/handicap_statisticss"
-                        android:text="--" />
-
-                    <TextView
-                        android:id="@+id/screenings_h"
-                        style="@style/handicap_statisticss"
-                        android:text="--" />
-
-                    <TextView
-                        android:id="@+id/screenings_g"
-                        style="@style/handicap_statisticss"
-                        android:text="--" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/handicap_statisticss_rl"
-                    android:layout_width="match_parent"
-                    android:layout_height="29dp"
-                    android:background="@color/tennis_details_pager_bg">
-
-                    <TextView
+                        android:id="@+id/textView16"
                         style="@style/handicap_statisticss"
                         android:text="@string/handicap_hanging" />
 
                     <TextView
-                        android:id="@+id/hanging_z"
+                        android:id="@+id/a_hanging_s"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                     <TextView
-                        android:id="@+id/hanging_h"
+                        android:id="@+id/a_hanging_w"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                     <TextView
-                        android:id="@+id/hanging_g"
+                        android:id="@+id/a_hanging_g"
+                        style="@style/handicap_statisticss"
+                        android:text="--" />
+
+                    <TextView
+                        android:id="@+id/a_hanging_l"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
@@ -160,7 +485,6 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/footwall_z_rl"
                     android:layout_width="match_parent"
                     android:layout_height="29dp">
 
@@ -170,46 +494,89 @@
                         android:text="@string/handicap_football" />
 
                     <TextView
-                        android:id="@+id/footwall_z"
+                        android:id="@+id/a_wall_s"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                     <TextView
-                        android:id="@+id/footwall_h"
+                        android:id="@+id/a_wall_w"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                     <TextView
-                        android:id="@+id/footwall_g"
+                        android:id="@+id/a_wall_g"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
+                    <TextView
+                        android:id="@+id/a_wall_l"
+                        style="@style/handicap_statisticss"
+                        android:text="--" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="29dp"
-                    android:background="@color/tennis_details_pager_bg">
-
+                    android:background="@color/line_football_footer">
 
                     <TextView
-                        android:id="@+id/bigball_z_tv"
+                        android:id="@+id/textView17"
                         style="@style/handicap_statisticss"
-                        android:text="@string/foot_team_odds_hdpw" />
+                        android:layout_weight="1"
+                        android:text="@string/foot_team_info_zu" />
 
                     <TextView
-                        android:id="@+id/bigball_z"
+                        style="@style/handicap_statisticss"
+                        android:layout_weight="1"
+                        android:text="@string/basket_database_details_match_num_title"
+                        android:textColor="@color/betting_recommend_issue_fangan_color" />
+
+                    <TextView
+                        style="@style/handicap_statisticss"
+                        android:text="@string/foot_team_odds_hdpw"
+                        android:textColor="@color/betting_recommend_issue_fangan_color" />
+
+                    <TextView
+                        style="@style/handicap_statisticss"
+                        android:text="@string/analyze_draw_rate"
+                        android:textColor="@color/betting_recommend_issue_fangan_color" />
+
+                    <TextView
+                        style="@style/handicap_statisticss"
+                        android:text="@string/foot_team_odds_hdpl"
+                        android:textColor="@color/betting_recommend_issue_fangan_color" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="29dp">
+
+
+                    <TextView
+
+                        android:id="@+id/b_textView16"
+                        style="@style/handicap_statisticss"
+                        android:text="@string/handicap_hanging" />
+
+                    <TextView
+                        android:id="@+id/b_hanging_s"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                     <TextView
-                        android:id="@+id/bigball_h"
+                        android:id="@+id/b_hanging_w"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                     <TextView
-                        android:id="@+id/bigball_g"
+                        android:id="@+id/b_hanging_g"
+                        style="@style/handicap_statisticss"
+                        android:text="--" />
+
+                    <TextView
+                        android:id="@+id/b_hanging_l"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
@@ -223,20 +590,25 @@
 
                     <TextView
                         style="@style/handicap_statisticss"
-                        android:text="@string/analyze_draw_rate" />
+                        android:text="@string/handicap_football" />
 
                     <TextView
-                        android:id="@+id/water_z"
+                        android:id="@+id/b_wall_s"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                     <TextView
-                        android:id="@+id/water_h"
+                        android:id="@+id/b_wall_w"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                     <TextView
-                        android:id="@+id/water_g"
+                        android:id="@+id/b_wall_g"
+                        style="@style/handicap_statisticss"
+                        android:text="--" />
+
+                    <TextView
+                        android:id="@+id/b_wall_l"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
@@ -246,58 +618,33 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="29dp"
-                    android:background="@color/tennis_details_pager_bg">
-
-
-                    <TextView
-
-                        android:id="@+id/ball_z_tv"
-                        style="@style/handicap_statisticss"
-                        android:text="@string/foot_team_odds_hdpl" />
-
-                    <TextView
-                        android:id="@+id/ball_z"
-                        style="@style/handicap_statisticss"
-                        android:text="--" />
-
-                    <TextView
-                        android:id="@+id/ball_h"
-                        style="@style/handicap_statisticss"
-                        android:text="--" />
-
-                    <TextView
-                        android:id="@+id/ball_g"
-                        style="@style/handicap_statisticss"
-                        android:text="--" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/clean_rl"
-                    android:layout_width="match_parent"
-                    android:layout_height="29dp"
-                   >
+                    android:background="@color/line_football_footer">
 
                     <TextView
                         style="@style/handicap_statisticss"
-                        android:text="@string/handicap_clean" />
+                        android:layout_weight="1"
+                        android:text="@string/foot_team_info_ke" />
 
                     <TextView
-                        android:id="@+id/clean_z"
                         style="@style/handicap_statisticss"
-                        android:text="--" />
+                        android:layout_weight="1"
+                        android:text="@string/basket_database_details_match_num_title"
+                        android:textColor="@color/betting_recommend_issue_fangan_color" />
 
                     <TextView
-                        android:id="@+id/clean_h"
                         style="@style/handicap_statisticss"
-                        android:text="--" />
+                        android:text="@string/foot_team_odds_hdpw"
+                        android:textColor="@color/betting_recommend_issue_fangan_color" />
 
                     <TextView
-                        android:id="@+id/clean_g"
                         style="@style/handicap_statisticss"
-                        android:text="--" />
+                        android:text="@string/analyze_draw_rate"
+                        android:textColor="@color/betting_recommend_issue_fangan_color" />
 
+                    <TextView
+                        style="@style/handicap_statisticss"
+                        android:text="@string/foot_team_odds_hdpl"
+                        android:textColor="@color/betting_recommend_issue_fangan_color" />
 
                 </LinearLayout>
 
@@ -307,51 +654,28 @@
 
 
                     <TextView
-                        android:id="@+id/big_ball_z_tv"
+
+                        android:id="@+id/c_textView16"
                         style="@style/handicap_statisticss"
-                        android:text="@string/winpro" />
+                        android:text="@string/handicap_hanging" />
 
                     <TextView
-                        android:id="@+id/big_ball_z"
-                        style="@style/handicap_statisticss"
-                        android:text="--" />
-
-                    <TextView
-                        android:id="@+id/big_ball_h"
+                        android:id="@+id/c_hanging_s"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                     <TextView
-                        android:id="@+id/big_ball_g"
-                        style="@style/handicap_statisticss"
-                        android:text="--" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="29dp"
-                    android:background="@color/tennis_details_pager_bg">
-
-
-                    <TextView
-                        android:id="@+id/go_z_tv"
-                        style="@style/handicap_statisticss"
-                        android:text="@string/handcaip_goo" />
-
-                    <TextView
-                        android:id="@+id/go_z"
+                        android:id="@+id/c_hanging_w"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                     <TextView
-                        android:id="@+id/go_h"
+                        android:id="@+id/c_hanging_g"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                     <TextView
-                        android:id="@+id/go_g"
+                        android:id="@+id/c_hanging_l"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
@@ -359,367 +683,43 @@
                 </LinearLayout>
 
                 <LinearLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="29dp">
 
 
                     <TextView
-                        android:id="@+id/smallball_z_tv"
                         style="@style/handicap_statisticss"
-                        android:text="@string/foot_team_odds_loserate" />
+                        android:text="@string/handicap_football" />
 
                     <TextView
-                        android:id="@+id/smallball_z"
-                        style="@style/handicap_statisticss"
-                        android:text="--" />
-
-                    <TextView
-                        android:id="@+id/smallball_h"
+                        android:id="@+id/c_wall_s"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                     <TextView
-                        android:id="@+id/smallball_g"
+                        android:id="@+id/c_wall_w"
+                        style="@style/handicap_statisticss"
+                        android:text="--" />
+
+                    <TextView
+                        android:id="@+id/c_wall_g"
+                        style="@style/handicap_statisticss"
+                        android:text="--" />
+
+                    <TextView
+                        android:id="@+id/c_wall_l"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
                 </LinearLayout>
 
-
-                <LinearLayout
-                    android:id="@+id/footwall_road_rl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingBottom="50dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="22dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@color/white">
-
-                        <View
-                            android:layout_width="3dp"
-                            android:layout_height="19dp"
-                            android:layout_marginTop="3dp"
-                            android:background="@color/colorPrimary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dp"
-                            android:gravity="center"
-                            android:text="@string/on_the_lower_panel"
-                            android:textColor="@color/snooker"
-                            android:textSize="13sp" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="29dp"
-                        android:background="@color/line_football_footer">
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:layout_weight="1"
-                            android:text="@string/foot_team_info_total" />
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:layout_weight="1"
-                            android:text="@string/basket_database_details_match_num_title"
-                            android:textColor="@color/betting_recommend_issue_fangan_color" />
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:text="@string/foot_team_odds_hdpw"
-                            android:textColor="@color/betting_recommend_issue_fangan_color" />
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:text="@string/analyze_draw_rate"
-                            android:textColor="@color/betting_recommend_issue_fangan_color" />
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:text="@string/foot_team_odds_hdpl"
-                            android:textColor="@color/betting_recommend_issue_fangan_color" />
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="29dp">
-
-
-                        <TextView
-
-                            android:id="@+id/textView16"
-                            style="@style/handicap_statisticss"
-                            android:text="@string/handicap_hanging" />
-
-                        <TextView
-                            android:id="@+id/a_hanging_s"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/a_hanging_w"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/a_hanging_g"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/a_hanging_l"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="29dp">
-
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:text="@string/handicap_football" />
-
-                        <TextView
-                            android:id="@+id/a_wall_s"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/a_wall_w"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/a_wall_g"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/a_wall_l"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="29dp"
-                        android:background="@color/line_football_footer">
-
-                        <TextView
-                            android:id="@+id/textView17"
-                            style="@style/handicap_statisticss"
-                            android:layout_weight="1"
-                            android:text="@string/foot_team_info_zu" />
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:layout_weight="1"
-                            android:text="@string/basket_database_details_match_num_title"
-                            android:textColor="@color/betting_recommend_issue_fangan_color" />
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:text="@string/foot_team_odds_hdpw"
-                            android:textColor="@color/betting_recommend_issue_fangan_color" />
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:text="@string/analyze_draw_rate"
-                            android:textColor="@color/betting_recommend_issue_fangan_color" />
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:text="@string/foot_team_odds_hdpl"
-                            android:textColor="@color/betting_recommend_issue_fangan_color" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="29dp">
-
-
-                        <TextView
-
-                            android:id="@+id/b_textView16"
-                            style="@style/handicap_statisticss"
-                            android:text="@string/handicap_hanging" />
-
-                        <TextView
-                            android:id="@+id/b_hanging_s"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/b_hanging_w"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/b_hanging_g"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/b_hanging_l"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="29dp">
-
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:text="@string/handicap_football" />
-
-                        <TextView
-                            android:id="@+id/b_wall_s"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/b_wall_w"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/b_wall_g"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/b_wall_l"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="29dp"
-                        android:background="@color/line_football_footer">
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:layout_weight="1"
-                            android:text="@string/foot_team_info_ke" />
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:layout_weight="1"
-                            android:text="@string/basket_database_details_match_num_title"
-                            android:textColor="@color/betting_recommend_issue_fangan_color" />
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:text="@string/foot_team_odds_hdpw"
-                            android:textColor="@color/betting_recommend_issue_fangan_color" />
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:text="@string/analyze_draw_rate"
-                            android:textColor="@color/betting_recommend_issue_fangan_color" />
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:text="@string/foot_team_odds_hdpl"
-                            android:textColor="@color/betting_recommend_issue_fangan_color" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="29dp">
-
-
-                        <TextView
-
-                            android:id="@+id/c_textView16"
-                            style="@style/handicap_statisticss"
-                            android:text="@string/handicap_hanging" />
-
-                        <TextView
-                            android:id="@+id/c_hanging_s"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/c_hanging_w"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/c_hanging_g"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/c_hanging_l"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="29dp">
-
-
-                        <TextView
-                            style="@style/handicap_statisticss"
-                            android:text="@string/handicap_football" />
-
-                        <TextView
-                            android:id="@+id/c_wall_s"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/c_wall_w"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/c_wall_g"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                        <TextView
-                            android:id="@+id/c_wall_l"
-                            style="@style/handicap_statisticss"
-                            android:text="--" />
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
 
             </LinearLayout>
 
-        </ScrollView>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
 
     <TextView
         android:id="@+id/match_no_data_txt"
@@ -731,12 +731,14 @@
         android:text="@string/nodata"
         android:textSize="20sp"
         android:visibility="gone" />
+
     <LinearLayout
         android:id="@+id/match_error_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:paddingTop="90dp"
         android:visibility="gone">
 
         <ImageView
@@ -777,7 +779,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
 
 </LinearLayout>
