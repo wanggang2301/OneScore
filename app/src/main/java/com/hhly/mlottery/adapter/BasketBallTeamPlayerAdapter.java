@@ -22,6 +22,7 @@ public class BasketBallTeamPlayerAdapter extends BaseQuickAdapter<BasketTeamPlay
     private Context mContext;
     public BasketBallTeamPlayerAdapter( List<BasketTeamPlayerBean> data,Context context) {
         super(R.layout.item_basket_team_player, data);
+        this.mContext=context;
     }
 
     @Override
