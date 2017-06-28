@@ -3,11 +3,14 @@ package com.hhly.mlottery.frame;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,6 +123,7 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
     private String mLeagueId;
     private String mTeamId;
     private LinearLayout match_error_btn;
+    private boolean isCheckeed=true;
 
 
     public static HandicapStatisticsFragment newInstance(String season, String leagueId,String teamId) {
@@ -172,8 +176,6 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
 
                 if (handicapStatisticsBean.getResult() == 200) {
 
-
-
                     //大小盘 上下盘盘路
                     trendPlate = handicapStatisticsBean.getTrendPlate();
 
@@ -182,20 +184,28 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
 
                     //让分盘盘路
                     letPlate = handicapStatisticsBean.getLetPlate();
+                    Log.i("sda","sdsa===="+isCheckeed);
+                    if (isCheckeed){
 
+                        if (trendPlate != null && letPlate != null) {
+                            match_no_data_txt.setVisibility(View.GONE);
+                            scrollView.setVisibility(View.VISIBLE);
+                            match_error_btn.setVisibility(View.GONE);
+                            radioGroup.setVisibility(View.VISIBLE);
+                            initLetSplitDatas();
+                        } else {
+                            radioGroup.setVisibility(View.VISIBLE);
+                            match_no_data_txt.setVisibility(View.VISIBLE);
+                            scrollView.setVisibility(View.GONE);
+                            match_error_btn.setVisibility(View.GONE);
+                        }
 
-                    if (trendPlate != null && letPlate != null) {
-                        match_no_data_txt.setVisibility(View.GONE);
-                        scrollView.setVisibility(View.VISIBLE);
-                        match_error_btn.setVisibility(View.GONE);
-                        radioGroup.setVisibility(View.VISIBLE);
-                        initLetSplitDatas();
-                    } else {
-                        radioGroup.setVisibility(View.VISIBLE);
-                        match_no_data_txt.setVisibility(View.VISIBLE);
-                        scrollView.setVisibility(View.GONE);
-                        match_error_btn.setVisibility(View.GONE);
+                    }else{
+
+                        initSizeDiskDatas();
                     }
+
+
                     initEvent();
                 }else{
                     radioGroup.setVisibility(View.GONE);
@@ -231,10 +241,12 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
 
                 switch (radioButtonId) {
                     case R.id.let_split:
+                        isCheckeed = true;
                         initLetSplitDatas();
 
                         break;
                     case R.id.size_disk:
+                        isCheckeed = false;
                         if (sizePlate != null) {
                             match_no_data_txt.setVisibility(View.GONE);
                             scrollView.setVisibility(View.VISIBLE);
@@ -272,7 +284,7 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
         smallball_z_tv.setText(getResources().getString(R.string.handicap_small_ball));
 
 
-        //screenings_z.setText(sizePlate.getTotalSizePlate().getCount());
+        screenings_z.setText(sizePlate.getTotalSizePlate().getCount());
         screenings_h.setText(sizePlate.getHomeSizePlate().getCount());
         screenings_g.setText(sizePlate.getGuestSizePlate().getCount());
 
@@ -529,8 +541,7 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
 
     @Override
     public void onRefresh() {
-        let_split.setChecked(true);
-        size_disk.setChecked(false);
+
         initData();
     }
 

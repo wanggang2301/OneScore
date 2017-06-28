@@ -8,14 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -166,7 +164,7 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
         param.put("teamId", mTeamId);
 
 
-        VolleyContentFast.requestJsonByPost(BaseURLs.TEAMTECHSTATDATA, param, new VolleyContentFast.ResponseSuccessListener<TechnicalStatisticBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.TEAMTECHSTATDATA, param, new VolleyContentFast.ResponseSuccessListener<TechnicalStatisticBean>() {
             @Override
             public void onResponse(TechnicalStatisticBean handicapStatisticsBean) {
 
@@ -225,7 +223,6 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
         season_3.setText(dataBean3.getSeason());
         //常规
         routine_win_1.setText(dataBean1.getWinRoutine() + "");
-        Log.i("sdasd","sadasd"+dataBean1.getWinRoutine() + "");
         routine_win_2.setText(dataBean2.getWinRoutine() + "");
         routine_win_3.setText(dataBean3.getWinRoutine() + "");
 
@@ -241,37 +238,37 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
         overtime_lose_3.setText(dataBean3.getLoseOvertime() + "");
         //投篮
         shoot_zong_1.setText(dataBean1.getTotalShoot() + "(" + dataBean1.getAverageShoot() + ")" + "");
-        shoot_zong_2.setText(dataBean2.getTotalShoot() + "(" + dataBean1.getAverageShoot() + ")" + "");
-        shoot_zong_3.setText(dataBean3.getTotalShoot() + "(" + dataBean1.getAverageShoot() + ")" + "");
+        shoot_zong_2.setText(dataBean2.getTotalShoot() + "(" + dataBean2.getAverageShoot() + ")" + "");
+        shoot_zong_3.setText(dataBean3.getTotalShoot() + "(" + dataBean3.getAverageShoot() + ")" + "");
 
         shoot_in_1.setText(dataBean1.getTotalShootHit() + "(" + dataBean1.getAverageShootHit() + ")" + "");
-        shoot_in_2.setText(dataBean2.getTotalShootHit() + "(" + dataBean1.getAverageShootHit() + ")" + "");
-        shoot_in_3.setText(dataBean3.getTotalShootHit() + "(" + dataBean1.getAverageShootHit() + ")" + "");
+        shoot_in_2.setText(dataBean2.getTotalShootHit() + "(" + dataBean2.getAverageShootHit() + ")" + "");
+        shoot_in_3.setText(dataBean3.getTotalShootHit() + "(" + dataBean3.getAverageShootHit() + ")" + "");
 
         shoot_hit_1.setText(dataBean1.getPercentShot() + "");
         shoot_hit_2.setText(dataBean2.getPercentShot() + "");
         shoot_hit_3.setText(dataBean3.getPercentShot() + "");
         //三分
         three_points_zong_1.setText(dataBean1.getTotalThreeMin() + "(" + dataBean1.getAverageThreeMin() + ")" + "");
-        three_points_zong_2.setText(dataBean2.getTotalThreeMin() + "(" + dataBean1.getAverageThreeMin() + ")" + "");
-        three_points_zong_3.setText(dataBean3.getTotalThreeMin() + "(" + dataBean1.getAverageThreeMin() + ")" + "");
+        three_points_zong_2.setText(dataBean2.getTotalThreeMin() + "(" + dataBean2.getAverageThreeMin() + ")" + "");
+        three_points_zong_3.setText(dataBean3.getTotalThreeMin() + "(" + dataBean3.getAverageThreeMin() + ")" + "");
 
         three_points_in_1.setText(dataBean1.getTotalThreeMinHit() + "(" + dataBean1.getAverageThreeMinHit() + ")" + "");
-        three_points_in_2.setText(dataBean2.getTotalThreeMinHit() + "(" + dataBean1.getAverageThreeMinHit() + ")" + "");
-        three_points_in_3.setText(dataBean3.getTotalThreeMinHit() + "(" + dataBean1.getAverageThreeMinHit() + ")" + "");
+        three_points_in_2.setText(dataBean2.getTotalThreeMinHit() + "(" + dataBean2.getAverageThreeMinHit() + ")" + "");
+        three_points_in_3.setText(dataBean3.getTotalThreeMinHit() + "(" + dataBean3.getAverageThreeMinHit() + ")" + "");
 
         three_points_hit_1.setText(dataBean1.getPercentThree());
         three_points_hit_2.setText(dataBean2.getPercentThree());
         three_points_hit_3.setText(dataBean3.getPercentThree());
         //罚球
         free_throw_zong_1.setText(dataBean1.getTotalPunishBall() + "(" + dataBean1.getAveragePunishBall() + ")" + "");
-        free_throw_zong_2.setText(dataBean2.getTotalPunishBall() + "(" + dataBean1.getAveragePunishBall() + ")" + "");
-        free_throw_zong_3.setText(dataBean3.getTotalPunishBall() + "(" + dataBean1.getAveragePunishBall() + ")" + "");
+        free_throw_zong_2.setText(dataBean2.getTotalPunishBall() + "(" + dataBean2.getAveragePunishBall() + ")" + "");
+        free_throw_zong_3.setText(dataBean3.getTotalPunishBall() + "(" + dataBean3.getAveragePunishBall() + ")" + "");
 
 
         free_throw_in_1.setText(dataBean1.getTotalPunishBallHit() + "(" + dataBean1.getAveragePunishBallHit() + ")" + "");
-        free_throw_in_2.setText(dataBean2.getTotalPunishBallHit() + "(" + dataBean1.getAveragePunishBallHit() + ")" + "");
-        free_throw_in_3.setText(dataBean3.getTotalPunishBallHit() + "(" + dataBean1.getAveragePunishBallHit() + ")" + "");
+        free_throw_in_2.setText(dataBean2.getTotalPunishBallHit() + "(" + dataBean2.getAveragePunishBallHit() + ")" + "");
+        free_throw_in_3.setText(dataBean3.getTotalPunishBallHit() + "(" + dataBean3.getAveragePunishBallHit() + ")" + "");
 
 
         free_throw_hit_1.setText(dataBean1.getPercentThrow() + "");
@@ -279,8 +276,8 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
         free_throw_hit_3.setText(dataBean3.getPercentThrow() + "");
         //篮板
         rebound_zong_1.setText(dataBean1.getAttack() + dataBean1.getDefend() + "");
-        rebound_zong_2.setText(dataBean2.getAttack() + dataBean1.getDefend() + "");
-        rebound_zong_3.setText(dataBean3.getAttack() + dataBean1.getDefend() + "");
+        rebound_zong_2.setText(dataBean2.getAttack() + dataBean2.getDefend() + "");
+        rebound_zong_3.setText(dataBean3.getAttack() + dataBean3.getDefend() + "");
 
         rebound_in_1.setText(dataBean1.getAttack() + "");
         rebound_in_2.setText(dataBean2.getAttack() + "");
