@@ -96,6 +96,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     private String expertId;
     private String winPoint;
     private String errPoint;
+    private TextView detailsPointsPlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -208,6 +209,8 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         detailsPrice = (TextView) findViewById(R.id.detting_details_price);
         datailsContextll = (LinearLayout)findViewById(R.id.betting_details_txt_ll);
 
+        detailsPointsPlay = (TextView)findViewById(R.id.betting_concede_points_play);
+
         //默认隐藏
         toPayll.setVisibility(View.GONE);
         detailsContextBg.setVisibility(View.GONE);
@@ -228,7 +231,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         L.d("qwertyui===>>> " , promotionId);
         //http://192.168.10.242:8092/promotion/info/detail?
         // userId=hhly90662&promotionId=643&sign=007ec32c4f7279cfd49260c408528c0412
-//        String url = "http://192.168.10.242:8092/promotion/info/detail";
+//        String url = "http://192.168.10.242:8098/promotion/info/detail";
 //        String url = "http://m.1332255.com:81/promotion/info/detail";
         String url = BaseURLs.URL_REMMEND_DETAILS;
         String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
@@ -314,6 +317,13 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                 detailsHomeWinOdds.setText(filtraNullTonull(detailsData.getLeftOdds()));
                 detailsDrawOdds.setText(filtraNullTonull(detailsData.getMidOdds()));
                 detailsGuestWinOdds.setText(filtraNullTonull(detailsData.getRightOdds()));
+
+            if (detailsData.getTypeStr() == null || detailsData.getTypeStr().equals("")) {
+                detailsPointsPlay.setVisibility(View.GONE);
+            }else{
+                detailsPointsPlay.setVisibility(View.VISIBLE);
+                detailsPointsPlay.setText(detailsData.getTypeStr());
+            }
 
             switch (detailsData.getStatus()){
                 case "1": //中
