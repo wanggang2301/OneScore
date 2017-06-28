@@ -115,7 +115,7 @@
                         android:textSize="@dimen/text_size_15"
                         android:textColor="@color/betting_recommend_details_color"
                         android:padding="10dp"
-                        android:text="推荐理由:"
+                        android:text="@string/betting_reason_txt"
                         />
 
                     <!--<LinearLayout-->

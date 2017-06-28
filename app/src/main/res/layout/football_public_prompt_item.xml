@@ -1,0 +1,21 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ll_prompt_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:alpha="0.85"
+    android:background="@color/foot_ball_score_title_bg"
+    android:visibility="gone"
+    android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tv_prompt_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/foot_ball_score_title_txt"
+        android:textSize="@dimen/item_football_left_odds"
+        tools:text="更新了xx条，隐藏xx条" />
+
+</LinearLayout>

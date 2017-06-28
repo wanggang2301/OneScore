@@ -17,6 +17,7 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
 import android.view.animation.Transformation;
+import android.view.animation.TranslateAnimation;
 import android.widget.BaseAdapter;
 
 import java.util.List;
@@ -219,5 +220,32 @@ public class AnimUtils {
 		animator.setDuration(duration);
 		animator.start();
 		return animator;
+	}
+
+	/**
+	 * 缓慢展示动画
+	 * @param view
+	 */
+	public static void tAnimShow(View view){
+		TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+				-1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+		translate.setDuration(500);//动画时间500毫秒
+		view.startAnimation(translate);//开始动画
+		view.setVisibility(View.VISIBLE);//设置可见
+	}
+
+	/**
+	 * 缓慢收缩动画
+	 * @param view
+	 */
+	public static void tAnimHide(View view){
+		TranslateAnimation translate = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+				0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+				Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+				-1.0f);
+		translate.setDuration(500);//动画时间500毫秒
+		view.startAnimation(translate);//开始动画
+		view.setVisibility(View.GONE);//设置可见
 	}
 }

@@ -1811,6 +1811,7 @@
     <string name="issue_check_recome">請輸入您的推介理由</string>
     <string name="issue_check_price">請輸入您的方案價格</string>
     <string name="issue_check_singlg">必須選擇壹種玩法</string>
+    <string name="issue_price_spill">價格需在0-68元之間</string>
 
     <string name="corner_score">角球比分</string>
     <string name="higher">高於</string>
@@ -1953,5 +1954,8 @@
     <string name="basket_team_result_schdule">賽程賽果</string>
     <string name="basket_team_handicap_statistics">盤口統計</string>
     <string name="basket_team_tech_staticss">技術統計</string>
+    <string name="basket_team_player_num">号</string>
+
+    <string name="football_up_data_prompt">更新了%1$d場比賽，隱藏了%2$d場比賽</string>
 
 </resources>

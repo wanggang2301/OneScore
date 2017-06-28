@@ -28,6 +28,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.RankingGroup;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingTeam;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
+import com.hhly.mlottery.callback.BasketTeamParams;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.ToastTools;
@@ -401,8 +402,8 @@ public class BasketDatabaseRankingFragment extends Fragment {
             @Override
             public void IntegralDetailsOnClick(View view, RankingTeam teamData) {
                 Intent intent=new Intent(getActivity(), BasketballTeamActivity.class);
-                intent.putExtra("leagueId",league.getLeagueId());
-                intent.putExtra("teamId",teamData.getTeamId());
+                intent.putExtra(BasketTeamParams.LEAGUE_ID,league.getLeagueId());
+                intent.putExtra(BasketTeamParams.TEAM_ID,teamData.getTeamId());
 //                intent.putExtra("key",BaseURLs.P_URL_API_HOST+"data/basket/team.html?teamId="+teamData.getTeamId()+"&leagueId="
 //                +league.getLeagueId()+"#/");
 //                intent.putExtra("show","show");

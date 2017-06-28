@@ -815,7 +815,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 issuePriceCardB.setChecked(false);
                 issuePriceCardC.setChecked(false);
                 issuePriceCardD.setChecked(false);
-                jiageEdit.setText("10");
+                jiageEdit.setText(getApplicationContext().getResources().getText(R.string.betting_txt_amount_two));
                 jiageEdit.setSelection(jiageEdit.getText().length());
                 break;
             case R.id.issue_price_card_b:
@@ -823,7 +823,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 issuePriceCardB.setChecked(true);
                 issuePriceCardC.setChecked(false);
                 issuePriceCardD.setChecked(false);
-                jiageEdit.setText("20");
+                jiageEdit.setText(getApplicationContext().getResources().getText(R.string.betting_txt_amount_five));
                 jiageEdit.setSelection(jiageEdit.getText().length());
                 break;
             case R.id.issue_price_card_c:
@@ -831,7 +831,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 issuePriceCardB.setChecked(false);
                 issuePriceCardC.setChecked(true);
                 issuePriceCardD.setChecked(false);
-                jiageEdit.setText("50");
+                jiageEdit.setText(getApplicationContext().getResources().getText(R.string.betting_txt_amount_ten));
                 jiageEdit.setSelection(jiageEdit.getText().length());
                 break;
             case R.id.issue_price_card_d:
@@ -839,7 +839,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 issuePriceCardB.setChecked(false);
                 issuePriceCardC.setChecked(false);
                 issuePriceCardD.setChecked(true);
-                jiageEdit.setText("100");
+                jiageEdit.setText(getApplicationContext().getResources().getText(R.string.betting_txt_amount_fifteen));
                 jiageEdit.setSelection(jiageEdit.getText().length());
                 break;
 
@@ -990,62 +990,74 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
             Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_check_price), Toast.LENGTH_SHORT).show();
         }else{
 
-            Map<String ,String> mapPrament = new HashMap<>();
-            mapPrament.put(PARAM_USER_ID , userid);
-            mapPrament.put(PARAM_LOGIN_TOKEN , token); //logintoken
-            mapPrament.put(PARAM_LANG , MyApp.getLanguage());
-            mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
-            mapPrament.put(ISSUE_TITLE , title);
-            mapPrament.put(ISSUE_CONTEXT , context);
-            mapPrament.put(ISSUE_PRICE ,price);
-            mapPrament.put(ISSUE_CHOOSE ,mChoose);
-            mapPrament.put(ISSUE_CHOOSE1 ,mChoose1);
-            mapPrament.put(ISSUE_MATCHID ,mMatchId);
-            mapPrament.put(ISSUE_LEAGUEID ,leagueId);
-            mapPrament.put(ISSUE_TYPE ,type);
-            mapPrament.put(ISSUE_ODDSID ,oddsId);
-            String signs = SignUtils.getSign(BaseURLs.PARAMENT_TO_ISSUE, mapPrament);
+            int currPrice = 0;//定价
+            try {
+                currPrice = Integer.parseInt(price);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+            if (currPrice > 68) {
+                Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_price_spill), Toast.LENGTH_SHORT).show();
+            }else{
 
-            Map<String ,String> map = new HashMap<>();
-            map.put(PARAM_USER_ID , userid);//用户id
-            map.put(PARAM_LOGIN_TOKEN , token); //logintoken
-            map.put(ISSUE_TITLE , title);
-            map.put(ISSUE_CONTEXT , context);
-            map.put(ISSUE_PRICE ,price);
-            map.put(ISSUE_CHOOSE ,mChoose);
-            map.put(ISSUE_CHOOSE1 ,mChoose1);
-            map.put(ISSUE_MATCHID ,mMatchId);
-            map.put(ISSUE_LEAGUEID ,leagueId);
-            map.put(ISSUE_TYPE ,type);
-            map.put(ISSUE_ODDSID ,oddsId);
-            map.put(PARAM_SIGN , signs);
+                Map<String ,String> mapPrament = new HashMap<>();
+                mapPrament.put(PARAM_USER_ID , userid);
+                mapPrament.put(PARAM_LOGIN_TOKEN , token); //logintoken
+                mapPrament.put(PARAM_LANG , MyApp.getLanguage());
+                mapPrament.put(PARAM_TIMEZONE , AppConstants.timeZone + "");
+                mapPrament.put(ISSUE_TITLE , title);
+                mapPrament.put(ISSUE_CONTEXT , context);
+                mapPrament.put(ISSUE_PRICE ,price);
+                mapPrament.put(ISSUE_CHOOSE ,mChoose);
+                mapPrament.put(ISSUE_CHOOSE1 ,mChoose1);
+                mapPrament.put(ISSUE_MATCHID ,mMatchId);
+                mapPrament.put(ISSUE_LEAGUEID ,leagueId);
+                mapPrament.put(ISSUE_TYPE ,type);
+                mapPrament.put(ISSUE_ODDSID ,oddsId);
+                String signs = SignUtils.getSign(BaseURLs.PARAMENT_TO_ISSUE, mapPrament);
 
-            VolleyContentFast.requestJsonByPost(issueUrl,map , new VolleyContentFast.ResponseSuccessListener<IssueCodeBean>() {
-                @Override
-                public void onResponse(IssueCodeBean jsonBean) {
-                    if (jsonBean.getCode() == 200) {
-                        L.d("qwerqwer == >" , "发布成功");
-                        Toast.makeText(MvpBettingIssueDetailsActivity.this, getApplicationContext().getResources().getText(R.string.issue_success), Toast.LENGTH_SHORT).show();
-                        EventBus.getDefault().post(new IssueSuccessResulyEventBus(true));
-                        finish();
-                    }else{
-                        switch (jsonBean.getCode()){
-                            case 3012:
-                                Toast.makeText(MvpBettingIssueDetailsActivity.this, getApplicationContext().getResources().getText(R.string.issue_match_fivemin_noissue), Toast.LENGTH_SHORT).show();
-                                break;
-                            case 3013:
-                                Toast.makeText(MvpBettingIssueDetailsActivity.this, getApplicationContext().getResources().getText(R.string.issue_play_ok), Toast.LENGTH_SHORT).show();
-                                break;
+                Map<String ,String> map = new HashMap<>();
+                map.put(PARAM_USER_ID , userid);//用户id
+                map.put(PARAM_LOGIN_TOKEN , token); //logintoken
+                map.put(ISSUE_TITLE , title);
+                map.put(ISSUE_CONTEXT , context);
+                map.put(ISSUE_PRICE ,price);
+                map.put(ISSUE_CHOOSE ,mChoose);
+                map.put(ISSUE_CHOOSE1 ,mChoose1);
+                map.put(ISSUE_MATCHID ,mMatchId);
+                map.put(ISSUE_LEAGUEID ,leagueId);
+                map.put(ISSUE_TYPE ,type);
+                map.put(ISSUE_ODDSID ,oddsId);
+                map.put(PARAM_SIGN , signs);
+
+                VolleyContentFast.requestJsonByPost(issueUrl,map , new VolleyContentFast.ResponseSuccessListener<IssueCodeBean>() {
+                    @Override
+                    public void onResponse(IssueCodeBean jsonBean) {
+                        if (jsonBean.getCode() == 200) {
+                            L.d("qwerqwer == >" , "发布成功");
+                            Toast.makeText(MvpBettingIssueDetailsActivity.this, getApplicationContext().getResources().getText(R.string.issue_success), Toast.LENGTH_SHORT).show();
+                            EventBus.getDefault().post(new IssueSuccessResulyEventBus(true));
+                            finish();
+                        }else{
+                            switch (jsonBean.getCode()){
+                                case 3012:
+                                    Toast.makeText(MvpBettingIssueDetailsActivity.this, getApplicationContext().getResources().getText(R.string.issue_match_fivemin_noissue), Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 3013:
+                                    Toast.makeText(MvpBettingIssueDetailsActivity.this, getApplicationContext().getResources().getText(R.string.issue_play_ok), Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                            L.d("qwerqwer == >" , "发布失败");
                         }
-                        L.d("qwerqwer == >" , "发布失败");
                     }
-                }
-            }, new VolleyContentFast.ResponseErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-                    L.d("qwerqwer == >" , "访问失败");
-                }
-            },IssueCodeBean.class);
+                }, new VolleyContentFast.ResponseErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyContentFast.VolleyException exception) {
+                        L.d("qwerqwer == >" , "访问失败");
+                    }
+                },IssueCodeBean.class);
+            }
+
         }
     }
 

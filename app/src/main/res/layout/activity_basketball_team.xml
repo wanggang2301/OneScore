@@ -22,20 +22,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentScrim="?attr/colorPrimary"
+            android:fitsSystemWindows="true"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <LinearLayout
                 android:id="@+id/basket_team_img"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="@dimen/mheight"
                 android:gravity="center"
                 android:paddingTop="50dp"
+                android:fitsSystemWindows="true"
                 android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/basket_team_head_icon"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="@dimen/basket_analyze_line2"
+                    android:layout_height="@dimen/basket_analyze_line2"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:src="@mipmap/basket_default" />

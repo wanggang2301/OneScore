@@ -37,8 +37,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -149,6 +147,27 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
         mViewPager.setOffscreenPageLimit(4);
         appBarLayout.addOnOffsetChangedListener(this);
 
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position==3){
+                    mSelect.setVisibility(View.GONE);
+                }else {
+                    mSelect.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -210,9 +229,10 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 //        mSelect.getLocationOnScreen(location);
 //
 //        popupWindow.showAtLocation(mSelect, Gravity.NO_GRAVITY, location[0] - mSelect.getWidth() - mSelect.getPaddingRight(), location[1] + mSelect.getHeight());
-
-       popupWindow.showAsDropDown(mSelect,0,0, Gravity.RIGHT);
+        popupWindow.setOutsideTouchable(true);
         popupWindow.setBackgroundDrawable(new BitmapDrawable());
+       popupWindow.showAsDropDown(mSelect,0,-30, Gravity.RIGHT);
+
 
 //        popupWindow.setBackgroundDrawable(getApplicationContext().getResources().getDrawable(R.drawable.four_radius));
 //        Toast.makeText(this, ">>>", Toast.LENGTH_SHORT).show();
@@ -257,6 +277,8 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
      * 切换日期刷新
      */
     private void chooseSeasonToRefresh(){
+        mRefreshLayout.setEnabled(true);
+        setRefresh(true);
         mResultFragment.refreshFragment(lists.get(mCurrentPosition));
         mTeamDataFragment.refreshFragment(lists.get(mCurrentPosition));
         handicapStatisticsFragment.refreshFragment(lists.get(mCurrentPosition));

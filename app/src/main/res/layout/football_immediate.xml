@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,145 +9,151 @@
     <include layout="@layout/item_header_unconection_view" />
 
     <LinearLayout
-        android:id="@+id/titleContainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/selector_item_clickable"
-        android:orientation="horizontal"
-        android:visibility="invisible">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4.8">
+            android:id="@+id/titleContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_item_clickable"
+            android:orientation="horizontal"
+            android:visibility="invisible">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="3.6"
-                android:orientation="horizontal">
+                android:layout_weight="4.8">
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3.6"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:background="@mipmap/football_date" />
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center"
+                        android:textColor="#666666"
+                        android:textSize="13dp"
+                        tools:text="2016-25-25" />
+
+                    <TextView
+                        android:id="@+id/tv_week"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:text="周四"
+                        android:textColor="#666666"
+                        android:textSize="13dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_odd"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:background="@mipmap/football_date" />
+                    android:layout_weight="1.2"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_handicap_name1"
+                        style="@style/WW_Width_0dp"
+                        android:layout_weight="0.6"
+                        android:gravity="center"
+                        android:text="@string/roll_asialet" />
+
+                    <TextView
+                        android:id="@+id/tv_handicap_name2"
+                        style="@style/WW_Width_0dp"
+                        android:layout_weight="0.6"
+                        android:gravity="center"
+                        android:text="@string/roll_asiasize" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:gravity="center"
-                    android:textColor="#666666"
-                    android:textSize="13dp"
-                    tools:text="2016-25-25" />
-
-                <TextView
-                    android:id="@+id/tv_week"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="3dp"
-                    android:text="周四"
-                    android:textColor="#666666"
-                    android:textSize="13dp" />
-
+                    style="@style/WW_Width_0dp"
+                    android:layout_weight="0.4"
+                    android:gravity="center" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_odd"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.2"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tv_handicap_name1"
-                    style="@style/WW_Width_0dp"
-                    android:layout_weight="0.6"
-                    android:gravity="center"
-                    android:text="@string/roll_asialet" />
-
-                <TextView
-                    android:id="@+id/tv_handicap_name2"
-                    style="@style/WW_Width_0dp"
-                    android:layout_weight="0.6"
-                    android:gravity="center"
-                    android:text="@string/roll_asiasize" />
-
-            </LinearLayout>
-
-            <TextView
-                style="@style/WW_Width_0dp"
-                android:layout_weight="0.4"
-                android:gravity="center" />
         </LinearLayout>
 
-    </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <LinearLayout
-            android:id="@+id/football_immediate_loading_ll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/loading_txt"
-                android:textColor="@color/loading_txt_color" />
-        </LinearLayout>
-
-
-        <RelativeLayout
-            android:id="@+id/football_immediate_unfocus_ll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/football_immediate_unfocus_coffee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/unfocus_coffee" />
-
-            <TextView
-                android:id="@+id/football_immediate_no_data_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/football_immediate_unfocus_coffee"
-                android:layout_centerHorizontal="true"
-                android:text="@string/unfocus"
-                android:textColor="@color/unfocus_text"
-                android:textSize="@dimen/text_size_14" />
-        </RelativeLayout>
-
-        <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
-            android:id="@+id/football_immediate_swiperefreshlayout"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/recyclerview_immedia"
+            <LinearLayout
+                android:id="@+id/football_immediate_loading_ll"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
-
-        </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
-
-
-        <include layout="@layout/network_exception" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
 
 
-    </FrameLayout>
-</LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/loading_txt"
+                    android:textColor="@color/loading_txt_color" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/football_immediate_unfocus_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/football_immediate_unfocus_coffee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/unfocus_coffee" />
+
+                <TextView
+                    android:id="@+id/football_immediate_no_data_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/football_immediate_unfocus_coffee"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/unfocus"
+                    android:textColor="@color/unfocus_text"
+                    android:textSize="@dimen/text_size_14" />
+            </RelativeLayout>
+
+            <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
+                android:id="@+id/football_immediate_swiperefreshlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/recyclerview_immedia"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+
+            <include layout="@layout/network_exception" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/football_public_prompt_item" />
+
+</FrameLayout>
