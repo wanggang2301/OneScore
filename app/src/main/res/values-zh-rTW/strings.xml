@@ -1957,5 +1957,6 @@
     <string name="basket_team_player_num">号</string>
 
     <string name="football_up_data_prompt">更新了%1$d場比賽，隱藏了%2$d場比賽</string>
+    <string name="football_not_animation_txt">暫無動畫直播</string>
 
 </resources>
