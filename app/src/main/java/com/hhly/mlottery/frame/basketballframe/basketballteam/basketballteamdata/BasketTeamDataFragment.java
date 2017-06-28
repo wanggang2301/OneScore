@@ -240,7 +240,6 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
             public void onItemClick(View view, int i) {
                 Intent intent=new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("key",url+mPresenter.getForward().get(i).getPlayerId()+"#/");
-                intent.putExtra("show","show");
                 startActivity(intent);
             }
         });
@@ -249,7 +248,6 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
             public void onItemClick(View view, int i) {
                 Intent intent=new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("key",url+mPresenter.getCenter().get(i).getPlayerId()+"#/");
-                intent.putExtra("show","show");
                 startActivity(intent);
             }
         });
@@ -258,7 +256,6 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
             public void onItemClick(View view, int i) {
                 Intent intent=new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("key",url+mPresenter.getDefender().get(i).getPlayerId()+"#/");
-                intent.putExtra("show","show");
                 startActivity(intent);
             }
         });

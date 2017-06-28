@@ -1954,6 +1954,7 @@
     <string name="basket_team_result_schdule">賽程賽果</string>
     <string name="basket_team_handicap_statistics">盤口統計</string>
     <string name="basket_team_tech_staticss">技術統計</string>
+    <string name="basket_team_player_num">号</string>
 
     <string name="football_up_data_prompt">更新了%1$d場比賽，隱藏了%2$d場比賽</string>
 

@@ -21,6 +21,7 @@ import com.hhly.mlottery.activity.BasketballTeamActivity;
 import com.hhly.mlottery.adapter.basketball.BasketDatabaseDetailsBigSmallAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBigSmallBean;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBigSmallDetailsBean;
+import com.hhly.mlottery.callback.BasketTeamParams;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NoScrollListView;
@@ -282,8 +283,8 @@ public class BasketDatabaseBigSmallFragment extends Fragment implements View.OnC
             public void IntegralDetailsOnClick(View view, BasketDatabaseBigSmallDetailsBean teamData) {
 
                 Intent intent=new Intent(getActivity(), BasketballTeamActivity.class);
-                intent.putExtra("leagueId",mLeagueId);
-                intent.putExtra("teamId",teamData.getTeamId());
+                intent.putExtra(BasketTeamParams.LEAGUE_ID,mLeagueId);
+                intent.putExtra(BasketTeamParams.TEAM_ID,teamData.getTeamId());
                 startActivity(intent);
             }
         };

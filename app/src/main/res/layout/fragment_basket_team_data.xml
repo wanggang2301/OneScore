@@ -261,18 +261,6 @@
                         android:layout_marginLeft="20dp"
                         />
                 </RelativeLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="25dp"
-                    android:text="@string/basket_team_forward"
-                    android:textColor="@color/snooker"
-                    android:gravity="center"
-                    android:background="@color/mdy_dfdfdf"
-                    />
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/basket_team_recycler_forward"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -286,6 +274,21 @@
                     android:id="@+id/basket_team_recycler_center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:text="@string/basket_team_forward"
+                    android:textColor="@color/snooker"
+                    android:gravity="center"
+                    android:background="@color/mdy_dfdfdf"
+                    />
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/basket_team_recycler_forward"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+
 
                 <TextView
                     android:layout_width="match_parent"

@@ -511,7 +511,9 @@
         <activity
             android:name=".activity.RecommendedExpertDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.BasketballTeamActivity"></activity>
+        <activity android:name=".activity.BasketballTeamActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

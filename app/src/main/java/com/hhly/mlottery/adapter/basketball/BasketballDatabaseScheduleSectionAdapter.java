@@ -72,7 +72,7 @@ public class BasketballDatabaseScheduleSectionAdapter
             @Override
             public void onClick(View v) {
                 if (basketballDetailsClickListener != null){
-                    basketballDetailsClickListener.DetailsOnClick(v , match.getHomeTeamId()+"");
+                    basketballDetailsClickListener.DetailsOnClick(v , match.thirdId);
                 }
             }
         });
