@@ -157,7 +157,7 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
             @Override
             public void onClick(View v) {
                 if (mGameDetailsClick != null) {
-                    mGameDetailsClick.GameDetailsOnClick(v , data.getId());
+                    mGameDetailsClick.GameDetailsOnClick(v , data);
                 }
             }
         });

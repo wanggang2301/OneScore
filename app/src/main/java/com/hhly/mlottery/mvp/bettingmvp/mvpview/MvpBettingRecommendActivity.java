@@ -364,7 +364,7 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
     private BettingGameDetailsClickListener mBettingGameDetailsClickListener;
     // 比赛内页点击监听
     public interface BettingGameDetailsClickListener{
-        void GameDetailsOnClick(View view , String s);
+        void GameDetailsOnClick(View view , BettingListDataBean.PromotionData.BettingListData s);
     }
     /**
      * 购买(查看)的点击事件
@@ -408,9 +408,16 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
     public void gameDetailsClick(){
         mBettingGameDetailsClickListener = new BettingGameDetailsClickListener() {
             @Override
-            public void GameDetailsOnClick(View view, String s) {
-//                Toast.makeText(mContext, "内页跳转** " + s, Toast.LENGTH_SHORT).show();
-                L.d("yxq-0418=== " , "点击了*内页跳转** " + s);
+            public void GameDetailsOnClick(View view, BettingListDataBean.PromotionData.BettingListData s) {
+                Intent mIntent = new Intent(mContext , MvpBettingPayDetailsActivity.class);
+                mIntent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID , s.getId());//推介id
+
+                mIntent.putExtra("expertId",s.getUserid());
+                mIntent.putExtra("winPoint",s.getWinPoint());
+                mIntent.putExtra("errPoint",s.getErrPoint());
+
+                startActivity(mIntent);
+                overridePendingTransition(R.anim.push_left_in , R.anim.push_fix_out);
             }
         };
     }
