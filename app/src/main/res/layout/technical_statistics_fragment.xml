@@ -1026,7 +1026,7 @@
                     <View style="@style/technial_hr_line" />
 
                     <TextView
-                        android:id="@+id/assists_1"
+
                         style="@style/handicap_statisticss"
                         android:text="@string/basket_assist" />
 
@@ -1034,8 +1034,16 @@
                     <View style="@style/technial_hr_line" />
 
                     <TextView
-                        android:id="@+id/assists_2"
+                        android:id="@+id/assists_1"
 
+                        style="@style/handicap_statisticss"
+                        android:text="--" />
+
+
+                    <View style="@style/technial_hr_line" />
+
+                    <TextView
+                        android:id="@+id/assists_2"
                         style="@style/handicap_statisticss"
                         android:text="--" />
 
@@ -1044,13 +1052,6 @@
 
                     <TextView
                         android:id="@+id/assists_3"
-                        style="@style/handicap_statisticss"
-                        android:text="--" />
-
-
-                    <View style="@style/technial_hr_line" />
-
-                    <TextView
                         style="@style/handicap_statisticss"
                         android:text="--" />
 

@@ -137,6 +137,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
     private final static String MATCH_TYPE = "1"; //足球
     private static final String baseUrl = "http://pic.13322.com/bg/";
+    private static final String NOT_ANIMATION = "notAnimation";
 
     private final static int PERIOD_20 = 1000 * 60 * 20;//刷新周期二十分钟
     private final static int PERIOD_5 = 1000 * 60 * 5;//刷新周期五分钟
@@ -263,7 +264,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private GifImageView gif_home_ball2, gif_guest_ball2, gif_guest_hit2, gif_home_hit2;
     private TextView tv_home_title2_time, tv_guest_title2_time;
     // 球门球
-    private LinearLayout ll_goal_door_content,ll_home_goal_door_title,ll_guest_goal_door_title;
+    private LinearLayout ll_goal_door_content, ll_home_goal_door_title, ll_guest_goal_door_title;
     private RelativeLayout rl_home_goal_door, rl_guest_goal_door;
     private GifImageView gif_home_goal_door_position, gif_guest_goal_door_position;
     private GifImageView gfi_home_goal_door, gfi_guest_goal_door;
@@ -336,6 +337,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     // 欢呼
     private LinearLayout ll_cheer_content;
     private GifImageView gif_cheer;
+
+    // 暂无动画直播
+    private LinearLayout ll_not_animation_content;
 
     private AnimationDrawable homeAnima;// 主队进球动画
     private AnimationDrawable guestAnima;// 客队进球动画
@@ -1208,6 +1212,23 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     updatePushData(currMatchTextLiveBean);
                     updateAnimation(currMatchTextLiveBean);
                 }
+            } else if (msg.arg1 == 8) { // 后台数据源切换 data:1:rb,2:bt,3:球探，4：手动
+                // 针对球探数据 显示暂无动画提示
+                String ws_json = (String) msg.obj;
+                L.d(TAG,"数据切换：" + ws_json);
+                String data = "";
+                try {
+                    JSONObject jsonObject = new JSONObject(ws_json);
+                    data = jsonObject.getString("data");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if ("3".equals(data)) { // 球探数据切换 显示暂无动画直播
+                    MatchTextLiveBean matchTextLiveBean = new MatchTextLiveBean();
+                    matchTextLiveBean.setCode(NOT_ANIMATION);
+                    updateAnimation(matchTextLiveBean);
+                }
             }
         }
     };
@@ -1218,6 +1239,12 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
      * @param matchTextLiveBean
      */
     private void updateAnimation(MatchTextLiveBean matchTextLiveBean) {
+        if (NOT_ANIMATION.equals(matchTextLiveBean.getCode())) {
+            // 暂无动画直播
+            showGifAnimation(-1111);
+            return;
+        }
+
         String time = matchTextLiveBean.getTime();
 
         // 上半场
@@ -2038,7 +2065,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     public void run() {
                         playInfo = null;
                     }
-                },2000);
+                }, 2000);
                 break;
             case "1028"://主队任意球
                 final String finalTime = time;
@@ -3798,6 +3825,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         ll_cheer_content = (LinearLayout) findViewById(R.id.ll_cheer_content);
         gif_cheer = (GifImageView) findViewById(R.id.gif_cheer);
 
+        ll_not_animation_content = (LinearLayout) findViewById(R.id.ll_not_animation_content);
+
         gif_cheer.setImageResource(R.mipmap.football_cheer);// 欢呼动画
         iv_home_goal.setImageResource(R.drawable.football_goal_animation);// 主队进球动画
         homeAnima = (AnimationDrawable) iv_home_goal.getDrawable();
@@ -4188,6 +4217,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
      * @param type
      */
     private void showGifAnimation(int type) {
+
+        // 球探数据切换 暂无动画直播  -1111
+        ll_not_animation_content.setVisibility(-1111 == type ? View.VISIBLE : View.GONE);
 
         // 比赛开始、信号中断、喝水、受伤、伤停补时
         ll_match_start_content.setVisibility((11 == type || 12 == type || 13 == type || // 比赛开始

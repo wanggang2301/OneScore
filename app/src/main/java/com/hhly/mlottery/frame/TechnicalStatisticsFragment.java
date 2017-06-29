@@ -30,7 +30,7 @@ import java.util.Map;
  * 技术统计
  */
 
-public class TechnicalStatisticsFragment extends Fragment  implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener{
+public class TechnicalStatisticsFragment extends Fragment implements View.OnClickListener {
 
 
     private View view;
@@ -121,7 +121,10 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
     private String mTeamId;
     private LinearLayout match_error_btn;
 
-    public static TechnicalStatisticsFragment newInstance(String season, String leagueId,String teamId) {
+
+    int isCheckedId=1;
+
+    public static TechnicalStatisticsFragment newInstance(String season, String leagueId, String teamId) {
         TechnicalStatisticsFragment fragment = new TechnicalStatisticsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, season);
@@ -176,7 +179,15 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
                     //季前赛
                     preseasonList = handicapStatisticsBean.getPreseasonList();
 
-                    inithandicapStatisticDatas(preseasonList);
+                    if(isCheckedId==1){
+                        inithandicapStatisticDatas(preseasonList);
+                    }else if(isCheckedId==2){
+                        inithandicapStatisticDatas(regularList);
+                    }else if (isCheckedId==3){
+                        inithandicapStatisticDatas(playoffList);
+                    }
+
+
                     initEvent();
                 }
             }
@@ -198,7 +209,7 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
     /*更新数据*/
     private void inithandicapStatisticDatas(List<TechnicalStatisticBean.DataBean> dataBean) {
 
-        if (dataBean.size()==0) {
+        if (dataBean==null||dataBean.size() == 0) {
             radioGroup.setVisibility(View.VISIBLE);
             technical_scrollview.setVisibility(View.GONE);
             match_no_data_txt.setVisibility(View.VISIBLE);
@@ -322,18 +333,21 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
 
                 switch (radioButtonId) {
                     case R.id.odd_plate_btn://季前赛
-                        if(preseasonList!=null){
+                        isCheckedId=1;
+                        if (preseasonList != null) {
                             inithandicapStatisticDatas(preseasonList);
                         }
                         break;
                     case R.id.odd_big_btn://常规赛
-                        if (regularList!=null){
+                        isCheckedId=2;
+                        if (regularList != null) {
                             inithandicapStatisticDatas(regularList);
                         }
 
                         break;
                     case R.id.odd_op_btn://季后赛
-                        if (playoffList!=null){
+                        isCheckedId=3;
+                        if (playoffList != null) {
                             inithandicapStatisticDatas(playoffList);
                         }
 
@@ -455,26 +469,16 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
     /**
      * 父类调用下拉刷新
      */
-    public void refreshFragment(String season){
-        mSeason=season;
-        preseason_games.setChecked(true);
-        regular_season.setChecked(false);
-        playoff.setChecked(false);
+    public void refreshFragment(String season) {
+        mSeason = season;
+     ;
         initData();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        this.mActivity= (Activity) context;
-    }
-
-    @Override
-    public void onRefresh() {
-        preseason_games.setChecked(true);
-        regular_season.setChecked(false);
-        playoff.setChecked(false);
-        initData();
+        this.mActivity = (Activity) context;
     }
 
     @Override
@@ -482,9 +486,6 @@ public class TechnicalStatisticsFragment extends Fragment  implements View.OnCli
         switch (view.getId()) {
 
             case R.id.match_error_btn:
-                preseason_games.setChecked(true);
-                regular_season.setChecked(false);
-                playoff.setChecked(false);
                 initData();
                 break;
 

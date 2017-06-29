@@ -733,6 +733,16 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 }
                 updateAdapter();
                 currentDatePosition = position;
+
+                // 更新提示
+                AnimUtils.tAnimShow(promptContent);
+                mViewHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        AnimUtils.tAnimHide(promptContent);
+                    }
+                },2000);
+                promptTxt.setText(String.format(getString(R.string.football_up_data_prompt), mAllMatchs.size(), mAllMatchs.size() - mMatchs.size()));
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override

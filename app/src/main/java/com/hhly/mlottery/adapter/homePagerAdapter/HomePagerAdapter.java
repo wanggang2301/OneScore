@@ -234,7 +234,7 @@ public class HomePagerAdapter extends PagerAdapter {
                         break;
                         case 0:// 无
                             break;
-                        case 4:// 无
+                        case 4:// 德州跳转
                             if (DeviceInfo.isLogin()) {
                                 Intent intent = new Intent(mContext, WebActivity.class);
                                 intent.putExtra("key", jumpAddr);// 跳转地址

@@ -78,7 +78,7 @@
                                     android:layout_alignParentEnd="true">
 
                                     <TextView
-                                        android:id="@+id/betting_concede_points_spf"
+                                        android:id="@+id/betting_concede_points_play"
                                         style="@style/betting_recommend_style"
                                         android:background="@drawable/betting_shape_corners_spf"
                                         android:visibility="gone"
