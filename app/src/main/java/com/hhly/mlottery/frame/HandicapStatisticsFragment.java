@@ -181,7 +181,6 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
                     //让分盘盘路
                     letPlate = handicapStatisticsBean.getLetPlate();
 
-                    Log.i("sda","sdsa===="+isCheckeed);
                     if (isCheckeed){
 
                         if (trendPlate != null && letPlate != null) {
