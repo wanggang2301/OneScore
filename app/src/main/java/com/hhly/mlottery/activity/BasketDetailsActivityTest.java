@@ -378,6 +378,7 @@ public class BasketDetailsActivityTest extends BaseWebSocketActivity implements 
         EventBus.getDefault().unregister(this);
         closeWebSocket();
         mSocketHandler.removeCallbacksAndMessages(null);
+        barrage_view.delHandler();
     }
 
     /**

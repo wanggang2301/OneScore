@@ -733,11 +733,11 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
 
     @Override
     protected void onTextResult(final String text) {
-        new Thread() {
-            @Override
-            public void run() {
+//        new Thread() {
+//            @Override
+//            public void run() {
                 synchronized (this) {
-                    L.d("xxxxx", "滚球推送：" + text);
+                    L.d("xxxxx", "聊球推送：" + text);
                     ChartRoom chartRoom = JSON.parseObject(text, ChartRoom.class);
 
                     // 国际化日期格式
@@ -828,28 +828,22 @@ public class ChartBallFragment extends BaseWebSocketFragment implements View.OnC
                             break;
                     }
                 }
-            }
-        }.start();
+//            }
+//        }.start();
     }
 
     // 等adapter更新OK后再执行
     private void sleepView() {
-        new Thread() {
+        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                SystemClock.sleep(500);
-                mContext.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (historyBeen.size() != 0) {
-                            if (isScrollBottom) {
-                                recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
-                            }
-                        }
+                if (historyBeen.size() != 0) {
+                    if (isScrollBottom) {
+                        recycler_view.smoothScrollToPosition(historyBeen.size() - 1);
                     }
-                });
+                }
             }
-        }.start();
+        },500);
     }
 
     @Override

@@ -1125,6 +1125,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         mHandler.removeCallbacksAndMessages(null);
         mSocketHandler.removeCallbacksAndMessages(null);
+        barrage_view.delHandler();
 
         closePollingGifCount();
 

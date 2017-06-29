@@ -105,7 +105,7 @@ public class HomeMuenFragment extends Fragment {
                             switch (jumpType) {
                                 case 0:// 无
                                     break;
-                                case 4:// 无
+                                case 6:// h5登录跳转
                                     if (DeviceInfo.isLogin()) {
                                         Intent intent = new Intent(getContext(), WebActivity.class);
                                         intent.putExtra("key", jumpAddr);// 跳转地址

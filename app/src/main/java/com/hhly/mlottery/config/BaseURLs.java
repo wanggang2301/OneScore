@@ -76,7 +76,8 @@ public class BaseURLs {
             int url_config = PreferenceUtil.getInt(MyConstants.URL_HOME_CONFIG, DebugConfigActivity.ZH_1332255);
 
             if (url_config == DebugConfigActivity.ZH_1332255) {
-                return "m.1332255.com:81";
+//                return "m.1332255.com:81";
+                return "192.168.74.85:8096";
             } else if (url_config == DebugConfigActivity.TH_1332255) {
                 return "m.th.1332255.com:81";
             } else if (url_config == DebugConfigActivity.VN_1332255) {
@@ -92,7 +93,8 @@ public class BaseURLs {
             } else if (url_config == DebugConfigActivity.DIY_INPUT) {
                 return PreferenceUtil.getString("DIY_INPUT", "m.1332255.com:81");
             } else {
-                return "m.1332255.com:81";
+//                return "m.1332255.com:81";
+                return "192.168.74.85:8096";
             }
         }
 
