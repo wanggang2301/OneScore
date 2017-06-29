@@ -221,6 +221,12 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
             public void onResponse(RecommendationExpertBean jsonObject) {
                 if (jsonObject != null) {
 
+                    if (jsonObject.getExpertPromotions()==null){
+
+                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
+                        return;
+                    }
+
                     if (jsonObject.getExpertPromotions().getList() == null) {
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
                         return;

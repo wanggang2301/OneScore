@@ -209,7 +209,7 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
     /*更新数据*/
     private void inithandicapStatisticDatas(List<TechnicalStatisticBean.DataBean> dataBean) {
 
-        if (dataBean.size() == 0) {
+        if (dataBean==null||dataBean.size() == 0) {
             radioGroup.setVisibility(View.VISIBLE);
             technical_scrollview.setVisibility(View.GONE);
             match_no_data_txt.setVisibility(View.VISIBLE);
