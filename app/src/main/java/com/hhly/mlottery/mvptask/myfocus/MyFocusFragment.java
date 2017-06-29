@@ -153,7 +153,6 @@ public class MyFocusFragment extends Fragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.focus_back:
-
                 if (type == 0) {
                     isDeletedFocusMatch();
                 } else {

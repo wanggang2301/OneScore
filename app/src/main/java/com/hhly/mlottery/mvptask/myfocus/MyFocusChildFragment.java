@@ -15,6 +15,7 @@ import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.MyFocusActivity;
 import com.hhly.mlottery.adapter.myfocus.IDeleteMyFocus;
 import com.hhly.mlottery.adapter.myfocus.MyFocusPinnedHeaderExpandableAdapter;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.view.MyFocusPinnedHeaderExpandableListView;
 
 import java.util.ArrayList;
@@ -54,7 +55,6 @@ public class MyFocusChildFragment extends Fragment {
     private LayoutInflater layoutInflater;
 
     private IDeleteMyFocus iDeleteMyFocus;
-
 
 
     public static MyFocusChildFragment newInstance() {
@@ -124,6 +124,8 @@ public class MyFocusChildFragment extends Fragment {
             public void deleteMyFocusGroup(int groupPosition) {
 
                 list.remove(groupPosition);
+
+
                 if (list.size() == 0) {
 
                     explistview.setVisibility(View.GONE);
@@ -139,14 +141,26 @@ public class MyFocusChildFragment extends Fragment {
 
 
                 list.get(groupPosition).getList().remove(childPosition);
+                L.d("ffgghh", groupPosition + "____" + childPosition);
+
                 if (list.get(groupPosition).getList().size() == 0) {
                     list.remove(groupPosition);
+
+                    L.d("ffgghh", "删除父亲节点");
+
+
                     if (list.size() == 0) {
                         explistview.setVisibility(View.GONE);
                         tvNoRaces.setVisibility(View.VISIBLE);
                         return;
                     }
                 }
+
+
+                L.d("ffgghh", "==" + list.size());
+                L.d("ffgghh", "==" + list.get(0).getList().size());
+
+
                 adapter.notifyDataSetChanged();
             }
 
