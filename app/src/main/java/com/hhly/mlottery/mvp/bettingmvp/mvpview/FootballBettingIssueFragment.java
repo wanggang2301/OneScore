@@ -438,7 +438,7 @@ public class FootballBettingIssueFragment extends Fragment implements MView<Bett
 
     /**--------------这**里**先**不**删**--------start-------这**里**先**不**删**------------------------------*/
     /**
-     * 语音发布的popupwindow[本期需求暂时不做，先不删 鬼知道他什么时候要加上]
+     * 语音发布的popupwindow[暂时不做，先不删 鬼知道他什么时候要加上]
      */
     public void setPopupWindow() {
 

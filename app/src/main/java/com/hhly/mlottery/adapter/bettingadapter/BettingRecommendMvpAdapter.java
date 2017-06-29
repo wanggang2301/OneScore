@@ -60,6 +60,13 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
         holder.setText(R.id.betting_recommended_reason , filtraNull(data.getContext()));
         holder.setText(R.id.betting_buy_num , filtraNull(data.getCountOrder()));
 
+        if (data.getEarningsRate() != null) {
+            holder.setText(R.id.betting_earnings_rate , data.getEarningsRate() + " %");
+            holder.setVisible(R.id.betting_earnings_rate , true);
+        }else{
+            holder.setVisible(R.id.betting_earnings_rate , false);
+        }
+
         int winPoint = 0;//胜场
         int errPoint = 0;//负场
 
@@ -84,6 +91,30 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
             }else{
                 holder.setText(R.id.textView11 , mContext.getResources().getString(R.string.betting_txt_check));
             }
+        }
+
+        switch (data.getStatus()){
+            case "1"://中
+                holder.setVisible(R.id.betting_status_imageView , true);
+                holder.setVisible(R.id.betting_tobuy_or_check , false);
+                holder.setImageDrawable(R.id.betting_status_imageView , mContext.getResources().getDrawable(R.mipmap.jingcai_icon_zhong));
+                break;
+            case "2"://失
+                holder.setVisible(R.id.betting_status_imageView , true);
+                holder.setVisible(R.id.betting_tobuy_or_check , false);
+                holder.setImageDrawable(R.id.betting_status_imageView , mContext.getResources().getDrawable(R.mipmap.jingcai_icon_shi));
+                break;
+            case "6"://走
+                holder.setVisible(R.id.betting_status_imageView , true);
+                holder.setVisible(R.id.betting_tobuy_or_check , false);
+                holder.setImageDrawable(R.id.betting_status_imageView , mContext.getResources().getDrawable(R.mipmap.jingcai_icon_zou));
+                break;
+            default:
+                holder.setVisible(R.id.betting_status_imageView , false);
+                holder.setVisible(R.id.betting_tobuy_or_check , true);
+                break;
+
+
         }
 
         LinearLayout mBuyOrCheck = holder.getView(R.id.betting_tobuy_or_check);
@@ -126,7 +157,7 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
             @Override
             public void onClick(View v) {
                 if (mGameDetailsClick != null) {
-                    mGameDetailsClick.GameDetailsOnClick(v , data.getId());
+                    mGameDetailsClick.GameDetailsOnClick(v , data);
                 }
             }
         });

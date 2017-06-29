@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
 
 import java.util.Map;
@@ -277,6 +278,12 @@ public class BarrageView extends RelativeLayout {
             //每个弹幕产生的间隔时间随机
             int duration = (int) ((BARRAGE_GAP_MAX_DURATION - BARRAGE_GAP_MIN_DURATION) * Math.random());
             this.sendEmptyMessageDelayed(0, duration);
+        }
+    }
+
+    public void delHandler(){
+        if(mHandler != null){
+            mHandler.removeCallbacksAndMessages(null);
         }
     }
 }

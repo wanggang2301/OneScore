@@ -3,7 +3,7 @@
     package="com.hhly.mlottery">
 
     <!-- 录音权限 -->
-    <!--<uses-permission android:name="android.permission.RECORD_AUDIO" />-->
+    <!-- <uses-permission android:name="android.permission.RECORD_AUDIO" /> -->
     <!-- 调用系统下载权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
@@ -51,10 +51,10 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
 
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <!-- 环境选择 -->
         <activity
@@ -511,8 +511,7 @@
         <activity
             android:name=".activity.RecommendedExpertDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.MyFocusActivity"
+        <activity android:name=".activity.BasketballTeamActivity"
             android:screenOrientation="portrait" />
 
     </application>

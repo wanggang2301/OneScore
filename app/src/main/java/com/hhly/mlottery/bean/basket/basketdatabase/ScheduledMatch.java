@@ -29,6 +29,7 @@ public class ScheduledMatch implements Parcelable {
     private String homeTeamName;
     private String guestTeamName;
     private String time;
+    public String thirdId;
 
     public String getTime() {
         return time;

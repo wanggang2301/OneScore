@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.basketballframe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,11 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketballTeamActivity;
 import com.hhly.mlottery.adapter.basketball.BasketDatabaseDetailsAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseHandicapBean;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseHandicapDetailsBean;
+import com.hhly.mlottery.callback.BasketTeamParams;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NoScrollListView;
@@ -99,6 +103,7 @@ public class BasketDatabaseHandicapFragment extends Fragment implements View.OnC
         mView = inflater.inflate(R.layout.basket_database_details_handicap, container, false);
 
         initView();
+        setIntegralDetailsOnClick();
         mHandlerData.postDelayed(mRun, 500); // 加载数据
         return mView;
     }
@@ -201,6 +206,7 @@ public class BasketDatabaseHandicapFragment extends Fragment implements View.OnC
                         mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA); // 暂无数据
                     }else{
                         mAdapter = new BasketDatabaseDetailsAdapter(getContext() , mAllList, R.layout.basket_database_details_item);
+                        mAdapter.setBasketballHandicpDetailsClickListener(basketballHandicpDetailsClickListener);
                         mListView.setAdapter(mAdapter);
                         mHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                     }
@@ -269,5 +275,21 @@ public class BasketDatabaseHandicapFragment extends Fragment implements View.OnC
                 mHandlerData.postDelayed(mRun , 500);
                 break;
         }
+    }
+
+    private BasketballHandicpDetailsClickListener basketballHandicpDetailsClickListener;
+    public interface BasketballHandicpDetailsClickListener {
+        void IntegralDetailsOnClick(View view, BasketDatabaseHandicapDetailsBean teamData);
+    }
+    private void setIntegralDetailsOnClick(){
+        basketballHandicpDetailsClickListener = new BasketballHandicpDetailsClickListener() {
+            @Override
+            public void IntegralDetailsOnClick(View view, BasketDatabaseHandicapDetailsBean teamData) {
+                Intent intent=new Intent(getActivity(), BasketballTeamActivity.class);
+                intent.putExtra(BasketTeamParams.LEAGUE_ID,mLeagueId);
+                intent.putExtra(BasketTeamParams.TEAM_ID,teamData.getTeamId());
+                startActivity(intent);
+            }
+        };
     }
 }

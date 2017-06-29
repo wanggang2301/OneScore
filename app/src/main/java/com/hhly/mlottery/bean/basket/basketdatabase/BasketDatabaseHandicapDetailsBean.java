@@ -15,6 +15,15 @@ public class BasketDatabaseHandicapDetailsBean {
     private String win;//: 4,
     private String draw; //: 0,
     private String lose;//: 0
+    private String teamId;
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
 
     public String getRanking() {
         return ranking;

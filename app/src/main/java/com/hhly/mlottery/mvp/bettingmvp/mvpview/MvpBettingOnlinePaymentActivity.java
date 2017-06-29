@@ -211,7 +211,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
 
                     }
                 }else{
-                    Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_network_anomaly), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, mContext.getResources().getText(R.string.betting_network_anomaly), Toast.LENGTH_SHORT).show();
                     //刷新接口
                     initData();
                 }
@@ -270,7 +270,7 @@ public class MvpBettingOnlinePaymentActivity extends Activity implements MView<B
             mBalance.setText("￥ " + UnitsUtil.fenToYuan(orderDataBean.getData().getAmount()));
             mPayPrice.setText("￥ " + orderDataBean.getData().getPayPrice());
 
-            if (blance >= price) { //余额大于单价
+            if (blance >= (price*100)) { //余额大于单价(接口返回单价的单位是元)
                 balanceFully = true; //余额足够
             }else{
                 balanceFully = false;

@@ -1,0 +1,152 @@
+<com.hhly.mlottery.widget.ExactSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/basket_team_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/basket_team_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/basket_score"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/basket_team_collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="?attr/colorPrimary"
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <LinearLayout
+                android:id="@+id/basket_team_img"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/mheight"
+                android:gravity="center"
+                android:paddingTop="50dp"
+                android:fitsSystemWindows="true"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/basket_team_head_icon"
+                    android:layout_width="@dimen/basket_analyze_line2"
+                    android:layout_height="@dimen/basket_analyze_line2"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/basket_default" />
+                <!--</RelativeLayout>-->
+
+                <TextView
+                    android:id="@+id/basket_team_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:text="--"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/basket_team_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:background="@color/transparency"
+                app:contentInsetStart="0dp"
+                app:layout_collapseMode="pin"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/AppTheme.PopupOverlay">
+
+                <LinearLayout
+                    android:id="@+id/basket_team_header_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/basket_team_back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerInParent="true"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:src="@mipmap/basketball_back" />
+                        <TextView
+                            android:id="@+id/basket_team_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_toRightOf="@id/basket_team_back"
+                            android:textColor="@color/home_default_icon_coloer"
+                            android:textSize="15sp"
+                            android:paddingLeft="5dp"
+                            android:text="--"/>
+
+                        <LinearLayout
+                            android:id="@+id/basket_team_collect"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:paddingRight="15dp">
+
+                            <TextView
+                                android:id="@+id/basket_team_season"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:gravity="center"
+                                android:paddingRight="8dp"
+                                android:text="--"
+                                android:textColor="@color/home_default_icon_coloer"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:id="@+id/img_spinner_drop"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/basket_database_details_pencel" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+            </android.support.v7.widget.Toolbar>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/basket_team_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:tabGravity="center"
+            app:tabIndicatorColor="@color/white"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/basket_text_color"
+            app:tabTextColor="@color/unselected_tab_color" />
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/basket_team_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+</android.support.design.widget.CoordinatorLayout>
+
+</com.hhly.mlottery.widget.ExactSwipeRefreshLayout>

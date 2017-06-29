@@ -395,9 +395,9 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
      */
     private void setOddsData(TextView topView, TextView centerView, TextView bottomView, OddsBean odd, int type) {
         if (odd == null) {
-            topView.setText("-");
-            centerView.setText("-");
-            bottomView.setText("-");
+            topView.setText(" ");
+            centerView.setText(" ");
+            bottomView.setText(" ");
             return;
         }
         String handicapValue;
@@ -412,13 +412,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 handicapValue = odd.getMediumOdds();
                 break;
             default:
-                handicapValue = "-";
+                handicapValue = " ";
                 break;
         }
 
-        topView.setText(odd.getLeftOdds() != null ? odd.getLeftOdds() : "-");
-        centerView.setText(handicapValue != null ? handicapValue : "-");
-        bottomView.setText(odd.getRightOdds() != null ? odd.getRightOdds() : "-");
+        topView.setText(odd.getLeftOdds() != null ? odd.getLeftOdds() : " ");
+        centerView.setText(handicapValue != null ? handicapValue : " ");
+        bottomView.setText(odd.getRightOdds() != null ? odd.getRightOdds() : " ");
 
         topView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));
         bottomView.setTextColor(mContext.getResources().getColor(R.color.content_txt_light_grad));

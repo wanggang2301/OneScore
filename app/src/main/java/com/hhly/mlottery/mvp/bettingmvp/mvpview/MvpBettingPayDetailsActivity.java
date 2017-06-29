@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.LoginActivity;
+import com.hhly.mlottery.activity.RecommendedExpertDetailsActivity;
 import com.hhly.mlottery.bean.bettingbean.BettingDetailsBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.ConstantPool;
@@ -92,6 +93,10 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
     private TextView scoreTxt;
     private TextView halfscoreTxt;
     private LinearLayout datailsContextll;
+    private String expertId;
+    private String winPoint;
+    private String errPoint;
+    private TextView detailsPointsPlay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +188,7 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         mNoDataLayout = (TextView) findViewById(R.id.nodata_txt);
 
         portraitImg = (CircleImageView)findViewById(R.id.portrait_img);
+        portraitImg.setOnClickListener(this);
         mSecialistName = (TextView) findViewById(R.id.betting_recommend_specialist_name);
         detailsWeek = (TextView) findViewById(R.id.betting_details_week);
         detailsNum = (TextView) findViewById(R.id.betting_details_num);
@@ -203,6 +209,8 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
         detailsPrice = (TextView) findViewById(R.id.detting_details_price);
         datailsContextll = (LinearLayout)findViewById(R.id.betting_details_txt_ll);
 
+        detailsPointsPlay = (TextView)findViewById(R.id.betting_concede_points_play);
+
         //默认隐藏
         toPayll.setVisibility(View.GONE);
         detailsContextBg.setVisibility(View.GONE);
@@ -215,11 +223,15 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
 //        itemData = (BettingListDataBean.PromotionData.BettingListData)allLeague;
 
         promotionId = getIntent().getStringExtra(ConstantPool.TO_DETAILS_PROMOTION_ID);
+        expertId = getIntent().getStringExtra("expertId");
+        winPoint = getIntent().getStringExtra("winPoint");
+        errPoint = getIntent().getStringExtra("errPoint");
+
 
         L.d("qwertyui===>>> " , promotionId);
         //http://192.168.10.242:8092/promotion/info/detail?
         // userId=hhly90662&promotionId=643&sign=007ec32c4f7279cfd49260c408528c0412
-//        String url = "http://192.168.10.242:8092/promotion/info/detail";
+//        String url = "http://192.168.10.242:8098/promotion/info/detail";
 //        String url = "http://m.1332255.com:81/promotion/info/detail";
         String url = BaseURLs.URL_REMMEND_DETAILS;
         String userid = AppConstants.register.getUser() == null ? "" : AppConstants.register.getUser().getUserId();
@@ -270,6 +282,13 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                     startActivity(intent);
                 }
                 break;
+            case R.id.portrait_img:
+                Intent intent=new Intent(mContext,RecommendedExpertDetailsActivity.class);
+                intent.putExtra("expertId",expertId);
+                intent.putExtra("winPoint",winPoint);
+                intent.putExtra("errPoint",errPoint);
+                startActivity(intent);
+                break;
 
 
         }
@@ -298,6 +317,13 @@ public class MvpBettingPayDetailsActivity extends Activity implements MView<Bett
                 detailsHomeWinOdds.setText(filtraNullTonull(detailsData.getLeftOdds()));
                 detailsDrawOdds.setText(filtraNullTonull(detailsData.getMidOdds()));
                 detailsGuestWinOdds.setText(filtraNullTonull(detailsData.getRightOdds()));
+
+            if (detailsData.getTypeStr() == null || detailsData.getTypeStr().equals("")) {
+                detailsPointsPlay.setVisibility(View.GONE);
+            }else{
+                detailsPointsPlay.setVisibility(View.VISIBLE);
+                detailsPointsPlay.setText(detailsData.getTypeStr());
+            }
 
             switch (detailsData.getStatus()){
                 case "1": //中

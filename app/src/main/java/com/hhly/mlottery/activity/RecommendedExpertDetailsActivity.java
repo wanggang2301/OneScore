@@ -221,6 +221,12 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
             public void onResponse(RecommendationExpertBean jsonObject) {
                 if (jsonObject != null) {
 
+                    if (jsonObject.getExpertPromotions()==null){
+
+                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
+                        return;
+                    }
+
                     if (jsonObject.getExpertPromotions().getList() == null) {
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
                         return;
@@ -417,7 +423,7 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
         view = layoutInflater.inflate(R.layout.view_load_more, null);
         headView = layoutInflater.inflate(R.layout.activity_experts_head_view, null);
         headView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        
+
         //暂无数据
         match_no_data_txt = (TextView) findViewById(R.id.match_no_data_txt);
 
@@ -481,7 +487,12 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
             Glide.with(getApplicationContext()).load(headerDatas.getImageSrc()).error(R.mipmap.specialist_default).into(ex_image);
             ex_name.setText(headerDatas.getNickname());
             ex_zhong.setText(mContext.getResources().getString(R.string.betting_item_jin) + allPoint+ mContext.getResources().getString(R.string.betting_item_zhong) + winPoint);
-            ex_text.setText("\t\t\t\t" + headerDatas.getIntroduce());
+            if(headerDatas.getIntroduce()!=null||headerDatas.getIntroduce().isEmpty()){
+                ex_text.setText("\t\t\t\t" + headerDatas.getIntroduce());
+            }else{
+                ex_text.setText(this.getResources().getString(R.string.recomend_no_datas));
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

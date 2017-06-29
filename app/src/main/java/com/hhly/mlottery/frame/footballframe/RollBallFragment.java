@@ -13,6 +13,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +44,7 @@ import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusE
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
+import com.hhly.mlottery.util.AnimUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FiltrateCupsMap;
@@ -113,6 +116,10 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     TextView tvWeek;
     @BindView(R.id.ll_odd)
     LinearLayout llOdd;
+    @BindView(R.id.ll_prompt_content)
+    LinearLayout promptContent;
+    @BindView(R.id.tv_prompt_txt)
+    TextView promptTxt;
 
     private ApiHandler apiHandler = new ApiHandler(this);
     private RollBallAdapter adapter;
@@ -260,7 +267,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
 
     @Override
     protected void initData(int type) {
-        if(type == 0){
+        if (type == 0) {
             apiHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         }
         this.requestApi();
@@ -543,6 +550,16 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                 RollBallFragment.this.feedAdapter(feedAdapterLists);
                                 apiHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                                 isLoadedData = true;
+
+                                // 更新提示
+                                AnimUtils.tAnimShow(promptContent);
+                                apiHandler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        AnimUtils.tAnimHide(promptContent);
+                                    }
+                                }, 2000);
+                                promptTxt.setText(String.format(getString(R.string.football_up_data_prompt), allDataLists.size(), allDataLists.size() - feedAdapterLists.size()));
                             }
                         });
                     }
@@ -763,5 +780,4 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
         setHandicapName();
         adapter.notifyDataSetChanged();
     }
-
 }

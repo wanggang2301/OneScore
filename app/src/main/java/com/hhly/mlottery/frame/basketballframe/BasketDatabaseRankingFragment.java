@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.basketballframe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,10 +14,13 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketballTeamActivity;
+import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.adapter.basketball.BasketballDatabaseRankingAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketIntegralResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.MatchStage;
@@ -24,6 +28,7 @@ import com.hhly.mlottery.bean.basket.basketdatabase.RankingGroup;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingResult;
 import com.hhly.mlottery.bean.basket.basketdatabase.RankingTeam;
 import com.hhly.mlottery.bean.basket.infomation.LeagueBean;
+import com.hhly.mlottery.callback.BasketTeamParams;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.ToastTools;
@@ -124,6 +129,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
 
         initListener();
 
+        setIntegralDetailsOnClick();
         initRecycler();
 
         load(null);
@@ -214,6 +220,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
     private void initRecycler() {
         mSections = new ArrayList<>();
         mAdapter = new BasketballDatabaseRankingAdapter(mSections);
+        mAdapter.setBasketballRankingDetailsClickListener(basketballHandicpDetailsClickListener);
         mAdapter.setEmptyView(mEmptyView);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         mRecyclerView.setAdapter(mAdapter);
@@ -383,5 +390,25 @@ public class BasketDatabaseRankingFragment extends Fragment {
         this.season = season;
         Bundle args = getArguments();
         if (args != null) args.putString(PARAM_SEASON, season);
+    }
+
+
+    private BasketballRankingDetailsClickListener basketballHandicpDetailsClickListener;
+    public interface BasketballRankingDetailsClickListener {
+        void IntegralDetailsOnClick(View view, RankingTeam teamData);
+    }
+    private void setIntegralDetailsOnClick(){
+        basketballHandicpDetailsClickListener = new BasketballRankingDetailsClickListener() {
+            @Override
+            public void IntegralDetailsOnClick(View view, RankingTeam teamData) {
+                Intent intent=new Intent(getActivity(), BasketballTeamActivity.class);
+                intent.putExtra(BasketTeamParams.LEAGUE_ID,league.getLeagueId());
+                intent.putExtra(BasketTeamParams.TEAM_ID,teamData.getTeamId());
+//                intent.putExtra("key",BaseURLs.P_URL_API_HOST+"data/basket/team.html?teamId="+teamData.getTeamId()+"&leagueId="
+//                +league.getLeagueId()+"#/");
+//                intent.putExtra("show","show");
+                startActivity(intent);
+            }
+        };
     }
 }

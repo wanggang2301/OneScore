@@ -234,6 +234,19 @@ public class HomePagerAdapter extends PagerAdapter {
                         break;
                         case 0:// 无
                             break;
+                        case 6:// 德州跳转
+                            if (DeviceInfo.isLogin()) {
+                                Intent intent = new Intent(mContext, WebActivity.class);
+                                intent.putExtra("key", jumpAddr);// 跳转地址
+                                intent.putExtra("infoTypeName", title);
+                                intent.putExtra("imageurl", picUrl);
+                                intent.putExtra("title", title);
+                                intent.putExtra("subtitle", "");
+                                mContext.startActivity(intent);
+                            } else {// 跳转到登录界面
+                                mContext.startActivity(new Intent(mContext, LoginActivity.class));
+                            }
+                            break;
                         case 1:// 页面
                         {
                             if (jumpAddr.contains("{loginToken}")) {// 是否需要登录

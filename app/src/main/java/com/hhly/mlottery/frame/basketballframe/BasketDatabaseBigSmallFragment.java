@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.basketballframe;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,11 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketballTeamActivity;
 import com.hhly.mlottery.adapter.basketball.BasketDatabaseDetailsBigSmallAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBigSmallBean;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseBigSmallDetailsBean;
+import com.hhly.mlottery.callback.BasketTeamParams;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NoScrollListView;
@@ -92,6 +96,7 @@ public class BasketDatabaseBigSmallFragment extends Fragment implements View.OnC
         mView = inflater.inflate(R.layout.basket_database_details_big_small, container, false);
 
         initView();
+        setIntegralDetailsOnClick();
         mHandlerData.postDelayed(mRun, 500); // 加载数据
         return mView;
     }
@@ -198,6 +203,7 @@ public class BasketDatabaseBigSmallFragment extends Fragment implements View.OnC
                         mHandler.sendEmptyMessage(VIEW_STATUS_NET_NODATA);
                     }else{
                         mAdapter = new BasketDatabaseDetailsBigSmallAdapter(getContext(), mAllList, R.layout.basket_database_details_big_small_item);
+                        mAdapter.setBasketballBigSmallDetailsClickListener(basketballHandicpDetailsClickListener);
                         mListView.setAdapter(mAdapter);
                         mHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                     }
@@ -266,5 +272,21 @@ public class BasketDatabaseBigSmallFragment extends Fragment implements View.OnC
                 mHandlerData.postDelayed(mRun , 500);
                 break;
         }
+    }
+    private BasketballBigSmallDetailsClickListener basketballHandicpDetailsClickListener;
+    public interface BasketballBigSmallDetailsClickListener {
+        void IntegralDetailsOnClick(View view,  BasketDatabaseBigSmallDetailsBean teamData);
+    }
+    private void setIntegralDetailsOnClick(){
+        basketballHandicpDetailsClickListener = new BasketballBigSmallDetailsClickListener() {
+            @Override
+            public void IntegralDetailsOnClick(View view, BasketDatabaseBigSmallDetailsBean teamData) {
+
+                Intent intent=new Intent(getActivity(), BasketballTeamActivity.class);
+                intent.putExtra(BasketTeamParams.LEAGUE_ID,mLeagueId);
+                intent.putExtra(BasketTeamParams.TEAM_ID,teamData.getTeamId());
+                startActivity(intent);
+            }
+        };
     }
 }

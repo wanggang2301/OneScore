@@ -1163,7 +1163,7 @@
     <string name="unknown_error">未知错误</string>
     <string name="token_null">令牌(token)为空</string>
     <string name="phone_mismatching">用户名与手机号不匹配</string>
-    <string name="token_invalid">令牌(token)失效</string>
+    <string name="token_invalid">登录超时,请重新登录</string>
     <string name="signature_empty">签名为空</string>
     <string name="signature_mismatching">签名不匹配</string>
     <string name="token_mismatchin">令牌(token)与个人信息不匹配</string>
@@ -1843,6 +1843,7 @@
     <string name="issue_check_recome">请输入您的推介理由</string>
     <string name="issue_check_price">请输入您的方案价格</string>
     <string name="issue_check_singlg">必须选择一种玩法</string>
+    <string name="issue_price_spill">价格需在0-68元之间</string>
 
 
     <string name="recommendarticle_txt">推介文章</string>
@@ -1924,6 +1925,10 @@
     <string name="football_play_goal_out">界外球</string>
     <string name="football_play_whistle">犯规</string>
     <string name="football_play_goal_qx">取消进球</string>
+    <string name="football_play_404">信号中断</string>
+    <string name="football_play_drink_water">喝水时间</string>
+    <string name="football_play_injured">有人受伤</string>
+    <string name="football_play_injured_addtime">伤停补时</string>
 
 
 
@@ -1947,4 +1952,23 @@
     <string name="please_add_eague">请添加联赛</string>
     <string name="agreement_carefully">请认真阅读推荐付费协议</string>
     <string name="recommendation_agreement">认真付费推荐协议</string>
+    <string name="basket_team_zhanji">战绩</string>
+    <string name="basket_team_jiaolian">教练</string>
+    <string name="basket_team_avg_score">场均得分</string>
+    <string name="basket_team_avg_assitant">场均助攻</string>
+    <string name="basket_team_avg_borad">场均篮板</string>
+    <string name="basket_team_avg_lose">场均失分</string>
+    <string name="basket_team_abg_misplay">场均失误</string>
+    <string name="basket_team_total_chang">总场次</string>
+    <string name="basket_team_forward">前锋</string>
+    <string name="basket_team_center">中锋</string>
+    <string name="basket_team_defender">后卫</string>
+    <string name="basket_team_statistics">球队统计</string>
+    <string name="basket_team_result_schdule">赛程赛果</string>
+    <string name="basket_team_handicap_statistics">盘口统计</string>
+    <string name="basket_team_tech_staticss">技术统计</string>
+    <string name="football_up_data_prompt">更新了%1$d场比赛，隐藏了%2$d场比赛</string>
+    <string name="basket_team_player_num">号</string>
+    <string name="football_not_animation_txt">暂无动画直播</string>
+
 </resources>

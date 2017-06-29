@@ -25,6 +25,15 @@ public class RankingTeam {
     private int gameBehind; // 胜差
     private int ranking;
     private String recent; // 近况
+    private String teamId;
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
+    }
 
     public String getTeamName() {
         return teamName;

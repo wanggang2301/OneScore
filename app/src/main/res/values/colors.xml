@@ -729,4 +729,12 @@
 
     <color name="account_trade_name">#4a494a</color>
     <color name="edit_hint_color">#d7d7d7</color>
+    <color name="basket_equals">#5a93f3</color>
+    <color name="basket_defeat">#74be6d</color>
+    <color name="recycler_view_shadow">#c6ddff</color>
+    <color name="basket_team_circle">#f7d34e</color>
+
+    <color name="foot_ball_score_title_bg">#ffde00</color>
+    <color name="foot_ball_score_title_txt">#0097ff</color>
+
 </resources>
