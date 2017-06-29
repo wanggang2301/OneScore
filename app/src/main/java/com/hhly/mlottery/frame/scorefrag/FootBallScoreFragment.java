@@ -36,8 +36,6 @@ import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.BaseUserTopics;
 import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.frame.BallType;
-import com.hhly.mlottery.frame.HandicapStatisticsFragment;
-import com.hhly.mlottery.frame.TechnicalStatisticsFragment;
 import com.hhly.mlottery.frame.footballframe.FocusFragment;
 import com.hhly.mlottery.frame.footballframe.ImmediateFragment;
 import com.hhly.mlottery.frame.footballframe.ResultFragment;
@@ -300,7 +298,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         if (msgView != null) {
             msgView.setBackgroundColor(Color.parseColor("#ffde00"));
             msgView.setTextColor(Color.parseColor("#0085e1"));
-            msgView.setTextSize(mContext.getResources().getDimension(R.dimen.text_size_5));
+            msgView.setTextSize(mContext.getResources().getDimension(R.dimen.focus_notice));
         }
 
 
