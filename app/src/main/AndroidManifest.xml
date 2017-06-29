@@ -511,7 +511,11 @@
         <activity
             android:name=".activity.RecommendedExpertDetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.BasketballTeamActivity"
+        <activity
+            android:name=".activity.BasketballTeamActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MyFocusActivity"
             android:screenOrientation="portrait" />
 
     </application>
