@@ -73,6 +73,15 @@ public class BasketTeamDataBean {
         private int avgMisplayRank;
         private MatchStatEntity matchStat;
         private LineUpEntity lineUp;
+        private List<String> seasons;
+
+        public List<String> getSeasons() {
+            return seasons;
+        }
+
+        public void setSeasons(List<String> seasons) {
+            this.seasons = seasons;
+        }
 
         public String getTeamName() {
             return teamName;
