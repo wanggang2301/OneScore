@@ -244,6 +244,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
                 mCurrentPosition=i;
                 popupWindow.dismiss();
                 mSeasonText.setText(lists.get(i));
+                mCurrentPosition=i;
                 chooseSeasonToRefresh();
             }
         });
@@ -273,7 +274,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
         mTitleLeagueName.setText(info.getTeamName());
         ImageLoader.load(this,info.getTeamImg(),R.mipmap.basket_default).into(mIcon);
         lists=info.getSeasons();
-        mSeasonText.setText(lists.get(0));
+        mSeasonText.setText(lists.get(mCurrentPosition));
     }
 
     /**
