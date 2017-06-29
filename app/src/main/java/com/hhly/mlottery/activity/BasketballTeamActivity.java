@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.adapter.BasketSeasonSelectAdapter;
 import com.hhly.mlottery.adapter.football.TabsAdapter;
+import com.hhly.mlottery.callback.BasketTeamParams;
 import com.hhly.mlottery.frame.HandicapStatisticsFragment;
 import com.hhly.mlottery.frame.TechnicalStatisticsFragment;
 import com.hhly.mlottery.frame.basketballframe.basketballteam.basketballteamdata.BasketTeamDataFragment;
@@ -82,7 +83,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
     private int mCurrentPosition=0;
 
     private TabsAdapter mTabsAdapter;
-    private String mSeason;
+    private String mSeason="2016-2017";
     private String mLeagueId;
     private String mTeamId;
 
@@ -96,8 +97,8 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basketball_team);
         if(getIntent()!=null){
-            mLeagueId=getIntent().getStringExtra("leagueId");
-            mTeamId=getIntent().getStringExtra("teamId");
+            mLeagueId=getIntent().getStringExtra(BasketTeamParams.LEAGUE_ID);
+            mTeamId=getIntent().getStringExtra(BasketTeamParams.TEAM_ID);
         }
         ButterKnife.bind(this);
 
@@ -106,18 +107,18 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 
     private void initView() {
 
-        lists=  getRecentThreeSeason();
+//        lists=  getRecentThreeSeason();
 
-        mSeasonText.setText(lists.get(0));
-        mSeason=lists.get(mCurrentPosition);
+
+//        mSeason=lists.get(mCurrentPosition);
 
         mTeamDataFragment=BasketTeamDataFragment.newInstance(mSeason,mLeagueId,mTeamId);
         mResultFragment=BasketTeamResultFragment.newInstance(mSeason,mLeagueId,mTeamId);
         handicapStatisticsFragment = HandicapStatisticsFragment.newInstance(mSeason,mLeagueId,mTeamId);
         technicalStatisticsFragment = TechnicalStatisticsFragment.newInstance(mSeason,mLeagueId,mTeamId);
 
-
-
+//        http://192.168.74.85:8096/mlottery/core/basketballData.teamData.do?season=2016-2017&leagueId=27&teamId=27&lang=zh&timeZone=8
+//        http://192.168.74.85:8096/mlottery/core/basketballData.teamData.do?lang=zh&season=2016-2017&leagueId=1&teamId=1
         String[] titles = new String[]{
                 getString(R.string.basket_team_statistics),getString(R.string.basket_team_result_schdule),
                 getString(R.string.basket_team_handicap_statistics),getString(R.string.basket_team_tech_staticss)
@@ -199,7 +200,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         Calendar calendar = null;
-        for (int i = 0; i < 3 ; i++) {
+        for (int i = 0; i < 10 ; i++) {
             calendar =  Calendar.getInstance();
             calendar.add(Calendar.YEAR, -i);
             String sim = sdf.format(calendar.getTime());
@@ -271,6 +272,8 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
         mLeagueName.setText(info.getTeamName());
         mTitleLeagueName.setText(info.getTeamName());
         ImageLoader.load(this,info.getTeamImg(),R.mipmap.basket_default).into(mIcon);
+        lists=info.getSeasons();
+        mSeasonText.setText(lists.get(0));
     }
 
     /**
