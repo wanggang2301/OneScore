@@ -37,7 +37,7 @@ import java.util.Map;
  * 篮球盘口统计
  */
 
-public class HandicapStatisticsFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class HandicapStatisticsFragment extends Fragment implements View.OnClickListener {
 
 
     private View view;
@@ -157,8 +157,6 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
         mContext = mActivity;
         initView();
         initData();
-
-
         return view;
     }
 
@@ -178,12 +176,11 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
 
                     //大小盘 上下盘盘路
                     trendPlate = handicapStatisticsBean.getTrendPlate();
-
                     //大小盘主客场盘路
                     sizePlate = handicapStatisticsBean.getSizePlate();
-
                     //让分盘盘路
                     letPlate = handicapStatisticsBean.getLetPlate();
+
                     Log.i("sda","sdsa===="+isCheckeed);
                     if (isCheckeed){
 
@@ -526,8 +523,6 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
      */
     public void refreshFragment(String season){
         mSeason=season;
-        let_split.setChecked(true);
-        size_disk.setChecked(false);
         initData();
     }
 
@@ -539,19 +534,13 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
         this.mActivity = (Activity) context;
     }
 
-    @Override
-    public void onRefresh() {
-
-        initData();
-    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
 
             case R.id.match_error_btn:
-                let_split.setChecked(true);
-                size_disk.setChecked(false);
+
                 initData();
                 break;
 
