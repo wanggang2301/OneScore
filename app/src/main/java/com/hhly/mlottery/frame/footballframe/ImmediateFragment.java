@@ -1313,7 +1313,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
     //推送
     public void onEventMainThread(FootBallScoreFragment.FootballScoresWebSocketEntity entity) {
-        L.d("gaiban", "即时比分推送改版");
+
         if (mAdapter == null) {
             return;
         }
@@ -1332,6 +1332,8 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
             msg.arg1 = Integer.parseInt(type);
             mSocketHandler.sendMessage(msg);
         }
+
+        L.d("gaiban", "即时比分推送改版: " + entity.text);
     }
 
     @Override

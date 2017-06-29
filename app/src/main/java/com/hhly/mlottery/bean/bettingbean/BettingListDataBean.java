@@ -108,6 +108,8 @@ public class BettingListDataBean {
 //            lookStatus: 2,
 //            detailUrl: "http://tj.1332255.com/tjDetail/totjDetail?id=645"
 
+//            earningsRate: "0"
+
             private String id;
             private String enable;
             private String remark;
@@ -152,6 +154,15 @@ public class BettingListDataBean {
             private String lookStatus;
             private String detailUrl;
             private String countOrder;
+            private String earningsRate;
+
+            public String getEarningsRate() {
+                return earningsRate;
+            }
+
+            public void setEarningsRate(String earningsRate) {
+                this.earningsRate = earningsRate;
+            }
 
             public String getId() {
                 return id;

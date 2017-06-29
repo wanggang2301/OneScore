@@ -60,6 +60,13 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
         holder.setText(R.id.betting_recommended_reason , filtraNull(data.getContext()));
         holder.setText(R.id.betting_buy_num , filtraNull(data.getCountOrder()));
 
+        if (data.getEarningsRate() != null) {
+            holder.setText(R.id.betting_earnings_rate , data.getEarningsRate() + " %");
+            holder.setVisible(R.id.betting_earnings_rate , true);
+        }else{
+            holder.setVisible(R.id.betting_earnings_rate , false);
+        }
+
         int winPoint = 0;//胜场
         int errPoint = 0;//负场
 
@@ -150,7 +157,7 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
             @Override
             public void onClick(View v) {
                 if (mGameDetailsClick != null) {
-                    mGameDetailsClick.GameDetailsOnClick(v , data.getId());
+                    mGameDetailsClick.GameDetailsOnClick(v , data);
                 }
             }
         });
