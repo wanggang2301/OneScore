@@ -656,6 +656,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
                 new DateMatchChoseDialogFragment.OnDateChooseListener() {
                     @Override
                     public void onDateChoose(String date) {
+                        pageNum = 1;
                         choosenDate = date;
                         mTitleTextView.setText(DateUtil.convertDateToNation(date) + " " + DateUtil.getLotteryWeekOfDate(DateUtil.parseDate(DateUtil.convertDateToNation(date))));
                         initDate(DateUtil.convertDateToNation(date));

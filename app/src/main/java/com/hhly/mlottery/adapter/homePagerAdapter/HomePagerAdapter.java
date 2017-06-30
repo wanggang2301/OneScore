@@ -486,7 +486,7 @@ public class HomePagerAdapter extends PagerAdapter {
                                             Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
                                             intent.putExtra("thirdId", split[1]);
                                             intent.putExtra("currentFragmentId", 0);
-                                            intent.putExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_DEFAULT);
+                                            intent.putExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, FootBallDetailTypeEnum.FOOT_DETAIL_LIVE);
                                             mContext.startActivity(intent);
                                         }
                                     }

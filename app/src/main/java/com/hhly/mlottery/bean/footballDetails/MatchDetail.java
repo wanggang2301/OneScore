@@ -45,6 +45,16 @@ public class MatchDetail implements Parcelable {
 
     private Integer leagueType;
 
+    private int sourceType;// 1:rb,2:bt,3：球探，4：手动
+
+    public int getSourceType() {
+        return sourceType;
+    }
+
+    public void setSourceType(int sourceType) {
+        this.sourceType = sourceType;
+    }
+
     public Integer getLeagueType() {
         return leagueType;
     }
@@ -128,6 +138,7 @@ public class MatchDetail implements Parcelable {
         result = in.readString();
         leagueId = in.readInt();
         leagueType = in.readInt();
+        sourceType = in.readInt();
         matchType1 = in.readString();
         matchType2 = in.readString();
         matchStatus = in.readString();
@@ -161,6 +172,7 @@ public class MatchDetail implements Parcelable {
         dest.writeString(result);
         dest.writeInt(leagueId);
         dest.writeInt(leagueType);
+        dest.writeInt(sourceType);
         dest.writeString(matchType1);
         dest.writeString(matchType2);
         dest.writeString(matchStatus);
