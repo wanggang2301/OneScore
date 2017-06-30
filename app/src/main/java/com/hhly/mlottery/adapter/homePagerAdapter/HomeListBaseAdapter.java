@@ -35,6 +35,7 @@ import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.bean.productadvice.ProductUserLike;
 import com.hhly.mlottery.callback.ProductListener;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.frame.HomeMuenFragment;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
@@ -184,6 +185,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                         final String summary = bodys.get(j).getSummary();// 分享摘要
                         final String lotteryName = bodys.get(j).getName();// 彩票name
                         final List<HomeBodysLottery> lotteryList = bodys.get(j).getLottery();// 彩票Item
+                        final String status = bodys.get(j).getStatusOrigin();// 比赛状态
                         switch (labType) {
                             case 1:// 热门赛事
                                 scoreViewList.get(j).setOnClickListener(new View.OnClickListener() {
@@ -209,6 +211,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                                             Intent intent = new Intent(mContext, FootballMatchDetailActivity.class);
                                                             intent.putExtra("thirdId", thirdId);
                                                             intent.putExtra("currentFragmentId", -1);
+                                                            intent.putExtra(FootBallDetailTypeEnum.CURRENT_TAB_KEY, "0".equals(status) ? FootBallDetailTypeEnum.FOOT_DETAIL_ANALYSIS : FootBallDetailTypeEnum.FOOT_DETAIL_LIVE);
                                                             mContext.startActivity(intent);
                                                         }
                                                     } else if ("20".equals(jumpAddr)) {// 篮球内页20

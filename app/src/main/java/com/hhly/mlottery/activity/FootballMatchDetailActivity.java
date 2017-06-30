@@ -3220,6 +3220,21 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         isAddFragment = true;
                     }
 
+                    L.d("aaaaa","比赛状态：" + mMatchDetail.getLiveStatus());
+                    switch (mMatchDetail.getLiveStatus()){
+                        case BEFOURLIVE:// 赛前
+                            mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_ANALYSE_MERGE, false);
+                            break;
+                        case ONLIVE:// 赛中
+                            mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_LIVE, false);
+                            break;
+                        case LIVEENDED:// 完场
+                            mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_LIVE, false);
+                            break;
+                        default:
+                            mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_DEFAULT, false);
+                            break;
+                    }
                     break;
                 case ERROR:// 加载失败
                     if (isInitedViewPager) {
