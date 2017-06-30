@@ -21,6 +21,7 @@ import com.hhly.mlottery.bean.LeagueCup;
 import com.hhly.mlottery.callback.RequestHostFocusCallBack;
 import com.hhly.mlottery.config.FootBallMatchFilterTypeEnum;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CollectionUtils;
 import com.hhly.mlottery.util.HotFocusUtils;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.PreferenceUtil;
@@ -175,7 +176,7 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
 
 
         mAllSize = ComputeRaceTotal(mAllCups);
-        mSelectedSize = ComputeRaceTotal(mSelectedCups);
+        mSelectedSize = ComputeSelectRaceTotal(mSelectedCups);
         mHideNumber.setText(String.valueOf(mAllSize - mSelectedSize));
 
         mSelectAllBtn = (TextView) view.findViewById(R.id.filtrate_match_all_btn);
@@ -441,6 +442,21 @@ public class FiltrateMatchFragment extends Fragment implements OnClickListener {
         int total = 0;
         for (LeagueCup leagueCup : list) {
             total += leagueCup.getCount();
+        }
+        return total;
+    }
+
+
+    private int ComputeSelectRaceTotal(List<LeagueCup> list) {
+        int total = 0;
+        for (LeagueCup leagueCup : list) {
+            if (CollectionUtils.notEmpty(mCheckedIds)) {
+                if (mCheckedIds.contains(leagueCup.getRaceId())) {
+                    total += leagueCup.getCount();
+                }
+            } else {
+                total += leagueCup.getCount();
+            }
         }
         return total;
     }
