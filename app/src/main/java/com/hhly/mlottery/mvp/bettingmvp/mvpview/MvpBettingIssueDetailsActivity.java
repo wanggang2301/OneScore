@@ -815,7 +815,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 issuePriceCardB.setChecked(false);
                 issuePriceCardC.setChecked(false);
                 issuePriceCardD.setChecked(false);
-                jiageEdit.setText(getApplicationContext().getResources().getText(R.string.betting_txt_amount_two));
+                jiageEdit.setText("2");
                 jiageEdit.setSelection(jiageEdit.getText().length());
                 break;
             case R.id.issue_price_card_b:
@@ -823,7 +823,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 issuePriceCardB.setChecked(true);
                 issuePriceCardC.setChecked(false);
                 issuePriceCardD.setChecked(false);
-                jiageEdit.setText(getApplicationContext().getResources().getText(R.string.betting_txt_amount_five));
+                jiageEdit.setText("5");
                 jiageEdit.setSelection(jiageEdit.getText().length());
                 break;
             case R.id.issue_price_card_c:
@@ -831,7 +831,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 issuePriceCardB.setChecked(false);
                 issuePriceCardC.setChecked(true);
                 issuePriceCardD.setChecked(false);
-                jiageEdit.setText(getApplicationContext().getResources().getText(R.string.betting_txt_amount_ten));
+                jiageEdit.setText("10");
                 jiageEdit.setSelection(jiageEdit.getText().length());
                 break;
             case R.id.issue_price_card_d:
@@ -839,7 +839,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 issuePriceCardB.setChecked(false);
                 issuePriceCardC.setChecked(false);
                 issuePriceCardD.setChecked(true);
-                jiageEdit.setText(getApplicationContext().getResources().getText(R.string.betting_txt_amount_fifteen));
+                jiageEdit.setText("15");
                 jiageEdit.setSelection(jiageEdit.getText().length());
                 break;
 
