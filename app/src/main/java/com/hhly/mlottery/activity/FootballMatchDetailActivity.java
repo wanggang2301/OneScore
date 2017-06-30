@@ -713,6 +713,10 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     updateAnimation(matchLive.get(0));
                     matchTimeStart(mMatchTime, state);
                 }
+                // 球探数据源，显示暂无动画直播
+                if (matchDetail.getSourceType() == 3) {
+                    showGifAnimation(-1111);
+                }
 
                 L.d("wwwww", "计算 tv_head_data_or_score ：" + tv_head_data_or_score.getVisibility() + "  score: " + tv_head_data_or_score.getText().toString());
 
@@ -1215,23 +1219,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     updatePushData(currMatchTextLiveBean);
                     updateAnimation(currMatchTextLiveBean);
                 }
-            } else if (msg.arg1 == 8) { // 后台数据源切换 data:1:rb,2:bt,3:球探，4：手动
-                // 针对球探数据 显示暂无动画提示
-                String ws_json = (String) msg.obj;
-                L.d(TAG,"数据切换：" + ws_json);
-                String data = "";
-                try {
-                    JSONObject jsonObject = new JSONObject(ws_json);
-                    data = jsonObject.getString("data");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                if ("3".equals(data)) { // 球探数据切换 显示暂无动画直播
-                    MatchTextLiveBean matchTextLiveBean = new MatchTextLiveBean();
-                    matchTextLiveBean.setCode(NOT_ANIMATION);
-                    updateAnimation(matchTextLiveBean);
-                }
             }
         }
     };
@@ -1242,12 +1229,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
      * @param matchTextLiveBean
      */
     private void updateAnimation(MatchTextLiveBean matchTextLiveBean) {
-        if (NOT_ANIMATION.equals(matchTextLiveBean.getCode())) {
-            // 暂无动画直播
-            showGifAnimation(-1111);
-            return;
-        }
-
         String time = matchTextLiveBean.getTime();
 
         // 上半场
@@ -1273,6 +1254,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         }
 
         switch (matchTextLiveBean.getCode()) {
+            case "9999":// 暂无动画直播
+                showGifAnimation(-1111);
+                break;
             case "0":// 未开
             case "10":
             case "11":  //开始上半场，开球：
@@ -3220,8 +3204,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         isAddFragment = true;
                     }
 
-                    L.d("aaaaa","比赛状态：" + mMatchDetail.getLiveStatus());
-                    switch (mMatchDetail.getLiveStatus()){
+                    L.d("aaaaa", "比赛状态：" + mMatchDetail.getLiveStatus());
+                    switch (mMatchDetail.getLiveStatus()) {
                         case BEFOURLIVE:// 赛前
                             mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_ANALYSE_MERGE, false);
                             break;
