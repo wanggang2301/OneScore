@@ -1813,6 +1813,8 @@
     <string name="issue_check_singlg">必須選擇壹種玩法</string>
     <string name="issue_price_spill">價格需在0-68元之間</string>
 
+    <string name="charge_money_notice">充值只能用於購買推介方案,壹比分不提供投註服務!</string>
+
     <string name="corner_score">角球比分</string>
     <string name="higher">高於</string>
     <string name="jishi_pan">即時盤</string>
