@@ -42,9 +42,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:gravity="center"
-                    tools:text="2016-25-25"
                     android:textColor="#666666"
-                    android:textSize="13dp" />
+                    android:textSize="13dp"
+                    tools:text="2016-25-25" />
 
                 <TextView
                     android:id="@+id/tv_week"
@@ -105,6 +105,8 @@
             android:layout_below="@+id/titleContainer" />
 
     </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
+
+    <include layout="@layout/football_public_prompt_item"/>
 
     <RelativeLayout
         android:id="@+id/football_immediate_unfocus_ll"

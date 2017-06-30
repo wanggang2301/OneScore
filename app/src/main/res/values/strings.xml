@@ -1833,6 +1833,7 @@
 
 
     <string name="roll_desc_txt">胜出</string>
+
     /*****不要删除*************************************************************************************************/
     <string name="odds_back_list">""</string>
     <string name="odds_average">""</string>
@@ -1965,7 +1966,9 @@
     <string name="in_field">进(场均)</string>
     <string name="hit">命中%</string>
     <string name="technical_total">总数</string>
-
+    <string name="recomend_no_datas">专家忙于分析赛事,资料都忘了填写了</string>
+    <string name="application_write_datas">请认真填写以下信息,不能为空</string>
+    <string name="title_activity_scrolling">ScrollingActivity</string>
     <!--app动画直播-->
     <string name="football_play_penalty_lose">点球罚失</string>
     <string name="football_play_free_kick_danger">危险任意球</string>
@@ -1981,5 +1984,24 @@
     <string name="football_play_drink_water">喝水时间</string>
     <string name="football_play_injured">有人受伤</string>
     <string name="football_play_injured_addtime">伤停补时</string>
+    <string name="basket_team_zhanji">战绩</string>
+    <string name="basket_team_jiaolian">教练</string>
+    <string name="basket_team_avg_score">场均得分</string>
+    <string name="basket_team_avg_assitant">场均助攻</string>
+    <string name="basket_team_avg_borad">场均篮板</string>
+    <string name="basket_team_avg_lose">场均失分</string>
+    <string name="basket_team_abg_misplay">场均失误</string>
+    <string name="basket_team_total_chang">总场次</string>
+    <string name="basket_team_forward">前锋</string>
+    <string name="basket_team_center">中锋</string>
+    <string name="basket_team_defender">后卫</string>
+    <string name="basket_team_statistics">球队统计</string>
+    <string name="basket_team_result_schdule">赛程赛果</string>
+    <string name="basket_team_handicap_statistics">盘口统计</string>
+    <string name="basket_team_tech_staticss">技术统计</string>
+    <string name="basket_team_player_num">号</string>
+
+    <string name="football_up_data_prompt">更新了%1$d场比赛，隐藏了%2$d场比赛</string>
+    <string name="football_not_animation_txt">暂无动画直播</string>
 
 </resources>

@@ -1,13 +1,52 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mvptask.myfocus.MyFocusChildFragment">
+    android:background="#F0F0F0">
 
-    <!-- TODO: Update blank fragment layout -->
+
     <TextView
+        android:id="@+id/tv_add"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:text="@string/multi_add"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/text_size_17" />
+
+    <TextView
+        android:id="@+id/tv_noRaces"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_above="@id/tv_add"
+        android:layout_marginTop="220dp"
+        android:gravity="center_horizontal"
+        android:text="暂无关注球队,去添加您喜欢的球队吧!"
+        android:textColor="#666666"
+        android:textSize="@dimen/text_size_14"
+        android:visibility="gone" />
 
-</FrameLayout>
+
+    <com.hhly.mlottery.view.MyFocusPinnedHeaderExpandableListView
+        android:id="@+id/explistview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tv_add"
+        android:layout_marginLeft="0.0dip"
+        android:cacheColorHint="#00000000"
+        android:childDivider="@color/red"
+        android:choiceMode="singleChoice"
+        android:divider="@color/yellow"
+        android:drawSelectorOnTop="false"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="true"
+        android:groupIndicator="@null"
+        android:headerDividersEnabled="false"
+        android:scrollbars="vertical"
+        android:scrollingCache="true"
+        android:background="@color/white"/>
+
+
+</RelativeLayout>

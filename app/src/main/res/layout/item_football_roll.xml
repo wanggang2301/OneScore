@@ -265,7 +265,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="-"
+                            tools:text="-"
                             android:textColor="@color/res_pl_color"
                             android:textSize="@dimen/item_football_half_score" />
 
@@ -273,9 +273,9 @@
                             android:id="@+id/tv_odds_center1"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1"
+                            android:layout_weight="1.3"
                             android:gravity="center"
-                            android:text="-"
+                            tools:text="两/两球半"
                             android:textColor="@color/res_pl_color"
                             android:textSize="@dimen/item_football_half_score" />
 
@@ -285,7 +285,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="-"
+                            tools:text="-"
                             android:textColor="@color/res_pl_color"
                             android:textSize="@dimen/item_football_half_score" />
 
@@ -308,7 +308,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="-"
+                            tools:text="-"
                             android:textColor="@color/res_pl_color"
                             android:textSize="@dimen/item_football_half_score" />
 
@@ -316,9 +316,9 @@
                             android:id="@+id/tv_odds_center2"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1"
+                            android:layout_weight="1.3"
                             android:gravity="center"
-                            android:text="-"
+                            tools:text="两/两球半"
                             android:textColor="@color/res_pl_color"
                             android:textSize="@dimen/item_football_half_score" />
 
@@ -328,7 +328,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="-"
+                            tools:text="-"
                             android:textColor="@color/res_pl_color"
                             android:textSize="@dimen/item_football_half_score" />
 

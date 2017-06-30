@@ -50,6 +50,9 @@ public class WebActivity extends BaseActivity implements OnClickListener {
     private static final String INTENT_PARAMS_TITLE = "title";
     private ImageView public_btn_set;
 
+    private LinearLayout mHeadLayout;
+    private String showHead="show";
+
     private float y;
 
     private ShareFragment mShareFragment;
@@ -96,6 +99,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
 
 
     private void initView() {
+        mHeadLayout= (LinearLayout) findViewById(R.id.header_layout);
         findViewById(R.id.comment).setVisibility(View.GONE);
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.header_layout);
         linearLayout.setLayoutParams(
@@ -181,6 +185,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         try {
             Intent intent = getIntent();
             url = intent.getStringExtra("key");
+            showHead=intent.getStringExtra("show");
             L.d("CommonUtils初始url" + url);
 //            url = "http://192.168.33.14:8080/gameweb/h5/index";
 //            url = "http://192.168.37.6:8080/gameweb/h5/index";

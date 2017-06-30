@@ -1,52 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f4f8ff"
+
     android:orientation="vertical">
-
-    <RadioGroup
-        android:id="@+id/radio_group"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="26dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="4">
-
-        <RadioButton
-            android:id="@+id/let_split"
-            style="@style/odds_radio_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginRight="-0.25dp"
-            android:layout_weight="1"
-            android:background="@drawable/radio_button_left"
-            android:checked="true"
-            android:text="让分盘"
-            android:textColor="@drawable/info_text_color" />
-
-        <RadioButton
-            android:id="@+id/size_disk"
-            style="@style/odds_radio_button"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="-0.25dp"
-            android:layout_weight="1"
-            android:background="@drawable/radio_button_right"
-            android:checked="false"
-            android:text="大小盘"
-            android:textColor="@drawable/info_text_color" />
-    </RadioGroup>
-
-
-
-        <ScrollView
-            android:id="@+id/handicap_scrollview"
-            android:scrollbars="none"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#f4f8ff"
+        >
+        <RadioGroup
+            android:id="@+id/radio_group"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="26dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:weightSum="4">
+
+            <RadioButton
+                android:id="@+id/let_split"
+                style="@style/odds_radio_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="-0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_left"
+                android:checked="true"
+                android:text="让分盘"
+                android:textColor="@drawable/info_text_color" />
+
+            <RadioButton
+                android:id="@+id/size_disk"
+                style="@style/odds_radio_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="-0.25dp"
+                android:layout_weight="1"
+                android:background="@drawable/radio_button_right"
+                android:checked="false"
+                android:text="大小盘"
+                android:textColor="@drawable/info_text_color" />
+        </RadioGroup>
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/handicap_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -276,8 +282,7 @@
                 <LinearLayout
                     android:id="@+id/clean_rl"
                     android:layout_width="match_parent"
-                    android:layout_height="29dp"
-                   >
+                    android:layout_height="29dp">
 
                     <TextView
                         style="@style/handicap_statisticss"
@@ -719,19 +724,68 @@
 
             </LinearLayout>
 
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
+
+        <TextView
+            android:id="@+id/match_no_data_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/nodata"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/match_error_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="90dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/refresh" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/exp_net_status_txt"
+                android:textColor="@color/version"
+                android:textSize="@dimen/text_size_14" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dip"
+                    android:text="@string/exp__check_txt"
+                    android:textColor="@color/msg"
+                    android:textSize="@dimen/text_size_14" />
+
+                <TextView
+                    android:id="@+id/match_error_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exp_refresh_txt"
+                    android:textColor="@color/exp_refresh"
+                    android:textSize="@dimen/text_size_14" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/match_no_data_txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:gravity="center"
-        android:padding="10dp"
-        android:text="@string/nodata"
-        android:textSize="20sp"
-        android:visibility="gone" />
 
-
-</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="18dp">
+
+        <com.hhly.mlottery.view.CircleImageView
+            android:id="@+id/basket_team_player_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/center_head"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/basket_team_player_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="13dp"
+        android:textColor="@color/snooker"
+        android:textSize="@dimen/text_size_15"
+        android:text="克里斯蒂亚诺·罗纳尔多"
+        />
+    <TextView
+        android:id="@+id/basket_team_player_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:textColor="@color/snooker"
+        android:textSize="@dimen/text_size_15"
+        android:text="7号"/>
+</LinearLayout>

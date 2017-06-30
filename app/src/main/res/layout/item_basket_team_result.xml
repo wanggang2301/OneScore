@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/football_cardview_margin"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="@dimen/football_cardview_margin"
+    android:clickable="true"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="5dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardElevation="0.5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:id="@+id/item_basket_team_league_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NBA"
+                android:textSize="14sp"
+                android:textColor="@color/home_item_lottery_title"
+                />
+            <TextView
+                android:id="@+id/item_basket_team_result_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5月14日  09:00"
+                android:textSize="10sp"
+                android:layout_centerInParent="true"
+                android:textColor="@color/betting_recommend_issue_jiage_color"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            >
+                <ImageView
+                    android:id="@+id/item_basket_result_guest_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/basket_default"
+                    android:layout_marginLeft="40dp"
+                    />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:id="@+id/linearLayout3"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true">
+                <TextView
+                    android:id="@+id/item_result_guest_score"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="109"
+                    android:layout_marginRight="5dp"
+                    android:textSize="13sp"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="—"
+                    android:textSize="13sp"
+                    />
+                <TextView
+                    android:id="@+id/item_result_home_score"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="13sp"
+                    android:text="999"
+                    android:gravity="center"
+                    />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/item_basket_result_home_icon"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@mipmap/basket_default"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="40dp"
+                 />
+
+            <TextView
+                android:id="@+id/item_basket_team_guest_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="13sp"
+                android:layout_below="@+id/linearLayout3"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/linearLayout3"
+                android:layout_toStartOf="@+id/linearLayout3" />
+
+            <TextView
+                android:id="@+id/item_basket_team_home_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="科比湖人队"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:layout_below="@+id/linearLayout3"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@+id/linearLayout3"
+                android:layout_toEndOf="@+id/linearLayout3" />
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>

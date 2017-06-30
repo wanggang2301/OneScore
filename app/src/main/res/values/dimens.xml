@@ -94,6 +94,8 @@
     <dimen name="basket_analyze_line2">80dp</dimen>
     <dimen name="basket_analyze_line3">125dp</dimen>
     <dimen name="basket_analyze_hight_nodata">150dp</dimen>
+    <dimen name="focus_notice">5sp</dimen>
+
 
     <dimen name="text_size_1">1sp</dimen>
     <dimen name="text_size_2">2sp</dimen>

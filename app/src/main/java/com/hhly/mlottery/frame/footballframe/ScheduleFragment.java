@@ -43,6 +43,7 @@ import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusE
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
+import com.hhly.mlottery.util.AnimUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
@@ -164,6 +165,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     private TextView tv_handicap_name1;
     private TextView tv_handicap_name2;
 
+    private LinearLayout promptContent;
+    private TextView promptTxt;
+
     public static ScheduleFragment newInstance(String param1, String param2) {
         ScheduleFragment fragment = new ScheduleFragment();
         Bundle args = new Bundle();
@@ -263,6 +267,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         };
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         new Handler().postDelayed(mLoadingDataThread, 0);
+
+        promptContent = (LinearLayout) view.findViewById(R.id.ll_prompt_content);
+        promptTxt = (TextView) view.findViewById(R.id.tv_prompt_txt);
     }
 
     private final static int VIEW_STATUS_LOADING = 1;
@@ -294,6 +301,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     mNoDataLayout.setVisibility(View.GONE);
                     mLine.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
+
                     break;
                 case VIEW_STATUS_NET_ERROR:
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -462,6 +470,16 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                     isLoadData = true;
+
+                    // 更新提示
+                    AnimUtils.tAnimShow(promptContent);
+                    mViewHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            AnimUtils.tAnimHide(promptContent);
+                        }
+                    },2000);
+                    promptTxt.setText(String.format(getString(R.string.football_up_data_prompt), mAllMatchs.size(), mAllMatchs.size() - mMatchs.size()));
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_ANY_DATA);
                 }

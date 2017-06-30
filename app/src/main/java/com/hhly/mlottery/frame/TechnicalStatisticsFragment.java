@@ -6,13 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -29,7 +30,7 @@ import java.util.Map;
  * 技术统计
  */
 
-public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefreshLayout.OnRefreshListener{
+public class TechnicalStatisticsFragment extends Fragment implements View.OnClickListener {
 
 
     private View view;
@@ -106,16 +107,42 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
     private TextView season_1;
     private TextView season_2;
     private TextView season_3;
-    private ScrollView technical_scrollview;
+    private NestedScrollView technical_scrollview;
     private TextView match_no_data_txt;
     private Activity mActivity;
     private Context mContext;
 
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_PARAM3 = "param3";
+
+    private String mSeason;
+    private String mLeagueId;
+    private String mTeamId;
+    private LinearLayout match_error_btn;
+
+
+    int isCheckedId = 1;
+
+    public static TechnicalStatisticsFragment newInstance(String season, String leagueId, String teamId) {
+        TechnicalStatisticsFragment fragment = new TechnicalStatisticsFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, season);
+        args.putString(ARG_PARAM2, leagueId);
+        args.putString(ARG_PARAM3, teamId);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mSeason = getArguments().getString(ARG_PARAM1);
+            mLeagueId = getArguments().getString(ARG_PARAM2);
+            mTeamId = getArguments().getString(ARG_PARAM3);
+        }
     }
 
     @Nullable
@@ -135,17 +162,16 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
 
 
         Map<String, String> param = new HashMap<>();
-        param.put("season", "2016-2017");
-        param.put("leagueId", "1");
-        param.put("teamId", "1");
+        param.put("season", mSeason);
+        param.put("leagueId", mLeagueId);
+        param.put("teamId", mTeamId);
 
 
-        VolleyContentFast.requestJsonByPost(BaseURLs.TEAMTECHSTATDATA, param, new VolleyContentFast.ResponseSuccessListener<TechnicalStatisticBean>() {
+        VolleyContentFast.requestJsonByGet(BaseURLs.TEAMTECHSTATDATA, param, new VolleyContentFast.ResponseSuccessListener<TechnicalStatisticBean>() {
             @Override
             public void onResponse(TechnicalStatisticBean handicapStatisticsBean) {
 
                 if (handicapStatisticsBean.getResult() == 200) {
-
                     //季后赛
                     playoffList = handicapStatisticsBean.getPlayoffList();
                     //常规赛
@@ -153,17 +179,26 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
                     //季前赛
                     preseasonList = handicapStatisticsBean.getPreseasonList();
 
-                    inithandicapStatisticDatas(preseasonList);
-                    initEvent();
+                    if (isCheckedId == 1) {
+                        inithandicapStatisticDatas(preseasonList);
+                    } else if (isCheckedId == 2) {
+                        inithandicapStatisticDatas(regularList);
+                    } else if (isCheckedId == 3) {
+                        inithandicapStatisticDatas(playoffList);
+                    }
 
+
+                    initEvent();
                 }
             }
 
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
-
-
+                radioGroup.setVisibility(View.GONE);
+                match_error_btn.setVisibility(View.VISIBLE);
+                technical_scrollview.setVisibility(View.GONE);
+                match_no_data_txt.setVisibility(View.GONE);
             }
 
         }, TechnicalStatisticBean.class);
@@ -174,113 +209,243 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
     /*更新数据*/
     private void inithandicapStatisticDatas(List<TechnicalStatisticBean.DataBean> dataBean) {
 
-        if (dataBean.size()==0) {
+        if (dataBean == null || dataBean.size() == 0) {
+            radioGroup.setVisibility(View.VISIBLE);
             technical_scrollview.setVisibility(View.GONE);
             match_no_data_txt.setVisibility(View.VISIBLE);
+            match_error_btn.setVisibility(View.GONE);
             return;
         } else {
+            radioGroup.setVisibility(View.VISIBLE);
             technical_scrollview.setVisibility(View.VISIBLE);
             match_no_data_txt.setVisibility(View.GONE);
+            match_error_btn.setVisibility(View.GONE);
         }
 
+        if (dataBean.size() == 1) {
+            TechnicalStatisticBean.DataBean dataBean1 = dataBean.get(0);
 
-        //第一赛季
-        TechnicalStatisticBean.DataBean dataBean1 = dataBean.get(0);
-        TechnicalStatisticBean.DataBean dataBean2 = dataBean.get(1);
-        TechnicalStatisticBean.DataBean dataBean3 = dataBean.get(2);
+            //赛季时间
+            season_1.setText(dataBean1.getSeason());
+            //常规
+            routine_win_1.setText(dataBean1.getWinRoutine() + "");
 
-        //赛季时间
-        season_1.setText(dataBean1.getSeason());
-        season_2.setText(dataBean2.getSeason());
-        season_3.setText(dataBean3.getSeason());
-        //常规
-        routine_win_1.setText(dataBean1.getWinRoutine() + "");
-        routine_win_2.setText(dataBean2.getWinRoutine() + "");
-        routine_win_3.setText(dataBean3.getWinRoutine() + "");
+            routine_lose_1.setText(dataBean1.getLoseRoutine() + "");
+            //加时
+            overtime_win_1.setText(dataBean1.getWinOvertime() + "");
+            //投篮
+            shoot_zong_1.setText(dataBean1.getTotalShoot() + "(" + dataBean1.getAverageShoot() + ")" + "");
 
-        routine_lose_1.setText(dataBean1.getLoseRoutine() + "");
-        routine_lose_2.setText(dataBean2.getLoseRoutine() + "");
-        routine_lose_3.setText(dataBean3.getLoseRoutine() + "");
-        //加时
-        overtime_win_1.setText(dataBean1.getWinOvertime() + "");
-        overtime_win_2.setText(dataBean2.getWinOvertime() + "");
-        overtime_win_3.setText(dataBean3.getWinOvertime() + "");
-        overtime_lose_1.setText(dataBean1.getLoseOvertime() + "");
-        overtime_lose_2.setText(dataBean2.getLoseOvertime() + "");
-        overtime_lose_3.setText(dataBean3.getLoseOvertime() + "");
-        //投篮
-        shoot_zong_1.setText(dataBean1.getTotalShoot() + "(" + dataBean1.getAverageShoot() + ")" + "");
-        shoot_zong_2.setText(dataBean2.getTotalShoot() + "(" + dataBean1.getAverageShoot() + ")" + "");
-        shoot_zong_3.setText(dataBean3.getTotalShoot() + "(" + dataBean1.getAverageShoot() + ")" + "");
+            shoot_in_1.setText(dataBean1.getTotalShootHit() + "(" + dataBean1.getAverageShootHit() + ")" + "");
 
-        shoot_in_1.setText(dataBean1.getTotalShootHit() + "(" + dataBean1.getAverageShootHit() + ")" + "");
-        shoot_in_2.setText(dataBean2.getTotalShootHit() + "(" + dataBean1.getAverageShootHit() + ")" + "");
-        shoot_in_3.setText(dataBean3.getTotalShootHit() + "(" + dataBean1.getAverageShootHit() + ")" + "");
+            shoot_hit_1.setText(dataBean1.getPercentShot() + "");
+            //三分
+            three_points_zong_1.setText(dataBean1.getTotalThreeMin() + "(" + dataBean1.getAverageThreeMin() + ")" + "");
 
-        shoot_hit_1.setText(dataBean1.getPercentShot() + "");
-        shoot_hit_2.setText(dataBean2.getPercentShot() + "");
-        shoot_hit_3.setText(dataBean3.getPercentShot() + "");
-        //三分
-        three_points_zong_1.setText(dataBean1.getTotalThreeMin() + "(" + dataBean1.getAverageThreeMin() + ")" + "");
-        three_points_zong_2.setText(dataBean2.getTotalThreeMin() + "(" + dataBean1.getAverageThreeMin() + ")" + "");
-        three_points_zong_3.setText(dataBean3.getTotalThreeMin() + "(" + dataBean1.getAverageThreeMin() + ")" + "");
+            three_points_in_1.setText(dataBean1.getTotalThreeMinHit() + "(" + dataBean1.getAverageThreeMinHit() + ")" + "");
 
-        three_points_in_1.setText(dataBean1.getTotalThreeMinHit() + "(" + dataBean1.getAverageThreeMinHit() + ")" + "");
-        three_points_in_2.setText(dataBean2.getTotalThreeMinHit() + "(" + dataBean1.getAverageThreeMinHit() + ")" + "");
-        three_points_in_3.setText(dataBean3.getTotalThreeMinHit() + "(" + dataBean1.getAverageThreeMinHit() + ")" + "");
-
-        three_points_hit_1.setText(dataBean1.getPercentThree());
-        three_points_hit_2.setText(dataBean2.getPercentThree());
-        three_points_hit_3.setText(dataBean3.getPercentThree());
-        //罚球
-        free_throw_zong_1.setText(dataBean1.getTotalPunishBall() + "(" + dataBean1.getAveragePunishBall() + ")" + "");
-        free_throw_zong_2.setText(dataBean2.getTotalPunishBall() + "(" + dataBean1.getAveragePunishBall() + ")" + "");
-        free_throw_zong_3.setText(dataBean3.getTotalPunishBall() + "(" + dataBean1.getAveragePunishBall() + ")" + "");
+            three_points_hit_1.setText(dataBean1.getPercentThree());
+            //罚球
+            free_throw_zong_1.setText(dataBean1.getTotalPunishBall() + "(" + dataBean1.getAveragePunishBall() + ")" + "");
 
 
-        free_throw_in_1.setText(dataBean1.getTotalPunishBallHit() + "(" + dataBean1.getAveragePunishBallHit() + ")" + "");
-        free_throw_in_2.setText(dataBean2.getTotalPunishBallHit() + "(" + dataBean1.getAveragePunishBallHit() + ")" + "");
-        free_throw_in_3.setText(dataBean3.getTotalPunishBallHit() + "(" + dataBean1.getAveragePunishBallHit() + ")" + "");
+            free_throw_in_1.setText(dataBean1.getTotalPunishBallHit() + "(" + dataBean1.getAveragePunishBallHit() + ")" + "");
 
 
-        free_throw_hit_1.setText(dataBean1.getPercentThrow() + "");
-        free_throw_hit_2.setText(dataBean2.getPercentThrow() + "");
-        free_throw_hit_3.setText(dataBean3.getPercentThrow() + "");
-        //篮板
-        rebound_zong_1.setText(dataBean1.getAttack() + dataBean1.getDefend() + "");
-        rebound_zong_2.setText(dataBean2.getAttack() + dataBean1.getDefend() + "");
-        rebound_zong_3.setText(dataBean3.getAttack() + dataBean1.getDefend() + "");
+            free_throw_hit_1.setText(dataBean1.getPercentThrow() + "");
+            //篮板
+            rebound_zong_1.setText(dataBean1.getAttack() + dataBean1.getDefend() + "");
 
-        rebound_in_1.setText(dataBean1.getAttack() + "");
-        rebound_in_2.setText(dataBean2.getAttack() + "");
-        rebound_in_3.setText(dataBean3.getAttack() + "");
+            rebound_in_1.setText(dataBean1.getAttack() + "");
 
-        rebound_hit_1.setText(dataBean1.getDefend() + "");
-        rebound_hit_2.setText(dataBean2.getDefend() + "");
-        rebound_hit_3.setText(dataBean3.getDefend() + "");
+            rebound_hit_1.setText(dataBean1.getDefend() + "");
 
-        //助攻
-        assists_1.setText(dataBean1.getHelpattack() + "");
-        assists_2.setText(dataBean2.getHelpattack() + "");
-        assists_3.setText(dataBean3.getHelpattack() + "");
-        //抢断
-        steals_1.setText(dataBean1.getRob() + "");
-        steals_2.setText(dataBean2.getRob() + "");
-        steals_3.setText(dataBean3.getRob() + "");
-        //盖帽
-        shot_1.setText(dataBean1.getCover() + "");
-        shot_2.setText(dataBean2.getCover() + "");
-        shot_3.setText(dataBean3.getCover() + "");
-        //犯规
-        foul_1.setText(dataBean1.getFoul() + "");
-        foul_2.setText(dataBean2.getFoul() + "");
-        foul_3.setText(dataBean3.getFoul() + "");
-        //失误
-        error_1.setText(dataBean1.getMisplay() + "");
-        error_2.setText(dataBean2.getMisplay() + "");
-        error_3.setText(dataBean3.getMisplay() + "");
+            //助攻
+            assists_1.setText(dataBean1.getHelpattack() + "");
+            //抢断
+            steals_1.setText(dataBean1.getRob() + "");
+            //盖帽
+            shot_1.setText(dataBean1.getCover() + "");
+            //犯规
+            foul_1.setText(dataBean1.getFoul() + "");
+            //失误
+            error_1.setText(dataBean1.getMisplay() + "");
+
+        } else if (dataBean.size() == 2) {
 
 
+            //第一赛季
+            TechnicalStatisticBean.DataBean dataBean1 = dataBean.get(0);
+            TechnicalStatisticBean.DataBean dataBean2 = dataBean.get(1);
+
+            //赛季时间
+            season_1.setText(dataBean1.getSeason());
+            season_2.setText(dataBean2.getSeason());
+            //常规
+            routine_win_1.setText(dataBean1.getWinRoutine() + "");
+            routine_win_2.setText(dataBean2.getWinRoutine() + "");
+
+            routine_lose_1.setText(dataBean1.getLoseRoutine() + "");
+            routine_lose_2.setText(dataBean2.getLoseRoutine() + "");
+            //加时
+            overtime_win_1.setText(dataBean1.getWinOvertime() + "");
+            overtime_win_2.setText(dataBean2.getWinOvertime() + "");
+            overtime_lose_1.setText(dataBean1.getLoseOvertime() + "");
+            overtime_lose_2.setText(dataBean2.getLoseOvertime() + "");
+            //投篮
+            shoot_zong_1.setText(dataBean1.getTotalShoot() + "(" + dataBean1.getAverageShoot() + ")" + "");
+            shoot_zong_2.setText(dataBean2.getTotalShoot() + "(" + dataBean2.getAverageShoot() + ")" + "");
+
+            shoot_in_1.setText(dataBean1.getTotalShootHit() + "(" + dataBean1.getAverageShootHit() + ")" + "");
+            shoot_in_2.setText(dataBean2.getTotalShootHit() + "(" + dataBean2.getAverageShootHit() + ")" + "");
+
+            shoot_hit_1.setText(dataBean1.getPercentShot() + "");
+            shoot_hit_2.setText(dataBean2.getPercentShot() + "");
+            //三分
+            three_points_zong_1.setText(dataBean1.getTotalThreeMin() + "(" + dataBean1.getAverageThreeMin() + ")" + "");
+            three_points_zong_2.setText(dataBean2.getTotalThreeMin() + "(" + dataBean2.getAverageThreeMin() + ")" + "");
+
+            three_points_in_1.setText(dataBean1.getTotalThreeMinHit() + "(" + dataBean1.getAverageThreeMinHit() + ")" + "");
+            three_points_in_2.setText(dataBean2.getTotalThreeMinHit() + "(" + dataBean2.getAverageThreeMinHit() + ")" + "");
+
+            three_points_hit_1.setText(dataBean1.getPercentThree());
+            three_points_hit_2.setText(dataBean2.getPercentThree());
+            //罚球
+            free_throw_zong_1.setText(dataBean1.getTotalPunishBall() + "(" + dataBean1.getAveragePunishBall() + ")" + "");
+            free_throw_zong_2.setText(dataBean2.getTotalPunishBall() + "(" + dataBean2.getAveragePunishBall() + ")" + "");
+
+
+            free_throw_in_1.setText(dataBean1.getTotalPunishBallHit() + "(" + dataBean1.getAveragePunishBallHit() + ")" + "");
+            free_throw_in_2.setText(dataBean2.getTotalPunishBallHit() + "(" + dataBean2.getAveragePunishBallHit() + ")" + "");
+
+
+            free_throw_hit_1.setText(dataBean1.getPercentThrow() + "");
+            free_throw_hit_2.setText(dataBean2.getPercentThrow() + "");
+            //篮板
+            rebound_zong_1.setText(dataBean1.getAttack() + dataBean1.getDefend() + "");
+            rebound_zong_2.setText(dataBean2.getAttack() + dataBean2.getDefend() + "");
+
+            rebound_in_1.setText(dataBean1.getAttack() + "");
+            rebound_in_2.setText(dataBean2.getAttack() + "");
+
+            rebound_hit_1.setText(dataBean1.getDefend() + "");
+            rebound_hit_2.setText(dataBean2.getDefend() + "");
+
+            //助攻
+            assists_1.setText(dataBean1.getHelpattack() + "");
+            assists_2.setText(dataBean2.getHelpattack() + "");
+            //抢断
+            steals_1.setText(dataBean1.getRob() + "");
+            steals_2.setText(dataBean2.getRob() + "");
+            //盖帽
+            shot_1.setText(dataBean1.getCover() + "");
+            shot_2.setText(dataBean2.getCover() + "");
+            //犯规
+            foul_1.setText(dataBean1.getFoul() + "");
+            foul_2.setText(dataBean2.getFoul() + "");
+            //失误
+            error_1.setText(dataBean1.getMisplay() + "");
+            error_2.setText(dataBean2.getMisplay() + "");
+
+        } else {
+
+            //第一赛季
+            TechnicalStatisticBean.DataBean dataBean1 = dataBean.get(0);
+            TechnicalStatisticBean.DataBean dataBean2 = dataBean.get(1);
+            TechnicalStatisticBean.DataBean dataBean3 = dataBean.get(2);
+
+            //赛季时间
+            season_1.setText(dataBean1.getSeason());
+            season_2.setText(dataBean2.getSeason());
+            season_3.setText(dataBean3.getSeason());
+            //常规
+            routine_win_1.setText(dataBean1.getWinRoutine() + "");
+            routine_win_2.setText(dataBean2.getWinRoutine() + "");
+            routine_win_3.setText(dataBean3.getWinRoutine() + "");
+
+            routine_lose_1.setText(dataBean1.getLoseRoutine() + "");
+            routine_lose_2.setText(dataBean2.getLoseRoutine() + "");
+            routine_lose_3.setText(dataBean3.getLoseRoutine() + "");
+            //加时
+            overtime_win_1.setText(dataBean1.getWinOvertime() + "");
+            overtime_win_2.setText(dataBean2.getWinOvertime() + "");
+            overtime_win_3.setText(dataBean3.getWinOvertime() + "");
+            overtime_lose_1.setText(dataBean1.getLoseOvertime() + "");
+            overtime_lose_2.setText(dataBean2.getLoseOvertime() + "");
+            overtime_lose_3.setText(dataBean3.getLoseOvertime() + "");
+            //投篮
+            shoot_zong_1.setText(dataBean1.getTotalShoot() + "(" + dataBean1.getAverageShoot() + ")" + "");
+            shoot_zong_2.setText(dataBean2.getTotalShoot() + "(" + dataBean2.getAverageShoot() + ")" + "");
+            shoot_zong_3.setText(dataBean3.getTotalShoot() + "(" + dataBean3.getAverageShoot() + ")" + "");
+
+            shoot_in_1.setText(dataBean1.getTotalShootHit() + "(" + dataBean1.getAverageShootHit() + ")" + "");
+            shoot_in_2.setText(dataBean2.getTotalShootHit() + "(" + dataBean2.getAverageShootHit() + ")" + "");
+            shoot_in_3.setText(dataBean3.getTotalShootHit() + "(" + dataBean3.getAverageShootHit() + ")" + "");
+
+            shoot_hit_1.setText(dataBean1.getPercentShot() + "");
+            shoot_hit_2.setText(dataBean2.getPercentShot() + "");
+            shoot_hit_3.setText(dataBean3.getPercentShot() + "");
+            //三分
+            three_points_zong_1.setText(dataBean1.getTotalThreeMin() + "(" + dataBean1.getAverageThreeMin() + ")" + "");
+            three_points_zong_2.setText(dataBean2.getTotalThreeMin() + "(" + dataBean2.getAverageThreeMin() + ")" + "");
+            three_points_zong_3.setText(dataBean3.getTotalThreeMin() + "(" + dataBean3.getAverageThreeMin() + ")" + "");
+
+            three_points_in_1.setText(dataBean1.getTotalThreeMinHit() + "(" + dataBean1.getAverageThreeMinHit() + ")" + "");
+            three_points_in_2.setText(dataBean2.getTotalThreeMinHit() + "(" + dataBean2.getAverageThreeMinHit() + ")" + "");
+            three_points_in_3.setText(dataBean3.getTotalThreeMinHit() + "(" + dataBean3.getAverageThreeMinHit() + ")" + "");
+
+            three_points_hit_1.setText(dataBean1.getPercentThree());
+            three_points_hit_2.setText(dataBean2.getPercentThree());
+            three_points_hit_3.setText(dataBean3.getPercentThree());
+            //罚球
+            free_throw_zong_1.setText(dataBean1.getTotalPunishBall() + "(" + dataBean1.getAveragePunishBall() + ")" + "");
+            free_throw_zong_2.setText(dataBean2.getTotalPunishBall() + "(" + dataBean2.getAveragePunishBall() + ")" + "");
+            free_throw_zong_3.setText(dataBean3.getTotalPunishBall() + "(" + dataBean3.getAveragePunishBall() + ")" + "");
+
+
+            free_throw_in_1.setText(dataBean1.getTotalPunishBallHit() + "(" + dataBean1.getAveragePunishBallHit() + ")" + "");
+            free_throw_in_2.setText(dataBean2.getTotalPunishBallHit() + "(" + dataBean2.getAveragePunishBallHit() + ")" + "");
+            free_throw_in_3.setText(dataBean3.getTotalPunishBallHit() + "(" + dataBean3.getAveragePunishBallHit() + ")" + "");
+
+
+            free_throw_hit_1.setText(dataBean1.getPercentThrow() + "");
+            free_throw_hit_2.setText(dataBean2.getPercentThrow() + "");
+            free_throw_hit_3.setText(dataBean3.getPercentThrow() + "");
+            //篮板
+            rebound_zong_1.setText(dataBean1.getAttack() + dataBean1.getDefend() + "");
+            rebound_zong_2.setText(dataBean2.getAttack() + dataBean2.getDefend() + "");
+            rebound_zong_3.setText(dataBean3.getAttack() + dataBean3.getDefend() + "");
+
+            rebound_in_1.setText(dataBean1.getAttack() + "");
+            rebound_in_2.setText(dataBean2.getAttack() + "");
+            rebound_in_3.setText(dataBean3.getAttack() + "");
+
+            rebound_hit_1.setText(dataBean1.getDefend() + "");
+            rebound_hit_2.setText(dataBean2.getDefend() + "");
+            rebound_hit_3.setText(dataBean3.getDefend() + "");
+
+            //助攻
+            assists_1.setText(dataBean1.getHelpattack() + "");
+            assists_2.setText(dataBean2.getHelpattack() + "");
+            assists_3.setText(dataBean3.getHelpattack() + "");
+            //抢断
+            steals_1.setText(dataBean1.getRob() + "");
+            steals_2.setText(dataBean2.getRob() + "");
+            steals_3.setText(dataBean3.getRob() + "");
+            //盖帽
+            shot_1.setText(dataBean1.getCover() + "");
+            shot_2.setText(dataBean2.getCover() + "");
+            shot_3.setText(dataBean3.getCover() + "");
+            //犯规
+            foul_1.setText(dataBean1.getFoul() + "");
+            foul_2.setText(dataBean2.getFoul() + "");
+            foul_3.setText(dataBean3.getFoul() + "");
+            //失误
+            error_1.setText(dataBean1.getMisplay() + "");
+            error_2.setText(dataBean2.getMisplay() + "");
+            error_3.setText(dataBean3.getMisplay() + "");
+
+        }
     }
 
     private void initEvent() {
@@ -294,14 +459,23 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
 
                 switch (radioButtonId) {
                     case R.id.odd_plate_btn://季前赛
-                        inithandicapStatisticDatas(preseasonList);
+                        isCheckedId = 1;
+                        if (preseasonList != null) {
+                            inithandicapStatisticDatas(preseasonList);
+                        }
                         break;
                     case R.id.odd_big_btn://常规赛
-                        inithandicapStatisticDatas(regularList);
+                        isCheckedId = 2;
+                        if (regularList != null) {
+                            inithandicapStatisticDatas(regularList);
+                        }
 
                         break;
                     case R.id.odd_op_btn://季后赛
-                        inithandicapStatisticDatas(playoffList);
+                        isCheckedId = 3;
+                        if (playoffList != null) {
+                            inithandicapStatisticDatas(playoffList);
+                        }
 
                         break;
                     default:
@@ -323,9 +497,14 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
         playoff = (RadioButton) view.findViewById(R.id.odd_op_btn);
 
 
-        technical_scrollview = (ScrollView) view.findViewById(R.id.technical_scrollview);
+        technical_scrollview = (NestedScrollView) view.findViewById(R.id.technical_scrollview);
         //暂无数据
         match_no_data_txt = (TextView) view.findViewById(R.id.match_no_data_txt);
+
+        //网络异常
+        match_error_btn = (LinearLayout) view.findViewById(R.id.match_error_ll);
+        view.findViewById(R.id.match_error_btn).setOnClickListener(this);
+
         //赛季时间
         season_1 = (TextView) view.findViewById(R.id.season_1);
         season_2 = (TextView) view.findViewById(R.id.season_2);
@@ -412,17 +591,33 @@ public class TechnicalStatisticsFragment extends Fragment  implements  SwipeRefr
 
 
     }
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.mActivity= (Activity) context;
+
+    /**
+     * 父类调用下拉刷新
+     */
+    public void refreshFragment(String season) {
+        mSeason = season;
+        ;
+        initData();
     }
 
     @Override
-    public void onRefresh() {
-        preseason_games.setChecked(true);
-        regular_season.setChecked(false);
-        playoff.setChecked(false);
-        initData();
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.mActivity = (Activity) context;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+
+            case R.id.match_error_btn:
+                initData();
+                break;
+
+            default:
+                break;
+
+        }
     }
 }

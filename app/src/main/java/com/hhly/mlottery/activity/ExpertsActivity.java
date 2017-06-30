@@ -1,11 +1,9 @@
 package com.hhly.mlottery.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -15,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,10 +22,8 @@ import com.hhly.mlottery.adapter.ExpertsListAdapter;
 import com.hhly.mlottery.bean.MostExpertBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
-import com.hhly.mlottery.util.PreferenceUtil;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
@@ -58,7 +53,6 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
     private TextView match_no_data_txt;
     private LinearLayout match_error_btn;
 
-    private View emptyView;
     private final static int VIEW_STATUS_LOADING = 11;
     private final static int VIEW_STATUS_SUCCESS = 33;
     private static final int VIEW_STATUS_NET_ERROR = 44;
@@ -66,12 +60,8 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
     public final static String INTENT_PARAM_THIRDID = "thirdId";
     public final static String INTENT_PARAM_JUMPURL = "key";
-    public final static String INTENT_PARAM_INDEX = "index";
     public final static String INTENT_PARAM_TYPE = "type";
     public final static String INTENT_PARAM_TITLE = "infoTypeName";
-    public static final String BUNDLE_PARM_TITLE = "headTitle";
-    public static final String NET_PARM_PAGE = "currentPage";//网络请求的参数key  页数
-    public static final String BUNDLE_PARM_INFOTYPE = "infoType";//网络请求的参数key  列表类型
     private View headView;
     private String expertId;
 
@@ -213,7 +203,6 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
     private void initView() {
 
-
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.match_swiperefreshlayout);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -234,8 +223,6 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
         px_line = (LinearLayout) findViewById(R.id.px_line);
         px_line.setVisibility(View.GONE);
-        emptyView = View.inflate(this, R.layout.layout_nodata, null);
-
 
         TextView public_txt_title = (TextView) findViewById(R.id.public_txt_title);
         public_txt_title.setText(getString(R.string.home_expert_title_name));
@@ -273,11 +260,9 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
 
             default:
                 break;
-
         }
 
     }
-
     /*加载头部数据*/
     public void setHeaderDatas(MostExpertBean.ExpertBean headerDatas) {
         try {

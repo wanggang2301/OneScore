@@ -1,5 +1,6 @@
 package com.hhly.mlottery.frame.basketballframe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,9 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.activity.BasketballTeamActivity;
 import com.hhly.mlottery.adapter.basketball.BasketDatabaseDetailsAdapter;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseHandicapBean;
 import com.hhly.mlottery.bean.basket.basketdatabase.BasketDatabaseHandicapDetailsBean;
+import com.hhly.mlottery.callback.BasketTeamParams;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 import com.hhly.mlottery.widget.NoScrollListView;
@@ -282,7 +285,10 @@ public class BasketDatabaseHandicapFragment extends Fragment implements View.OnC
         basketballHandicpDetailsClickListener = new BasketballHandicpDetailsClickListener() {
             @Override
             public void IntegralDetailsOnClick(View view, BasketDatabaseHandicapDetailsBean teamData) {
-//                Toast.makeText(getContext(), teamData.getTeamName(), Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(getActivity(), BasketballTeamActivity.class);
+                intent.putExtra(BasketTeamParams.LEAGUE_ID,mLeagueId);
+                intent.putExtra(BasketTeamParams.TEAM_ID,teamData.getTeamId());
+                startActivity(intent);
             }
         };
     }

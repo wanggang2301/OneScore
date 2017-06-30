@@ -46,6 +46,7 @@ import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFilterEventBusE
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchFocusEventBusEntity;
 import com.hhly.mlottery.frame.footballframe.eventbus.ScoresMatchSettingEventBusEntity;
 import com.hhly.mlottery.frame.scorefrag.FootBallScoreFragment;
+import com.hhly.mlottery.util.AnimUtils;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.FocusUtils;
@@ -152,6 +153,9 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
     private int mEntryType; // 标记入口 判断是从哪里进来的 (0:首页入口  1:新导航条入口)
 
+    private LinearLayout promptContent;
+    private TextView promptTxt;
+
     public static ResultFragment newInstance(String param1, String param2) {
         ResultFragment fragment = new ResultFragment();
         Bundle args = new Bundle();
@@ -193,6 +197,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     mSwipeRefreshLayout.setRefreshing(false);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
+
                     break;
                 case VIEW_STATUS_NET_ERROR:
                     if (isLoadedData) {
@@ -301,6 +306,10 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         new Handler().postDelayed(mLoadingDataThread, 0);
+
+
+        promptContent = (LinearLayout) mView.findViewById(R.id.ll_prompt_content);
+        promptTxt = (TextView) mView.findViewById(R.id.tv_prompt_txt);
 
         setDialog();
     }
@@ -486,7 +495,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                     @Override
                     public void onItemClick(View view, String data) {
-                        if(HandMatchId.handId(getActivity(), data)) {
+                        if (HandMatchId.handId(getActivity(), data)) {
 
                             String thirdId = data;
                             Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
@@ -499,6 +508,24 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
 
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                 isLoadedData = true;
+
+                // 更新提示
+                AnimUtils.tAnimShow(promptContent);
+                mViewHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        AnimUtils.tAnimHide(promptContent);
+                    }
+                }, 2000);
+                int currentSize = 0;
+                if (current != null && current.getMatch() != null) {
+                    currentSize = current.getMatch().size();
+                }
+                int previousSize = 0;
+                if (previous != null && previous.getMatch() != null) {
+                    previousSize = previous.getMatch().size();
+                }
+                promptTxt.setText(String.format(getString(R.string.football_up_data_prompt), (currentSize + previousSize), mAllMatchs.size() - mMatchs.size()));
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -714,6 +741,16 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 }
                 updateAdapter();
                 currentDatePosition = position;
+
+                // 更新提示
+                AnimUtils.tAnimShow(promptContent);
+                mViewHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        AnimUtils.tAnimHide(promptContent);
+                    }
+                }, 2000);
+                promptTxt.setText(String.format(getString(R.string.football_up_data_prompt), schedulelist.size(), mAllMatchs.size() - mMatchs.size()));
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override

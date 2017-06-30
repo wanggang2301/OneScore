@@ -3,7 +3,7 @@
 
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="item_filtrate_match_text">12sp</dimen>
-    
+
     <dimen name="item_football_racename">13sp</dimen>
     <dimen name="item_football_time">13sp</dimen>
     <dimen name="keep_time">13sp</dimen>
@@ -19,21 +19,20 @@
     <dimen name="item_football_handicap_value">13sp</dimen>
     <dimen name="item_football_right_odds">13sp</dimen>
     <dimen name="item_football_right_mid_score">13sp</dimen>
-    
-    
+
+
     <dimen name="number_title">14sp</dimen>
     <dimen name="tennis_score_item">13sp</dimen>
     <dimen name="home_pager_title">15sp</dimen>
     <dimen name="home_pager_user_title">17sp</dimen>
     <dimen name="number_desc">12sp</dimen>
-    
+
     <dimen name="item_football_international_teamname_max_width">214dp</dimen>
-	
+
     <dimen name="item_football_international_card">10sp</dimen>
 
     <dimen name="activity_football_match_detail_teamname">15sp</dimen>
     <dimen name="activity_football_match_detail_teamname_hometag">10sp</dimen>
-
 
 
     <dimen name="football_icon_x">100px</dimen>
@@ -49,6 +48,8 @@
     <dimen name="info_center_title">13sp</dimen>
     <dimen name="info_center_desc">10sp</dimen>
     <dimen name="info_center_value">20sp</dimen>
+
+    <dimen name="focus_notice">5sp</dimen>
 
 </resources>
 
