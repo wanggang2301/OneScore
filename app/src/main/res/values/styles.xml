@@ -1200,6 +1200,10 @@
         <item name="android:textColor">@color/betting_recommend_issue_wanfa_color</item>
         <item name="android:textSize">@dimen/text_size_13</item>
     </style>
+    <style name="betting_recommend_issue_fabu_key_xhdpi">
+        <item name="android:textColor">@color/betting_recommend_issue_wanfa_color</item>
+        <item name="android:textSize">@dimen/text_size_11</item>
+    </style>
 
     <style name="betting_recommend_issue_fabu_jiage">
         <item name="android:textColor">@color/betting_recommend_issue_jiage_color</item>
