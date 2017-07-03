@@ -202,12 +202,24 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
         BottomOddsItem bottomOddsItem = new BottomOddsItem();
 
         if (isNULLOrEmpty(webodds.getLeft()) || isNULLOrEmpty(webodds.getMiddle()) || isNULLOrEmpty(webodds.getRight()) || isNULLOrEmpty(b.getOdd().getLeft()) || isNULLOrEmpty(b.getOdd().getMiddle()) || isNULLOrEmpty(b.getOdd().getRight())) {
-            bottomOddsItem.setLeft(webodds.getLeft());
-            bottomOddsItem.setMiddle(webodds.getMiddle());
-            bottomOddsItem.setRight(webodds.getRight());
-            bottomOddsItem.setLeftUp("0");
-            bottomOddsItem.setMiddleUp("0");
-            bottomOddsItem.setRightUp("0");
+
+            if (isNULLOrEmpty(webodds.getLeft()) || isNULLOrEmpty(webodds.getMiddle()) || isNULLOrEmpty(webodds.getRight())) {
+                bottomOddsItem.setLeft("0");
+                bottomOddsItem.setMiddle("0");
+                bottomOddsItem.setRight("0");
+                bottomOddsItem.setLeftUp("0");
+                bottomOddsItem.setMiddleUp("0");
+                bottomOddsItem.setRightUp("0");
+            } else {
+                bottomOddsItem.setLeft(webodds.getLeft());
+                bottomOddsItem.setMiddle(webodds.getMiddle());
+                bottomOddsItem.setRight(webodds.getRight());
+                bottomOddsItem.setLeftUp("0");
+                bottomOddsItem.setMiddleUp("0");
+                bottomOddsItem.setRightUp("0");
+            }
+
+
         } else {
 
             if (Float.parseFloat(b.getOdd().getLeft()) > Float.parseFloat(webodds.getLeft())) {
