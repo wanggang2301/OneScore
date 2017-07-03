@@ -495,7 +495,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 mAdapter.setmOnItemClickListener(new RecyclerViewItemClickListener() {
                     @Override
                     public void onItemClick(View view, String data) {
-                        if(HandMatchId.handId(getActivity(), data)) {
+                        if (HandMatchId.handId(getActivity(), data)) {
 
                             String thirdId = data;
                             Intent intent = new Intent(getActivity(), FootballMatchDetailActivity.class);
@@ -516,8 +516,16 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     public void run() {
                         AnimUtils.tAnimHide(promptContent);
                     }
-                },2000);
-                promptTxt.setText(String.format(getString(R.string.football_up_data_prompt), mAllMatchs.size(), mAllMatchs.size() - mMatchs.size()));
+                }, 2000);
+                int currentSize = 0;
+                if (current != null && current.getMatch() != null) {
+                    currentSize = current.getMatch().size();
+                }
+                int previousSize = 0;
+                if (previous != null && previous.getMatch() != null) {
+                    previousSize = previous.getMatch().size();
+                }
+                promptTxt.setText(String.format(getString(R.string.football_up_data_prompt), (currentSize + previousSize), mAllMatchs.size() - mMatchs.size()));
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override
@@ -741,8 +749,8 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                     public void run() {
                         AnimUtils.tAnimHide(promptContent);
                     }
-                },2000);
-                promptTxt.setText(String.format(getString(R.string.football_up_data_prompt), mAllMatchs.size(), mAllMatchs.size() - mMatchs.size()));
+                }, 2000);
+                promptTxt.setText(String.format(getString(R.string.football_up_data_prompt), schedulelist.size(), mAllMatchs.size() - mMatchs.size()));
             }
         }, new VolleyContentFast.ResponseErrorListener() {
             @Override

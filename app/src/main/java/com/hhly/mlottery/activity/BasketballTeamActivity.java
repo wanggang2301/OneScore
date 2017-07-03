@@ -247,7 +247,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
                 mCurrentPosition=i;
                 chooseSeasonToRefresh();
             }
-        });
+        });//
     }
 
     @Override

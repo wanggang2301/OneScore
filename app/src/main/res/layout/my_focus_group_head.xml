@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/account_tab_color"
+    android:gravity="center_vertical"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp">
+
+
+    <ImageView
+        android:id="@+id/groupIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/score_default" />
+
+
+    <TextView
+        android:id="@+id/groupto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/groupIcon"
+        android:textColor="@color/red"
+
+        android:textSize="16sp" />
+
+     <ImageView
+         android:id="@+id/groupIncome"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentRight="true"
+         android:layout_centerVertical="true"
+         android:layout_marginRight="18dp"
+         android:src="@mipmap/iconfont_xiala_2" />
+
+     <ImageView
+         android:id="@+id/groupStar"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_centerVertical="true"
+         android:layout_marginRight="15dp"
+         android:layout_toLeftOf="@id/groupIncome"
+         android:src="@mipmap/attention_star2" />
+
+
+</RelativeLayout>
