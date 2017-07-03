@@ -225,47 +225,94 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
 
             //赛季时间
             season_1.setText(dataBean1.getSeason());
+            season_2.setText("--");
+            season_3.setText("--");
             //常规
             routine_win_1.setText(dataBean1.getWinRoutine() + "");
+            routine_win_2.setText("--");
+            routine_win_3.setText("--");
 
             routine_lose_1.setText(dataBean1.getLoseRoutine() + "");
+            routine_lose_2.setText("--");
+            routine_lose_3.setText("--");
             //加时
             overtime_win_1.setText(dataBean1.getWinOvertime() + "");
+            overtime_win_2.setText("--");
+            overtime_win_3.setText("--");
+            overtime_lose_1.setText(dataBean1.getLoseOvertime() + "");
+            overtime_lose_2.setText("--");
+            overtime_lose_3.setText("--");
             //投篮
             shoot_zong_1.setText(dataBean1.getTotalShoot() + "(" + dataBean1.getAverageShoot() + ")" + "");
+            shoot_zong_2.setText("--");
+            shoot_zong_3.setText("--");
 
             shoot_in_1.setText(dataBean1.getTotalShootHit() + "(" + dataBean1.getAverageShootHit() + ")" + "");
+            shoot_in_2.setText("--");
+            shoot_in_3.setText("--");
 
             shoot_hit_1.setText(dataBean1.getPercentShot() + "");
+            shoot_hit_2.setText("--");
+            shoot_hit_3.setText("--");
             //三分
             three_points_zong_1.setText(dataBean1.getTotalThreeMin() + "(" + dataBean1.getAverageThreeMin() + ")" + "");
+            three_points_zong_2.setText("--");
+            three_points_zong_3.setText("--");
 
             three_points_in_1.setText(dataBean1.getTotalThreeMinHit() + "(" + dataBean1.getAverageThreeMinHit() + ")" + "");
+            three_points_in_2.setText("--");
+            three_points_in_3.setText("--");
 
             three_points_hit_1.setText(dataBean1.getPercentThree());
+            three_points_hit_2.setText("--");
+            three_points_hit_3.setText("--");
             //罚球
             free_throw_zong_1.setText(dataBean1.getTotalPunishBall() + "(" + dataBean1.getAveragePunishBall() + ")" + "");
+            free_throw_zong_2.setText("--");
+            free_throw_zong_3.setText("--");
+
 
             free_throw_in_1.setText(dataBean1.getTotalPunishBallHit() + "(" + dataBean1.getAveragePunishBallHit() + ")" + "");
+            free_throw_in_2.setText("--");
+            free_throw_in_3.setText("--");
+
 
             free_throw_hit_1.setText(dataBean1.getPercentThrow() + "");
+            free_throw_hit_2.setText("--");
+            free_throw_hit_3.setText("--");
             //篮板
             rebound_zong_1.setText(dataBean1.getAttack() + dataBean1.getDefend() + "");
+            rebound_zong_2.setText("--");
+            rebound_zong_3.setText("--");
 
             rebound_in_1.setText(dataBean1.getAttack() + "");
+            rebound_in_2.setText("--");
+            rebound_in_3.setText("--");
 
             rebound_hit_1.setText(dataBean1.getDefend() + "");
+            rebound_hit_2.setText("--");
+            rebound_hit_3.setText("--");
 
             //助攻
             assists_1.setText(dataBean1.getHelpattack() + "");
+            assists_2.setText("--");
+            assists_3.setText("--");
             //抢断
             steals_1.setText(dataBean1.getRob() + "");
+            steals_2.setText("--");
+            steals_3.setText("--");
             //盖帽
             shot_1.setText(dataBean1.getCover() + "");
+            shot_2.setText("--");
+            shot_3.setText("--");
             //犯规
             foul_1.setText(dataBean1.getFoul() + "");
+            foul_2.setText("--");
+            foul_3.setText("--");
             //失误
             error_1.setText(dataBean1.getMisplay() + "");
+            error_2.setText("--");
+            error_3.setText("--");
 
         } else if (dataBean.size() == 2) {
 
@@ -342,6 +389,73 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
             //失误
             error_1.setText(dataBean1.getMisplay() + "");
             error_2.setText(dataBean2.getMisplay() + "");
+
+
+            //赛季时间
+            season_3.setText("--");
+            //常规
+
+            routine_win_3.setText("--");
+
+
+            routine_lose_3.setText("--");
+            //加时
+
+            overtime_win_3.setText("--");
+
+            overtime_lose_3.setText("--");
+            //投篮
+
+            shoot_zong_3.setText("--");
+
+
+            shoot_in_3.setText("--");
+
+
+            shoot_hit_3.setText("--");
+            //三分
+
+            three_points_zong_3.setText("--");
+
+            three_points_in_3.setText("--");
+
+
+            three_points_hit_3.setText("--");
+            //罚球
+
+            free_throw_zong_3.setText("--");
+
+
+            free_throw_in_3.setText("--");
+
+
+            free_throw_hit_3.setText("--");
+            //篮板
+
+            rebound_zong_3.setText("--");
+
+
+            rebound_in_3.setText("--");
+
+
+            rebound_hit_3.setText("--");
+
+            //助攻
+
+            assists_3.setText("--");
+            //抢断
+
+            steals_3.setText("--");
+            //盖帽
+
+            shot_3.setText("--");
+            //犯规
+
+            foul_3.setText("--");
+            //失误
+
+            error_3.setText("--");
+
 
         } else {
 
