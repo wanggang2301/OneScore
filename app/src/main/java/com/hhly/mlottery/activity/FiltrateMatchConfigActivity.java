@@ -124,6 +124,7 @@ public class FiltrateMatchConfigActivity extends BaseActivity implements OnClick
                         break;
                     default:
                         break;
+
                 }
                 transaction.commit();
             }

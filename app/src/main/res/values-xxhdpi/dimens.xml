@@ -39,6 +39,7 @@
 
     <dimen name="football_cardview_margin">2.5dp</dimen>
     <dimen name="snooker_header">36dp</dimen>
+    <dimen name="focus_notice">3sp</dimen>
 
 </resources>
 
