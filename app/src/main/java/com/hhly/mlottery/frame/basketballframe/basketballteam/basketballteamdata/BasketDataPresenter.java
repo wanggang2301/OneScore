@@ -46,7 +46,7 @@ public class BasketDataPresenter extends BasePresenter<BasketDataContract.View> 
             @Override
             public void onError(Throwable e) {
                 mView.setRefresh(false);
-                mView.onError();
+                mView.showNoData();
 //                L.e("?????",e.getMessage().toString());
             }
 
