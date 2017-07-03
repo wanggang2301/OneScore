@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
@@ -202,7 +201,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
                 case VIEW_STATUS_NET_ERROR:
                     if (isLoadedData) {
                         if (mContext != null) {
-                            Toast.makeText(mContext, R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(mContext, R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         mLoadingLayout.setVisibility(View.GONE);

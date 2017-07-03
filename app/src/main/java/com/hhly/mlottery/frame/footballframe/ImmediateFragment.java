@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.R;
@@ -72,7 +71,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.BindView;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -348,7 +346,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                     mSwipeRefreshLayout.setRefreshing(false);
                     if (isLoadedData) {
 //                        if (!isPause && getActivity() != null && !isError) {
-                        Toast.makeText(mContext, R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(mContext, R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
                     } else {
                         //mSwipeRefreshLayout.setVisibility(View.GONE);
                         titleContainer.setVisibility(View.GONE);

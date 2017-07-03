@@ -13,12 +13,9 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.hhly.mlottery.MyApp;
@@ -732,7 +729,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                         break;
                     case VIEW_STATUS_NET_ERROR:
                         if (isLoadedData) {
-                            Toast.makeText(MyApp.getContext(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(MyApp.getContext(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
                         } else {
                             fragment.titleContainer.setVisibility(View.GONE);
                             fragment.networkExceptionLayout.setVisibility(View.VISIBLE);

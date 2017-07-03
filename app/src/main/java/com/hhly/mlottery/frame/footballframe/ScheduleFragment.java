@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.FiltrateMatchConfigActivity;
@@ -306,7 +305,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                 case VIEW_STATUS_NET_ERROR:
                     mSwipeRefreshLayout.setRefreshing(false);
                     if (isLoadData) {
-                        Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
                     } else {
                         mLine.setVisibility(View.GONE);
                         mLoadingLayout.setVisibility(View.GONE);

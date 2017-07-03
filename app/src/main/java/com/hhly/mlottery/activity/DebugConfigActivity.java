@@ -41,7 +41,7 @@ public class DebugConfigActivity extends BaseActivity {
         MobclickAgent.openActivityDurationTrack(false);
 
         Button config_submit = (Button) findViewById(R.id.config_submit);
-        Button bt_zidingyi = (Button) findViewById(R.id.bt_zidingyi);
+        final Button bt_zidingyi = (Button) findViewById(R.id.bt_zidingyi);
 
 
         //国内测试环境
@@ -178,11 +178,10 @@ public class DebugConfigActivity extends BaseActivity {
                 //   public LeagueCup(int type, List<String> thirdId, String racename, String raceId, int count, boolean hot) {
 
 
+                /// Intent intent = new Intent(DebugConfigActivity.this, MyFocusActivity.class);
+                // intent.putExtra("type",0);
 
-                Intent intent = new Intent(DebugConfigActivity.this, MyFocusActivity.class);
-                intent.putExtra("type",0);
-
-                startActivity(intent);
+                // startActivity(intent);
 
             }
         });
