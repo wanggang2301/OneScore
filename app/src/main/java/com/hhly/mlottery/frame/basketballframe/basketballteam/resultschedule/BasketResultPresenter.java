@@ -34,7 +34,7 @@ public class BasketResultPresenter extends BasePresenter<BasketResultContract.Vi
     }
 
     @Override
-    public void refreshData(String season, String leagueId, String teamId, String pageNum) {
+    public void refreshData(String season, String leagueId, String teamId) {
         mPage.index=1;
         Observable<BasketTeamResultBean> observable=mRepository.getMatchResult(season,leagueId,teamId,mPage.index+"");
 
@@ -47,7 +47,7 @@ public class BasketResultPresenter extends BasePresenter<BasketResultContract.Vi
 
             @Override
             public void onError(Throwable e) {
-                mView.onError();
+                mView.showNoData();
                 mView.setRefresh(false);
             }
 
@@ -66,8 +66,8 @@ public class BasketResultPresenter extends BasePresenter<BasketResultContract.Vi
     }
 
     @Override
-    public void refreshDataByPage(String season, String leagueId, String teamId, String pageNum) {
-        Observable<BasketTeamResultBean> observable=mRepository.getMatchResult("2016-2017","1","1",mPage.index+"");
+    public void refreshDataByPage(String season, String leagueId, String teamId) {
+        Observable<BasketTeamResultBean> observable=mRepository.getMatchResult(season,leagueId,teamId,mPage.index+"");
         addSubscription(observable, new Subscriber<BasketTeamResultBean>() {
             @Override
             public void onCompleted() {
