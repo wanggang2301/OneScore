@@ -496,6 +496,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 // if (mMatchDetail != null && !"-1".equals(mMatchDetail.getLiveStatus())) {
                 if (mMatchDetail != null) {
                     L.d(TAG, "下拉刷新未开赛和正在比赛的");
+
+                    isRefresh = true;
+
                     loadData(1);
 
                     //走势图
@@ -847,11 +850,16 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         isInitedViewPager = true;
     }
 
+    private boolean isRefresh = false;
 
     /***
      * 跳转到足球内页显示哪个Tab
      */
     public void setCurrentShowTab(String matchstatus) {
+
+        if (isRefresh)
+            return;
+
         switch (current_tab) {
             case FootBallDetailTypeEnum.FOOT_DATAIL_BETTING:
                 mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DATAIL_BETTING, false);
