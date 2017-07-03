@@ -160,12 +160,10 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
 
     private void initData() {
 
-
         Map<String, String> param = new HashMap<>();
         param.put("season", mSeason);
         param.put("leagueId", mLeagueId);
         param.put("teamId", mTeamId);
-
 
         VolleyContentFast.requestJsonByGet(BaseURLs.TEAMTECHSTATDATA, param, new VolleyContentFast.ResponseSuccessListener<TechnicalStatisticBean>() {
             @Override
@@ -248,9 +246,7 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
             //罚球
             free_throw_zong_1.setText(dataBean1.getTotalPunishBall() + "(" + dataBean1.getAveragePunishBall() + ")" + "");
 
-
             free_throw_in_1.setText(dataBean1.getTotalPunishBallHit() + "(" + dataBean1.getAveragePunishBallHit() + ")" + "");
-
 
             free_throw_hit_1.setText(dataBean1.getPercentThrow() + "");
             //篮板
