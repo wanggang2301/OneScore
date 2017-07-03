@@ -298,9 +298,18 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
 
     @Override
     public void onRefresh() {
-        mResultFragment.refreshFragment(lists.get(mCurrentPosition));
-        mTeamDataFragment.refreshFragment(lists.get(mCurrentPosition));
-        handicapStatisticsFragment.refreshFragment(lists.get(mCurrentPosition));
-        technicalStatisticsFragment.refreshFragment(lists.get(mCurrentPosition));
+
+        if(lists.size()!=0){
+            mResultFragment.refreshFragment(lists.get(mCurrentPosition));
+            mTeamDataFragment.refreshFragment(lists.get(mCurrentPosition));
+            handicapStatisticsFragment.refreshFragment(lists.get(mCurrentPosition));
+            technicalStatisticsFragment.refreshFragment(lists.get(mCurrentPosition));
+        }else {
+            mResultFragment.refreshFragment(mSeason);
+            mTeamDataFragment.refreshFragment(mSeason);
+            handicapStatisticsFragment.refreshFragment(mSeason);
+            technicalStatisticsFragment.refreshFragment(mSeason);
+        }
+
     }
 }

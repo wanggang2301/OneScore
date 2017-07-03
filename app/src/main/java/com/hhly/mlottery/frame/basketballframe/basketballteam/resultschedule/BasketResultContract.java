@@ -26,8 +26,8 @@ public class BasketResultContract {
 
     interface Presenter extends IPresenter<View> {
         Page getPage();
-        void refreshData(String season,String leagueId,String teamId ,String pageNum);
-        void refreshDataByPage(String season,String leagueId,String teamId ,String pageNum);
+        void refreshData(String season,String leagueId,String teamId );
+        void refreshDataByPage(String season,String leagueId,String teamId );
         List<BasketTeamResultBean.TeamMatchDataEntity> getListData();
     }
 }
