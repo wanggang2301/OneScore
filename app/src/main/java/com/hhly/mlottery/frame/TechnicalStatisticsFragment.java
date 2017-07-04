@@ -108,7 +108,6 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
     private TextView season_2;
     private TextView season_3;
     private NestedScrollView technical_scrollview;
-    private TextView match_no_data_txt;
     private Activity mActivity;
     private Context mContext;
 
@@ -123,6 +122,7 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
 
 
     int isCheckedId = 1;
+    private LinearLayout no_datas_ll;
 
     public static TechnicalStatisticsFragment newInstance(String season, String leagueId, String teamId) {
         TechnicalStatisticsFragment fragment = new TechnicalStatisticsFragment();
@@ -198,7 +198,7 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
                 radioGroup.setVisibility(View.GONE);
                 match_error_btn.setVisibility(View.VISIBLE);
                 technical_scrollview.setVisibility(View.GONE);
-                match_no_data_txt.setVisibility(View.GONE);
+                no_datas_ll.setVisibility(View.GONE);
             }
 
         }, TechnicalStatisticBean.class);
@@ -212,13 +212,13 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
         if (dataBean == null || dataBean.size() == 0) {
             radioGroup.setVisibility(View.VISIBLE);
             technical_scrollview.setVisibility(View.GONE);
-            match_no_data_txt.setVisibility(View.VISIBLE);
+            no_datas_ll.setVisibility(View.VISIBLE);
             match_error_btn.setVisibility(View.GONE);
             return;
         } else {
             radioGroup.setVisibility(View.VISIBLE);
             technical_scrollview.setVisibility(View.VISIBLE);
-            match_no_data_txt.setVisibility(View.GONE);
+            no_datas_ll.setVisibility(View.GONE);
             match_error_btn.setVisibility(View.GONE);
         }
 
@@ -499,11 +499,11 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
 
         technical_scrollview = (NestedScrollView) view.findViewById(R.id.technical_scrollview);
         //暂无数据
-        match_no_data_txt = (TextView) view.findViewById(R.id.match_no_data_txt);
+        no_datas_ll = (LinearLayout) view.findViewById(R.id.no_datas_ll);
 
         //网络异常
-        match_error_btn = (LinearLayout) view.findViewById(R.id.match_error_ll);
-        view.findViewById(R.id.match_error_btn).setOnClickListener(this);
+        match_error_btn = (LinearLayout) view.findViewById(R.id.network_error_ll);
+        view.findViewById(R.id.network_exception_reload_btn).setOnClickListener(this);
 
         //赛季时间
         season_1 = (TextView) view.findViewById(R.id.season_1);
@@ -611,7 +611,7 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
 
-            case R.id.match_error_btn:
+            case R.id.network_exception_reload_btn:
                 initData();
                 break;
 

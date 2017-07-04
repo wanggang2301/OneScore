@@ -68,30 +68,7 @@
             android:clickable="true"
             android:visibility="gone" />
 
-        <LinearLayout
-            android:id="@+id/ll_loading_error"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="0dip"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:visibility="gone">
+        <include layout="@layout/exception_page_display" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="5dip"
-                android:text="@string/exp__check_txt"
-                android:textColor="@color/msg"
-                android:textSize="@dimen/text_size_14" />
-
-            <TextView
-                android:id="@+id/tv_current_reLoading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/exp_refresh_txt"
-                android:textColor="@color/exp_refresh"
-                android:textSize="@dimen/text_size_14" />
-        </LinearLayout>
     </FrameLayout>
 </LinearLayout>

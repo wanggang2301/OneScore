@@ -261,8 +261,8 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recyclerview_result);
         // 加载状态图标
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_result_loading_ll);
-        mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
-        mReloadTvBtn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
+        mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_error_ll);
+        mReloadTvBtn = (TextView) mView.findViewById(R.id.network_error_btn);
         mReloadTvBtn.setOnClickListener(this);
 
         // 筛选0场 显示图标
@@ -545,7 +545,7 @@ public class ResultFragment extends Fragment implements OnClickListener, OnRefre
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.network_exception_reload_btn:
+            case R.id.network_error_btn:
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
                 new Handler().postDelayed(mLoadingDataThread, 0);
                 break;

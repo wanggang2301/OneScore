@@ -111,7 +111,6 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
     private LinearLayout footwall_road_rl;
     private Activity mActivity;
     private Context mContext;
-    private TextView match_no_data_txt;
     private NestedScrollView scrollView;
 
     private static final String ARG_PARAM1 = "param1";
@@ -123,10 +122,11 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
     private String mLeagueId;
     private String mTeamId;
     private LinearLayout match_error_btn;
-    private boolean isCheckeed=true;
+    private boolean isCheckeed = true;
+    private LinearLayout no_datas_ll;
 
 
-    public static HandicapStatisticsFragment newInstance(String season, String leagueId,String teamId) {
+    public static HandicapStatisticsFragment newInstance(String season, String leagueId, String teamId) {
         HandicapStatisticsFragment fragment = new HandicapStatisticsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, season);
@@ -181,31 +181,31 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
                     //让分盘盘路
                     letPlate = handicapStatisticsBean.getLetPlate();
 
-                    if (isCheckeed){
+                    if (isCheckeed) {
 
                         if (trendPlate != null && letPlate != null) {
-                            match_no_data_txt.setVisibility(View.GONE);
+                            no_datas_ll.setVisibility(View.GONE);
                             scrollView.setVisibility(View.VISIBLE);
                             match_error_btn.setVisibility(View.GONE);
                             radioGroup.setVisibility(View.VISIBLE);
                             initLetSplitDatas();
                         } else {
                             radioGroup.setVisibility(View.VISIBLE);
-                            match_no_data_txt.setVisibility(View.VISIBLE);
+                            no_datas_ll.setVisibility(View.VISIBLE);
                             scrollView.setVisibility(View.GONE);
                             match_error_btn.setVisibility(View.GONE);
                         }
 
-                    }else{
+                    } else {
 
                         initSizeDiskDatas();
                     }
 
 
                     initEvent();
-                }else{
+                } else {
                     radioGroup.setVisibility(View.GONE);
-                    match_no_data_txt.setVisibility(View.GONE);
+                    no_datas_ll.setVisibility(View.GONE);
                     scrollView.setVisibility(View.GONE);
                     match_error_btn.setVisibility(View.VISIBLE);
                 }
@@ -217,7 +217,7 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
             @Override
             public void onErrorResponse(VolleyContentFast.VolleyException exception) {
                 radioGroup.setVisibility(View.GONE);
-                match_no_data_txt.setVisibility(View.GONE);
+                no_datas_ll.setVisibility(View.GONE);
                 scrollView.setVisibility(View.GONE);
                 match_error_btn.setVisibility(View.VISIBLE);
             }
@@ -244,12 +244,12 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
                     case R.id.size_disk:
                         isCheckeed = false;
                         if (sizePlate != null) {
-                            match_no_data_txt.setVisibility(View.GONE);
+                            no_datas_ll.setVisibility(View.GONE);
                             scrollView.setVisibility(View.VISIBLE);
                             match_error_btn.setVisibility(View.GONE);
                             initSizeDiskDatas();
                         } else {
-                            match_no_data_txt.setVisibility(View.VISIBLE);
+                            no_datas_ll.setVisibility(View.VISIBLE);
                             scrollView.setVisibility(View.GONE);
                             match_error_btn.setVisibility(View.GONE);
                         }
@@ -414,10 +414,11 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
         scrollView = (NestedScrollView) view.findViewById(R.id.handicap_scrollview);
 
         //暂无数据
-        match_no_data_txt = (TextView) view.findViewById(R.id.match_no_data_txt);
+        no_datas_ll = (LinearLayout) view.findViewById(R.id.no_datas_ll);
+
         //网络异常
-        match_error_btn = (LinearLayout) view.findViewById(R.id.match_error_ll);
-        view.findViewById(R.id.match_error_btn).setOnClickListener(this);
+        match_error_btn = (LinearLayout) view.findViewById(R.id.network_error_ll);
+        view.findViewById(R.id.network_exception_reload_btn).setOnClickListener(this);
 
 
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
@@ -520,11 +521,10 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
     /**
      * 父类调用下拉刷新
      */
-    public void refreshFragment(String season){
-        mSeason=season;
+    public void refreshFragment(String season) {
+        mSeason = season;
         initData();
     }
-
 
 
     @Override
@@ -538,7 +538,7 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
 
-            case R.id.match_error_btn:
+            case R.id.network_exception_reload_btn:
 
                 initData();
                 break;

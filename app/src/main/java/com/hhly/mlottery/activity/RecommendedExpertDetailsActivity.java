@@ -71,8 +71,8 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
 
     private RecomenHeadAdapter recomenHeadAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private TextView match_no_data_txt;
-    private LinearLayout match_error_btn;
+    private LinearLayout match_no_data_txt;
+    private LinearLayout network_error_ll;
     private LinearLayout px_line;
     private List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> listBeanList;
     private View view;
@@ -97,16 +97,16 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case VIEW_STATUS_LOADING:
-                    match_error_btn.setVisibility(View.GONE);
+                    network_error_ll.setVisibility(View.GONE);
                     match_no_data_txt.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(true);
-                    match_error_btn.setVisibility(View.GONE);
+
                     px_line.setVisibility(View.GONE);
                     break;
                 case VIEW_STATUS_SUCCESS:
                     match_no_data_txt.setVisibility(View.GONE);
-                    match_error_btn.setVisibility(View.GONE);
+                    network_error_ll.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     px_line.setVisibility(View.VISIBLE);
@@ -116,14 +116,14 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                     match_no_data_txt.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    match_error_btn.setVisibility(View.GONE);
+                    network_error_ll.setVisibility(View.GONE);
                     px_line.setVisibility(View.GONE);
                     break;
                 case VIEW_STATUS_NET_ERROR:
                     match_no_data_txt.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    match_error_btn.setVisibility(View.VISIBLE);
+                    network_error_ll.setVisibility(View.VISIBLE);
                     px_line.setVisibility(View.GONE);
                     break;
                 default:
@@ -147,9 +147,9 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
         EventBus.getDefault().register(this);
 
         if (getIntent() != null) {
-            expertId =getIntent().getStringExtra(EXPERT_ID);
+            expertId = getIntent().getStringExtra(EXPERT_ID);
             winPoint = getIntent().getStringExtra(WINPOINT);
-            errorPoint =getIntent().getStringExtra(ERRPOINT);
+            errorPoint = getIntent().getStringExtra(ERRPOINT);
         }
         initView();
         initData();
@@ -177,7 +177,6 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                             pullUpLoadMoreData();
                         } else {
                             Toast.makeText(mContext, mContext.getResources().getText(R.string.nodata_txt), Toast.LENGTH_SHORT).show();
-//                            mOnloadingView.findViewById(R.id.loading_text)
                             recomenHeadAdapter.addFooterView(mNoLoadingView);
                         }
                     }
@@ -221,35 +220,41 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
             public void onResponse(RecommendationExpertBean jsonObject) {
                 if (jsonObject != null) {
 
-                    if (jsonObject.getExpertPromotions()==null){
-
-                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
-                        return;
-                    }
-
-                    if (jsonObject.getExpertPromotions().getList() == null) {
-                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
-                        return;
-                    }
-                    hasNextPage = jsonObject.getExpertPromotions().isHasNextPage();
+                    if (jsonObject.getCode().equals("200")) {
 
 
-                    listBeanList = new ArrayList<>();
-                    listBeanList.addAll(jsonObject.getExpertPromotions().getList());
+                        if (jsonObject.getExpertPromotions() == null) {
 
-                    if (recomenHeadAdapter == null) {
-                        recomenHeadAdapter = new RecomenHeadAdapter(mContext, listBeanList);
-                        recomenHeadAdapter.setLoadingView(view);
-                        recomenHeadAdapter.addHeaderView(headView);
-                        buyClicked();
-                        recomenHeadAdapter.setmBuyClick(mBettingBuyClickListener);
-                        ex_recyclerview.setAdapter(recomenHeadAdapter);
-                        recomenHeadAdapter.openLoadMore(0, true);
-                        initEvent();
+                            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
+                            return;
+                        }
 
+                        if (jsonObject.getExpertPromotions().getList() == null) {
+                            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
+                            return;
+                        }
+                        hasNextPage = jsonObject.getExpertPromotions().isHasNextPage();
+                        listBeanList = new ArrayList<>();
+                        listBeanList.addAll(jsonObject.getExpertPromotions().getList());
+
+                        if (recomenHeadAdapter == null) {
+                            recomenHeadAdapter = new RecomenHeadAdapter(mContext, listBeanList);
+                            recomenHeadAdapter.setLoadingView(view);
+                            recomenHeadAdapter.addHeaderView(headView);
+                            buyClicked();
+                            recomenHeadAdapter.setmBuyClick(mBettingBuyClickListener);
+                            ex_recyclerview.setAdapter(recomenHeadAdapter);
+                            recomenHeadAdapter.openLoadMore(0, true);
+                            initEvent();
+
+                        } else {
+
+                            upDataAdapter();
+                        }
+                        mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                     } else {
 
-                        upDataAdapter();
+                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                     }
 
                 } else {
@@ -301,8 +306,6 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
 
     private void pullUpLoadMoreData() {
 
-        // mSwipeRefreshLayout.setRefreshing(true);
-        // mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
         pageNum += 1;
         Map<String, String> mapPrament = new HashMap<>();
         mapPrament.put("userId", AppConstants.register.getUser().getUserId());
@@ -397,7 +400,6 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                         return;
                     }
                     setHeaderDatas(jsonObject.getUserInfo());
-                    mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                 }
@@ -425,11 +427,11 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
         headView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //暂无数据
-        match_no_data_txt = (TextView) findViewById(R.id.match_no_data_txt);
+        match_no_data_txt = (LinearLayout) findViewById(R.id.no_datas_ll);
 
         //网络异常
-        match_error_btn = (LinearLayout) findViewById(R.id.match_error_ll);
-        findViewById(R.id.match_error_btn).setOnClickListener(this);
+        network_error_ll = (LinearLayout) findViewById(R.id.network_error_ll);
+        findViewById(R.id.network_error_btn).setOnClickListener(this);
 
         px_line = (LinearLayout) headView.findViewById(R.id.px_line);
         px_line.setVisibility(View.GONE);
@@ -448,7 +450,6 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
         ex_recyclerview = (RecyclerView) findViewById(R.id.ex_recyclerview);
 
         layoutManager = new LinearLayoutManager(mContext);
-        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         ex_recyclerview.setLayoutManager(layoutManager);
 
@@ -463,7 +464,7 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                 finish();
                 break;
 
-            case R.id.match_error_btn:
+            case R.id.network_error_btn:
                 initData();
                 initHeadData();
                 break;
@@ -479,17 +480,17 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
     public void setHeaderDatas(RecomeHeadBean.UserInfoBean headerDatas) {
         try {
 
-            if (winPoint==null&&errorPoint==null){
-                 winPoint="0";
-                 errorPoint="0";
+            if (winPoint == null && errorPoint == null) {
+                winPoint = "0";
+                errorPoint = "0";
             }
-            allPoint = Integer.parseInt(winPoint)+Integer.parseInt(errorPoint);
+            allPoint = Integer.parseInt(winPoint) + Integer.parseInt(errorPoint);
             Glide.with(getApplicationContext()).load(headerDatas.getImageSrc()).error(R.mipmap.specialist_default).into(ex_image);
             ex_name.setText(headerDatas.getNickname());
-            ex_zhong.setText(mContext.getResources().getString(R.string.betting_item_jin) + allPoint+ mContext.getResources().getString(R.string.betting_item_zhong) + winPoint);
-            if(headerDatas.getIntroduce()!=null||headerDatas.getIntroduce().isEmpty()){
+            ex_zhong.setText(mContext.getResources().getString(R.string.betting_item_jin) + allPoint + mContext.getResources().getString(R.string.betting_item_zhong) + winPoint);
+            if (headerDatas.getIntroduce() != null || headerDatas.getIntroduce().isEmpty()) {
                 ex_text.setText("\t\t\t\t" + headerDatas.getIntroduce());
-            }else{
+            } else {
                 ex_text.setText(this.getResources().getString(R.string.recomend_no_datas));
             }
 
@@ -506,10 +507,11 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
 
     /**
      * 详情页面返回
+     *
      * @param detailsResuleEventBusEntity
      */
-    public void onEventMainThread(BettingDetailsResuleEventBusEntity detailsResuleEventBusEntity){
-        L.d("asdfqwer ==> " , "接收成功" + detailsResuleEventBusEntity.getCurrentId());
+    public void onEventMainThread(BettingDetailsResuleEventBusEntity detailsResuleEventBusEntity) {
+
         for (RecommendationExpertBean.ExpertPromotionsBean.ListBean currlist : listBeanList) {
             if (currlist.getId().equals(detailsResuleEventBusEntity.getCurrentId())) {
                 currlist.setLookStatus(-1);
