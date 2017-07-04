@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.R;
@@ -53,7 +55,7 @@ public class BasketTeamResultFragment extends ViewFragment<BasketResultContract.
      * 无数据的界面
      */
     @BindView(R.id.nodata)
-    TextView mNodataLayout;
+    LinearLayout mNodataLayout;
     /**
      * 点击刷新
      */
@@ -140,22 +142,22 @@ public class BasketTeamResultFragment extends ViewFragment<BasketResultContract.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
-//        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-//            @Override
-//            public void onLoadMoreRequested() {
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mPresenter.refreshDataByPage(mSeason,mLeagueId,mTeamId);
-//                    }
-//                },1000);
-//            }
-//        });
     }
 
     @Override
     public void recyclerNotify() {
 
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPresenter.refreshDataByPage(mSeason,mLeagueId,mTeamId);
+                    }
+                },1000);
+            }
+        });
         mRecyclerView.setVisibility(View.VISIBLE);
         mAdapter.setNewData(mPresenter.getListData()); //点进去看下
         mAdapter.setLoadingView(mOnloadingView);
@@ -169,6 +171,7 @@ public class BasketTeamResultFragment extends ViewFragment<BasketResultContract.
         mNodataLayout.setVisibility(View.VISIBLE);
         mProgressBarLayout.setVisibility(View.GONE);
         mExceptionLayout.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.GONE);
     }
 
     @Override

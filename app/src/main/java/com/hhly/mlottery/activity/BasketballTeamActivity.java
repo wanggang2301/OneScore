@@ -83,7 +83,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
     private int mCurrentPosition=0;
 
     private TabsAdapter mTabsAdapter;
-    private String mSeason="2016-2017";
+    private String mSeason="";
     private String mLeagueId;
     private String mTeamId;
 
@@ -92,6 +92,7 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
     private TechnicalStatisticsFragment technicalStatisticsFragment;
     private HandicapStatisticsFragment handicapStatisticsFragment;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +100,11 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
         if(getIntent()!=null){
             mLeagueId=getIntent().getStringExtra(BasketTeamParams.LEAGUE_ID);
             mTeamId=getIntent().getStringExtra(BasketTeamParams.TEAM_ID);
+            if(mLeagueId.equals("2")){ //WNBA
+                mSeason=Calendar.getInstance().get(Calendar.YEAR)+"";
+            }else{
+                mSeason=getCurrentSeason();
+            }
         }
         ButterKnife.bind(this);
 
@@ -195,23 +201,20 @@ public class BasketballTeamActivity extends AppCompatActivity implements AppBarL
      *
      * @return
      */
-    private  List<String> getRecentThreeSeason(){
-        List<String> reset = new ArrayList<>();
+    private  String getCurrentSeason(){
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
         Calendar calendar = null;
-        for (int i = 0; i < 10 ; i++) {
+
             calendar =  Calendar.getInstance();
-            calendar.add(Calendar.YEAR, -i);
+
             String sim = sdf.format(calendar.getTime());
 
             calendar.add(Calendar.YEAR, -1);
             String sim1 = sdf.format(calendar.getTime());
 
             String season = sim1 +"-"+ sim;
-            reset.add(season);
-        }
-        return reset;
+        return season;
     }
 
     /**

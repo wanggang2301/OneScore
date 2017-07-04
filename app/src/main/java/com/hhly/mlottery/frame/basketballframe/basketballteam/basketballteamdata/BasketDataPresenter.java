@@ -46,8 +46,8 @@ public class BasketDataPresenter extends BasePresenter<BasketDataContract.View> 
             @Override
             public void onError(Throwable e) {
                 mView.setRefresh(false);
-                mView.onError();
-//                L.e("?????",e.getMessage().toString());
+                mView.showNoData();
+                L.e("?????",e.getMessage().toString()+"cuowu");
             }
 
             @Override
@@ -65,9 +65,15 @@ public class BasketDataPresenter extends BasePresenter<BasketDataContract.View> 
                             mListForward.clear();
                             mListCenter.clear();
                             mListDefender.clear();
-                            mListForward.addAll(mRankInfo.getLineUp().getForward());
-                            mListCenter.addAll(mRankInfo.getLineUp().getCenter());
-                            mListDefender.addAll(mRankInfo.getLineUp().getDefender());
+                            if(null!=mRankInfo.getLineUp().getForward()){
+                                mListForward.addAll(mRankInfo.getLineUp().getForward());
+                            }
+                           if(null!=mRankInfo.getLineUp().getCenter()){
+                               mListCenter.addAll(mRankInfo.getLineUp().getCenter());
+                           }
+                           if(null!=mRankInfo.getLineUp().getDefender()){
+                               mListDefender.addAll(mRankInfo.getLineUp().getDefender());
+                           }
                             mView.showForwardPlayer();
                             mView.showCenterPlayer();
                             mView.showDefender();
