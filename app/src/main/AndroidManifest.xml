@@ -56,7 +56,7 @@
              <!--<category android:name="android.intent.category.LAUNCHER" />-->
              <!--</intent-filter>-->
         </activity>
-         环境选择
+         <!--环境选择-->
         <activity
             android:name=".activity.DebugConfigActivity"
             android:screenOrientation="portrait"
