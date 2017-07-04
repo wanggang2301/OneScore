@@ -1787,6 +1787,7 @@
     <string name="betting_disclaimer_txt">(免責聲明：個人觀點並不代表壹比分官方網站)</string>
     <string name="betting_paly_choose_txt">必須選擇壹項</string>
     <string name="betting_netword_error_txt">當前網酪繁忙,請稍後重試!</string>
+    <string name="betting_shouyilv_txt">收益率</string>
 
     <!--发布推介-->
     <string name="issue_cueernt_isexpert">您還不是專家,請申請成為專家後再發布!</string>
