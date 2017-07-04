@@ -229,7 +229,7 @@ public class ImmediateAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         // 完场描述
         holder.view_line.setVisibility(TextUtils.isEmpty(match.getTxt()) ? View.GONE : View.VISIBLE);
         holder.tv_item_desc.setVisibility(TextUtils.isEmpty(match.getTxt()) ? View.GONE : View.VISIBLE);
-        String name = match.getWinner() == match.getHomeId() ? match.getHometeam() : match.getGuestteam();
+        String name = match.getWinner() == Integer.parseInt(match.getHomeId()) ? match.getHometeam() : match.getGuestteam();
         holder.tv_item_desc.setText(match.getTxt() + "," + name + mContext.getResources().getString(R.string.roll_desc_txt));
 
         switch (match.getStatusOrigin()) {

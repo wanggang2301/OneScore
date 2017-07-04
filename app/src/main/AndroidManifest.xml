@@ -517,6 +517,15 @@
         <activity
             android:name=".activity.MyFocusActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MultiScreenIntroduceActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MultiScreenViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MultiScreenViewingListActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

@@ -1105,7 +1105,7 @@ public class BaseURLs {
     public final static String LOTTERY_INFO_CHART_URL = URL_API_HOST + "chartLottery.findLastAndroidLotteryResults.do";
 
     //多屏篮球列表
-//    public final static String MULTIPLE_BASKET_LIST_URL = URL_API_HOST + "basketballMatch.findMultiScreenMatchList.do";//"http://192.168.33.71:8080/mlottery/core/basketballMatch.findMultiScreenMatchList.do";
+    public final static String MULTIPLE_BASKET_LIST_URL = URL_API_HOST + "basketballMatch.findMultiScreenMatchList.do";//"http://192.168.33.71:8080/mlottery/core/basketballMatch.findMultiScreenMatchList.do";
 
     // 邀请码
     public final static String INVITED_RUL = URL_API_HOST + "androidUserCenter.getInviteCode.do";

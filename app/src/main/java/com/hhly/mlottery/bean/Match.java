@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,7 +20,7 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
     private String raceColor;
     private String date;
     private String time;
-    private int homeId;
+    private String homeId;
     private String hometeam;
 
     private String guestId;
@@ -67,7 +66,7 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
         raceColor = in.readString();
         date = in.readString();
         time = in.readString();
-        homeId = in.readInt();
+        homeId = in.readString();
         hometeam = in.readString();
         guestId = in.readString();
         guestteam = in.readString();
@@ -402,11 +401,11 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
         this.guestId = guestId;
     }
 
-    public int getHomeId() {
+    public String getHomeId() {
         return homeId;
     }
 
-    public void setHomeId(int homeId) {
+    public void setHomeId(String homeId) {
         this.homeId = homeId;
     }
 
@@ -441,7 +440,7 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
         parcel.writeString(raceColor);
         parcel.writeString(date);
         parcel.writeString(time);
-        parcel.writeInt(homeId);
+        parcel.writeString(homeId);
         parcel.writeString(hometeam);
         parcel.writeString(guestId);
         parcel.writeString(guestteam);
@@ -476,7 +475,6 @@ public class Match implements Parcelable, Cloneable, Comparator<Match> {
     public Match() {
 
     }
-
 
 
     @Override

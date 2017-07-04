@@ -425,7 +425,7 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         // 完场描述
         holder.tvRollDesc.setVisibility(TextUtils.isEmpty(data.getTxt()) ? View.GONE : View.VISIBLE);
         holder.view_line.setVisibility(TextUtils.isEmpty(data.getTxt()) ? View.GONE : View.VISIBLE);
-        String name = data.getWinner() == data.getHomeId() ? data.getHometeam() : data.getGuestteam();
+        String name = data.getWinner() == Integer.parseInt(data.getHomeId()) ? data.getHometeam() : data.getGuestteam();
         holder.tvRollDesc.setText(data.getTxt() + "," + name + context.getResources().getString(R.string.roll_desc_txt));
     }
 
