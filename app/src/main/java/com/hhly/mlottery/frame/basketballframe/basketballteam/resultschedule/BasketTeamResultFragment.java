@@ -124,17 +124,15 @@ public class BasketTeamResultFragment extends ViewFragment<BasketResultContract.
                 mExceptionLayout.setVisibility(View.GONE);
                 mProgressBarLayout.setVisibility(View.VISIBLE);
                 mRecyclerView.setVisibility(View.GONE);
-                mPresenter.refreshData(mSeason,mLeagueId,mTeamId,mPresenter.getPage().index+"");
+                mPresenter.refreshData(mSeason,mLeagueId,mTeamId );
             }
         });
 
-        mPresenter.refreshData(mSeason,mLeagueId,mTeamId,mPresenter.getPage().index+"");
+        mPresenter.refreshData(mSeason,mLeagueId,mTeamId);
 
         if(mAdapter==null){
             mAdapter=new BasketTeamResultAdapter(mPresenter.getListData(),getActivity());
         }
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.setPageSize(mPresenter.getPage().size);
         mOnloadingView=getActivity().getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecyclerView.getParent(),false);
         mAdapter.setLoadingView(mOnloadingView);
 
@@ -142,22 +140,22 @@ public class BasketTeamResultFragment extends ViewFragment<BasketResultContract.
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPresenter.refreshDataByPage(mSeason,mLeagueId,mTeamId,mPresenter.getPage().index+"");
-                    }
-                },1000);
-            }
-        });
-
+//        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+//            @Override
+//            public void onLoadMoreRequested() {
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mPresenter.refreshDataByPage(mSeason,mLeagueId,mTeamId);
+//                    }
+//                },1000);
+//            }
+//        });
     }
 
     @Override
     public void recyclerNotify() {
+
         mRecyclerView.setVisibility(View.VISIBLE);
         mAdapter.setNewData(mPresenter.getListData()); //点进去看下
         mAdapter.setLoadingView(mOnloadingView);
@@ -198,7 +196,8 @@ public class BasketTeamResultFragment extends ViewFragment<BasketResultContract.
      * 父类调用下拉刷新
      */
     public void refreshFragment(String mSeason){
-        mPresenter.refreshData(mSeason,mLeagueId,mTeamId,mPresenter.getPage().index+"");
+        this.mSeason=mSeason;
+        mPresenter.refreshData(mSeason,mLeagueId,mTeamId);
     }
 
 

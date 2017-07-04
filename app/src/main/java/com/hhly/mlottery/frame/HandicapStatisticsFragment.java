@@ -123,10 +123,10 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
     private String mLeagueId;
     private String mTeamId;
     private LinearLayout match_error_btn;
-    private boolean isCheckeed=true;
+    private boolean isCheckeed = true;
 
 
-    public static HandicapStatisticsFragment newInstance(String season, String leagueId,String teamId) {
+    public static HandicapStatisticsFragment newInstance(String season, String leagueId, String teamId) {
         HandicapStatisticsFragment fragment = new HandicapStatisticsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, season);
@@ -181,29 +181,40 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
                     //让分盘盘路
                     letPlate = handicapStatisticsBean.getLetPlate();
 
-                    if (isCheckeed){
+                    if (isCheckeed) {
 
-                        if (trendPlate != null && letPlate != null) {
+                        if (trendPlate == null && letPlate == null) {
+                            radioGroup.setVisibility(View.VISIBLE);
+                            match_no_data_txt.setVisibility(View.VISIBLE);
+                            scrollView.setVisibility(View.GONE);
+                            match_error_btn.setVisibility(View.GONE);
+                        } else {
                             match_no_data_txt.setVisibility(View.GONE);
                             scrollView.setVisibility(View.VISIBLE);
                             match_error_btn.setVisibility(View.GONE);
                             radioGroup.setVisibility(View.VISIBLE);
                             initLetSplitDatas();
-                        } else {
+                        }
+
+                    } else {
+                        if (sizePlate == null) {
                             radioGroup.setVisibility(View.VISIBLE);
                             match_no_data_txt.setVisibility(View.VISIBLE);
                             scrollView.setVisibility(View.GONE);
                             match_error_btn.setVisibility(View.GONE);
+                        } else {
+                            match_no_data_txt.setVisibility(View.GONE);
+                            scrollView.setVisibility(View.VISIBLE);
+                            match_error_btn.setVisibility(View.GONE);
+                            radioGroup.setVisibility(View.VISIBLE);
+                            initSizeDiskDatas();
                         }
 
-                    }else{
-
-                        initSizeDiskDatas();
                     }
 
 
                     initEvent();
-                }else{
+                } else {
                     radioGroup.setVisibility(View.GONE);
                     match_no_data_txt.setVisibility(View.GONE);
                     scrollView.setVisibility(View.GONE);
@@ -238,20 +249,31 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
                 switch (radioButtonId) {
                     case R.id.let_split:
                         isCheckeed = true;
-                        initLetSplitDatas();
 
+                        if (trendPlate == null && letPlate == null) {
+                            radioGroup.setVisibility(View.VISIBLE);
+                            match_no_data_txt.setVisibility(View.VISIBLE);
+                            scrollView.setVisibility(View.GONE);
+                            match_error_btn.setVisibility(View.GONE);
+                        } else {
+                            match_no_data_txt.setVisibility(View.GONE);
+                            scrollView.setVisibility(View.VISIBLE);
+                            match_error_btn.setVisibility(View.GONE);
+                            radioGroup.setVisibility(View.VISIBLE);
+                            initLetSplitDatas();
+                        }
                         break;
                     case R.id.size_disk:
                         isCheckeed = false;
-                        if (sizePlate != null) {
+                        if (sizePlate == null) {
+                            match_no_data_txt.setVisibility(View.VISIBLE);
+                            scrollView.setVisibility(View.GONE);
+                            match_error_btn.setVisibility(View.GONE);
+                        } else {
                             match_no_data_txt.setVisibility(View.GONE);
                             scrollView.setVisibility(View.VISIBLE);
                             match_error_btn.setVisibility(View.GONE);
                             initSizeDiskDatas();
-                        } else {
-                            match_no_data_txt.setVisibility(View.VISIBLE);
-                            scrollView.setVisibility(View.GONE);
-                            match_error_btn.setVisibility(View.GONE);
                         }
                         break;
                     default:
@@ -309,7 +331,6 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
         smallball_z.setText(sizePlate.getTotalSizePlate().getLowPer());
         smallball_h.setText(sizePlate.getHomeSizePlate().getLowPer());
         smallball_g.setText(sizePlate.getGuestSizePlate().getLowPer());
-
 
     }
 
@@ -520,11 +541,10 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
     /**
      * 父类调用下拉刷新
      */
-    public void refreshFragment(String season){
-        mSeason=season;
+    public void refreshFragment(String season) {
+        mSeason = season;
         initData();
     }
-
 
 
     @Override
