@@ -742,7 +742,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             tv_head_time.setVisibility(View.VISIBLE);
             ll_over_score_content.setVisibility(View.VISIBLE);
 
-            setCurrentShowTab(matchDetail.getLiveStatus());
 
             matchStartTime = matchDetail.getMatchInfo().getStartTime();
             initPreData(matchDetail);
@@ -760,8 +759,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
 
         } else {
-
-            setCurrentShowTab(matchDetail.getLiveStatus());
 
             initPreData(matchDetail);
 
@@ -885,7 +882,9 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
             default: //默认 用比赛状态来做跳转判断跟外部进来没有关系  赛前:分析   其他:直播
                 if (BEFOURLIVE.equals(matchstatus)) {
                     mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_ANALYSE_MERGE, false);
-                } else {
+                } else if (ONLIVE.equals(matchstatus)) {
+                    mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_LIVE, false);
+                } else if (LIVEENDED.equals(matchstatus)) {
                     mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_LIVE, false);
                 }
                 break;
@@ -3212,21 +3211,8 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                         isAddFragment = true;
                     }
 
-                    L.d("aaaaa", "比赛状态：" + mMatchDetail.getLiveStatus());
-                    switch (mMatchDetail.getLiveStatus()) {
-                        case BEFOURLIVE:// 赛前
-                            mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_ANALYSE_MERGE, false);
-                            break;
-                        case ONLIVE:// 赛中
-                            mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_LIVE, false);
-                            break;
-                        case LIVEENDED:// 完场
-                            mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_LIVE, false);
-                            break;
-                        default:
-                            mViewPager.setCurrentItem(FootBallDetailTypeEnum.FOOT_DETAIL_DEFAULT, false);
-                            break;
-                    }
+                    setCurrentShowTab(mMatchDetail.getLiveStatus());
+
                     break;
                 case ERROR:// 加载失败
                     if (isInitedViewPager) {
