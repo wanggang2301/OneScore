@@ -167,6 +167,7 @@
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
                 <RelativeLayout
+                    android:id="@+id/rl_gif_notice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
