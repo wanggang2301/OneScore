@@ -84,6 +84,8 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private List<View> dataInfoViewList = new ArrayList<>();// 热门资讯条目集合
     private List<View> lotteryViewList = new ArrayList<>();// 彩票条目集合
     private List<View> expertViewList = new ArrayList<>();// 专家专栏条目集合
+    private List<View> bettingList=new ArrayList<>(); // 推介列表
+
 
     private final int MIN_CLICK_DELAY_TIME = 1000;// 控件点击间隔时间
     private long lastClickTime = 0;
@@ -671,6 +673,16 @@ public class HomeListBaseAdapter extends BaseAdapter {
     }
 
     /**
+     * 获取推介条目
+     * @return
+     */
+    private View getBettingView(){
+        View view=View.inflate(mContext, R.layout.home_page_item_number_ssc, null);
+
+        return view;
+    }
+
+    /**
      * 初始化数据
      */
     private void init() {
@@ -681,6 +693,11 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 for (int j = 0, len1 = bodys.size(); j < len1; j++) {
                     HomeBodysEntity homeBodysEntity = bodys.get(j);
                     switch (labType) {
+                        case 8: //  推介
+                            View bettingView=getBettingView();
+                            bettingList.add(bettingView);
+                            break;
+
                         case 1:// 1、	热门赛事
                         {
                             View scoreView = getScoreView();
@@ -1513,10 +1530,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
             boolean addViewLottery = false;
             boolean addViewExpert = false;
             boolean expertName = false;
+            boolean addBetting=false;
             if (getItem(position) != null) {
                 final HomeContentEntity mContent = (HomeContentEntity) getItem(position);
                 if (mContent.getLabType() == 5) {
                     mViewHolderOther.tv_more_advice.setVisibility(View.VISIBLE);
+
                 } else {
                     mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                 }
@@ -1620,6 +1639,9 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             mViewHolderOther.ll_content.addView(expertView);
                             mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewExpert = true;
+                            break;
+                        case 8: //推介
+
                             break;
                     }
                 }
