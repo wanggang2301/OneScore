@@ -1,5 +1,6 @@
 package com.hhly.mlottery.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,7 +54,7 @@ import de.greenrobot.event.EventBus;
  * describe:多屏动画列表页
  */
 
-public class MultiScreenViewingListActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class MultiScreenViewingListActivity extends Activity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     protected Context mContext;
 
