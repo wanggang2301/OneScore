@@ -86,6 +86,10 @@ public class StadiumUtils {
 
 
     public static int convertStringToInt(String time) {
-        return (int) Math.ceil(Double.parseDouble(time) / 60000);
+        if (time == null || time.equals("")) {
+            return 0;
+        }else{
+            return (int) Math.ceil(Double.parseDouble(time) / 60000);
+        }
     }
 }
