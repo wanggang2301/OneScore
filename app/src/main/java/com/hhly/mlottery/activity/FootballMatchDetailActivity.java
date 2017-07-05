@@ -3824,6 +3824,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
         ll_not_animation_content = (LinearLayout) findViewById(R.id.ll_not_animation_content);
 
         gif_cheer.setImageResource(R.mipmap.football_cheer);// 欢呼动画
+
         iv_home_goal.setImageResource(R.drawable.football_goal_animation);// 主队进球动画
         homeAnima = (AnimationDrawable) iv_home_goal.getDrawable();
 
