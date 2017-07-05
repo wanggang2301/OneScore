@@ -288,6 +288,7 @@ public class FootBallScoreFragment extends BaseWebSocketFragment {
         });
         mViewPager.setAdapter(fragmentPagerAdapter);
         mViewPager.setOffscreenPageLimit(tabNames.length);
+        mViewPager.setCurrentItem(IMMEDIA_FRAGMENT,false);
 
         mTabLayout.setViewPager(mViewPager, tabNames);
         mTabLayout.showDot(FOCUS_FRAGMENT);
