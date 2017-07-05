@@ -12,6 +12,7 @@ import android.util.DisplayMetrics;
 
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.util.AppConstants;
+import com.hhly.mlottery.util.CrashException;
 import com.hhly.mlottery.util.CyUtils;
 import com.hhly.mlottery.util.DataBus;
 import com.hhly.mlottery.util.DeviceInfo;
@@ -92,9 +93,9 @@ public class MyApp extends Application {
                 // 根据上次的语言设置，重新设置语言
                 isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
 
-              /*  // 捕获异常
+                // 捕获异常
                 CrashException crashException = CrashException.getInstance();
-                crashException.init(getApplicationContext());*/
+                crashException.init(getApplicationContext());
 
                 // 初始化Vollery
                 VolleyContentFast.init(appcontext);
