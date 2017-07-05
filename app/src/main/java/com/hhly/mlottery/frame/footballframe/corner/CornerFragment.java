@@ -248,7 +248,6 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
         mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
-                Toast.makeText(mActivity, "角球", Toast.LENGTH_SHORT).show();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
