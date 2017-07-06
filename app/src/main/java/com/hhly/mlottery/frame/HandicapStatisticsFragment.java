@@ -111,7 +111,7 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
     private LinearLayout footwall_road_rl;
     private Activity mActivity;
     private Context mContext;
-    private TextView match_no_data_txt;
+    private LinearLayout match_no_data_txt;
     private NestedScrollView scrollView;
 
     private static final String ARG_PARAM1 = "param1";
@@ -435,7 +435,7 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
         scrollView = (NestedScrollView) view.findViewById(R.id.handicap_scrollview);
 
         //暂无数据
-        match_no_data_txt = (TextView) view.findViewById(R.id.no_datas_ll);
+        match_no_data_txt = (LinearLayout) view.findViewById(R.id.no_datas_ll);
         //网络异常
         match_error_btn = (LinearLayout) view.findViewById(R.id.network_error_ll);
         view.findViewById(R.id.network_error_btn).setOnClickListener(this);

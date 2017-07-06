@@ -106,7 +106,7 @@ public class BettingRecommendDetailsMvpAdapter extends BaseQuickAdapter<BettingL
 
         }
 
-        LinearLayout mBuyOrCheck = holder.getView(R.id.betting_issue_tobuy_or_check);
+//        LinearLayout mBuyOrCheck = holder.getView(R.id.betting_issue_tobuy_or_check);
         LinearLayout mSpecialistLay = holder.getView(R.id.betting_issue_specialist_lay);
         LinearLayout mGameDetailsLay = holder.getView(R.id.betting_issue_game_details_lay);
 
@@ -115,7 +115,7 @@ public class BettingRecommendDetailsMvpAdapter extends BaseQuickAdapter<BettingL
          */
 
         if (lookStatus) {
-            mBuyOrCheck.setOnClickListener(new View.OnClickListener() {
+            mGameDetailsLay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                    if (mBuyClick != null){
