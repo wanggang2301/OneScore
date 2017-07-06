@@ -108,7 +108,7 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
     private TextView season_2;
     private TextView season_3;
     private NestedScrollView technical_scrollview;
-    private TextView match_no_data_txt;
+    private LinearLayout match_no_data_txt;
     private Activity mActivity;
     private Context mContext;
 
@@ -609,7 +609,7 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
 
         technical_scrollview = (NestedScrollView) view.findViewById(R.id.technical_scrollview);
         //暂无数据
-        match_no_data_txt = (TextView) view.findViewById(R.id.no_datas_ll);
+        match_no_data_txt = (LinearLayout) view.findViewById(R.id.no_datas_ll);
 
         //网络异常
         match_error_btn = (LinearLayout) view.findViewById(R.id.network_error_ll);
