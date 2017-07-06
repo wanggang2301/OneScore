@@ -63,17 +63,13 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
     TextView handicapFirst;
     @BindView(R.id.guest_first)
     TextView guestFirst;
-    @BindView(R.id.fl_loading)
-    FrameLayout flLoading;
-    @BindView(R.id.reLoading)
+    @BindView(R.id.network_error_btn)
     TextView reLoading;
-    @BindView(R.id.fl_networkError)
-    FrameLayout flNetworkError;
-    @BindView(R.id.fl_nodata)
-    RelativeLayout flNodata;
+    @BindView(R.id.no_datas_ll)
+    LinearLayout flNodata;
     @BindView(R.id.ll_context)
     LinearLayout llContext;
-    @BindView(R.id.handle_exception)
+    @BindView(R.id.network_error_ll)
     LinearLayout handleException;
 
 
@@ -159,8 +155,6 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
     public void loading() { //loading的view
         llContext.setVisibility(View.GONE);
         handleException.setVisibility(View.VISIBLE);
-        flLoading.setVisibility(View.VISIBLE);
-        flNetworkError.setVisibility(View.GONE);
         flNodata.setVisibility(View.GONE);
     }
 
@@ -169,8 +163,6 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
     public void responseData() {
         llContext.setVisibility(View.VISIBLE);
         handleException.setVisibility(View.GONE);
-        flLoading.setVisibility(View.GONE);
-        flNetworkError.setVisibility(View.GONE);
         flNodata.setVisibility(View.GONE);
         bowlBean = mPresenter.getBowlBean();
 
@@ -293,17 +285,13 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
     public void onError() {
         llContext.setVisibility(View.GONE);
         handleException.setVisibility(View.VISIBLE);
-        flLoading.setVisibility(View.GONE);
-        flNetworkError.setVisibility(View.VISIBLE);
         flNodata.setVisibility(View.GONE);
     }
 
     @Override
     public void noData() {
         llContext.setVisibility(View.GONE);
-        handleException.setVisibility(View.VISIBLE);
-        flLoading.setVisibility(View.GONE);
-        flNetworkError.setVisibility(View.GONE);
+        handleException.setVisibility(View.GONE);
         flNodata.setVisibility(View.VISIBLE);
     }
 
@@ -311,7 +299,7 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
         return s == null || "".equals(s) || "-".equals(s);
     }
 
-    @OnClick(R.id.reLoading)
+    @OnClick(R.id.network_error_btn)
     public void onClick() {
         mPresenter.requestData(mThirdId, String.valueOf(oddType));
     }

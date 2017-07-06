@@ -269,6 +269,7 @@
 
     <!-- 异常处理 -->
     <string name="exp_net_status_txt">暂无法提供数据</string>
+    <string name="exp_no_net">暂无网络</string>
     <string name="exp__check_txt">请检查后</string>
     <string name="exp_refresh_txt">刷新</string>
     <!-- 赛程 -->

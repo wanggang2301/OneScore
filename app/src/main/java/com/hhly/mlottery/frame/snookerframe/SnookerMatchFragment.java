@@ -47,9 +47,9 @@ public class SnookerMatchFragment extends Fragment implements ExactSwipeRefreshL
     private SnookerMatchAdapter mSnookerMatchAdapter;
     private List<SnookerMatchBean.DataBean> dataBeanList;
     private TextView network_exception_reload_btn;
-    private FrameLayout fl_nodata;
     private LinearLayout ll_error;
     private ExactSwipeRefreshLayout refresh;
+    private LinearLayout no_datas_ll;
 
     public SnookerMatchFragment() {
         // Required empty public constructor
@@ -88,9 +88,11 @@ public class SnookerMatchFragment extends Fragment implements ExactSwipeRefreshL
         refresh.setOnRefreshListener(this);
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
-        fl_nodata = (FrameLayout) mView.findViewById(R.id.fl_nodata);
-        ll_error = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
-        network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
+
+        no_datas_ll = (LinearLayout) mView.findViewById(R.id.no_datas_ll);
+
+        ll_error = (LinearLayout) mView.findViewById(R.id.network_error_ll);
+        network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_error_btn);
         recyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
 
@@ -115,21 +117,21 @@ public class SnookerMatchFragment extends Fragment implements ExactSwipeRefreshL
                 case REQUEST_LOAD:
                     refresh.setRefreshing(true);
                     refresh.setVisibility(View.VISIBLE);
-                    fl_nodata.setVisibility(View.GONE);
+                    no_datas_ll.setVisibility(View.GONE);
                     ll_error.setVisibility(View.GONE);
                     break;
 
                 case REQUEST_SUCESS:
                     refresh.setRefreshing(false);
                     refresh.setVisibility(View.VISIBLE);
-                    fl_nodata.setVisibility(View.GONE);
+                    no_datas_ll.setVisibility(View.GONE);
                     ll_error.setVisibility(View.GONE);
                     break;
 
                 case REQUEST_NODATA:
                     refresh.setVisibility(View.GONE);
                     refresh.setRefreshing(false);
-                    fl_nodata.setVisibility(View.VISIBLE);
+                    no_datas_ll.setVisibility(View.VISIBLE);
                     ll_error.setVisibility(View.GONE);
 
                     break;
@@ -137,7 +139,7 @@ public class SnookerMatchFragment extends Fragment implements ExactSwipeRefreshL
                 case REQUEST_ERROR:
                     refresh.setVisibility(View.GONE);
                     refresh.setRefreshing(false);
-                    fl_nodata.setVisibility(View.GONE);
+                    no_datas_ll.setVisibility(View.GONE);
                     ll_error.setVisibility(View.VISIBLE);
                     break;
 

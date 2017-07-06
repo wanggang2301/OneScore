@@ -332,6 +332,7 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
         smallball_h.setText(sizePlate.getHomeSizePlate().getLowPer());
         smallball_g.setText(sizePlate.getGuestSizePlate().getLowPer());
 
+
     }
 
     /*更新让分盘数据*/
@@ -541,10 +542,11 @@ public class HandicapStatisticsFragment extends Fragment implements View.OnClick
     /**
      * 父类调用下拉刷新
      */
-    public void refreshFragment(String season) {
-        mSeason = season;
+    public void refreshFragment(String season){
+        mSeason=season;
         initData();
     }
+
 
 
     @Override

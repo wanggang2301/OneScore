@@ -93,9 +93,9 @@ public class MyApp extends Application {
                 // 根据上次的语言设置，重新设置语言
                 isLanguage = switchLanguage(PreferenceUtil.getString("language", ""));
 
-                // 捕获异常
+              /*  // 捕获异常
                 CrashException crashException = CrashException.getInstance();
-                crashException.init(getApplicationContext());
+                crashException.init(getApplicationContext());*/
 
                 // 初始化Vollery
                 VolleyContentFast.init(appcontext);
