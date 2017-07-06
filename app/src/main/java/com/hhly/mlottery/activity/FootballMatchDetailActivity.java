@@ -719,10 +719,16 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                     updateAnimation(matchLive.get(0));
                     matchTimeStart(mMatchTime, state);
                 }
-                // 球探数据源，显示暂无动画直播
-                if (matchDetail.getSourceType() == 3) {
-                    switchQiutan = true;
-                    showGifAnimation(-1111);
+
+                //是否完场
+                if (LIVEENDED.equals(matchDetail.getLiveStatus())) {
+                    showGifAnimation(-1);
+                }else{
+                    // 球探数据源，显示暂无动画直播
+                    if (matchDetail.getSourceType() == 3) {
+                        switchQiutan = true;
+                        showGifAnimation(-1111);
+                    }
                 }
 
                 L.d("wwwww", "计算 tv_head_data_or_score ：" + tv_head_data_or_score.getVisibility() + "  score: " + tv_head_data_or_score.getText().toString());
@@ -4221,7 +4227,13 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
     private void showGifAnimation(int type) {
 
         if (switchQiutan) {
-            type = -1111; //切换过球探数据后 不展示动画
+
+            if (type == -1) {
+                ll_not_animation_content.setVisibility(View.GONE);
+            }else{
+                type = -1111; //切换过球探数据后 不展示动画
+            }
+
         }
 
         // 球探数据切换 暂无动画直播  -1111

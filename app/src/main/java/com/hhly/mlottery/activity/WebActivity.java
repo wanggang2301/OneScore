@@ -368,6 +368,7 @@ public class WebActivity extends BaseActivity implements OnClickListener {
         @JavascriptInterface
         public void toLoginAct(){
             startActivity(new Intent(WebActivity.this , LoginActivity.class));
+            finish();
         }
 
     }
