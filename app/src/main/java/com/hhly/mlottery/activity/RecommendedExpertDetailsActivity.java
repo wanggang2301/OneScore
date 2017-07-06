@@ -71,8 +71,7 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
 
     private RecomenHeadAdapter recomenHeadAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private TextView match_no_data_txt;
-    private LinearLayout match_error_btn;
+
     private LinearLayout px_line;
     private List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> listBeanList;
     private View view;
@@ -97,16 +96,15 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case VIEW_STATUS_LOADING:
-                    match_error_btn.setVisibility(View.GONE);
                     match_no_data_txt.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(true);
-                    match_error_btn.setVisibility(View.GONE);
+                    network_error_ll.setVisibility(View.GONE);
                     px_line.setVisibility(View.GONE);
                     break;
                 case VIEW_STATUS_SUCCESS:
                     match_no_data_txt.setVisibility(View.GONE);
-                    match_error_btn.setVisibility(View.GONE);
+                    network_error_ll.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     px_line.setVisibility(View.VISIBLE);
@@ -116,14 +114,14 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                     match_no_data_txt.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    match_error_btn.setVisibility(View.GONE);
+                    network_error_ll.setVisibility(View.GONE);
                     px_line.setVisibility(View.GONE);
                     break;
                 case VIEW_STATUS_NET_ERROR:
                     match_no_data_txt.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    match_error_btn.setVisibility(View.VISIBLE);
+                    network_error_ll.setVisibility(View.VISIBLE);
                     px_line.setVisibility(View.GONE);
                     break;
                 default:
@@ -136,6 +134,8 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
 
     private int allPoint;
     private LinearLayoutManager layoutManager;
+    private LinearLayout match_no_data_txt;
+    private LinearLayout network_error_ll;
 
 
     @Override
@@ -177,7 +177,6 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                             pullUpLoadMoreData();
                         } else {
                             Toast.makeText(mContext, mContext.getResources().getText(R.string.nodata_txt), Toast.LENGTH_SHORT).show();
-//                            mOnloadingView.findViewById(R.id.loading_text)
                             recomenHeadAdapter.addFooterView(mNoLoadingView);
                         }
                     }
@@ -224,9 +223,6 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                     if (jsonObject.getCode().equals("200")){
 
 
-                    if (jsonObject.getExpertPromotions()==null){
-                    if (jsonObject.getCode().equals("200")) {
-
 
                         if (jsonObject.getExpertPromotions() == null) {
 
@@ -252,15 +248,6 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                         recomenHeadAdapter.openLoadMore(0, true);
                         initEvent();
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
-                        if (recomenHeadAdapter == null) {
-                            recomenHeadAdapter = new RecomenHeadAdapter(mContext, listBeanList);
-                            recomenHeadAdapter.setLoadingView(view);
-                            recomenHeadAdapter.addHeaderView(headView);
-                            buyClicked();
-                            recomenHeadAdapter.setmBuyClick(mBettingBuyClickListener);
-                            ex_recyclerview.setAdapter(recomenHeadAdapter);
-                            recomenHeadAdapter.openLoadMore(0, true);
-                            initEvent();
 
                     } else {
 
@@ -280,7 +267,6 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
             }
         }, RecommendationExpertBean.class);
-
 
     }
 
@@ -478,7 +464,7 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                 finish();
                 break;
 
-            case R.id.match_error_btn:
+            case R.id.network_error_btn:
                 initData();
                 initHeadData();
                 break;
