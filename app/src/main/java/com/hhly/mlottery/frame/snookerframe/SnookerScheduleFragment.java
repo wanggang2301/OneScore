@@ -58,7 +58,7 @@ public class SnookerScheduleFragment extends Fragment implements View.OnClickLis
     private LoadMoreRecyclerView mRecyclerView;
     private LinearLayout mErrorLayout;
     private TextView mRefreshText;
-    private TextView mNoData;
+    private LinearLayout mNoData;
     private ExactSwipeRefreshLayout mRefresh;
     private LinearLayoutManager linearLayoutManager;
     private DateOnClickListener mDateOnClickListener;
@@ -124,14 +124,14 @@ public class SnookerScheduleFragment extends Fragment implements View.OnClickLis
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(linearLayoutManager);
         //网络异常
-        mErrorLayout = (LinearLayout) mView.findViewById(R.id.snooker_error_layout);
+        mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_error_ll);
         //点击刷新
-        mRefreshText = (TextView) mView.findViewById(R.id.snooker_reloading_txt);
+        mRefreshText = (TextView) mView.findViewById(R.id.network_error_btn);
         mRefreshText.setOnClickListener(this);
         //暂无数据
-        mNoData = (TextView) mView.findViewById(R.id.snooker_nodata_txt);
+        mNoData = (LinearLayout) mView.findViewById(R.id.no_datas_ll);
         //加载中...
-        mLoading = (LinearLayout) mView.findViewById(R.id.snooker_loading_ll);
+        mLoading = (LinearLayout) mView.findViewById(R.id.loading_ll);
 
         //当前日期下无数据
         mCurrentNoData = (TextView) mView.findViewById(R.id.snooker_current_nodata);
@@ -279,7 +279,7 @@ public class SnookerScheduleFragment extends Fragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.snooker_reloading_txt:
+            case R.id.network_error_btn:
                 Toast.makeText(mContext, "点击了刷新···", Toast.LENGTH_SHORT).show();
                 setStatus(SHOW_STATUS_REFRESH_ONCLICK);
                 initData(currentDatePosition);

@@ -58,23 +58,23 @@ public class CornerFragment extends ViewFragment<CornerContract.Presenter> imple
     /**
      * 异常界面
      */
-    @BindView(R.id.basket_odds_net_error)
+    @BindView(R.id.network_error_ll)
     LinearLayout mExceptionLayout;
     /**
      * 无数据的界面
      */
-    @BindView(R.id.nodata)
-    TextView mNodataLayout;
+    @BindView(R.id.no_datas_ll)
+    LinearLayout mNodataLayout;
     /**
      * 点击刷新
      */
-    @BindView(R.id.network_exception_reload_btn)
+    @BindView(R.id.network_error_btn)
     TextView mBtnRefresh;
     /**
      * 加载中
      */
-    @BindView(R.id.basket_player_progressbar)
-    FrameLayout mProgressBarLayout;
+    @BindView(R.id.loading_ll)
+    LinearLayout mProgressBarLayout;
 
     @BindView(R.id.corner_list_recycler)
     RecyclerView mRecyclerView;

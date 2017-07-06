@@ -65,7 +65,7 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
     private View mEmptyView;
     private View mErrorLayout;
     private TextView mRefreshTextView;
-    private TextView mNoDataTextView;
+    private LinearLayout mNoDataTextView;
     private LinearLayout no_focus;
 
     private RecyclerView tennis_recycler;
@@ -100,7 +100,7 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mView = View.inflate(mContext, R.layout.fragment_tennls_ball_tab, null);
-        mEmptyView = View.inflate(mContext, R.layout.tennis_empty_layout, null);
+        mEmptyView = View.inflate(mContext, R.layout.exception_page_display, null);
 
         initView();
         initEmptyView();
@@ -220,9 +220,9 @@ public class TennisBallSocketFragment extends BaseWebSocketFragment implements S
     }
 
     private void initEmptyView() {
-        mErrorLayout = mEmptyView.findViewById(R.id.error_layout);
-        mRefreshTextView = (TextView) mEmptyView.findViewById(R.id.reloading_txt);
-        mNoDataTextView = (TextView) mEmptyView.findViewById(R.id.no_data_txt);
+        mErrorLayout = mEmptyView.findViewById(R.id.network_error_ll);
+        mRefreshTextView = (TextView) mEmptyView.findViewById(R.id.network_error_btn);
+        mNoDataTextView = (LinearLayout) mEmptyView.findViewById(R.id.no_datas_ll);
         no_focus = (LinearLayout) mEmptyView.findViewById(R.id.no_focus);
     }
 
