@@ -23,7 +23,6 @@ import com.hhly.mlottery.bean.MostExpertBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.util.DisplayUtil;
-import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.VolleyContentFast;
 
 import java.util.ArrayList;
@@ -50,7 +49,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
     private ExpertsListAdapter expertsListAdapter;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private TextView match_no_data_txt;
+    private LinearLayout match_no_data_txt;
     private LinearLayout match_error_btn;
 
     private final static int VIEW_STATUS_LOADING = 11;
@@ -125,7 +124,6 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
         expertsListAdapter.setOnRecyclerViewItemClickListener(new BaseQuickAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int i) {
-                L.d("experts", "index: " + i);
                 gotoWebActivity(i);
 
             }
@@ -176,7 +174,6 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
                         return;
                     }
 
-
                     expertDatas = jsonObject.getExpert();  //获取头部数据
 
                     if (expertDatas != null) {
@@ -209,17 +206,16 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getApplicationContext(), StaticValues.REFRASH_OFFSET_END));
 
 
-
         LayoutInflater layoutInflater = this.getLayoutInflater();
         headView = layoutInflater.inflate(R.layout.activity_experts_head_view, null);
         headView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //暂无数据
-        match_no_data_txt = (TextView) findViewById(R.id.match_no_data_txt);
+        match_no_data_txt = (LinearLayout) findViewById(R.id.no_datas_ll);
 
         //网络异常
-        match_error_btn = (LinearLayout) findViewById(R.id.match_error_ll);
-        findViewById(R.id.match_error_btn).setOnClickListener(this);
+        match_error_btn = (LinearLayout) findViewById(R.id.network_error_ll);
+        findViewById(R.id.network_error_btn).setOnClickListener(this);
 
         px_line = (LinearLayout) findViewById(R.id.px_line);
         px_line.setVisibility(View.GONE);
@@ -254,7 +250,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
                 finish();
                 break;
 
-            case R.id.match_error_btn:
+            case R.id.network_error_btn:
                 initData();
                 break;
 
@@ -263,6 +259,7 @@ public class ExpertsActivity extends BaseActivity implements View.OnClickListene
         }
 
     }
+
     /*加载头部数据*/
     public void setHeaderDatas(MostExpertBean.ExpertBean headerDatas) {
         try {

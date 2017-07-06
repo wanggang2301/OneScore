@@ -20,18 +20,7 @@
             android:scrollbars="vertical" />
     </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
-    <include layout="@layout/network_exception" />
+    <include layout="@layout/exception_page_display" />
 
-    <FrameLayout
-        android:id="@+id/fl_nodata"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/nodata" />
-    </FrameLayout>
 
 </LinearLayout>

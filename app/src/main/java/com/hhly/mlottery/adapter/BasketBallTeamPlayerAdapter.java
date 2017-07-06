@@ -31,6 +31,6 @@ public class BasketBallTeamPlayerAdapter extends BaseQuickAdapter<BasketTeamPlay
         ImageLoader.load(mContext,bean.getPlayerImg(),R.mipmap.center_head).into(headIcon);
 
         holder.setText(R.id.basket_team_player_name,bean.getPlayerName());
-        holder.setText(R.id.basket_team_player_num,bean.getPalyerShirtNum()+mContext.getString(R.string.basket_team_player_num));
+        holder.setText(R.id.basket_team_player_num,null==bean.getPalyerShirtNum()?mContext.getString(R.string.basket_team_player_num):bean.getPalyerShirtNum()+mContext.getString(R.string.basket_team_player_num));
     }
 }

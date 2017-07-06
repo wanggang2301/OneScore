@@ -28,6 +28,6 @@
 
         </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
-        <include layout="@layout/empty_layout"/>
+        <include layout="@layout/exception_page_display"/>
 
 </LinearLayout>

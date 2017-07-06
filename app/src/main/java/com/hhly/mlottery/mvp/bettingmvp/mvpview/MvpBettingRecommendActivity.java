@@ -73,7 +73,7 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
     private LinearLayout mErrorLayout;
     private TextView mRefreshTxt;
     private LinearLayout mLoadingLayout;
-    private TextView mNoDataLayout;
+    private LinearLayout mNoDataLayout;
     private Context mContext;
 
     List<BettingListDataBean.LeagueNameData> allLeague;// 所有的联赛
@@ -182,14 +182,14 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
 
         //异常状态
         //网络不给力
-        mErrorLayout = (LinearLayout) findViewById(R.id.error_layout);
+        mErrorLayout = (LinearLayout) findViewById(R.id.network_error_ll);
         //刷新
-        mRefreshTxt = (TextView) findViewById(R.id.reloading_txt);
+        mRefreshTxt = (TextView) findViewById(R.id.network_error_btn);
         mRefreshTxt.setOnClickListener(this);
         //加载中
-        mLoadingLayout = (LinearLayout) findViewById(R.id.custom_loading_ll);
+        mLoadingLayout = (LinearLayout) findViewById(R.id.loading_ll);
         //暂无数据
-        mNoDataLayout = (TextView) findViewById(R.id.nodata_txt);
+        mNoDataLayout = (LinearLayout) findViewById(R.id.no_datas_ll);
 
         mOnloadingView = getLayoutInflater().inflate(R.layout.onloading, (ViewGroup) mRecycleView.getParent(),false);
         mNoLoadingView=getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) mRecycleView.getParent(),false);
@@ -207,6 +207,7 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
 
         mapPrament.put(PARAM_PAGE_SIZE , pageSize +"");
         mapPrament.put(PARAM_PAGE_NO , pageNum + "");
+
         mapPrament.put(PARAM_USER_ID , userid);
         mapPrament.put(PARAM_KEY , key);
         mapPrament.put(PARAM_TYPE , type);
@@ -321,7 +322,7 @@ public class MvpBettingRecommendActivity extends Activity implements MView<Betti
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.reloading_txt:
+            case R.id.network_error_btn:
                 setStatus(SHOW_STATUS_REFRESH_ONCLICK);
                 mLoadHandler.postDelayed(mRun, 0);
                 break;

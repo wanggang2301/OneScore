@@ -243,7 +243,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
 
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mReloadTvBtn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
+        mReloadTvBtn = (TextView) mView.findViewById(R.id.network_error_btn);
         mReloadTvBtn.setOnClickListener(this);
 
         mNoDataLayout = mView.findViewById(R.id.football_immediate_unfocus_ll);// 没有数据板块
@@ -251,7 +251,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
         mNoDataTextView.setText(R.string.immediate_no_data);
 
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_immediate_loading_ll);// Loading板块
-        mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);// 网络错误板块
+        mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_error_ll);// 网络错误板块
 
         titleContainer = (LinearLayout) mView.findViewById(R.id.titleContainer);
         handicapName1 = (TextView) mView.findViewById(R.id.tv_handicap_name1);
@@ -466,7 +466,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                                         }
                                     }
                                 }
-                            } else {
+                            } /*else {
                                 for (Match m : mAllMatchs) {// 默认显示热门赛程 (所以把热门的过滤出来)
                                     for (String hotId : hotList) {
                                         if (m.getRaceId().equals(hotId)) {
@@ -475,7 +475,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                                         }
                                     }
                                 }
-                            }
+                            }*/
                         }
 
                         mCups = jsonMatch.getAll();
@@ -1140,7 +1140,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.network_exception_reload_btn:
+            case R.id.network_error_btn:
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
                 mLoadHandler.post(mLoadingDataThread);
                 break;

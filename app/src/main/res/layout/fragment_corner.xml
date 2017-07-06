@@ -6,25 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.hhly.mlottery.frame.cpifrag.SnookerIndex.SnookerChildFragment.SnookerIndexChildFragment">
 
-    <!--网络异常跟刷新-->
-
-    <!--内容加载进度条_正在加载中-->
-    <FrameLayout
-        android:id="@+id/basket_player_progressbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="50dp"
-        >
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-    </FrameLayout>
-    <include layout="@layout/layout_nodata"/>
-    <include layout="@layout/basket_odds_new_error"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -81,5 +62,9 @@
             />
 
     </LinearLayout>
+
+
+    <include layout="@layout/exception_page_display" />
+    <!--网络异常跟刷新-->
 
 </FrameLayout>

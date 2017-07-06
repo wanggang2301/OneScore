@@ -3,9 +3,13 @@ package com.hhly.mlottery.adapter.homePagerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
@@ -14,7 +18,9 @@ import android.view.ViewParent;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hhly.mlottery.MyApp;
@@ -26,6 +32,7 @@ import com.hhly.mlottery.activity.IndexActivity;
 import com.hhly.mlottery.activity.NumbersActivity;
 import com.hhly.mlottery.activity.NumbersInfoBaseActivity;
 import com.hhly.mlottery.activity.ProductAdviceActivity;
+import com.hhly.mlottery.activity.RecommendedExpertDetailsActivity;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.bean.homepagerentity.HomeBodysEntity;
 import com.hhly.mlottery.bean.homepagerentity.HomeBodysLottery;
@@ -35,8 +42,11 @@ import com.hhly.mlottery.bean.homepagerentity.HomePagerEntity;
 import com.hhly.mlottery.bean.productadvice.ProductUserLike;
 import com.hhly.mlottery.callback.ProductListener;
 import com.hhly.mlottery.config.BaseURLs;
+import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.FootBallDetailTypeEnum;
 import com.hhly.mlottery.frame.HomeMuenFragment;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DateUtil;
 import com.hhly.mlottery.util.DisplayUtil;
@@ -79,11 +89,19 @@ public class HomeListBaseAdapter extends BaseAdapter {
     private TextView klsf05_number, klsf06_number, klsf07_number, klsf08_number, ks_issue, ssc_issue, ssc01_number, ssc02_number, ssc03_number, ssc04_number, ssc05_number, qxc04_number, qxc05_number, qxc06_number;
     private List<TextView> hk_numbers, hk_zodiacs, qxc_numbers, klsf_numbers, ssc_numbers;// 彩种号码View集合
     private List<ImageView> bjsc_numbers, ks_numbers;
+    private TextView mBettingName,mBettingExpert,mHitRate,mMonthRate,mEarningRate,mLeagueName,
+                     mRound,mMatchDate,mBettingType,mHomeName,mVs,mGuestName,mPrice,mBuyerNumber , mBuy,mBetReason;
+
+    private ImageView mExpertIcon  ,mBettingResult;
+    private RelativeLayout mBettingMore; //某个专家更多比赛
+    private LinearLayout mBettingDetail; //某个推荐的详情
 
     private List<View> scoreViewList = new ArrayList<>();// 热门赛事条目集合
     private List<View> dataInfoViewList = new ArrayList<>();// 热门资讯条目集合
     private List<View> lotteryViewList = new ArrayList<>();// 彩票条目集合
     private List<View> expertViewList = new ArrayList<>();// 专家专栏条目集合
+    private List<View> bettingList=new ArrayList<>(); // 推介列表
+
 
     private final int MIN_CLICK_DELAY_TIME = 1000;// 控件点击间隔时间
     private long lastClickTime = 0;
@@ -359,6 +377,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                                     }
                                 });
                                 break;
+
                         }
                     }
                 }
@@ -671,6 +690,144 @@ public class HomeListBaseAdapter extends BaseAdapter {
     }
 
     /**
+     * 获取推介条目
+     * @return
+     */
+    private View getBettingView(){
+        View view=View.inflate(mContext, R.layout.home_betting_layout, null);
+        mBettingName= (TextView) view.findViewById(R.id.betting_specialist_name);
+        mBettingExpert= (TextView) view.findViewById(R.id.betting_specialist_grade);
+        mHitRate= (TextView) view.findViewById(R.id.betting_lately_accuracy);
+        mMonthRate= (TextView) view.findViewById(R.id.betting_month_win);
+        mEarningRate= (TextView) view.findViewById(R.id.betting_earnings_rate);
+        mLeagueName= (TextView) view.findViewById(R.id.betting_league_name);
+        mRound= (TextView) view.findViewById(R.id.betting_round);
+        mMatchDate= (TextView) view.findViewById(R.id.betting_date);
+        mBettingType= (TextView) view.findViewById(R.id.betting_concede_points_spf);
+        mHomeName= (TextView) view.findViewById(R.id.betting_home_name);
+        mGuestName= (TextView) view.findViewById(R.id.betting_guest_name);
+        mVs= (TextView) view.findViewById(R.id.betting_vs);
+        mPrice= (TextView) view.findViewById(R.id.betting_price);
+        mBuyerNumber= (TextView) view.findViewById(R.id.betting_buy_num);
+        mBuy = (TextView) view.findViewById(R.id.textView11);
+        mBettingMore= (RelativeLayout) view.findViewById(R.id.rl_specialist_detail);
+        mBettingResult= (ImageView) view.findViewById(R.id.betting_status_imageView);
+        mBettingDetail= (LinearLayout) view.findViewById(R.id.betting_game_details_lay);
+        mBetReason= (TextView) view.findViewById(R.id.betting_recommended_reason);
+        return view;
+    }
+
+    /**
+     * 设置推介的数据
+     * @param entity
+     */
+    private void setBettingData(final HomeBodysEntity entity){
+        mBettingName.setText(entity.getUserid());
+        mBettingExpert.setText(entity.getExpert());
+
+        int winPoint = 0;//胜场
+        int errPoint = 0;//负场
+        try {
+            winPoint = Integer.parseInt(entity.getWinPoint());
+            errPoint = Integer.parseInt(entity.getErrPoint());
+        }catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        int allPoint = winPoint + errPoint;
+
+        mHitRate.setText(mContext.getResources().getString(R.string.betting_item_jin) +
+                allPoint + mContext.getResources().getString(R.string.betting_item_zhong) + winPoint);
+        if(mMonthRate!=null){
+            mMonthRate.setText(entity.getMonthVic()+"%");
+        }else {
+            mMonthRate.setVisibility(View.GONE);
+        }
+        if(mEarningRate!=null){
+            mEarningRate.setText(entity.getEarningsRate()+"%");
+        }else {
+            mEarningRate.setVisibility(View.GONE);
+        }
+
+        mLeagueName.setText(filtraNull(entity.getLeagueName()));
+//        mRound.setText();
+        mMatchDate.setText(filtraNull(entity.getMatchDateTime()));
+        mBettingType.setText(filtraNull(entity.getTypeStr()));
+        mHomeName.setText(filtraNull(entity.getHomeName()));
+        mGuestName.setText(filtraNull(entity.getGuestName()));
+//        mVs.setText();
+        mPrice.setText("￥ " +filtraNull(entity.getPrice()));
+        mBuyerNumber.setText(filtraNull(entity.getCountOrder()));
+
+        if (entity.getLookStatus() == null) {
+            mBuy.setText("--");
+        }else{
+            if (entity.getLookStatus().equals("2")) {
+                mBuy.setText( mContext.getResources().getString(R.string.betting_txt_buy));
+            }else{
+                mBuy.setText( mContext.getResources().getString(R.string.betting_txt_check));
+            }
+        }
+
+        mBetReason.setText(filtraNull(entity.getTitle()));
+
+        switch (entity.getStatus()) {
+            case "1"://中
+                mBuy.setVisibility(View.GONE);
+                mBettingResult.setVisibility(View.VISIBLE);
+                mBettingResult.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.jingcai_icon_zhong));
+                break;
+            case "2"://失
+                mBuy.setVisibility(View.GONE);
+                mBettingResult.setVisibility(View.VISIBLE);
+                mBettingResult.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.jingcai_icon_shi));
+                break;
+            case "6"://走
+                mBuy.setVisibility(View.GONE);
+                mBettingResult.setVisibility(View.VISIBLE);
+                mBettingResult.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.jingcai_icon_zou));
+                break;
+            default:
+                mBuy.setVisibility(View.VISIBLE);
+                mBettingResult.setVisibility(View.GONE);
+                break;
+        }
+        //设置监听
+        mBettingMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //跳到专家
+                Intent intent=new Intent(mContext,RecommendedExpertDetailsActivity.class);
+                intent.putExtra("expertId",entity.getUserid());
+                intent.putExtra("winPoint",entity.getWinPoint());
+                intent.putExtra("errPoint",entity.getErrPoint());
+                mContext.startActivity(intent);
+            }
+        });
+        mBettingDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //跳到推介详情
+                Intent intent=new Intent(mContext, MvpBettingPayDetailsActivity.class);
+                intent.putExtra(ConstantPool.TO_DETAILS_PROMOTION_ID,entity.getId());
+                intent.putExtra("expertId",entity.getUserid());
+                intent.putExtra("winPoint",entity.getWinPoint());
+                intent.putExtra("errPoint",entity.getErrPoint());
+                mContext.startActivity(intent);
+            }
+        });
+
+
+    }
+
+    private String filtraNull(String str){
+
+        if (str == null) {
+            return "--";
+        }else{
+            return str;
+        }
+    }
+    /**
      * 初始化数据
      */
     private void init() {
@@ -681,6 +838,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 for (int j = 0, len1 = bodys.size(); j < len1; j++) {
                     HomeBodysEntity homeBodysEntity = bodys.get(j);
                     switch (labType) {
+                        case 8: //  推介
+                            View bettingView=getBettingView();
+                            bettingList.add(bettingView);
+                            setBettingData(homeBodysEntity);
+                            break;
+
                         case 1:// 1、	热门赛事
                         {
                             View scoreView = getScoreView();
@@ -1496,9 +1659,12 @@ public class HomeListBaseAdapter extends BaseAdapter {
                     mViewHolderOther = new ViewHolderOther();
                     convertView = View.inflate(mContext, R.layout.home_page_items, null);
                     mViewHolderOther.tv_title = (TextView) convertView.findViewById(R.id.tv_home_item_title);
+                    mViewHolderOther.tv_bet_title= (TextView) convertView.findViewById(R.id.tv_home_item_title_bet);
                     mViewHolderOther.ll_content = (LinearLayout) convertView.findViewById(R.id.ll_home_item_content);
                     mViewHolderOther.tv_more_advice = (TextView) convertView.findViewById(R.id.tv_home_item_more);
                     mViewHolderOther.view_title_split = convertView.findViewById(R.id.view_title_split);
+                    mViewHolderOther.img_bet_more= (ImageView) convertView.findViewById(R.id.img_bet_more);
+                    mViewHolderOther.bet_line=convertView.findViewById(R.id.bet_line);
                     convertView.setTag(mViewHolderOther);
                     break;
             }
@@ -1517,6 +1683,7 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 final HomeContentEntity mContent = (HomeContentEntity) getItem(position);
                 if (mContent.getLabType() == 5) {
                     mViewHolderOther.tv_more_advice.setVisibility(View.VISIBLE);
+
                 } else {
                     mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                 }
@@ -1529,6 +1696,32 @@ public class HomeListBaseAdapter extends BaseAdapter {
                 }
                 for (int i = 0, len = mContent.getBodys().size(); i < len; i++) {
                     switch (mContent.getLabType()) {
+
+                        case 8: //推介
+                            mViewHolderOther.tv_bet_title.setVisibility(View.VISIBLE);
+                            int titleWidth=getTextWidth();
+                            Shader shader_horizontal= new LinearGradient(0, 0, titleWidth, 0, ContextCompat.getColor(mContext,R.color.bet_start_color), ContextCompat.getColor(mContext,R.color.bet_end_color), Shader.TileMode.CLAMP);
+                            mViewHolderOther.tv_bet_title.getPaint().setShader(shader_horizontal);
+
+                            mViewHolderOther.img_bet_more.setVisibility(View.VISIBLE);
+                            mViewHolderOther.bet_line.setVisibility(View.VISIBLE);
+
+                            mViewHolderOther.img_bet_more.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    //跳推介列表
+                                    mContext.startActivity(new Intent(mContext, MvpBettingRecommendActivity.class));
+
+                                }
+                            });
+
+                            View betView=bettingList.get(i);
+                            ViewParent parentBet=betView.getParent();
+                            if(parentBet!=null){
+                                ((ViewGroup) parentBet).removeAllViews();
+                            }
+                            mViewHolderOther.ll_content.addView(betView);
+                            break;
                         case 1: // 1、	热门赛事.
                             if (addViewScore) {
                                 View splitView = View.inflate(mContext, R.layout.split_view, null);
@@ -1621,11 +1814,23 @@ public class HomeListBaseAdapter extends BaseAdapter {
                             mViewHolderOther.tv_more_advice.setVisibility(View.GONE);
                             addViewExpert = true;
                             break;
+
                     }
                 }
             }
         }
         return convertView;
+    }
+
+    /**
+     * 获取textview的宽度
+     * @return
+     */
+    public int getTextWidth(){
+        TextPaint paint = new TextPaint();
+        float scaledDensity = mContext.getResources().getDisplayMetrics().scaledDensity;
+        paint.setTextSize(scaledDensity * 8);
+        return (int)paint.measureText(mContext.getString(R.string.home_newest_bet));
     }
 
     int expertid1, expertid2, expertid3, expertid4;
@@ -1858,8 +2063,11 @@ public class HomeListBaseAdapter extends BaseAdapter {
      */
     public static class ViewHolderOther {
         TextView tv_title;// 标题
+        TextView tv_bet_title; //最新推介
         LinearLayout ll_content;// 条目
         TextView tv_more_advice; //产品建议条目的更多
+        ImageView img_bet_more; //推介点击更多
         View view_title_split;
+        View bet_line;
     }
 }

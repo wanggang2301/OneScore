@@ -49,9 +49,5 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
 
-    <include
-        layout="@layout/network_exception"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/tabs"></include>
+  <include layout="@layout/exception_page_display"/>
 </RelativeLayout>

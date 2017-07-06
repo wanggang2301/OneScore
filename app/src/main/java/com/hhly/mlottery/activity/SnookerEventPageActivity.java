@@ -49,8 +49,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
 
 
     private TextView public_txt_title;
-    private FragmentManager fragmentManager;
-    private TabsAdapter mTabsAdapter;
+
     private List<String> seasonList = new ArrayList<>();
 
     private static final int QUALIFICATIONS = 0;  //资格赛
@@ -61,7 +60,6 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
     private ViewPager viewPager;
 
     private PopupWindow popupWindow;//弹出框
-    private LinearLayout mTxt_title1;//获取弹出框所在位置
 
     private String mIsCurenDatas;//默认赛季时间
     private InforPopuWindowdapter mAdapter;
@@ -74,8 +72,6 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
     // private String LEAGUEID = "";
 
     private String leagueId;
-    private List<String> titles;
-    private String[] titles1;
     private List<Fragment> fragments;
     private List<String> titles2;
     private String profile;
@@ -206,13 +202,6 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         titles2.add(getString(R.string.snooker_match));
         titles2.add(getString(R.string.snooker_champion));
         titles2.add(getString(R.string.snooker_tournament));
-        // titles1 = getApplicationContext().getResources().getStringArray(R.array.snooker_info_tabs);
-    /*    titles1 = new ArrayList<>();
-        titles1.add(getString(R.string.foot_rollball_txt));
-        titles1.add(getString(R.string.foot_jishi_txt));
-        titles1.add(getString(R.string.foot_saiguo_txt));
-        titles1.add(getString(R.string.foot_saicheng_txt));
-*/
         fragments = new ArrayList<>();
         fragments.add(SnookerDatabaseFragment.newInstance(QUALIFICATIONS, leagueId));
         fragments.add(SnookerDataQualificationHeatFragement.newInstance(RACE, leagueId));
@@ -295,22 +284,7 @@ public class SnookerEventPageActivity extends BaseActivity implements View.OnCli
         text_times_title1.setOnClickListener(this);
         ib_operate_more = (ImageView) findViewById(R.id.ib_operate_more);
 
- /*
-        fragmentManager = getSupportFragmentManager();
 
-        mTabsAdapter = new TabsAdapter(fragmentManager);
-        mTabsAdapter.setTitles(titles);
-        mTabsAdapter.addFragments(SnookerDatabaseFragment.newInstance(QUALIFICATIONS, leagueId),
-                SnookerDataQualificationHeatFragement.newInstance(RACE, leagueId),
-                SnookerDatabaseFragment.newInstance(SUCCESSIVE, leagueId),
-                SnookerDatabaseFragment.newInstance(PROFILE, leagueId)
-        );
-
-        viewPager.setOffscreenPageLimit(3);//设置预加载页面的个数。
-        viewPager.setAdapter(mTabsAdapter);
-        tabLayout.setupWithViewPager(viewPager);*/
-        // tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        // tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
     }
 
     @Override

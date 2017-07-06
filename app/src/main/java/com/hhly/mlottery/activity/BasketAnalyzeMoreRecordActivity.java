@@ -82,7 +82,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
     private TextView mNoData3;
     private TextView mNoData4;
     private TextView mNoData5;
-    private TextView mNodataTextview;
+    private LinearLayout mNodataTextview;
 
 
     @Override
@@ -146,7 +146,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         mGuestFuture_ll = (LinearLayout)findViewById(R.id.basket_analyze_details_future_guest);
         mHomeFuture_ll = (LinearLayout)findViewById(R.id.basket_analyze_details_future_home);
 
-        mErrorLoad = (LinearLayout)findViewById(R.id.basketball_details_error);
+        mErrorLoad = (LinearLayout)findViewById(R.id.network_error_ll);
         mErrorLoad.setVisibility(View.GONE);
 
         mSuccessLoad = (LinearLayout)findViewById(R.id.basket_loading_success_ll);
@@ -154,7 +154,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
 
         mGuestFruture = (TextView) findViewById(R.id.basket_guest_fruture_tv_list);
         mHomeFruture = (TextView) findViewById(R.id.basket_home_fruture_tv_list);
-        mError = (TextView)findViewById(R.id.basketball_details_error_btn);
+        mError = (TextView)findViewById(R.id.network_error_btn);
         mError.setOnClickListener(this);
 
         mRefresh = (ExactSwipeRefreshLayout)findViewById(R.id.basket_analyze_details_refreshlayout);
@@ -164,7 +164,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
         mRefresh.setRefreshing(true);
 
         //暂无数据
-        mNodataTextview = (TextView) findViewById(R.id.basket_analyze_details_nodata);
+        mNodataTextview = (LinearLayout) findViewById(R.id.no_datas_ll);
 
         mNoData1 = (TextView) findViewById(R.id.basket_analyze_nodata1);
         mNoData2 = (TextView) findViewById(R.id.basket_analyze_nodata2);
@@ -608,7 +608,7 @@ public class BasketAnalyzeMoreRecordActivity extends BaseActivity implements Vie
                 MobclickAgent.onEvent(mContext, "BasketAnalyzeMoreRecordActivity_RecentScreen");
                 setDialog(false);
                 break;
-            case R.id.basketball_details_error_btn: //点击刷新
+            case R.id.network_error_btn: //点击刷新
                 MobclickAgent.onEvent(mContext, "BasketAnalyzeMoreRecordActivity_Refresh");
                 mErrorLoad.setVisibility(View.GONE);
                 mRefresh.setRefreshing(true);

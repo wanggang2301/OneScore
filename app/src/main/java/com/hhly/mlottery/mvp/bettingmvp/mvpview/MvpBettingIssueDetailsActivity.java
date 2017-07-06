@@ -478,12 +478,16 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                             playLeftA.setChecked(false);
                             playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                             setOddsData(null , chooseLeft , "1" , false);
+                            if (listVo != null && listVo.size() != 0) {
+                                getOdds("1" , listVo.get(prositionPlay).getOddsList().get(0).getLeftOdds() , false);
+                            }
                         }else{
                             playLeftA.setChecked(true);
                             playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
 
                             if (listVo != null && listVo.size() != 0) {
                                 setOddsData(listVo.get(prositionPlay).getOddsList().get(0),chooseLeft ,"1" ,true);
+                                getOdds("1" , listVo.get(prositionPlay).getOddsList().get(0).getLeftOdds() , true);
                             }
                             if (oddsRightA) {
                                 playRightA.setChecked(false);
@@ -514,12 +518,16 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                                 playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
 
                                 setOddsData(null , chooseLeft , "0" , false);
+                                if (listVo != null && listVo.size() != 0) {
+                                    getOdds("0" , listVo.get(prositionPlay).getOddsList().get(0).getLeftOdds() , false);
+                                }
                             }else{
                                 playLeftA.setChecked(true);
                                 playLeftImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
 
                                 if (listVo != null && listVo.size() != 0) {
                                     setOddsData(listVo.get(prositionPlay).getOddsList().get(0),chooseLeft ,"0" ,true);
+                                    getOdds("0" , listVo.get(prositionPlay).getOddsList().get(0).getLeftOdds() , true);
                                 }
 //                        else{
 //                            setOddsData(null,chooseLeft ,"0" ,true);
@@ -553,12 +561,16 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                             playMiddleA.setChecked(false);
                             playMiddleImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                             setOddsData(null,chooseMiddle ,"0" ,false);
+                            if (listVo != null && listVo.size() != 0) {
+                                getOdds("0" , listVo.get(prositionPlay).getOddsList().get(0).getMidOdds() , false);
+                            }
                         }else{
                             playMiddleA.setChecked(true);
                             playMiddleImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
 
                             if (listVo != null && listVo.size() != 0) {
                                 setOddsData(listVo.get(prositionPlay).getOddsList().get(0),chooseMiddle ,"0" ,true);
+                                getOdds("0" , listVo.get(prositionPlay).getOddsList().get(0).getMidOdds() , true);
                             }
 //                        else{
 //                            setOddsData(null,chooseMiddle ,"0" ,true);
@@ -584,11 +596,15 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                             playRightA.setChecked(false);
                             playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                             setOddsData(null , chooseRight , "1" , false);
+                            if (listVo != null && listVo.size() != 0) {
+                                getOdds("1" , listVo.get(prositionPlay).getOddsList().get(0).getRightOdds() , false);
+                            }
                         }else{
                             playRightA.setChecked(true);
                             playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
                             if (listVo != null && listVo.size() != 0) {
                                 setOddsData(listVo.get(prositionPlay).getOddsList().get(0),chooseRight ,"1" ,true);
+                                getOdds("1" , listVo.get(prositionPlay).getOddsList().get(0).getRightOdds() , true);
                             }
                             if (oddsLeftA) {
                                 playLeftA.setChecked(false);
@@ -620,11 +636,15 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                                 playRightA.setChecked(false);
                                 playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                                 setOddsData(null , chooseRight , "0" , false);
+                                if (listVo != null && listVo.size() != 0) {
+                                    getOdds("0" , listVo.get(prositionPlay).getOddsList().get(0).getRightOdds() , false);
+                                }
                             }else{
                                 playRightA.setChecked(true);
                                 playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
                                 if (listVo != null && listVo.size() != 0) {
                                     setOddsData(listVo.get(prositionPlay).getOddsList().get(0),chooseRight ,"0" ,true);
+                                    getOdds("0" , listVo.get(prositionPlay).getOddsList().get(0).getRightOdds() , true);
                                 }
 //                        else{
 //                            setOddsData(null,chooseRight ,"0" ,true);
@@ -653,11 +673,15 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                             playLeftB.setChecked(false);
                             playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                             setOddsData(null , chooseLeft , "1" , false);
+                            if (listVo != null && listVo.size() != 0) {
+                                getOdds("1" , listVo.get(prositionPlay).getOddsList().get(1).getLeftOdds() , false);
+                            }
                         }else{
                             playLeftB.setChecked(true);
                             playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
                             if (listVo != null && listVo.size() != 0) {
                                 setOddsData(listVo.get(prositionPlay).getOddsList().get(1),chooseLeft ,"1" ,true);
+                                getOdds("1" , listVo.get(prositionPlay).getOddsList().get(1).getLeftOdds() , true);
                             }
                             if (oddsRightB) {
                                 playRightB.setChecked(false);
@@ -688,11 +712,15 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                                 playLeftB.setChecked(false);
                                 playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                                 setOddsData(null , chooseLeft , "0" , false);
+                                if (listVo != null && listVo.size() != 0) {
+                                    getOdds("0" , listVo.get(prositionPlay).getOddsList().get(1).getLeftOdds() , false);
+                                }
                             }else{
                                 playLeftB.setChecked(true);
                                 playLeftImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
                                 if (listVo != null && listVo.size() != 0) {
                                     setOddsData(listVo.get(prositionPlay).getOddsList().get(1),chooseLeft ,"0" ,true);
+                                    getOdds("0" , listVo.get(prositionPlay).getOddsList().get(1).getLeftOdds() , true);
                                 }
 //                        else{
 //                            setOddsData(null,chooseLeft ,"1" ,true);
@@ -723,11 +751,15 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                             playMiddleB.setChecked(false);
                             playMiddleImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                             setOddsData(null , chooseMiddle , "0" , false);
+                            if (listVo != null && listVo.size() != 0) {
+                                getOdds("0" , listVo.get(prositionPlay).getOddsList().get(1).getMidOdds() , false);
+                            }
                         }else{
                             playMiddleB.setChecked(true);
                             playMiddleImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
                             if (listVo != null && listVo.size() != 0) {
                                 setOddsData(listVo.get(prositionPlay).getOddsList().get(1),chooseMiddle ,"0" ,true);
+                                getOdds("0" , listVo.get(prositionPlay).getOddsList().get(1).getMidOdds() , true);
                             }
 //                        else{
 //                            setOddsData(null,chooseMiddle ,"1" ,true);
@@ -752,11 +784,15 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                             playRightB.setChecked(false);
                             playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                             setOddsData(null , chooseRight , "1" , false);
+                            if (listVo != null && listVo.size() != 0) {
+                                getOdds("1" , listVo.get(prositionPlay).getOddsList().get(1).getRightOdds() , false);
+                            }
                         }else{
                             playRightB.setChecked(true);
                             playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
                             if (listVo != null && listVo.size() != 0) {
                                 setOddsData(listVo.get(prositionPlay).getOddsList().get(1),chooseRight ,"1" ,true);
+                                getOdds("1" , listVo.get(prositionPlay).getOddsList().get(1).getRightOdds() , true);
                             }
                             if (oddsLeftB) {
                                 playLeftB.setChecked(false);
@@ -787,11 +823,15 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                                 playRightB.setChecked(false);
                                 playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
                                 setOddsData(null , chooseRight , "0" , false);
+                                if (listVo != null && listVo.size() != 0) {
+                                    getOdds("0" , listVo.get(prositionPlay).getOddsList().get(1).getRightOdds() , false);
+                                }
                             }else{
                                 playRightB.setChecked(true);
                                 playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.checked_blue));
                                 if (listVo != null && listVo.size() != 0) {
                                     setOddsData(listVo.get(prositionPlay).getOddsList().get(1),chooseRight ,"0" ,true);
+                                    getOdds("0" , listVo.get(prositionPlay).getOddsList().get(1).getRightOdds() , true);
                                 }
 //                        else{
 //                            setOddsData(null,chooseRight ,"1" ,true);
@@ -873,6 +913,27 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
         playRightImgA.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
         playRightB.setChecked(false);
         playRightImgB.setBackground(getApplicationContext().getResources().getDrawable(R.mipmap.unchecked_grey));
+
+        /**切换玩法时清空赔率选中记录*/
+        chooseList.clear();
+        oddsList.clear();
+        /**竞彩单关时 上下两组赔率只能单选*/
+        oddsFirstCheck = true;
+        oddsSecondCheck = true;
+        /**玩法赔率是否选中*/
+        playLeftCheckA = false;
+        playMiddleCheckA = false;
+        playRightCheckA = false;
+        playLeftCheckB = false;
+        playMiddleCheckB = false;
+        playRightCheckB = false;
+        /**非竞彩单关玩法时参数*/
+        otherOddsPlayFirst = true;
+        otherOddsPlaySecond = true;
+        oddsLeftA = false;
+        oddsRightA = false;
+        oddsLeftB = false;
+        oddsRightB = false;
     }
 
 
@@ -920,7 +981,7 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
                 }
                 break;
         }
-
+        L.d("mChoosess===>> ",chooseList.size() + " <**> " +mChoose + " -- " +mChoose1);
 //        switch (type){
 //            case "0":
 //                if (addChoose) {
@@ -963,6 +1024,42 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
 //        }
     }
 
+    private List<String> oddsList = new ArrayList<>();
+    private String oddsChoose = "";
+    private String oddsChoose1 = "";
+    /**获得赔率值*/
+    private void getOdds(String type , String oddsData , boolean addOdds){
+
+        oddsChoose = "";
+        oddsChoose1 = "";
+        switch (type){
+            case "0":
+                if (addOdds) {
+                    oddsList.add(oddsData);
+                }else{
+                    if (oddsList.contains(oddsData)) {
+                        oddsList.remove(oddsData);
+                    }
+                }
+                if (oddsList.size() == 1) {
+                    oddsChoose = oddsList.get(0);
+                }else if(oddsList.size() == 2){
+                    oddsChoose = oddsList.get(0);
+                    oddsChoose1 = oddsList.get(1);
+                }
+                break;
+            case "1":
+                if (addOdds) {
+                    oddsChoose = oddsData;
+                }else{
+                    oddsChoose = "";
+                }
+                break;
+        }
+        L.d("oddsChoose===>> ",oddsList.size() + " <**> " +oddsChoose + " -- " +oddsChoose1);
+
+    }
+
 
     private void issueCheck(){
 
@@ -989,6 +1086,37 @@ public class MvpBettingIssueDetailsActivity extends Activity implements View.OnC
         }else if (price.equals("")){
             Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_check_price), Toast.LENGTH_SHORT).show();
         }else{
+
+            double chooseOdds = 0;//赔率
+            double chooseOdds1 = 0;//赔率1
+            try {
+                chooseOdds = Double.parseDouble(oddsChoose);//Double.parseDouble(s);
+                chooseOdds1 = Double.parseDouble(oddsChoose1);
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+            L.d("zxcvasdf==>> ",chooseOdds + " ** " + chooseOdds1);
+            switch (type){
+                case "0":
+                    if (chooseOdds1 <= 0) {
+                        if (chooseOdds*100 < 150) {
+                            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_odds_sing_check), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }else{
+                        if (chooseOdds*100 < 200 || chooseOdds1*100 < 200) {
+                            Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_odds_double_check), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    break;
+                default:
+                    if (chooseOdds*100 < 50) {
+                        Toast.makeText(this, getApplicationContext().getResources().getText(R.string.issue_odds_check), Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    break;
+            }
 
             int currPrice = 0;//定价
             try {

@@ -63,7 +63,7 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     private View mEmptyView;
     private View mErrorLayout;
     private TextView mRefreshTextView;
-    private TextView mNoDataTextView;
+    private LinearLayout mNoDataTextView;
 
     private RecyclerView tennis_recycler;
     private TextView tv_date;
@@ -98,7 +98,7 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mView = View.inflate(mContext, R.layout.fragment_tennls_ball_tab, null);
-        mEmptyView = inflater.inflate(R.layout.tennis_empty_layout, container, false);
+        mEmptyView = inflater.inflate(R.layout.exception_page_display, container, false);
 
         initView();
         initEmptyView();
@@ -206,9 +206,10 @@ public class TennisBallTabFragment extends Fragment implements SwipeRefreshLayou
     }
 
     private void initEmptyView() {
-        mErrorLayout = mEmptyView.findViewById(R.id.error_layout);
-        mRefreshTextView = (TextView) mEmptyView.findViewById(R.id.reloading_txt);
-        mNoDataTextView = (TextView) mEmptyView.findViewById(R.id.no_data_txt);
+        mErrorLayout = mEmptyView.findViewById(R.id.network_error_ll);
+        mRefreshTextView = (TextView) mEmptyView.findViewById(R.id.network_error_btn);
+        mNoDataTextView = (LinearLayout) mEmptyView.findViewById(R.id.no_datas_ll);
+
         mRefreshTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
