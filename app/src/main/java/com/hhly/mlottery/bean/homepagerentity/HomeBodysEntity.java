@@ -74,6 +74,363 @@ public class HomeBodysEntity implements Serializable {
     private int matchType;// 比赛类型 0是足球,1是篮球
     private String expertId;// 专家id
 
+    //推介
+
+    private String enable;
+    private String remark;
+    private String createBy;
+    private String createTime;
+    private String updateBy;
+    private String updateTime;
+    private String choose;
+    private String context;
+
+    private String choose1;
+    private String price;
+    private String userid;
+    private String matchid;
+    private String leagueid;
+    private String status;
+    private String createtime;
+    private String updatetime;
+    private String oddsid;
+
+    private String nickname;
+    private String orderStatus;
+    private String orderUserId;
+    private String homeName;
+    private String guestName;
+    private String winPoint;
+    private String errPoint;
+    private String serNum;
+    private String matchId;
+
+    private String levels;
+    private String isExpert;
+    private String photoUrl;
+    private String releaseDate;
+    private String matchDateTime;
+    private String expert;
+    private String expertImg;
+    private String typeStr;
+    private String lookStatus;
+    private String detailUrl;
+    private String countOrder;
+    private String earningsRate;
+    private String monthVic;
+
+    public String getEnable() {
+        return enable;
+    }
+
+    public void setEnable(String enable) {
+        this.enable = enable;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getChoose() {
+        return choose;
+    }
+
+    public void setChoose(String choose) {
+        this.choose = choose;
+    }
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
+
+    public String getChoose1() {
+        return choose1;
+    }
+
+    public void setChoose1(String choose1) {
+        this.choose1 = choose1;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public String getMatchid() {
+        return matchid;
+    }
+
+    public void setMatchid(String matchid) {
+        this.matchid = matchid;
+    }
+
+    public String getLeagueid() {
+        return leagueid;
+    }
+
+    public void setLeagueid(String leagueid) {
+        this.leagueid = leagueid;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(String createtime) {
+        this.createtime = createtime;
+    }
+
+    public String getUpdatetime() {
+        return updatetime;
+    }
+
+    public void setUpdatetime(String updatetime) {
+        this.updatetime = updatetime;
+    }
+
+    public String getOddsid() {
+        return oddsid;
+    }
+
+    public void setOddsid(String oddsid) {
+        this.oddsid = oddsid;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public String getOrderUserId() {
+        return orderUserId;
+    }
+
+    public void setOrderUserId(String orderUserId) {
+        this.orderUserId = orderUserId;
+    }
+
+    public String getHomeName() {
+        return homeName;
+    }
+
+    public void setHomeName(String homeName) {
+        this.homeName = homeName;
+    }
+
+    public String getGuestName() {
+        return guestName;
+    }
+
+    public void setGuestName(String guestName) {
+        this.guestName = guestName;
+    }
+
+    public String getWinPoint() {
+        return winPoint;
+    }
+
+    public void setWinPoint(String winPoint) {
+        this.winPoint = winPoint;
+    }
+
+    public String getErrPoint() {
+        return errPoint;
+    }
+
+    public void setErrPoint(String errPoint) {
+        this.errPoint = errPoint;
+    }
+
+    public String getSerNum() {
+        return serNum;
+    }
+
+    public void setSerNum(String serNum) {
+        this.serNum = serNum;
+    }
+
+    public String getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(String matchId) {
+        this.matchId = matchId;
+    }
+
+    public String getLevels() {
+        return levels;
+    }
+
+    public void setLevels(String levels) {
+        this.levels = levels;
+    }
+
+    public String getIsExpert() {
+        return isExpert;
+    }
+
+    public void setIsExpert(String isExpert) {
+        this.isExpert = isExpert;
+    }
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public String getMatchDateTime() {
+        return matchDateTime;
+    }
+
+    public void setMatchDateTime(String matchDateTime) {
+        this.matchDateTime = matchDateTime;
+    }
+
+    public String getExpert() {
+        return expert;
+    }
+
+    public void setExpert(String expert) {
+        this.expert = expert;
+    }
+
+    public String getExpertImg() {
+        return expertImg;
+    }
+
+    public void setExpertImg(String expertImg) {
+        this.expertImg = expertImg;
+    }
+
+    public String getTypeStr() {
+        return typeStr;
+    }
+
+    public void setTypeStr(String typeStr) {
+        this.typeStr = typeStr;
+    }
+
+    public String getLookStatus() {
+        return lookStatus;
+    }
+
+    public void setLookStatus(String lookStatus) {
+        this.lookStatus = lookStatus;
+    }
+
+    public String getDetailUrl() {
+        return detailUrl;
+    }
+
+    public void setDetailUrl(String detailUrl) {
+        this.detailUrl = detailUrl;
+    }
+
+    public String getCountOrder() {
+        return countOrder;
+    }
+
+    public void setCountOrder(String countOrder) {
+        this.countOrder = countOrder;
+    }
+
+    public String getEarningsRate() {
+        return earningsRate;
+    }
+
+    public void setEarningsRate(String earningsRate) {
+        this.earningsRate = earningsRate;
+    }
+
+    public String getMonthVic() {
+        return monthVic;
+    }
+
+    public void setMonthVic(String monthVic) {
+        this.monthVic = monthVic;
+    }
+
     public int getInfoId() {
         return infoId;
     }

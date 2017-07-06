@@ -14,6 +14,15 @@
         android:layout_height="wrap_content"
         android:focusable="false"
         >
+        <View
+            android:id="@+id/bet_line"
+            android:layout_width="3dp"
+            android:layout_height="16dp"
+            android:background="@color/bet_start_color"
+            android:layout_centerInParent="true"
+            android:layout_alignParentLeft="true"
+            android:visibility="gone"
+            />
         <TextView
             android:id="@+id/tv_home_item_title"
             android:layout_width="wrap_content"
@@ -23,12 +32,32 @@
             android:textColor="@color/content_txt_light_grad"
             android:textSize="@dimen/home_pager_title" />
         <TextView
+            android:id="@+id/tv_home_item_title_bet"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_marginLeft="5dp"
+            android:text="@string/home_newest_bet"
+            android:visibility="gone"
+            android:textColor="@color/content_txt_light_grad"
+            android:textSize="@dimen/text_size_16" />
+        <TextView
             android:id="@+id/tv_home_item_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:text="@string/more"
             android:padding="10dp"
+            android:visibility="gone"
+            />
+        <ImageView
+            android:id="@+id/img_bet_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/home_icon_more"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:padding="15dp"
             android:visibility="gone"
             />
     </RelativeLayout>

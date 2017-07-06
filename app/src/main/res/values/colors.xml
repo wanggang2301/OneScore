@@ -736,5 +736,8 @@
 
     <color name="foot_ball_score_title_bg">#ffde00</color>
     <color name="foot_ball_score_title_txt">#0097ff</color>
+    <color name="bet_start_color">#0085e1</color>
+    <color name="bet_end_color">#03cee9</color>
+
     <color name="no_network">#2D84E5</color>
 </resources>

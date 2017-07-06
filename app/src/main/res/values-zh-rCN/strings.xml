@@ -1974,5 +1974,6 @@
     <string name="football_up_data_prompt">更新了%1$d场比赛，隐藏了%2$d场比赛</string>
     <string name="basket_team_player_num">号</string>
     <string name="football_not_animation_txt">暂无动画直播</string>
+    <string name="home_newest_bet">最新推介</string>
 
 </resources>
