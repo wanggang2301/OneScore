@@ -57,8 +57,9 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
     private TextView loadmore_text;
     private ProgressBar progressBar;
     private TextView network_exception_reload_btn;
-    private FrameLayout fl_nodata;
+
     private LinearLayout ll_error;
+    private LinearLayout no_datas_ll;
 
     public SnookerRankFragment() {
     }
@@ -92,9 +93,12 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
         refresh.setColorSchemeResources(R.color.bg_header);
         refresh.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
         ll_title = (LinearLayout) mView.findViewById(R.id.ll_title);
-        fl_nodata = (FrameLayout) mView.findViewById(R.id.fl_nodata);
-        ll_error = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
-        network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
+
+
+        no_datas_ll = (LinearLayout) mView.findViewById(R.id.no_datas_ll);
+        ll_error = (LinearLayout) mView.findViewById(R.id.network_error_ll);
+        network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_error_btn);
+
         loadmore_text = (TextView) moreView.findViewById(R.id.loadmore_text);
         progressBar = (ProgressBar) moreView.findViewById(R.id.progressBar);
 
@@ -121,7 +125,7 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
                     refresh.setRefreshing(true);
                     refresh.setVisibility(View.VISIBLE);
                     ll_title.setVisibility(View.GONE);
-                    fl_nodata.setVisibility(View.GONE);
+                    no_datas_ll.setVisibility(View.GONE);
                     ll_error.setVisibility(View.GONE);
                     break;
 
@@ -130,7 +134,7 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
                     refresh.setRefreshing(false);
                     ll_title.setVisibility(View.VISIBLE);
                     refresh.setVisibility(View.VISIBLE);
-                    fl_nodata.setVisibility(View.GONE);
+                    no_datas_ll.setVisibility(View.GONE);
                     ll_error.setVisibility(View.GONE);
                     break;
 
@@ -140,7 +144,7 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
                     ll_title.setVisibility(View.GONE);
                     refresh.setVisibility(View.GONE);
                     refresh.setRefreshing(false);
-                    fl_nodata.setVisibility(View.VISIBLE);
+                    no_datas_ll.setVisibility(View.VISIBLE);
                     ll_error.setVisibility(View.GONE);
 
                     break;
@@ -149,7 +153,7 @@ public class SnookerRankFragment extends Fragment implements ExactSwipeRefreshLa
                     ll_title.setVisibility(View.GONE);
                     refresh.setVisibility(View.GONE);
                     refresh.setRefreshing(false);
-                    fl_nodata.setVisibility(View.GONE);
+                    no_datas_ll.setVisibility(View.GONE);
                     ll_error.setVisibility(View.VISIBLE);
                     break;
             }

@@ -324,8 +324,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         myPostParams.put("version", MyApp.version);
         myPostParams.put("versionCode", String.valueOf(MyApp.versionCode));
         myPostParams.put("channelNumber", MyApp.channelNumber);
-
-        VolleyContentFast.requestStringByGet(BaseURLs.URL_HOME_PAGER_INFO, myPostParams, null, new VolleyContentFast.ResponseSuccessListener<String>() {
+        myPostParams.put("userId",AppConstants.register.getUser().getUserId());
+        String url="http://192.168.71.187:8080/mlottery/core/mainPage.findAndroid122LotteryMainRsts.do";
+        VolleyContentFast.requestStringByGet(url,  myPostParams,null, new VolleyContentFast.ResponseSuccessListener<String>() {
             @Override
             public void onResponse(String jsonObject) {
                 if (jsonObject != null) {// 请求成功

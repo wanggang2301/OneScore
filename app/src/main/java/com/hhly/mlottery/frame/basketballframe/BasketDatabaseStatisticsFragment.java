@@ -91,7 +91,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
     private RadioButton mMostButton;
     private FrameLayout mLoading;
     private LinearLayout mLoadRefresh;
-    private TextView mNodata;
+    private LinearLayout mNodata;
     private LinearLayout mData;
 
     private final static int VIEW_STATUS_LOADING = 1; //加载中
@@ -249,11 +249,11 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
         //加载中...
         mLoading = (FrameLayout) mView.findViewById(R.id.basket_database_loading_details);
         //网络异常
-        mLoadRefresh = (LinearLayout) mView.findViewById(R.id.basket_database_details_refresh);
+        mLoadRefresh = (LinearLayout) mView.findViewById(R.id.network_error_ll);
         //暂无数据
-        mNodata = (TextView) mView.findViewById(R.id.basket_database_details_nodata);
+        mNodata = (LinearLayout) mView.findViewById(R.id.no_datas_ll);
 
-        mRefresh = (TextView)mView.findViewById(R.id.reLoadin);
+        mRefresh = (TextView)mView.findViewById(R.id.network_error_btn);
         mRefresh.setOnClickListener(this);
         setRadioOnClick();
     }
@@ -451,7 +451,7 @@ public class BasketDatabaseStatisticsFragment extends Fragment implements View.O
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.reLoadin:
+            case R.id.network_error_btn:
                 mHandlerData.postDelayed(mRun , 500);
                 break;
         }

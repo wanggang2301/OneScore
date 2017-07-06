@@ -39,7 +39,7 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class SnookerDataSuccessFragment extends Fragment implements View.OnClickListener,SwipeRefreshLayout.OnRefreshListener{
         /*标题，暂无数据*/
-        private TextView live_no_data_txt;
+        private LinearLayout live_no_data_txt;
 
         private List<List<?>> childDataList = new ArrayList<>();//直播子列表
 
@@ -188,14 +188,14 @@ public class SnookerDataSuccessFragment extends Fragment implements View.OnClick
             mSwipeRefreshLayout.setOnRefreshListener(this);
             mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getActivity(), StaticValues.REFRASH_OFFSET_END));
 
-            live_error_ll = (LinearLayout) view.findViewById(R.id.live_error_ll);
-            live_error_btn = (TextView) view.findViewById(R.id.live_error_btn);
+            live_error_ll = (LinearLayout) view.findViewById(R.id.network_error_ll);
+            live_error_btn = (TextView) view.findViewById(R.id.network_error_btn);
             live_error_btn.setOnClickListener(this);
             //暂无数据
-            live_no_data_txt = (TextView) view.findViewById(R.id.live_no_data_txt);
+            live_no_data_txt = (LinearLayout) view.findViewById(R.id.no_datas_ll);
 
-            live_error_ll = (LinearLayout) view.findViewById(R.id.live_error_ll);
-            live_error_btn = (TextView) view.findViewById(R.id.live_error_btn);
+            live_error_ll = (LinearLayout) view.findViewById(R.id.network_error_ll);
+            live_error_btn = (TextView) view.findViewById(R.id.network_error_btn);
             live_error_btn.setOnClickListener(this);
             //赛事简介的暂无数据
             live_pr_no_data_txt = (TextView) view.findViewById(R.id.live_pr_no_data_txt);
@@ -235,7 +235,7 @@ public class SnookerDataSuccessFragment extends Fragment implements View.OnClick
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.live_error_btn:
+                case R.id.network_error_btn:
 
                     reFH();
 

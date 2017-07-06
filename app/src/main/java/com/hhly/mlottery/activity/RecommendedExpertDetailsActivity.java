@@ -225,20 +225,22 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
 
 
                     if (jsonObject.getExpertPromotions()==null){
-
-                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
-                        return;
-                    }
-
-                    if (jsonObject.getExpertPromotions().getList() == null) {
-                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
-                        return;
-                    }
-                    hasNextPage = jsonObject.getExpertPromotions().isHasNextPage();
+                    if (jsonObject.getCode().equals("200")) {
 
 
-                    listBeanList = new ArrayList<>();
-                    listBeanList.addAll(jsonObject.getExpertPromotions().getList());
+                        if (jsonObject.getExpertPromotions() == null) {
+
+                            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
+                            return;
+                        }
+
+                        if (jsonObject.getExpertPromotions().getList() == null) {
+                            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
+                            return;
+                        }
+                        hasNextPage = jsonObject.getExpertPromotions().isHasNextPage();
+                        listBeanList = new ArrayList<>();
+                        listBeanList.addAll(jsonObject.getExpertPromotions().getList());
 
                     if (recomenHeadAdapter == null) {
                         recomenHeadAdapter = new RecomenHeadAdapter(mContext, listBeanList);
@@ -250,6 +252,15 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                         recomenHeadAdapter.openLoadMore(0, true);
                         initEvent();
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
+                        if (recomenHeadAdapter == null) {
+                            recomenHeadAdapter = new RecomenHeadAdapter(mContext, listBeanList);
+                            recomenHeadAdapter.setLoadingView(view);
+                            recomenHeadAdapter.addHeaderView(headView);
+                            buyClicked();
+                            recomenHeadAdapter.setmBuyClick(mBettingBuyClickListener);
+                            ex_recyclerview.setAdapter(recomenHeadAdapter);
+                            recomenHeadAdapter.openLoadMore(0, true);
+                            initEvent();
 
                     } else {
 
@@ -430,11 +441,11 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
         headView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //暂无数据
-        match_no_data_txt = (TextView) findViewById(R.id.match_no_data_txt);
+        match_no_data_txt = (LinearLayout) findViewById(R.id.no_datas_ll);
 
         //网络异常
-        match_error_btn = (LinearLayout) findViewById(R.id.match_error_ll);
-        findViewById(R.id.match_error_btn).setOnClickListener(this);
+        network_error_ll = (LinearLayout) findViewById(R.id.network_error_ll);
+        findViewById(R.id.network_error_btn).setOnClickListener(this);
 
         px_line = (LinearLayout) headView.findViewById(R.id.px_line);
         px_line.setVisibility(View.GONE);
@@ -453,7 +464,6 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
         ex_recyclerview = (RecyclerView) findViewById(R.id.ex_recyclerview);
 
         layoutManager = new LinearLayoutManager(mContext);
-        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         ex_recyclerview.setLayoutManager(layoutManager);
 

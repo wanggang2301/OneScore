@@ -52,54 +52,34 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 public class SnookerDataQualificationHeatFragement extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     /*标题，暂无数据*/
-    private TextView live_no_data_txt;
-    /*直播列表*/
-    private List<String> groupDataList = new ArrayList<>();
+    private LinearLayout live_no_data_txt;
     /*直播子列表*/
     private List<List<String>> childDataList = new ArrayList<>();//直播子列表
-    private static final String QUALIFICATIONHEAT = "102";
-    private static final String RACEHEAD = "103";
     boolean isAddHeadDatas = false;
-
-    //动画效果
-    private RotateAnimation ra;
-
-    private static final int QUALIFICATIONS = 0;  //资格赛
-    private static final int RACE = 1;         //正赛
-    private static final int SUCCESSIVE = 2;    //历届冠军
-    private static final int PROFILE = 3;          //赛事简介
 
     /*视频直播适配器*/
     private PinnedHeaderExpandableAdapter pheadapter;
-    private List<NewMatchVideoinfo.MatchVideoBean> groupMatchVideoList;
     /*加载失败显示的layout*/
     private LinearLayout live_error_ll;
     /*重新加载网络的按钮*/
     private TextView live_error_btn;
     /*下拉刷新*/
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    private SwipeRefreshLayout mSwipeRefreshLayout1;
-    private ChoseHeadInformationAdapter choseHeadInformationAdapter;
-
-    List headDatas = new ArrayList<>();
 
     private Context mContext;
     private Activity mActivity;
 
     private static final String PARAM_ID = "leagueId";
-    private static final String PARAM_TYPE = "type";
 
     private static final String TYPE_PARM = "TYPE_PARM";
     private int mType;
     private View view;
-    private ListView mRecyclerView;
     // private GalleryAdapter galleryAdapter;
     private SnookerPinnedHeaderExpandableListView explistview_live;
-    private GrapeGridView head_gridview;
+
     private TextView snooker_profile;
     private List<SnookerRaceListitemBean.DataBean.StageMapBean.StageInfoBean> stageInfo;
     private SnookerRaceListitemBean.DataBean.StageMapBean stageMap;
-    private InformationDataAdapter informationDataAdapter;
     private String currentStage = "";
     private String mSeason = "";
     private String mLeagueId;
@@ -154,7 +134,6 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
     }
 
     private void upLeagueRace(String secondTitle, String season) {
-        Log.i("aasdas>>>", " mSeason==" + mLeagueId);
         final Map<String, String> map = new HashMap();
         map.put("leagueId", mLeagueId);
         map.put("season", season);//默认不填是当前数据
@@ -279,7 +258,6 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
 
         //列表头部条目
         snooker_race_time_head = (LinearLayout) view.findViewById(R.id.snooker_race_time_head);
-        // snooker_race_time_head.set
         //级联列表listview
         explistview_live = (SnookerPinnedHeaderExpandableListView) view.findViewById(R.id.explistview_live);
         //设置悬浮头部VIEW
@@ -288,18 +266,11 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getActivity(), StaticValues.REFRASH_OFFSET_END));
-
-
-        mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getActivity(), StaticValues.REFRASH_OFFSET_END));
-
-        live_error_ll = (LinearLayout) view.findViewById(R.id.live_error_ll);
-        live_error_btn = (TextView) view.findViewById(R.id.live_error_btn);
-        live_error_btn.setOnClickListener(this);
         //暂无数据
-        live_no_data_txt = (TextView) view.findViewById(R.id.live_no_data_txt);
+        live_no_data_txt = (LinearLayout) view.findViewById(R.id.no_datas_ll);
 
-        live_error_ll = (LinearLayout) view.findViewById(R.id.live_error_ll);
-        live_error_btn = (TextView) view.findViewById(R.id.live_error_btn);
+        live_error_ll = (LinearLayout) view.findViewById(R.id.network_error_ll);
+        live_error_btn = (TextView) view.findViewById(R.id.network_error_btn);
         live_error_btn.setOnClickListener(this);
 
         //头部列表线条
@@ -322,9 +293,6 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
             @Override
             public void run() {
                 upLeagueRace(segmentDatas, mSeason);
-                Log.i("adasd","刷新=="+segmentDatas);
-                //Log.i("aasdas>>>","re getNume=="+currentStage);
-                //Log.i("aasdas>>>","re mSeason mSeason=="+mSeason);
             }
         }, 500);
     }
@@ -332,7 +300,7 @@ public class SnookerDataQualificationHeatFragement extends Fragment implements V
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.live_error_btn:
+            case R.id.network_error_btn:
                 reFH();
                 ((SnookerEventPageActivity) mContext).initData();
                 break;

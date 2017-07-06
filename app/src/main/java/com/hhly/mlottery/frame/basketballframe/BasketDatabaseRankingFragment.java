@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -67,10 +68,9 @@ public class BasketDatabaseRankingFragment extends Fragment {
     ImageView mRightButton;
 
     View mEmptyView;
-    ProgressBar mProgressBar;
     View mErrorLayout;
     TextView mRefreshTextView;
-    TextView mNoDataTextView;
+    LinearLayout mNoDataTextView;
 
     RecyclerView mRecyclerView;
 
@@ -102,7 +102,7 @@ public class BasketDatabaseRankingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mEmptyView = inflater.inflate(R.layout.basket_database_empty_layout, container, false);
+        mEmptyView = inflater.inflate(R.layout.exception_padding_page_display, container, false);
         return inflater.inflate(R.layout.fragment_basket_database_ranking, container, false);
     }
 
@@ -136,10 +136,10 @@ public class BasketDatabaseRankingFragment extends Fragment {
     }
 
     private void initEmptyView() {
-        mProgressBar = (ProgressBar) mEmptyView.findViewById(R.id.progress);
-        mErrorLayout = mEmptyView.findViewById(R.id.error_layout);
-        mRefreshTextView = (TextView) mEmptyView.findViewById(R.id.reloading_txt);
-        mNoDataTextView = (TextView) mEmptyView.findViewById(R.id.no_data_txt);
+
+        mErrorLayout = mEmptyView.findViewById(R.id.network_error_ll);
+        mRefreshTextView = (TextView) mEmptyView.findViewById(R.id.network_error_btn);
+        mNoDataTextView = (LinearLayout) mEmptyView.findViewById(R.id.no_datas_ll);
 
         mRefreshTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,7 +163,6 @@ public class BasketDatabaseRankingFragment extends Fragment {
      */
     public void setStatus(int status) {
         mNoDataTextView.setVisibility(status == STATUS_NO_DATA ? View.VISIBLE : View.GONE);
-        mProgressBar.setVisibility(status == STATUS_LOADING ? View.VISIBLE : View.GONE);
         mErrorLayout.setVisibility(status == STATUS_ERROR ? View.VISIBLE : View.GONE);
         mRadioGroup.setVisibility(status == STATUS_LOAD_SUCCESS ? View.VISIBLE : View.GONE);
     }

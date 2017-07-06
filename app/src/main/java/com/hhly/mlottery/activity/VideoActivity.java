@@ -24,7 +24,6 @@ import com.hhly.mlottery.adapter.videolive.NewPinnedHeaderExpandableAdapter;
 import com.hhly.mlottery.bean.videobean.NewMatchVideoinfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.video.ComprehensiveVideoFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
@@ -38,12 +37,13 @@ import java.util.Map;
 
 /**
  * Created by yuely198 on 2017/3/21.
+ * 视频直播
  */
 
 public class VideoActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     /*标题，暂无数据*/
-    private TextView live_no_data_txt;
+    private LinearLayout live_no_data_txt;
     /*直播列表*/
     private List<String> groupDataList = new ArrayList<>();
     /*直播子列表*/
@@ -114,8 +114,8 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener,
 
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(VideoActivity.this, StaticValues.REFRASH_OFFSET_END));
 
-        live_error_ll = (LinearLayout) findViewById(R.id.live_error_ll);
-        live_error_btn = (TextView) findViewById(R.id.live_error_btn);
+        live_error_ll = (LinearLayout) findViewById(R.id.network_error_ll);
+        live_error_btn = (TextView) findViewById(R.id.network_error_btn);
         live_error_btn.setOnClickListener(this);
 
         //级联列表listview
@@ -125,19 +125,9 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener,
         explistview_live.setHeaderView(getLayoutInflater().inflate(R.layout.item_live_header, explistview_live, false));
         explistview_live.setChildDivider(getResources().getDrawable(R.color.line_football_footer));
         //暂无数据
-        live_no_data_txt = (TextView) findViewById(R.id.live_no_data_txt);
+        live_no_data_txt = (LinearLayout) findViewById(R.id.no_datas_ll);
 
     }
-
-
-    public static ComprehensiveVideoFragment newInstance(int index) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(FRAGMENT_INDEX, index);
-        ComprehensiveVideoFragment fragment = new ComprehensiveVideoFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
 
     public void initData() {
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
@@ -297,13 +287,10 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener,
         switch (v.getId()) {
 
             case R.id.live_swiperefreshlayout://刷新网络
-/*                public_live_refresh.setAnimation(ra);
-                public_live_refresh.startAnimation(ra);*/
-//                InitData();
+
                 reFH();
                 break;
-            case R.id.live_error_btn://刷新网络
-//                mLoadHandler.post(mLoadingDataThread);
+            case R.id.network_error_btn://刷新网络
                 reFH();
                 break;
 
@@ -320,9 +307,6 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener,
     public void onRefresh() {
         reFH();
     }
-
-    /*定时刷新UI*/
-
 
     private Handler mViewHandler = new Handler() {
         public void handleMessage(Message msg) {

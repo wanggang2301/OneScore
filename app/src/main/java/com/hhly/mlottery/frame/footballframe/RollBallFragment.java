@@ -97,7 +97,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     TextView footballImmediateNoDataTv;
     @BindView(R.id.football_immediate_unfocus_ll)
     RelativeLayout footballImmediateUnfocusLl;
-    @BindView(R.id.network_exception_layout)
+    @BindView(R.id.network_error_ll)
     LinearLayout networkExceptionLayout;
     @BindView(R.id.swipe_refresh_layout)
     ExactSwipeRefreshLayout swipeRefreshLayout;

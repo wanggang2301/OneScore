@@ -266,6 +266,7 @@
 
     <!-- 异常处理 -->
     <string name="exp_net_status_txt">暫無法提供數據</string>
+    <string name="exp_no_net">暫無網絡</string>
     <string name="exp__check_txt">請檢查后</string>
     <string name="exp_refresh_txt">刷新</string>
 
@@ -1961,5 +1962,6 @@
 
     <string name="football_up_data_prompt">更新了%1$d場比賽，隱藏了%2$d場比賽</string>
     <string name="football_not_animation_txt">暫無動畫直播</string>
+    <string name="home_newest_bet">最新推介</string>
 
 </resources>

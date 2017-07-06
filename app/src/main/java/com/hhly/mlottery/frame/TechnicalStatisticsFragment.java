@@ -609,11 +609,11 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
 
         technical_scrollview = (NestedScrollView) view.findViewById(R.id.technical_scrollview);
         //暂无数据
-        match_no_data_txt = (TextView) view.findViewById(R.id.match_no_data_txt);
+        match_no_data_txt = (TextView) view.findViewById(R.id.no_datas_ll);
 
         //网络异常
-        match_error_btn = (LinearLayout) view.findViewById(R.id.match_error_ll);
-        view.findViewById(R.id.match_error_btn).setOnClickListener(this);
+        match_error_btn = (LinearLayout) view.findViewById(R.id.network_error_ll);
+        view.findViewById(R.id.network_error_btn).setOnClickListener(this);
 
         //赛季时间
         season_1 = (TextView) view.findViewById(R.id.season_1);
@@ -721,7 +721,7 @@ public class TechnicalStatisticsFragment extends Fragment implements View.OnClic
     public void onClick(View view) {
         switch (view.getId()) {
 
-            case R.id.match_error_btn:
+            case R.id.network_error_btn:
                 initData();
                 break;
 
