@@ -218,8 +218,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:paddingRight="28dp"
                 android:paddingBottom="10dp"
+                android:paddingRight="28dp"
                 >
                 <ImageView
                     android:id="@+id/betting_status_details_imageView"
