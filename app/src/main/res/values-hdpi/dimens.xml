@@ -19,7 +19,7 @@
 
 
     <dimen name="item_football_full_score">20sp</dimen>
-    <dimen name="item_football_half_score">12sp</dimen>
+    <dimen name="item_football_half_score">10sp</dimen>
 
 
     <dimen name="item_football_left_odds">13sp</dimen>
