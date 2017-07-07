@@ -70,9 +70,6 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
     LinearLayout llContext;
     @BindView(R.id.network_error_ll)
     LinearLayout handleException;
-    @BindView(R.id.ll_test)
-    LinearLayout llTest;
-
 
     private String mThirdId;
     private int oddType;
