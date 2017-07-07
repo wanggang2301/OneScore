@@ -466,7 +466,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                                         }
                                     }
                                 }
-                            } else {
+                            } /*else {
                                 for (Match m : mAllMatchs) {// 默认显示热门赛程 (所以把热门的过滤出来)
                                     for (String hotId : hotList) {
                                         if (m.getRaceId().equals(hotId)) {
@@ -475,7 +475,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                                         }
                                     }
                                 }
-                            }
+                            }*/
                         }
 
                         mCups = jsonMatch.getAll();
