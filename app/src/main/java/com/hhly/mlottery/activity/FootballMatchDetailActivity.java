@@ -4224,7 +4224,7 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 (type >= 302 && type <= 317) || type == 532 || type == 518 || type == 149 || //比赛暂停
                 517 == type || 148 == type || // 比赛恢复
                 -1 == type ||// 比赛结束
-                515 == type || 516 == type || // 信号中断
+                515 == type || 516 == type || //  信号中断
                 311 == type || // 喝水
                 132 == type || // 受伤
                 260 == type // 伤停补时
