@@ -97,7 +97,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
     TextView footballImmediateNoDataTv;
     @BindView(R.id.football_immediate_unfocus_ll)
     RelativeLayout footballImmediateUnfocusLl;
-    @BindView(R.id.network_error_ll)
+    @BindView(R.id.network_exception_layout)
     LinearLayout networkExceptionLayout;
     @BindView(R.id.swipe_refresh_layout)
     ExactSwipeRefreshLayout swipeRefreshLayout;
@@ -494,7 +494,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                                 }
                                             }
                                         }
-                                    } /*else {
+                                    } else {
                                         for (Match m : allDataLists) {// 默认显示热门赛程
                                             for (String hotId : hotList) {
                                                 if (m.getRaceId().equals(hotId)) {
@@ -503,7 +503,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                                 }
                                             }
                                         }
-                                    }*/
+                                    }
                                 }
 
                                 footballImmediateNoDataTv.setText(R.string.immediate_no_data);

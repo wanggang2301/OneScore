@@ -82,31 +82,7 @@ public class BettingRecommendDetailsMvpAdapter extends BaseQuickAdapter<BettingL
             }
         }
 
-        switch (data.getStatus()){
-            case "1"://中
-                holder.setVisible(R.id.betting_status_details_imageView , true);
-                holder.setVisible(R.id.betting_issue_tobuy_or_check , false);
-                holder.setImageDrawable(R.id.betting_status_details_imageView , mContext.getResources().getDrawable(R.mipmap.jingcai_icon_zhong));
-                break;
-            case "2"://失
-                holder.setVisible(R.id.betting_status_details_imageView , true);
-                holder.setVisible(R.id.betting_issue_tobuy_or_check , false);
-                holder.setImageDrawable(R.id.betting_status_details_imageView , mContext.getResources().getDrawable(R.mipmap.jingcai_icon_shi));
-                break;
-            case "6"://走
-                holder.setVisible(R.id.betting_status_details_imageView , true);
-                holder.setVisible(R.id.betting_issue_tobuy_or_check , false);
-                holder.setImageDrawable(R.id.betting_status_details_imageView , mContext.getResources().getDrawable(R.mipmap.jingcai_icon_zou));
-                break;
-            default:
-                holder.setVisible(R.id.betting_status_details_imageView , false);
-                holder.setVisible(R.id.betting_issue_tobuy_or_check , true);
-                break;
-
-
-        }
-
-//        LinearLayout mBuyOrCheck = holder.getView(R.id.betting_issue_tobuy_or_check);
+        LinearLayout mBuyOrCheck = holder.getView(R.id.betting_issue_tobuy_or_check);
         LinearLayout mSpecialistLay = holder.getView(R.id.betting_issue_specialist_lay);
         LinearLayout mGameDetailsLay = holder.getView(R.id.betting_issue_game_details_lay);
 
@@ -115,7 +91,7 @@ public class BettingRecommendDetailsMvpAdapter extends BaseQuickAdapter<BettingL
          */
 
         if (lookStatus) {
-            mGameDetailsLay.setOnClickListener(new View.OnClickListener() {
+            mBuyOrCheck.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                    if (mBuyClick != null){

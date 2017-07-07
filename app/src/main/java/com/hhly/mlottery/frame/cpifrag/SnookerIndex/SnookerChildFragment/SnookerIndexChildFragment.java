@@ -53,17 +53,17 @@ public class SnookerIndexChildFragment extends ViewFragment<SnookerIndexChildCon
     /**
      * 异常界面
      */
-    @BindView(R.id.network_error_ll)
+    @BindView(R.id.basket_odds_net_error)
     LinearLayout mExceptionLayout;
     /**
      * 无数据的界面
      */
-    @BindView(R.id.no_datas_ll)
-    LinearLayout mNodataLayout;
+    @BindView(R.id.nodata)
+    TextView mNodataLayout;
     /**
      * 点击刷新
      */
-    @BindView(R.id.network_error_btn)
+    @BindView(R.id.network_exception_reload_btn)
     TextView mBtnRefresh;
     /**
      * 加载中

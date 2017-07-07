@@ -8,12 +8,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,19 +24,25 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
+import com.hhly.mlottery.adapter.ExpertsListAdapter;
 import com.hhly.mlottery.adapter.RecomenHeadAdapter;
+import com.hhly.mlottery.adapter.custom.RecommendArticlesAdapter;
+import com.hhly.mlottery.bean.MostExpertBean;
 import com.hhly.mlottery.bean.RecomeHeadBean;
 import com.hhly.mlottery.bean.RecommendationExpertBean;
+import com.hhly.mlottery.bean.bettingbean.BettingListDataBean;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.ConstantPool;
 import com.hhly.mlottery.config.StaticValues;
 import com.hhly.mlottery.mvp.bettingmvp.eventbusconfig.BettingDetailsResuleEventBusEntity;
 import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingPayDetailsActivity;
+import com.hhly.mlottery.mvp.bettingmvp.mvpview.MvpBettingRecommendActivity;
 import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.net.SignUtils;
 import com.hhly.mlottery.util.net.VolleyContentFast;
+import com.sina.weibo.sdk.component.view.AppProgressDialog;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
@@ -62,7 +71,8 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
 
     private RecomenHeadAdapter recomenHeadAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-
+    private TextView match_no_data_txt;
+    private LinearLayout match_error_btn;
     private LinearLayout px_line;
     private List<RecommendationExpertBean.ExpertPromotionsBean.ListBean> listBeanList;
     private View view;
@@ -87,15 +97,16 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case VIEW_STATUS_LOADING:
+                    match_error_btn.setVisibility(View.GONE);
                     match_no_data_txt.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(true);
-                    network_error_ll.setVisibility(View.GONE);
+                    match_error_btn.setVisibility(View.GONE);
                     px_line.setVisibility(View.GONE);
                     break;
                 case VIEW_STATUS_SUCCESS:
                     match_no_data_txt.setVisibility(View.GONE);
-                    network_error_ll.setVisibility(View.GONE);
+                    match_error_btn.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     px_line.setVisibility(View.VISIBLE);
@@ -105,14 +116,14 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                     match_no_data_txt.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    network_error_ll.setVisibility(View.GONE);
+                    match_error_btn.setVisibility(View.GONE);
                     px_line.setVisibility(View.GONE);
                     break;
                 case VIEW_STATUS_NET_ERROR:
                     match_no_data_txt.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
-                    network_error_ll.setVisibility(View.VISIBLE);
+                    match_error_btn.setVisibility(View.VISIBLE);
                     px_line.setVisibility(View.GONE);
                     break;
                 default:
@@ -125,8 +136,6 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
 
     private int allPoint;
     private LinearLayoutManager layoutManager;
-    private LinearLayout match_no_data_txt;
-    private LinearLayout network_error_ll;
 
 
     @Override
@@ -168,6 +177,7 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                             pullUpLoadMoreData();
                         } else {
                             Toast.makeText(mContext, mContext.getResources().getText(R.string.nodata_txt), Toast.LENGTH_SHORT).show();
+//                            mOnloadingView.findViewById(R.id.loading_text)
                             recomenHeadAdapter.addFooterView(mNoLoadingView);
                         }
                     }
@@ -214,20 +224,21 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                     if (jsonObject.getCode().equals("200")){
 
 
+                    if (jsonObject.getExpertPromotions()==null){
 
-                        if (jsonObject.getExpertPromotions() == null) {
+                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
+                        return;
+                    }
 
-                            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
-                            return;
-                        }
+                    if (jsonObject.getExpertPromotions().getList() == null) {
+                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
+                        return;
+                    }
+                    hasNextPage = jsonObject.getExpertPromotions().isHasNextPage();
 
-                        if (jsonObject.getExpertPromotions().getList() == null) {
-                            mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
-                            return;
-                        }
-                        hasNextPage = jsonObject.getExpertPromotions().isHasNextPage();
-                        listBeanList = new ArrayList<>();
-                        listBeanList.addAll(jsonObject.getExpertPromotions().getList());
+
+                    listBeanList = new ArrayList<>();
+                    listBeanList.addAll(jsonObject.getExpertPromotions().getList());
 
                     if (recomenHeadAdapter == null) {
                         recomenHeadAdapter = new RecomenHeadAdapter(mContext, listBeanList);
@@ -258,6 +269,7 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
             }
         }, RecommendationExpertBean.class);
+
 
     }
 
@@ -418,11 +430,11 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
         headView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //暂无数据
-        match_no_data_txt = (LinearLayout) findViewById(R.id.no_datas_ll);
+        match_no_data_txt = (TextView) findViewById(R.id.match_no_data_txt);
 
         //网络异常
-        network_error_ll = (LinearLayout) findViewById(R.id.network_error_ll);
-        findViewById(R.id.network_error_btn).setOnClickListener(this);
+        match_error_btn = (LinearLayout) findViewById(R.id.match_error_ll);
+        findViewById(R.id.match_error_btn).setOnClickListener(this);
 
         px_line = (LinearLayout) headView.findViewById(R.id.px_line);
         px_line.setVisibility(View.GONE);
@@ -441,6 +453,7 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
         ex_recyclerview = (RecyclerView) findViewById(R.id.ex_recyclerview);
 
         layoutManager = new LinearLayoutManager(mContext);
+        layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         ex_recyclerview.setLayoutManager(layoutManager);
 
@@ -455,7 +468,7 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                 finish();
                 break;
 
-            case R.id.network_error_btn:
+            case R.id.match_error_btn:
                 initData();
                 initHeadData();
                 break;
@@ -479,18 +492,11 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
             Glide.with(getApplicationContext()).load(headerDatas.getImageSrc()).error(R.mipmap.specialist_default).into(ex_image);
             ex_name.setText(headerDatas.getNickname());
             ex_zhong.setText(mContext.getResources().getString(R.string.betting_item_jin) + allPoint+ mContext.getResources().getString(R.string.betting_item_zhong) + winPoint);
-
-            if (headerDatas.getIntroduce() == null || headerDatas.getIntroduce().equals("")) {
-                ex_text.setText(this.getResources().getString(R.string.recomend_no_datas));
-            }else{
+            if(headerDatas.getIntroduce()!=null||headerDatas.getIntroduce().isEmpty()){
                 ex_text.setText("\t\t\t\t" + headerDatas.getIntroduce());
+            }else{
+                ex_text.setText(this.getResources().getString(R.string.recomend_no_datas));
             }
-
-//            if(headerDatas.getIntroduce()!=null|| headerDatas.getIntroduce().isEmpty()){
-//                ex_text.setText("\t\t\t\t" + headerDatas.getIntroduce());
-//            }else{
-//                ex_text.setText(this.getResources().getString(R.string.recomend_no_datas));
-//            }
 
         } catch (Exception e) {
             e.printStackTrace();

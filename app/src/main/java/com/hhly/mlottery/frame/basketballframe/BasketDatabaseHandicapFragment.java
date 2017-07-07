@@ -51,7 +51,7 @@ public class BasketDatabaseHandicapFragment extends Fragment implements View.OnC
     private BasketDatabaseDetailsAdapter mAdapter;
     private LinearLayout mListData;
     private LinearLayout mLoadRefresh; // 网络异常
-    private LinearLayout mNodata; // 暂无数据
+    private TextView mNodata; // 暂无数据
     private FrameLayout mLoading;// 加载中 loading...
 
     private final static int VIEW_STATUS_LOADING = 1; //加载中
@@ -128,12 +128,11 @@ public class BasketDatabaseHandicapFragment extends Fragment implements View.OnC
 
         mListData = (LinearLayout)mView.findViewById(R.id.basket_database_details_data);
         mListData.setVisibility(View.GONE);
-
-        mLoadRefresh = (LinearLayout)mView.findViewById(R.id.network_error_ll);
-        mNodata = (LinearLayout)mView.findViewById(R.id.no_datas_ll);
+        mLoadRefresh = (LinearLayout)mView.findViewById(R.id.basket_database_details_refresh);
+        mNodata = (TextView)mView.findViewById(R.id.basket_database_details_nodata);
         mLoading = (FrameLayout)mView.findViewById(R.id.basket_database_loading_details);
 
-        mRefresh = (TextView)mView.findViewById(R.id.network_error_btn);
+        mRefresh = (TextView)mView.findViewById(R.id.reLoadin);
         mRefresh.setOnClickListener(this);
 
         RadioGroupOnClick();//切换按钮
@@ -272,7 +271,7 @@ public class BasketDatabaseHandicapFragment extends Fragment implements View.OnC
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.network_error_btn:
+            case R.id.reLoadin:
                 mHandlerData.postDelayed(mRun , 500);
                 break;
         }

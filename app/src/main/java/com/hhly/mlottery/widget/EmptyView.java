@@ -59,8 +59,8 @@ public class EmptyView extends FrameLayout {
 
     private void init() {
         View view = inflate(getContext(), R.layout.layout_empty_view, this);
-        mNoDataView = view.findViewById(R.id.no_datas);
-        mErrorView = view.findViewById(R.id.network_error_ll);
+        mNoDataView = view.findViewById(R.id.nodata);
+        mErrorView = view.findViewById(R.id.error);
 
         mProgress = view.findViewById(R.id.progress);
         mLoadingText = view.findViewById(R.id.loading);
@@ -103,7 +103,7 @@ public class EmptyView extends FrameLayout {
      * @param listener listener
      */
     public void setOnErrorClickListener(View.OnClickListener listener) {
-        mErrorView.findViewById(R.id.network_exception_reload_btn)
+        mErrorView.findViewById(R.id.reloading_txt)
                 .setOnClickListener(listener);
     }
 }

@@ -57,26 +57,31 @@
     <com.hhly.mlottery.widget.ExactSwipeRefreshLayout
         android:id="@+id/basket_analyze_details_refreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
         <ScrollView
             android:id="@+id/basket_analyze_details_scroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                >
 
                 <LinearLayout
                     android:id="@+id/basket_loading_success_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    >
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/basket_analyze">
+                        android:layout_height="@dimen/basket_analyze"
+                        >
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -102,8 +107,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_alignParentBottom="true"
-                        android:background="@color/line_football_footer" />
-
+                        android:background="@color/line_football_footer"
+                        />
                     <LinearLayout
                         android:id="@+id/basket_analyze_details_history"
                         android:layout_width="match_parent"
@@ -124,9 +129,10 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:paddingBottom="@dimen/basket_details_ball5"
+                            android:paddingTop="@dimen/basket_details_item"
                             android:paddingLeft="@dimen/basket_details_ball5"
                             android:paddingRight="@dimen/basket_details_ball5"
-                            android:paddingTop="@dimen/basket_details_item">
+                            >
 
                             <TextView
                                 android:layout_width="0dp"
@@ -218,11 +224,12 @@
                         android:text="@string/basket_nodata"
                         android:textColor="@color/mdy_666"
                         android:textSize="@dimen/text_size_16"
-                        android:visibility="gone" />
+                        android:visibility="gone"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/basket_analyze">
+                        android:layout_height="@dimen/basket_analyze"
+                        >
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -243,13 +250,12 @@
                             android:paddingRight="@dimen/basket_details_item_height"
                             android:src="@mipmap/football_analyze_filtrate" />
                     </RelativeLayout>
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_alignParentBottom="true"
-                        android:background="@color/line_football_footer" />
-
+                        android:background="@color/line_football_footer"
+                        />
                     <LinearLayout
                         android:id="@+id/basket_analyze_details_recent_guest"
                         android:layout_width="match_parent"
@@ -270,9 +276,10 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:paddingBottom="@dimen/basket_details_ball5"
+                            android:paddingTop="@dimen/basket_details_item"
                             android:paddingLeft="@dimen/basket_details_ball5"
                             android:paddingRight="@dimen/basket_details_ball5"
-                            android:paddingTop="@dimen/basket_details_item">
+                            >
 
                             <TextView
                                 android:layout_width="0dp"
@@ -353,7 +360,6 @@
                         android:divider="#00000000"
                         android:dividerHeight="0dip"
                         android:listSelector="@android:color/transparent"></com.hhly.mlottery.widget.NestedListView>
-
                     <TextView
                         android:id="@+id/basket_analyze_nodata2"
                         android:layout_width="match_parent"
@@ -365,7 +371,7 @@
                         android:text="@string/basket_nodata"
                         android:textColor="@color/black_details_ball_textcolor2"
                         android:textSize="@dimen/text_size_16"
-                        android:visibility="gone" />
+                        android:visibility="gone"/>
 
                     <LinearLayout
                         android:id="@+id/basket_analyze_details_recent_home"
@@ -387,9 +393,10 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:paddingBottom="@dimen/basket_details_ball5"
+                            android:paddingTop="@dimen/basket_details_item"
                             android:paddingLeft="@dimen/basket_details_ball5"
                             android:paddingRight="@dimen/basket_details_ball5"
-                            android:paddingTop="@dimen/basket_details_item">
+                            >
 
                             <TextView
                                 android:layout_width="0dp"
@@ -481,11 +488,12 @@
                         android:text="@string/basket_nodata"
                         android:textColor="@color/black_details_ball_textcolor2"
                         android:textSize="@dimen/text_size_16"
-                        android:visibility="gone" />
+                        android:visibility="gone"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/basket_analyze">
+                        android:layout_height="@dimen/basket_analyze"
+                        >
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -502,8 +510,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:layout_alignParentBottom="true"
-                        android:background="@color/line_football_footer" />
-
+                        android:background="@color/line_football_footer"
+                        />
                     <LinearLayout
                         android:id="@+id/basket_analyze_details_future_guest"
                         android:layout_width="match_parent"
@@ -597,7 +605,7 @@
                             android:text="@string/basket_nodata"
                             android:textColor="@color/mdy_666"
                             android:textSize="@dimen/text_size_16"
-                            android:visibility="gone" />
+                            android:visibility="gone"/>
 
                     </LinearLayout>
 
@@ -694,7 +702,7 @@
                             android:text="@string/basket_nodata"
                             android:textColor="@color/mdy_666"
                             android:textSize="@dimen/text_size_16"
-                            android:visibility="gone" />
+                            android:visibility="gone"/>
                     </LinearLayout>
 
                     <View
@@ -704,12 +712,63 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/basketball_details_error"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="200dp">
-                    <include layout="@layout/exception_page_display" />
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingTop="200dp"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/refresh" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/exp_net_status_txt"
+                        android:textColor="@color/mdy_666"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="0dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dip"
+                            android:text="@string/exp__check_txt"
+                            android:textColor="@color/mdy_666"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/basketball_details_error_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/exp_refresh_txt"
+                            android:textColor="@color/basket_score"
+                            android:textSize="14sp" />
+                    </LinearLayout>
                 </LinearLayout>
+                <TextView
+                    android:id="@+id/basket_analyze_details_nodata"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/basket_nodata"
+                    android:textSize="20sp"
+                    android:gravity="center"
+                    android:textColor="@color/mdy_666"
+                    android:paddingTop="250dp"
+                    android:visibility="gone"
+                    />
             </RelativeLayout>
         </ScrollView>
     </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
-</LinearLayout><!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:orientation="horizontal"--><!--android:paddingTop="@dimen/basket_details_ball6"--><!--android:paddingBottom="@dimen/basket_details_ball6"--><!-->--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="NBA"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="16-03-31"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="老鹰"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="鹈鹕"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="间隔"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--</LinearLayout>--><!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:orientation="horizontal"--><!--android:paddingTop="@dimen/basket_details_ball6"--><!--android:paddingBottom="@dimen/basket_details_ball6"--><!-->--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="NBA"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="16-03-31"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="老鹰"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="鹈鹕"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="间隔"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--</LinearLayout>--><!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:orientation="horizontal"--><!--android:paddingTop="@dimen/basket_details_ball6"--><!--android:paddingBottom="@dimen/basket_details_ball6"--><!-->--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="NBA"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="16-03-31"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="老鹰"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="鹈鹕"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="间隔"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--</LinearLayout>-->
+</LinearLayout>
+    <!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:orientation="horizontal"--><!--android:paddingTop="@dimen/basket_details_ball6"--><!--android:paddingBottom="@dimen/basket_details_ball6"--><!-->--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="NBA"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="16-03-31"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="老鹰"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="鹈鹕"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="间隔"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--</LinearLayout>--><!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:orientation="horizontal"--><!--android:paddingTop="@dimen/basket_details_ball6"--><!--android:paddingBottom="@dimen/basket_details_ball6"--><!-->--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="NBA"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="16-03-31"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="老鹰"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="鹈鹕"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="间隔"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--</LinearLayout>--><!--<LinearLayout--><!--android:layout_width="match_parent"--><!--android:layout_height="wrap_content"--><!--android:orientation="horizontal"--><!--android:paddingTop="@dimen/basket_details_ball6"--><!--android:paddingBottom="@dimen/basket_details_ball6"--><!-->--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="NBA"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="16-03-31"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="老鹰"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="鹈鹕"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--<TextView--><!--android:layout_width="0dp"--><!--android:layout_weight="1"--><!--android:layout_height="wrap_content"--><!--android:text="间隔"--><!--android:textSize="@dimen/text_size_11"--><!--android:textColor="@color/black_details_textcolor"--><!--android:gravity="center"--><!--/>--><!--</LinearLayout>-->

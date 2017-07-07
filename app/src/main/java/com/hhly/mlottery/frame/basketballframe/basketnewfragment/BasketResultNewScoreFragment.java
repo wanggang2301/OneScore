@@ -265,9 +265,8 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(MyApp.getContext(), StaticValues.REFRASH_OFFSET_END));
         mLoadingLayout = (LinearLayout) mView.findViewById(R.id.basketball_immediate_loading);
         mNoDataLayout = (RelativeLayout) mView.findViewById(R.id.basket_undata);
-
-        mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_error_ll);
-        mReloadTvBtn = (TextView) mView.findViewById(R.id.network_error_btn);
+        mErrorLayout = (LinearLayout) mView.findViewById(R.id.basketball_immediate_error);
+        mReloadTvBtn = (TextView) mView.findViewById(R.id.basketball_immediate_error_btn);
         mReloadTvBtn.setOnClickListener(this);
         mSwipeRefreshLayout.setRefreshing(true);
         mSwipeRefreshLayout.setVisibility(View.VISIBLE);
@@ -597,7 +596,7 @@ public class BasketResultNewScoreFragment extends Fragment implements View.OnCli
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.network_error_btn:
+            case R.id.basketball_immediate_error_btn:
                 isLoad = -1;
                 MobclickAgent.onEvent(mContext, "Basketball_Refresh");
                 setStatus(SHOW_STATUS_REFRESH_ONCLICK);

@@ -290,8 +290,8 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
 
         mNoDataLayout = (RelativeLayout) mView.findViewById(R.id.basket_undata);
 
-        mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_error_ll);
-        mReloadTvBtn = (TextView) mView.findViewById(R.id.network_error_btn);
+        mErrorLayout = (LinearLayout) mView.findViewById(R.id.basketball_immediate_error);
+        mReloadTvBtn = (TextView) mView.findViewById(R.id.basketball_immediate_error_btn);
         mReloadTvBtn.setOnClickListener(this);
 
         mSwipeRefreshLayout.setRefreshing(true);
@@ -597,7 +597,7 @@ public class BasketImmedNewScoreFragment extends Fragment implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.network_error_btn:
+            case R.id.basketball_immediate_error_btn:
                 isLoad = -1;
                 MobclickAgent.onEvent(mContext, "Basketball_Refresh");
                 setStatus(SHOW_STATUS_REFRESH_ONCLICK);

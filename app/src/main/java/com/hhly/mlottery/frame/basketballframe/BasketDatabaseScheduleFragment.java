@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -72,9 +71,10 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     ImageView mRightButton;
 
     View mEmptyView;
+    ProgressBar mProgressBar;
     View mErrorLayout;
     TextView mRefreshTextView;
-    LinearLayout mNoDataTextView;
+    TextView mNoDataTextView;
 
     RecyclerView mRecyclerView;
 
@@ -100,7 +100,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mEmptyView = inflater.inflate(R.layout.exception_page_display, container, false);
+        mEmptyView = inflater.inflate(R.layout.basket_database_empty_layout, container, false);
         return inflater.inflate(R.layout.fragment_basket_database_schedule, container, false);
     }
 
@@ -132,9 +132,10 @@ public class BasketDatabaseScheduleFragment extends Fragment {
     }
 
     private void initEmptyView() {
-        mErrorLayout = mEmptyView.findViewById(R.id.network_error_ll);
-        mRefreshTextView = (TextView) mEmptyView.findViewById(R.id.network_error_btn);
-        mNoDataTextView = (LinearLayout) mEmptyView.findViewById(R.id.no_datas_ll);
+        mProgressBar = (ProgressBar) mEmptyView.findViewById(R.id.progress);
+        mErrorLayout = mEmptyView.findViewById(R.id.error_layout);
+        mRefreshTextView = (TextView) mEmptyView.findViewById(R.id.reloading_txt);
+        mNoDataTextView = (TextView) mEmptyView.findViewById(R.id.no_data_txt);
 
         mRefreshTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,6 +301,7 @@ public class BasketDatabaseScheduleFragment extends Fragment {
      */
     public void setStatus(int status) {
         mNoDataTextView.setVisibility(status == STATUS_NO_DATA ? View.VISIBLE : View.GONE);
+        mProgressBar.setVisibility(status == STATUS_LOADING ? View.VISIBLE : View.GONE);
         mErrorLayout.setVisibility(status == STATUS_ERROR ? View.VISIBLE : View.GONE);
     }
 
@@ -333,7 +335,6 @@ public class BasketDatabaseScheduleFragment extends Fragment {
                         VolleyError error = e.getVolleyError();
                         if (error != null) error.printStackTrace();
                         setStatus(STATUS_ERROR);
-                        mButtonFrame.setVisibility(View.GONE);
                     }
                 }, ScheduleResult.class);
     }

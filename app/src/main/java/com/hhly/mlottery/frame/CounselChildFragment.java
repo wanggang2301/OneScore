@@ -49,10 +49,12 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
     private List<CounselBean.InfoIndexBean.InfosBean> mInfosList;//资讯列表数据集合父fg传来(第一个fragment的数据)
     private List<CounselBean.InfoIndexBean.AdsBean> mAdsList;//轮播图数据集合父fg传来(第一个fragment的数据)
     private List<String> adsurl = new ArrayList<>();//轮播图url
+    //    private List<String> adsurljump = new ArrayList<>();//轮播图跳转url
+//    private List<String> adstitle = new ArrayList<>();//轮播图标题
     private List<CounselBean.InfoIndexBean.InfosBean> mInfos = new ArrayList<>();//资讯列表数据集合(非第一个fragment的数据)由当前碎片发起网络请求
     private LinearLayout mReloadWhenFail;//头数据加载失败时的视图
     private TextView reLoading;//点击重新加载
-    private LinearLayout nodataorloading;//没有数据
+    private TextView nodataorloading;//没有数据
     private CounselFragmentLvAdapter mAdapter; //listview适配器
     private ExactSwipeRefreshLayout mSwipeRefreshLayout;//下拉刷新
     int index;//当前fragment
@@ -77,7 +79,6 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
     private boolean isCreated = false;//当前碎片是否createview
     private boolean isPullDownRefresh = false;//是否是下拉刷新
     private int infotype;
-    private LinearLayout no_datas_ll;
 
 
     @Override
@@ -100,12 +101,10 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
     private void initView(LayoutInflater inflater) {
         mView = inflater.inflate(R.layout.fragment_counsel_child, null);
         mContext = getActivity();
-        mReloadWhenFail = (LinearLayout) mView.findViewById(R.id.network_error_ll);
-        reLoading = (TextView) mView.findViewById(R.id.network_error_btn);
+        mReloadWhenFail = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
+        reLoading = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
         reLoading.setOnClickListener(this);
-
-        nodataorloading = (LinearLayout) mView.findViewById(R.id.loading_ll);
-        no_datas_ll = (LinearLayout) mView.findViewById(R.id.no_datas_ll);
+        nodataorloading = (TextView) mView.findViewById(R.id.dataloding_ornodata);
         //下拉刷新
         mSwipeRefreshLayout = (ExactSwipeRefreshLayout) mView.findViewById(R.id.swiperefreshlayout_counselfragmentchild);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
@@ -152,8 +151,8 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                 case NEWS_LOADING:
                     //列表正在下载
                     mReloadWhenFail.setVisibility(View.GONE);
-                    nodataorloading.setVisibility(View.VISIBLE);
-                    no_datas_ll.setVisibility(View.GONE);
+                    nodataorloading.setVisibility(View.GONE);
+                    nodataorloading.setText(R.string.loading_data_txt);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(true);
                     break;
@@ -161,7 +160,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                     //列表暂没数据
                     mReloadWhenFail.setVisibility(View.GONE);
                     nodataorloading.setVisibility(View.VISIBLE);
-                    no_datas_ll.setVisibility(View.VISIBLE);
+                    nodataorloading.setText(R.string.nodata);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     break;
@@ -177,20 +176,17 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                         mReloadWhenFail.setVisibility(View.VISIBLE);
                         mSwipeRefreshLayout.setVisibility(View.GONE);
                     }
-                    no_datas_ll.setVisibility(View.GONE);
                     nodataorloading.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     break;
                 case NEWS_SUCESS:
                     //列表下载成功
-                    no_datas_ll.setVisibility(View.GONE);
                     mReloadWhenFail.setVisibility(View.GONE);
                     nodataorloading.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     break;
                 case NEWS_FAIL:
-
                     //列表下载失败
                     //解决有数据时  下拉刷新失败以后  重新加载显示在listview上的问题。
                     // 不是下拉刷新时的请求失败，mReloadWhenFail里的刷新无法点击的问题
@@ -202,7 +198,6 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
                         mReloadWhenFail.setVisibility(View.VISIBLE);
                         mSwipeRefreshLayout.setVisibility(View.GONE);
                     }
-                    no_datas_ll.setVisibility(View.GONE);
                     nodataorloading.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     break;
@@ -283,7 +278,7 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
     public void onClick(View v) {
         switch (v.getId()) {
             //加載失敗后的刷新
-            case R.id.network_error_btn:
+            case R.id.network_exception_reload_btn:
                 //向列表接口发起请求
                 loadNewsData(BaseURLs.URL_FOOTBALL_INFOLIST, 1 + "", infotype + "");
                 break;
@@ -379,12 +374,13 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
 //        boolean isRelateMatch;//是否关联比赛
         String ThirdId;//联赛id
         int type;//联赛id类型  1篮球 2足球
-        if (index != 0 && mInfos.size() != 0 && mInfos.get(position).getIsvideonews() != null && mInfos.get(position).getIsvideonews().equals("1")) { //视频的点击播放
+        if(index!=0&&mInfos.size()!=0&&mInfos.get(position).getIsvideonews()!=null&&mInfos.get(position).getIsvideonews().equals("1")){ //视频的点击播放
 
-            Intent intent1 = new Intent(mContext, PLVideoTextureActivity.class);
-            intent1.putExtra("videoPath", mInfos.get(position).getVideourl());
+            Intent intent1=new Intent(mContext, PLVideoTextureActivity.class);
+            intent1.putExtra("videoPath",mInfos.get(position).getVideourl());
             mContext.startActivity(intent1);
-        } else { //除了视频的，按照之前的逻辑
+        }
+        else{ //除了视频的，按照之前的逻辑
             if (index == 0) {
                 if (mAdsList != null && mAdsList.size() != 0) {//有轮播图
                     //因为头部下标是0，item下标变成从1开始，所以要减去1
@@ -429,8 +425,8 @@ public class CounselChildFragment extends Fragment implements SwipeRefreshLayout
 
             }
 //            if (isRelateMatch) {
-            intent.putExtra(INTENT_PARAM_THIRDID, ThirdId);
-            intent.putExtra(INTENT_PARAM_TYPE, type);
+                intent.putExtra(INTENT_PARAM_THIRDID, ThirdId);
+                intent.putExtra(INTENT_PARAM_TYPE, type);
 //            }
             intent.putExtra(INTENT_PARAM_TITLE, mHeadName);//头部名称
             intent.putExtra(INTENT_PARAM_JUMPURL, jumpurl);

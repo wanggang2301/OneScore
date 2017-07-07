@@ -133,5 +133,5 @@
             android:textSize="@dimen/text_size_14" />
     </RelativeLayout>
 
-    <include layout="@layout/exception_page_display" />
+    <include layout="@layout/network_exception" />
 </RelativeLayout>

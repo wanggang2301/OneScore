@@ -266,7 +266,6 @@
 
     <!-- 异常处理 -->
     <string name="exp_net_status_txt">暫無法提供數據</string>
-    <string name="exp_no_net">暫無網絡</string>
     <string name="exp__check_txt">請檢查后</string>
     <string name="exp_refresh_txt">刷新</string>
 
@@ -1814,9 +1813,6 @@
     <string name="issue_check_price">請輸入您的方案價格</string>
     <string name="issue_check_singlg">必須選擇壹種玩法</string>
     <string name="issue_price_spill">價格需在0-68元之間</string>
-    <string name="issue_odds_sing_check">單選比賽賠率不得低於1.5</string>
-    <string name="issue_odds_double_check">雙選比賽賠率不得低於2.0</string>
-    <string name="issue_odds_check">該場比賽賠率不得低於0.5</string>
 
     <string name="charge_money_notice">溫馨提示: 壹比分暫不提供投註服務!</string>
 
@@ -1965,6 +1961,5 @@
 
     <string name="football_up_data_prompt">更新了%1$d場比賽，隱藏了%2$d場比賽</string>
     <string name="football_not_animation_txt">暫無動畫直播</string>
-    <string name="home_newest_bet">最新推介</string>
 
 </resources>

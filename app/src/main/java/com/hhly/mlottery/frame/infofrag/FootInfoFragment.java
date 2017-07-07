@@ -157,15 +157,14 @@ public class FootInfoFragment extends Fragment implements View.OnClickListener, 
 
     private void initView() {
 
-        mView.findViewById(R.id.network_error_btn).setOnClickListener(this);
+        mView.findViewById(R.id.tv_current_reLoading).setOnClickListener(this);
 
         fl_mask = (FrameLayout) mView.findViewById(R.id.fl_mask);
         iv_left = (ImageView) mView.findViewById(R.id.iv_left);
         iv_left.setOnClickListener(this);
         iv_right = (ImageView) mView.findViewById(R.id.iv_right);
         iv_right.setOnClickListener(this);
-        ll_error = (LinearLayout) mView.findViewById(R.id.network_error_ll);
-
+        ll_error = (LinearLayout) mView.findViewById(R.id.ll_loading_error);
         rl_top = (RelativeLayout) mView.findViewById(R.id.rl_top);
         tv_data_content = (TextView) mView.findViewById(R.id.tv_data_content);
         tv_data_content.setOnClickListener(this);
@@ -182,7 +181,7 @@ public class FootInfoFragment extends Fragment implements View.OnClickListener, 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
 
-        emptyView = View.inflate(mContext, R.layout.nodatas_display_layout, null);
+        emptyView = View.inflate(mContext, R.layout.layout_nodata, null);
 
         footInfoCallBack = new FootInfoCallBack() {
             @Override
@@ -213,7 +212,7 @@ public class FootInfoFragment extends Fragment implements View.OnClickListener, 
             case R.id.tv_data_content:
                 mInfoCenterPW.showPopupWindow(rl_top);
                 break;
-            case R.id.network_error_btn:
+            case tv_current_reLoading:
                 initDate();
                 break;
             case R.id.iv_left:

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".mvptask.bowl.BowlChildFragment">
 
-    <include layout="@layout/exception_page_display" />
+    <include layout="@layout/handle_exception" />
 
     <LinearLayout
         android:id="@+id/ll_context"

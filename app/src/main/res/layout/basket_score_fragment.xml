@@ -24,6 +24,7 @@
     </LinearLayout>
 
 
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/basketball_swiperefreshlayout"
         android:layout_width="match_parent"
@@ -46,7 +47,51 @@
             android:scrollingCache="true" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/exception_page_display" />
+    <LinearLayout
+        android:id="@+id/basketball_immediate_error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/refresh" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/exp_net_status_txt"
+            android:textColor="@color/version"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:text="@string/exp__check_txt"
+                android:textColor="@color/msg"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/basketball_immediate_error_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exp_refresh_txt"
+                android:textColor="@color/exp_refresh"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/basketball_immediate_unfocus_pinned"

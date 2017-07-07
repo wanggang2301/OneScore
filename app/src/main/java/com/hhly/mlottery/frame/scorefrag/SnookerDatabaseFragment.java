@@ -52,7 +52,7 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 public class SnookerDatabaseFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     /*标题，暂无数据*/
-    private LinearLayout live_no_data_txt;
+    private TextView live_no_data_txt;
     /*直播子列表*/
     private List<List<String>> childDataList = new ArrayList<>();//直播子列表
     boolean isAddHeadDatas = false;
@@ -99,7 +99,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
     private TextView lay_agendafg;
     private ScrollView snooker_scroll;
     private List<SnookerRaceListitemBean.DataBean.MatchListBean> matchList;
-    private String segmentDatas = "";
+    private String segmentDatas="";
 
     public static SnookerDatabaseFragment newInstance(int type, String leagueId) {
         Bundle bundle = new Bundle();
@@ -241,7 +241,6 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
             }
         }, SnookerRaceListitemBean.class);
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
@@ -251,7 +250,7 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 matchList.clear();
                 childDataList.clear();
-                segmentDatas = stageInfo.get(group.indexOfChild(group.findViewById(checkedId))).getNum() + "";
+                segmentDatas=stageInfo.get(group.indexOfChild(group.findViewById(checkedId))).getNum()+"";
                 upLeagueRace(stageInfo.get(group.indexOfChild(group.findViewById(checkedId))).getNum() + "", mSeason);
 
             }
@@ -279,14 +278,18 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
             upLeagueRace("", "");
         } else if (mType == SUCCESSIVE) {
 
-        } else if (mType == PROFILE) {
+        } else if(mType==PROFILE) {
             view.findViewById(R.id.snooker_race_fragemnt).setVisibility(View.GONE);
             snooker_scroll.setVisibility(View.VISIBLE);
         }
+        live_error_ll = (LinearLayout) view.findViewById(R.id.live_error_ll);
+        live_error_btn = (TextView) view.findViewById(R.id.live_error_btn);
+        live_error_btn.setOnClickListener(this);
         //暂无数据
-        live_no_data_txt = (LinearLayout) view.findViewById(R.id.no_datas_ll);
-        live_error_ll = (LinearLayout) view.findViewById(R.id.network_error_ll);
-        live_error_btn = (TextView) view.findViewById(R.id.network_error_btn);
+        live_no_data_txt = (TextView) view.findViewById(R.id.live_no_data_txt);
+
+        live_error_ll = (LinearLayout) view.findViewById(R.id.live_error_ll);
+        live_error_btn = (TextView) view.findViewById(R.id.live_error_btn);
         live_error_btn.setOnClickListener(this);
         //赛事简介的暂无数据
         live_pr_no_data_txt = (TextView) view.findViewById(R.id.live_pr_no_data_txt);
@@ -325,9 +328,10 @@ public class SnookerDatabaseFragment extends Fragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.network_error_btn:
+            case R.id.live_error_btn:
+
                 reFH();
-                ((SnookerEventPageActivity) mContext).initData();
+                ((SnookerEventPageActivity)mContext).initData();
                 break;
             default:
                 break;

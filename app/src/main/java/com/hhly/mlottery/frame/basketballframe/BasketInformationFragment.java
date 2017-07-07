@@ -128,16 +128,14 @@ public class BasketInformationFragment extends Fragment implements ExactSwipeRef
         mExactSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(getContext(), StaticValues.REFRASH_OFFSET_END));
 
         ll_loading = (LinearLayout) mView.findViewById(R.id.info_loading_ll);
-
-        ll_net_error = (LinearLayout) mView.findViewById(R.id.network_error_ll);
-
-        ll_nodata_inter = (LinearLayout) mView.findViewById(R.id.no_datas_ll);
+        ll_net_error = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
+        ll_nodata_inter = (LinearLayout) mView.findViewById(R.id.info_nodata_inter);
         ll_nodata_country = (LinearLayout) mView.findViewById(R.id.info_nodata_country);
 
         fl_inter = (FrameLayout) mView.findViewById(R.id.fl_inter);
         fl_country = (FrameLayout) mView.findViewById(R.id.fl_country);
 
-        network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_error_btn);
+        network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
 
         mExactSwipeRefreshLayout.setEnabled(false);
 

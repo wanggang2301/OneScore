@@ -5,8 +5,8 @@
 
     <include layout="@layout/layout_loading"/>
 
-    <include layout="@layout/nodatas_display_layout"/>
+    <include layout="@layout/layout_nodata"/>
 
-    <include layout="@layout/network_error_layout"/>
+    <include layout="@layout/layout_net_error"/>
 
 </FrameLayout>
