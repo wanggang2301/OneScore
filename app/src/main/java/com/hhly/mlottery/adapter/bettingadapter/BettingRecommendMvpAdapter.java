@@ -61,7 +61,7 @@ public class BettingRecommendMvpAdapter extends BaseQuickAdapter<BettingListData
         holder.setText(R.id.betting_buy_num , filtraNull(data.getCountOrder()));
 
         if (data.getEarningsRate() != null) {
-            holder.setText(R.id.betting_earnings_rate , data.getEarningsRate() + " %");
+            holder.setText(R.id.betting_earnings_rate , mContext.getResources().getString(R.string.betting_shouyilv_txt) + data.getEarningsRate() + " %");
             holder.setVisible(R.id.betting_earnings_rate , true);
         }else{
             holder.setVisible(R.id.betting_earnings_rate , false);

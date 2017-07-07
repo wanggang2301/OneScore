@@ -387,6 +387,24 @@ public class BasketTeamDataBean {
             private List<BasketTeamPlayerBean> center;
             private List<BasketTeamPlayerBean> forward;
             private List<BasketTeamPlayerBean> defender;
+            private List<BasketTeamPlayerBean> forwardOrCenter;
+            private List<BasketTeamPlayerBean> forwardOrDefender;
+
+            public List<BasketTeamPlayerBean> getForwardOrCenter() {
+                return forwardOrCenter;
+            }
+
+            public void setForwardOrCenter(List<BasketTeamPlayerBean> forwardOrCenter) {
+                this.forwardOrCenter = forwardOrCenter;
+            }
+
+            public List<BasketTeamPlayerBean> getForwardOrDefender() {
+                return forwardOrDefender;
+            }
+
+            public void setForwardOrDefender(List<BasketTeamPlayerBean> forwardOrDefender) {
+                this.forwardOrDefender = forwardOrDefender;
+            }
 
             public List<BasketTeamPlayerBean> getCenter() {
                 return center;

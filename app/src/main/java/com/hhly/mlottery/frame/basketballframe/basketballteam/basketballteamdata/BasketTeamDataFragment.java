@@ -14,15 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.hhly.mlottery.MyApp;
 import com.hhly.mlottery.R;
 import com.hhly.mlottery.activity.BasketballTeamActivity;
 import com.hhly.mlottery.activity.WebActivity;
 import com.hhly.mlottery.adapter.BasketBallTeamPlayerAdapter;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.mvp.ViewFragment;
+import com.hhly.mlottery.util.AppConstants;
 import com.hhly.mlottery.view.RoundProgressBar;
 
 import butterknife.BindView;
@@ -104,7 +107,7 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
      * 无数据的界面
      */
     @BindView(R.id.nodata)
-    TextView mNodataLayout;
+    LinearLayout mNodataLayout;
     /**
      * 点击刷新
      */
@@ -224,7 +227,7 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
 
     private void setListener() {
 
-        final String url= BaseURLs.P_URL_API_HOST+"data/basket/playerInfo.html?playerId=";
+        final String url= BaseURLs.P_URL_API_HOST+"data/basket/playerInfo.html"+"?lang="+ MyApp.getLanguage()+"playerId=";
 
         mBtnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -240,6 +243,7 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
             public void onItemClick(View view, int i) {
                 Intent intent=new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("key",url+mPresenter.getForward().get(i).getPlayerId()+"#/");
+                intent.putExtra("noShare",true);
                 startActivity(intent);
             }
         });
@@ -248,6 +252,7 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
             public void onItemClick(View view, int i) {
                 Intent intent=new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("key",url+mPresenter.getCenter().get(i).getPlayerId()+"#/");
+                intent.putExtra("noShare",true);
                 startActivity(intent);
             }
         });
@@ -256,6 +261,7 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
             public void onItemClick(View view, int i) {
                 Intent intent=new Intent(getActivity(), WebActivity.class);
                 intent.putExtra("key",url+mPresenter.getDefender().get(i).getPlayerId()+"#/");
+                intent.putExtra("noShare",true);
                 startActivity(intent);
             }
         });

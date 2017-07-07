@@ -221,6 +221,9 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
             public void onResponse(RecommendationExpertBean jsonObject) {
                 if (jsonObject != null) {
 
+                    if (jsonObject.getCode().equals("200")){
+
+
                     if (jsonObject.getExpertPromotions()==null){
 
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
@@ -246,12 +249,16 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                         ex_recyclerview.setAdapter(recomenHeadAdapter);
                         recomenHeadAdapter.openLoadMore(0, true);
                         initEvent();
+                        mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
 
                     } else {
 
                         upDataAdapter();
-                    }
+                      }
+                    }else{
 
+                        mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
+                    }
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                 }
@@ -392,12 +399,10 @@ public class RecommendedExpertDetailsActivity extends Activity implements View.O
                 if (jsonObject != null) {
 
                     if (jsonObject.getUserInfo() == null) {
-
                         mViewHandler.sendEmptyMessage(VIEW_STATUS_NO_DATA);
                         return;
                     }
                     setHeaderDatas(jsonObject.getUserInfo());
-                    mViewHandler.sendEmptyMessage(VIEW_STATUS_SUCCESS);
                 } else {
                     mViewHandler.sendEmptyMessage(VIEW_STATUS_NET_ERROR);
                 }

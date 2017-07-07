@@ -503,7 +503,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                                         }
                                     }
                                 }
-                            } else {
+                            } /*else {
                                 for (LeagueCup cup : mCups) {
                                     for (String hotId : hotList) {
                                         if (cup.getRaceId().equals(hotId)) {
@@ -512,7 +512,7 @@ public class ImmediateFragment extends Fragment implements OnClickListener, Swip
                                         }
                                     }
                                 }
-                            }
+                            }*/
                             mCheckedCups = tempHotCups.toArray(new LeagueCup[tempHotCups.size()]);
                         }
 

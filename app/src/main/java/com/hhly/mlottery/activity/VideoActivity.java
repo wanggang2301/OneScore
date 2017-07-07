@@ -24,7 +24,6 @@ import com.hhly.mlottery.adapter.videolive.NewPinnedHeaderExpandableAdapter;
 import com.hhly.mlottery.bean.videobean.NewMatchVideoinfo;
 import com.hhly.mlottery.config.BaseURLs;
 import com.hhly.mlottery.config.StaticValues;
-import com.hhly.mlottery.frame.video.ComprehensiveVideoFragment;
 import com.hhly.mlottery.util.DisplayUtil;
 import com.hhly.mlottery.util.L;
 import com.hhly.mlottery.util.UiUtils;
@@ -128,16 +127,6 @@ public class VideoActivity extends BaseActivity implements View.OnClickListener,
         live_no_data_txt = (TextView) findViewById(R.id.live_no_data_txt);
 
     }
-
-
-    public static ComprehensiveVideoFragment newInstance(int index) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(FRAGMENT_INDEX, index);
-        ComprehensiveVideoFragment fragment = new ComprehensiveVideoFragment();
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
 
     public void initData() {
         mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);

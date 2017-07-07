@@ -265,19 +265,19 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            tools:text="-"
                             android:textColor="@color/res_pl_color"
-                            android:textSize="@dimen/item_football_half_score" />
+                            android:textSize="@dimen/item_football_half_score"
+                            tools:text="-" />
 
                         <TextView
                             android:id="@+id/tv_odds_center1"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="1.3"
+                            android:layout_weight="1.6"
                             android:gravity="center"
-                            tools:text="两/两球半"
                             android:textColor="@color/res_pl_color"
-                            android:textSize="@dimen/item_football_half_score" />
+                            android:textSize="@dimen/item_football_half_score"
+                            tools:text="两/两球半" />
 
                         <TextView
                             android:id="@+id/tv_odds_bottom1"
@@ -285,9 +285,9 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            tools:text="-"
                             android:textColor="@color/res_pl_color"
-                            android:textSize="@dimen/item_football_half_score" />
+                            android:textSize="@dimen/item_football_half_score"
+                            tools:text="-" />
 
                     </LinearLayout>
 
@@ -308,9 +308,9 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            tools:text="-"
                             android:textColor="@color/res_pl_color"
-                            android:textSize="@dimen/item_football_half_score" />
+                            android:textSize="@dimen/item_football_half_score"
+                            tools:text="-" />
 
                         <TextView
                             android:id="@+id/tv_odds_center2"
@@ -318,9 +318,9 @@
                             android:layout_height="0dp"
                             android:layout_weight="1.3"
                             android:gravity="center"
-                            tools:text="两/两球半"
                             android:textColor="@color/res_pl_color"
-                            android:textSize="@dimen/item_football_half_score" />
+                            android:textSize="@dimen/item_football_half_score"
+                            tools:text="两/两球半" />
 
                         <TextView
                             android:id="@+id/tv_odds_bottom2"
@@ -328,9 +328,9 @@
                             android:layout_height="0dp"
                             android:layout_weight="1"
                             android:gravity="center"
-                            tools:text="-"
                             android:textColor="@color/res_pl_color"
-                            android:textSize="@dimen/item_football_half_score" />
+                            android:textSize="@dimen/item_football_half_score"
+                            tools:text="-" />
 
                     </LinearLayout>
 
@@ -339,8 +339,8 @@
                 <View
                     android:layout_width="0.1dp"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
                     android:background="@color/whitesmoke" />
 
                 <!--置顶-->
@@ -370,8 +370,8 @@
                 android:layout_height="0.1dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:visibility="gone"
-                android:background="@color/mdy_dfdfdf" />
+                android:background="@color/mdy_dfdfdf"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_roll_desc"
@@ -381,9 +381,9 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
-                android:visibility="gone"
                 android:textColor="@color/score_red"
                 android:textSize="@dimen/item_football_international_card"
+                android:visibility="gone"
                 tools:text="90分钟90分钟90分钟90分钟90分钟90分钟90分钟90分钟90分钟钟90分钟钟90分钟" />
 
         </LinearLayout>
