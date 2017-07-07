@@ -222,14 +222,14 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
         mRecyclerView.setLayoutManager(layoutManager);
 
-        mReloadTvBtn = (TextView) mView.findViewById(R.id.network_error_btn);
+        mReloadTvBtn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
         mReloadTvBtn.setOnClickListener(this);
 
         mUnFocusLayout = (RelativeLayout) mView.findViewById(R.id.football_unfocus);
         mLoading = (LinearLayout) mView.findViewById(R.id.football_focus_loading_ll);
 
 //        mLoadingLayout = (LinearLayout) mView.findViewById(R.id.football_immediate_loading_ll);
-        mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_error_ll);
+        mErrorLayout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
 
 
         mSwipeRefreshLayout.setRefreshing(true);
@@ -931,7 +931,7 @@ public class FocusFragment extends Fragment implements OnClickListener, SwipeRef
 
         switch (v.getId()) {
 
-            case R.id.network_error_btn:
+            case R.id.network_exception_reload_btn:
                 // mLoadingLayout.setVisibility(View.VISIBLE);
                 // mErrorLayout.setVisibility(View.GONE);
                 // mListView.setVisibility(View.GONE);

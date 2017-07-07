@@ -10,7 +10,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -32,7 +31,6 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
     private FrameLayout fl_play_loading;// 正在加载中
     private FrameLayout fl_play_networkError;// 加载失败
     private TextView play_reLoading;// 刷新
-    private LinearLayout network_error_ll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +46,7 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
     public void InitView() {
         fl_play_loading = (FrameLayout) findViewById(R.id.fl_paly_loading);
         fl_play_networkError = (FrameLayout) findViewById(R.id.fl_paly_networkError);
-        network_error_ll = (LinearLayout) findViewById(R.id.network_error_ll);
-        play_reLoading = (TextView) findViewById(R.id.network_error_btn);
+        play_reLoading = (TextView) findViewById(R.id.play_reLoading);
         play_reLoading.setOnClickListener(this);
 
         public_txt_title = (TextView) findViewById(R.id.public_txt_title);//标题
@@ -92,9 +89,8 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
                     super.onReceivedError(view, errorCode, description, failingUrl);
                     mWebView.setVisibility(View.GONE);
                     fl_play_networkError.setVisibility(View.VISIBLE);
-                    network_error_ll.setVisibility(View.VISIBLE);
 //                    mHandler.sendEmptyMessage(ERROR);
-                    findViewById(R.id.network_error_btn).setOnClickListener(new View.OnClickListener() {
+                    findViewById(R.id.play_reLoading).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             mWebView.loadUrl(failingUrl);
@@ -115,7 +111,7 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
             case R.id.public_img_back://返回
                 finish();
                 break;
-            case R.id.network_error_btn://刷新
+            case R.id.play_reLoading://刷新
                 InitData();
                 break;
             default:
@@ -163,20 +159,17 @@ public class PlayWebViewActivity extends BaseActivity implements View.OnClickLis
                 case SUCCESS:
                     fl_play_loading.setVisibility(View.GONE);
                     fl_play_networkError.setVisibility(View.GONE);
-                    network_error_ll.setVisibility(View.GONE);
                     mWebView.setVisibility(View.VISIBLE);
                     break;
                 case STARTLOADING://正在加载的时候
                     fl_play_loading.setVisibility(View.VISIBLE);
                     fl_play_networkError.setVisibility(View.GONE);
-                    network_error_ll.setVisibility(View.GONE);
                     mWebView.setVisibility(View.GONE);
                     break;
                 case ERROR://访问失败
                     fl_play_loading.setVisibility(View.GONE);
                     mWebView.setVisibility(View.GONE);
                     fl_play_networkError.setVisibility(View.VISIBLE);
-                    network_error_ll.setVisibility(View.VISIBLE);
 
                     break;
 

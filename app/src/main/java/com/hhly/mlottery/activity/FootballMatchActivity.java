@@ -76,7 +76,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
     private ImageView iv_right;
 
     private FootballMatchListAdapter footballMatchListAdapter;
-    private LinearLayout match_no_data_txt;
+    private TextView match_no_data_txt;
     private LinearLayout match_error_btn;
 
     boolean isSelect = false;
@@ -588,11 +588,11 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(FootballMatchActivity.this, StaticValues.REFRASH_OFFSET_END));
 
         //暂无数据
-        match_no_data_txt = (LinearLayout) findViewById(R.id.no_datas_ll);
+        match_no_data_txt = (TextView) findViewById(R.id.match_no_data_txt);
 
         //网络异常
-        match_error_btn = (LinearLayout) findViewById(R.id.network_error_ll);
-        findViewById(R.id.network_error_btn).setOnClickListener(this);
+        match_error_btn = (LinearLayout) findViewById(R.id.match_error_ll);
+        findViewById(R.id.match_error_btn).setOnClickListener(this);
 
         emptyView = View.inflate(this, R.layout.layout_nodata, null);
 
@@ -600,6 +600,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
         mNoLoadingView = getLayoutInflater().inflate(R.layout.nomoredata, (ViewGroup) mRecyclerView.getParent(), false);
 
     }
+
 
     /*上拉加载*/
 
@@ -728,7 +729,7 @@ public class FootballMatchActivity extends BaseWebSocketActivity implements View
 
                 finish();
                 break;
-            case R.id.network_error_btn:
+            case R.id.match_error_btn:
                 pageNum=1;
                 isSelect = false;
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);

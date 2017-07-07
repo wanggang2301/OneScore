@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -58,12 +57,12 @@ public class BasketBallOddFragment extends ViewFragment<BasketBallContract.OddPr
 
     @BindView(R.id.cpi_odds_recyclerView)
     RecyclerView cpiOddsRecyclerView;
-    @BindView(R.id.network_error_btn)
+    @BindView(R.id.cpi_txt_reLoading)
     TextView cpiTxtReLoading;
-    @BindView(R.id.network_error_ll)
-    LinearLayout cpiRightFlPlateNetworkError;
-    @BindView(R.id.no_datas_ll)
-    LinearLayout cpiRightFlPlateNoData;
+    @BindView(R.id.cpi_right_fl_plate_networkError)
+    FrameLayout cpiRightFlPlateNetworkError;
+    @BindView(R.id.cpi_right_fl_plate_noData)
+    FrameLayout cpiRightFlPlateNoData;
     private String type;
 
     private BasketIndexAdapter mBasketIndexAdapter;

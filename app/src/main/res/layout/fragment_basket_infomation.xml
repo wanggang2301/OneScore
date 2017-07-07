@@ -81,33 +81,20 @@
                     android:background="@color/white"
                     android:numColumns="4"></GridView>
 
-
-                <!--暂无数据-->
                 <LinearLayout
-                    android:id="@+id/no_datas_ll"
+                    android:id="@+id/info_nodata_inter"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical"
                     android:visibility="gone">
 
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="5dp"
-                        android:src="@mipmap/nodatas" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:text="@string/basket_unfiltrate"
-                        android:textColor="#909090"
-                        android:textSize="13sp" />
-
+                        android:textColor="@color/loading_txt_color" />
                 </LinearLayout>
-
 
             </FrameLayout>
 
@@ -138,19 +125,11 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="5dp"
-                        android:src="@mipmap/nodatas" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:text="@string/basket_unfiltrate"
-                        android:textColor="#909090"
-                        android:textSize="13sp" />
+                        android:textColor="@color/loading_txt_color" />
                 </LinearLayout>
             </FrameLayout>
 
@@ -159,6 +138,6 @@
 
     </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
-    <include layout="@layout/exception_page_display" />
+    <include layout="@layout/network_exception" />
 
 </LinearLayout>

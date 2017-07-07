@@ -122,6 +122,6 @@
                 android:textColor="@color/loading_txt_color" />
         </LinearLayout>
 
-        <include layout="@layout/exception_page_display" />
+        <include layout="@layout/network_exception" />
     </FrameLayout>
 </LinearLayout>

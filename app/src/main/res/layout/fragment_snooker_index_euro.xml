@@ -28,5 +28,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
     </FrameLayout>
-    <include layout="@layout/exception_page_display"/>
+    <include layout="@layout/layout_nodata"/>
+    <include layout="@layout/basket_odds_new_error"/>
 </FrameLayout>

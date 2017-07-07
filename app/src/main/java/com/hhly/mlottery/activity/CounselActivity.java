@@ -46,7 +46,7 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
     public static final String BUNDLE_PARM_INFOTYPE = "infoType";
     private LinearLayout reloadwhenfail;//头数据加载失败时的视图
     private TextView reLoading;//头数据加载失败时，点击重新加载
-    private LinearLayout loading;//头数据加载失败时，点击重新加载
+    private TextView nodataorloading;//头数据加载失败时，点击重新加载
     private List<Fragment> mList = new ArrayList();
     private CounselFragmentAdapter mCounselFragmentAdapter;
     private List<Boolean> isImageLeft = new ArrayList<>();//是否图片左边布局
@@ -68,8 +68,8 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
                 case HEAD_LOADING:
                     //头部正在下载
                     reloadwhenfail.setVisibility(View.GONE);
-                    loading.setVisibility(View.VISIBLE);
-                    no_datas_ll.setVisibility(View.GONE);
+                    nodataorloading.setVisibility(View.VISIBLE);
+                    nodataorloading.setText(R.string.loading_data_txt);
                     mTabLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setRefreshing(true);
@@ -77,8 +77,8 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
                 case HEAD_NODATA:
                     //头部暂没数据
                     reloadwhenfail.setVisibility(View.GONE);
-                    loading.setVisibility(View.GONE);
-                    no_datas_ll.setVisibility(View.VISIBLE);
+                    nodataorloading.setVisibility(View.VISIBLE);
+                    nodataorloading.setText(R.string.nodata);
                     mTabLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -87,17 +87,15 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
                 case HEAD_NETERROR:
                     //头部网络错误
                     reloadwhenfail.setVisibility(View.VISIBLE);
-                    loading.setVisibility(View.GONE);
+                    nodataorloading.setVisibility(View.GONE);
                     mTabLayout.setVisibility(View.GONE);
-                    no_datas_ll.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     break;
                 case HEAD_SUCESS:
                     //头部下载成功
-                    no_datas_ll.setVisibility(View.GONE);
                     reloadwhenfail.setVisibility(View.GONE);
-                    loading.setVisibility(View.GONE);
+                    nodataorloading.setVisibility(View.GONE);
                     mTabLayout.setVisibility(View.VISIBLE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -105,8 +103,7 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
                 case HEAD_FAIL:
                     //头部下载失败
                     reloadwhenfail.setVisibility(View.VISIBLE);
-                    loading.setVisibility(View.GONE);
-                    no_datas_ll.setVisibility(View.GONE);
+                    nodataorloading.setVisibility(View.GONE);
                     mTabLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -115,7 +112,6 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
             }
         }
     };
-    private LinearLayout no_datas_ll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,11 +131,13 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
         //正在加载数据
         mHandler.sendEmptyMessage(HEAD_LOADING);
         //语言不用传，已封装好自动追加
+//        String urlx = "http://192.168.10.242:8181/mlottery/core/info.findAndroidIndexInfo.do";
         VolleyContentFast.requestJsonByGet(url, new VolleyContentFast.ResponseSuccessListener<CounselBean>() {
             @Override
             public synchronized void onResponse(final CounselBean json) {
                 //请求成功
                 if ("200".equals(json.getResult() + "")) {
+//                    ToastTools.showQuickCenter(mContext, json.getResult() + "");
                     //没有数据
                     if (json == null) {
                         mHandler.sendEmptyMessage(HEAD_NODATA);//暂时没有数据
@@ -227,10 +225,9 @@ public class CounselActivity extends BaseActivity implements View.OnClickListene
 
     public void initView() {
         //网络异常
-        reloadwhenfail = (LinearLayout) findViewById(R.id.network_error_ll);
-        reLoading = (TextView) findViewById(R.id.network_error_btn);
-        loading = (LinearLayout) findViewById(R.id.loading_ll);
-        no_datas_ll = (LinearLayout) findViewById(R.id.no_datas_ll);
+        reloadwhenfail = (LinearLayout) findViewById(R.id.network_exception_layout);
+        reLoading = (TextView) findViewById(R.id.network_exception_reload_btn);
+        nodataorloading = (TextView) findViewById(R.id.dataloding_ornodata);
         reLoading.setOnClickListener(this);
 
         //标题

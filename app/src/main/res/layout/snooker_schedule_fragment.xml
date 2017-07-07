@@ -24,7 +24,7 @@
 
         </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
-        <include layout="@layout/exception_page_display"/>
+        <include layout="@layout/snooker_empty_layout"/>
 
         <!--当前日期无数据暂无数据提示-->
         <TextView

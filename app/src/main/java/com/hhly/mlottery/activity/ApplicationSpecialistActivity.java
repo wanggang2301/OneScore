@@ -211,7 +211,7 @@ public class ApplicationSpecialistActivity extends Activity implements View.OnCl
                 break;
             case R.id.immediate_authentication:
                 if (isChecked) {
-                    if (!TextUtils.isEmpty(real_name.getText().toString()) && !TextUtils.isEmpty(id_datas.getText().toString())  && !TextUtils.isEmpty(specalist_edittext.getText().toString())) {
+                    if (!TextUtils.isEmpty(real_name.getText().toString()) && !TextUtils.isEmpty(id_datas.getText().toString()) && !TextUtils.isEmpty(good_league.getText().toString()) && !TextUtils.isEmpty(specalist_edittext.getText().toString())) {
                         specalist_error_tv.setVisibility(View.GONE);
                         if (new_leauue==null){
                             UiUtils.toast(this, R.string.please_add_eague);

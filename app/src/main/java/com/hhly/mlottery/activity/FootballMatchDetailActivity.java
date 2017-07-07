@@ -126,9 +126,6 @@ import static com.hhly.mlottery.config.FootBallTypeEnum.YTORED1;
  */
 public class FootballMatchDetailActivity extends BaseWebSocketActivity implements View.OnClickListener, ExactSwipeRefreshLayout.OnRefreshListener {
 
-    /**是否切换过球探数据 ps:切换后显示暂无动画直播*/
-    boolean switchQiutan = false;
-
     private final static int ERROR = -1;//访问失败
     private final static int SUCCESS = 0;// 访问成功
     private final static int STARTLOADING = 1;// 正在加载中
@@ -721,7 +718,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
                 }
                 // 球探数据源，显示暂无动画直播
                 if (matchDetail.getSourceType() == 3) {
-                    switchQiutan = true;
                     showGifAnimation(-1111);
                 }
 
@@ -1266,7 +1262,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
 
         switch (matchTextLiveBean.getCode()) {
             case "9999":// 暂无动画直播
-                switchQiutan = true;
                 showGifAnimation(-1111);
                 break;
             case "0":// 未开
@@ -4219,10 +4214,6 @@ public class FootballMatchDetailActivity extends BaseWebSocketActivity implement
      * @param type
      */
     private void showGifAnimation(int type) {
-
-        if (switchQiutan) {
-            type = -1111; //切换过球探数据后 不展示动画
-        }
 
         // 球探数据切换 暂无动画直播  -1111
         ll_not_animation_content.setVisibility(-1111 == type ? View.VISIBLE : View.GONE);

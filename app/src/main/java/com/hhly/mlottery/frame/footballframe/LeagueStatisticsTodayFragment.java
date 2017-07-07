@@ -104,8 +104,8 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
     private boolean isSortTab2 = true;
     private boolean isSortTab3 = true;
 
-    private LinearLayout fl_loading;
-    private LinearLayout fl_nodata;
+    private FrameLayout fl_loading;
+    private FrameLayout fl_nodata;
     private LinearLayout ll_showdata;
     private LinearLayout network_exception_layout;
     private ExactSwipeRefreshLayout mExactSwipeRefreshLayout;
@@ -146,12 +146,12 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
 
 
     private void initView() {
-        fl_loading = (LinearLayout) mView.findViewById(R.id.loading_ll);
-        fl_nodata = (LinearLayout) mView.findViewById(R.id.no_datas_ll);
+        fl_loading = (FrameLayout) mView.findViewById(R.id.fl_loading);
+        fl_nodata = (FrameLayout) mView.findViewById(R.id.fl_nodata);
         ll_showdata = (LinearLayout) mView.findViewById(R.id.ll_showData);
-        network_exception_layout = (LinearLayout) mView.findViewById(R.id.network_error_ll);
+        network_exception_layout = (LinearLayout) mView.findViewById(R.id.network_exception_layout);
 
-        network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_error_btn);
+        network_exception_reload_btn = (TextView) mView.findViewById(R.id.network_exception_reload_btn);
         mExactSwipeRefreshLayout = (ExactSwipeRefreshLayout) mView.findViewById(R.id.league_swiperefreshlayout);
         mExactSwipeRefreshLayout.setOnRefreshListener(this);
         mExactSwipeRefreshLayout.setColorSchemeResources(R.color.bg_header);
@@ -488,7 +488,7 @@ public class LeagueStatisticsTodayFragment extends Fragment implements View.OnCl
                 leagueStatisticsTodayRecyclerViewAdapter.notifyDataSetChanged();
                 break;
 
-            case R.id.network_error_btn:
+            case R.id.network_exception_reload_btn:
                 mHandler.sendEmptyMessage(DATA_STATUS_LOADING);
                 new Handler().postDelayed(mLoadingDataThread, 0);
                 break;

@@ -133,6 +133,6 @@
 
     </com.hhly.mlottery.widget.ExactSwipeRefreshLayout>
 
-    <include layout="@layout/exception_page_display" />
+    <include layout="@layout/network_exception" />
 
 </LinearLayout>

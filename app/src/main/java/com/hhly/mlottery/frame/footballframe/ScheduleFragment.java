@@ -231,8 +231,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
         mNoDataLayout = (RelativeLayout) view.findViewById(R.id.football_schedule_unfocus_ll);
 
         mLoadingLayout = (LinearLayout) view.findViewById(R.id.football_schedule_loading_ll);
-        mErrorLayout = (LinearLayout) view.findViewById(R.id.network_error_ll);
-        mReloadTvBtn = (TextView) view.findViewById(R.id.network_error_btn);
+        mErrorLayout = (LinearLayout) view.findViewById(R.id.network_exception_layout);
+        mReloadTvBtn = (TextView) view.findViewById(R.id.network_exception_reload_btn);
         mReloadTvBtn.setOnClickListener(this);
 
         ll_date_select.setOnClickListener(this);
@@ -282,7 +282,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
             isNetSuccess = true;
             switch (msg.what) {
                 case VIEW_STATUS_LOADING:
-                    ll_date_select.setVisibility(View.GONE);
                     mLoadDataStatus = LOAD_DATA_STATUS_LOADING;
                     mErrorLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);
@@ -294,7 +293,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     }
                     break;
                 case VIEW_STATUS_SUCCESS:
-                    ll_date_select.setVisibility(View.VISIBLE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
                     mLoadingLayout.setVisibility(View.GONE);
                     mErrorLayout.setVisibility(View.GONE);
@@ -305,7 +303,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
 
                     break;
                 case VIEW_STATUS_NET_ERROR:
-                    ll_date_select.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setRefreshing(false);
                     if (isLoadData) {
                       //  Toast.makeText(getActivity(), R.string.exp_net_status_txt, Toast.LENGTH_SHORT).show();
@@ -320,7 +317,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     isNetSuccess = false;
                     break;
                 case VIEW_STATUS_NO_ANY_DATA:
-                    ll_date_select.setVisibility(View.GONE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
                     mLoadingLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
@@ -330,7 +326,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
                     mNoDataTextView.setText(R.string.immediate_no_match);
                     break;
                 case VIEW_STATUS_FLITER_NO_DATA:
-                    ll_date_select.setVisibility(View.GONE);
                     mLoadDataStatus = LOAD_DATA_STATUS_SUCCESS;
                     mLoadingLayout.setVisibility(View.GONE);
                     mSwipeRefreshLayout.setVisibility(View.GONE);
@@ -595,7 +590,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.network_error_btn:
+            case R.id.network_exception_reload_btn:
                 mViewHandler.sendEmptyMessage(VIEW_STATUS_LOADING);
                 initData(currentDatePosition);
                 break;

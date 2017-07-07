@@ -161,6 +161,63 @@
                 android:layout_gravity="center"/>
         </FrameLayout>
 
-      <include layout="@layout/exception_padding_page_display"/>
+        <!--网络不给力提示-->
+        <LinearLayout
+            android:id="@+id/basket_database_details_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/refresh"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/exp_net_status_txt"
+                android:textColor="@color/version"
+                android:textSize="@dimen/text_size_14"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dip"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dip"
+                    android:text="@string/exp__check_txt"
+                    android:textColor="@color/msg"
+                    android:textSize="@dimen/text_size_14"/>
+
+                <TextView
+                    android:id="@+id/reLoadin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exp_refresh_txt"
+                    android:textColor="@color/exp_refresh"
+                    android:textSize="@dimen/text_size_14"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--暂无数据提示-->
+        <TextView
+            android:id="@+id/basket_database_details_nodata"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:gravity="center"
+            android:text="@string/nodata"
+            android:textSize="20dp"
+            android:visibility="gone"
+            />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

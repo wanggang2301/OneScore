@@ -1021,10 +1021,10 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
         mSwipeRefreshLayout.setOnRefreshListener(NumbersActivity.this);
         mSwipeRefreshLayout.setProgressViewOffset(false, 0, DisplayUtil.dip2px(mContext, StaticValues.REFRASH_OFFSET_END));
 
-        ll_numbers_startLoading = (LinearLayout) findViewById(R.id.loading_ll);
-        ll_numbers_errorLoading = (LinearLayout) findViewById(R.id.network_error_ll);
+        ll_numbers_startLoading = (LinearLayout) findViewById(R.id.ll_numbers_startLoading);
+        ll_numbers_errorLoading = (LinearLayout) findViewById(R.id.ll_numbers_errorLoading);
 
-        reLoading = (TextView) findViewById(R.id.network_error_btn);
+        reLoading = (TextView) findViewById(R.id.reLoading);
         reLoading.setOnClickListener(this);
 
     }
@@ -1413,7 +1413,7 @@ public class NumbersActivity extends BaseActivity implements View.OnClickListene
 
                 break;
 
-            case R.id.network_error_btn:// 重新加载数据
+            case R.id.reLoading:// 重新加载数据
                 MobclickAgent.onEvent(mContext, "Lottery_Refresh");
                 numbersDataShow(0);
                 break;

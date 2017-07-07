@@ -269,7 +269,6 @@
 
     <!-- 异常处理 -->
     <string name="exp_net_status_txt">暂无法提供数据</string>
-    <string name="exp_no_net">暂无网络</string>
     <string name="exp__check_txt">请检查后</string>
     <string name="exp_refresh_txt">刷新</string>
     <!-- 赛程 -->
@@ -2005,6 +2004,5 @@
 
     <string name="football_up_data_prompt">更新了%1$d场比赛，隐藏了%2$d场比赛</string>
     <string name="football_not_animation_txt">暂无动画直播</string>
-    <string name="home_newest_bet">最新推介</string>
 
 </resources>
