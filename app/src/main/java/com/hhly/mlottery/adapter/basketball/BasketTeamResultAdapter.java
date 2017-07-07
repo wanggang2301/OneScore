@@ -41,23 +41,33 @@ public class BasketTeamResultAdapter extends BaseQuickAdapter<BasketTeamResultBe
         ImageLoader.load(mContext,entity.getHomeLogoUrl(),R.mipmap.basket_default).into(homeIcon);
         ImageLoader.load(mContext,entity.getGuestLogoUrl(),R.mipmap.basket_default).into(guestIcon);
 
-        int homeScore=Integer.parseInt(entity.getHomeScore()==null?"0":entity.getHomeScore());
-        int guestScore=Integer.parseInt(entity.getGuestScore()==null?"0":entity.getGuestScore());
 
         TextView homeText=holder.getView(R.id.item_result_home_score);
         TextView guestText=holder.getView(R.id.item_result_guest_score);
-        homeText.setText(entity.getHomeScore()==null?"－":entity.getHomeScore());
-        guestText.setText(entity.getGuestScore()==null?"－":entity.getGuestScore());
-        if(homeScore>guestScore){
-            guestText.setTextColor(ContextCompat.getColor(mContext,R.color.basket_defeat));
-            homeText.setTextColor(ContextCompat.getColor(mContext,R.color.betting_recommend_issue_balance_color));
-        }else if(homeScore<guestScore){
-            guestText.setTextColor(ContextCompat.getColor(mContext,R.color.betting_recommend_issue_balance_color));
-            homeText.setTextColor(ContextCompat.getColor(mContext,R.color.basket_defeat));
+
+        if(entity.getMatchStatus().equals("0")){ //未開賽
+            homeText.setText("");
+            guestText.setText("");
+            holder.setText(R.id.item_result_vs,"VS");
+
         }else {
-            guestText.setTextColor(ContextCompat.getColor(mContext,R.color.basket_equals));
-            homeText.setTextColor(ContextCompat.getColor(mContext,R.color.basket_equals));
+            int homeScore=Integer.parseInt(entity.getHomeScore()==null?"0":entity.getHomeScore());
+            int guestScore=Integer.parseInt(entity.getGuestScore()==null?"0":entity.getGuestScore());
+            homeText.setText(entity.getHomeScore()==null?"－":entity.getHomeScore());
+            guestText.setText(entity.getGuestScore()==null?"－":entity.getGuestScore());
+            holder.setText(R.id.item_result_vs,"－");
+            if(homeScore>guestScore){
+                guestText.setTextColor(ContextCompat.getColor(mContext,R.color.basket_defeat));
+                homeText.setTextColor(ContextCompat.getColor(mContext,R.color.betting_recommend_issue_balance_color));
+            }else if(homeScore<guestScore){
+                guestText.setTextColor(ContextCompat.getColor(mContext,R.color.betting_recommend_issue_balance_color));
+                homeText.setTextColor(ContextCompat.getColor(mContext,R.color.basket_defeat));
+            }else {
+                guestText.setTextColor(ContextCompat.getColor(mContext,R.color.basket_equals));
+                homeText.setTextColor(ContextCompat.getColor(mContext,R.color.basket_equals));
+            }
         }
+
 
     }
 
