@@ -494,7 +494,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                                 }
                                             }
                                         }
-                                    } else {
+                                    } /*else {
                                         for (Match m : allDataLists) {// 默认显示热门赛程
                                             for (String hotId : hotList) {
                                                 if (m.getRaceId().equals(hotId)) {
@@ -503,7 +503,7 @@ public class RollBallFragment extends BaseFragment implements BaseRecyclerViewHo
                                                 }
                                             }
                                         }
-                                    }
+                                    }*/
                                 }
 
                                 footballImmediateNoDataTv.setText(R.string.immediate_no_data);
