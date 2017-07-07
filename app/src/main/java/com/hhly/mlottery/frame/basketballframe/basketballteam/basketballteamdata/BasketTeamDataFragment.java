@@ -227,7 +227,8 @@ public class BasketTeamDataFragment extends ViewFragment<BasketDataContract.Pres
 
     private void setListener() {
 
-        final String url= BaseURLs.P_URL_API_HOST+"data/basket/playerInfo.html"+"?lang="+ MyApp.getLanguage()+"&playerId=";
+        final String url= BaseURLs.P_URL_API_HOST+"data/basket/playerInfo.html"+"?lang="
+                + MyApp.getLanguage()+"&playerId=";
 
         mBtnRefresh.setOnClickListener(new View.OnClickListener() {
             @Override

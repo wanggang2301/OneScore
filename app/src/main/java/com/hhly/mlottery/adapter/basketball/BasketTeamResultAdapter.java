@@ -49,6 +49,7 @@ public class BasketTeamResultAdapter extends BaseQuickAdapter<BasketTeamResultBe
             homeText.setText("");
             guestText.setText("");
             holder.setText(R.id.item_result_vs,"VS");
+
         }else {
             int homeScore=Integer.parseInt(entity.getHomeScore()==null?"0":entity.getHomeScore());
             int guestScore=Integer.parseInt(entity.getGuestScore()==null?"0":entity.getGuestScore());
