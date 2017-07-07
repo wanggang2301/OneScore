@@ -2,6 +2,7 @@ package data;
 
 import java.io.IOException;
 
+import data.utils.L;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -34,6 +35,7 @@ public class DataInterceptor implements okhttp3.Interceptor {
                 .addQueryParameter("lang", lang)
                 .addQueryParameter("timeZone", timeZone)
                 .build();
+        L.d("signurl", url.toString());
 
         Request.Builder requestBuilder = oldRequest.newBuilder().url(url);
 

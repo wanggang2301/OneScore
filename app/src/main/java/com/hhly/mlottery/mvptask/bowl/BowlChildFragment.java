@@ -10,9 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hhly.mlottery.R;
@@ -63,6 +61,7 @@ public class BowlChildFragment extends ViewFragment<IContract.IBowlChildPresente
     TextView handicapFirst;
     @BindView(R.id.guest_first)
     TextView guestFirst;
+
     @BindView(R.id.network_error_btn)
     TextView reLoading;
     @BindView(R.id.no_datas_ll)
