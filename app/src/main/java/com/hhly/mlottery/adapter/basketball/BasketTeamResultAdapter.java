@@ -55,7 +55,7 @@ public class BasketTeamResultAdapter extends BaseQuickAdapter<BasketTeamResultBe
             int guestScore=Integer.parseInt(entity.getGuestScore()==null?"0":entity.getGuestScore());
             homeText.setText(entity.getHomeScore()==null?"－":entity.getHomeScore());
             guestText.setText(entity.getGuestScore()==null?"－":entity.getGuestScore());
-
+            holder.setText(R.id.item_result_vs,"－");
             if(homeScore>guestScore){
                 guestText.setTextColor(ContextCompat.getColor(mContext,R.color.basket_defeat));
                 homeText.setTextColor(ContextCompat.getColor(mContext,R.color.betting_recommend_issue_balance_color));
