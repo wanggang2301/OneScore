@@ -404,7 +404,7 @@ public class RollBallAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             holder.tvGuestRedCard.setText(data.getGuest_rc());
         } else holder.tvGuestRedCard.setVisibility(View.INVISIBLE);
 
-        // 控制器
+        // 控制器sfs
         holder.itemPositionControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
